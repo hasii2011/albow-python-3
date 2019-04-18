@@ -1,0 +1,25 @@
+Text Screen
+
+This is a demonstration text screen. You can imagine
+some kind of exciting introductory paragraph to your
+game here.
+
+If you want, you can have more than one paragraph of
+text on a page.
+
+PAGE
+
+Second Page
+
+This is the second page of the demo text screen. It's
+here so you can see how the menu at the bottom looks
+with all three buttons enabled.
+
+PAGE
+
+Last Page
+
+Three shall be the number of demo pages, and the
+number of demo pages shall be three. There shall
+not be four, nor shall there be two, except that
+they be followed by a third. Five is right out.
