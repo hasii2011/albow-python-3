@@ -12,7 +12,6 @@ from albow.widgets.CheckWidget import CheckWidget
 from albow.widgets.CheckControl import CheckControl
 
 from theme import ThemeProperty
-from utils import blit_in_rect
 
 
 class AttrRef(object):
@@ -76,30 +75,6 @@ class ImageButton(ButtonBase, Image):
         fgi = self.image
         if fgi:
             self.draw_image(surf, fgi)
-
-
-class ValueDisplay(Control, Widget):
-
-    format = "%s"
-    align = 'l'
-
-    def __init__(self, width=100, **kwds):
-
-        Widget.__init__(self, **kwds)
-        self.set_size_for_text(width)
-
-    def draw(self, surf):
-        value = self.value
-        text = self.format_value(value)
-        buf = self.font.render(text, True, self.fg_color)
-        frame = surf.get_rect()
-        blit_in_rect(surf, buf, frame, self.align, self.margin)
-
-    def format_value(self, value):
-        if value is not None:
-            return self.format % value
-        else:
-            return ""
 
 
 class CheckBox(CheckControl, CheckWidget):

@@ -24,9 +24,10 @@ from albow.theme import root
 from albow.widgets.Label import Label
 from albow.widgets.Image import Image
 from albow.widgets.Button import Button
+from albow.widgets.ValueDisplay import ValueDisplay
 
 from albow.widget import Widget
-from albow.controls import AttrRef, RadioButton, ValueDisplay
+from albow.controls import AttrRef, RadioButton
 from albow.layout import Row, Column, Grid
 from albow.fields import TextField, FloatField
 from albow.shell import Shell
@@ -192,10 +193,10 @@ class DemoControlsScreen(Screen):
             RadioButton(setting = 'ellipse',   ref = shape), Label("Ellipse",   **colors),
         ])
         grid = Grid([
-            [Label("Width",  **colors), width_field],
-            [Label("Height", **colors), height_field],
-            [Label("Shape",  **colors), shape_choices],
-            [Label("Area",   **colors), area_display],
+            [Label("Width",      **colors), width_field],
+            [Label("Height",     **colors), height_field],
+            [Label("Shape",      **colors), shape_choices],
+            [Label("Value Area", **colors), area_display],
         ])
         back = Button("Menu", action = shell.show_menu)
         contents = Column([grid, back])
@@ -228,15 +229,22 @@ class DemoAnimationScreen(Screen):
     """
 
     def __init__(self, shell):
-        Screen.__init__(self, shell)
+
+        #
+        # Python 3 update
+        #
+        super().__init__(shell)
         self.rect = shell.rect.inflate(-100, -100)
         w, h = self.size
         self.points = [[100, 50], [w - 50, 100], [50, h - 50]]
         from random import randint
         def randv():
             return randint(-5, 5)
-        self.velocities = [[randv(), randv()] for i in range(len(self.points))]
-        btn = Button("Menu", action = self.go_back)
+        self.velocities = [
+            [randv(), randv()] for i in range(len(self.points))
+        ]
+
+        btn = Button("Menu", action=self.go_back)
         btn.rect.center = (w/2, h - 20)
         self.add(btn)
 
