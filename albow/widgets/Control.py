@@ -1,9 +1,9 @@
 
 from widget import overridable_property
 
-class Control(object):
+class Control():
     """
-
+        Albow base control
 
     """
 
