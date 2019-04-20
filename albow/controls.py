@@ -6,7 +6,7 @@ from widget import Widget
 
 from albow.widgets.ButtonBase import ButtonBase
 from albow.widgets.Control import Control
-from albow.widgets.Label import Label
+from albow.widgets.RadioControl import RadioControl
 from albow.widgets.Image import Image
 from albow.widgets.CheckWidget import CheckWidget
 
@@ -112,17 +112,6 @@ class CheckControl(Control):
 
 class CheckBox(CheckControl, CheckWidget):
     pass
-
-
-class RadioControl(Control):
-
-    setting = None
-
-    def get_highlighted(self):
-        return self.value == self.setting
-
-    def mouse_down(self, e):
-        self.value = self.setting
 
 
 class RadioButton(RadioControl, CheckWidget):

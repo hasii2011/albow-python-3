@@ -1,9 +1,9 @@
 import textwrap
 
 from albow.widgets.Button import Button
+from albow.widgets.Label import Label
 
 from widget import Widget
-from controls import Label
 from layout import Row, Column
 from fields import TextField
 
