@@ -1,8 +1,9 @@
 import textwrap
-from pygame import Rect
-from pygame.locals import *
+
+from albow.widgets.Button import Button
+
 from widget import Widget
-from controls import Label, Button
+from controls import Label
 from layout import Row, Column
 from fields import TextField
 

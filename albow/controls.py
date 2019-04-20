@@ -2,7 +2,6 @@
     Albow - Controls
 """
 
-from pygame import Rect, draw
 from widget import Widget
 
 from albow.widgets.ButtonBase import ButtonBase
@@ -49,19 +48,6 @@ class ItemRef(object):
     def set(self, x):
         # self.obj[item] = x
         self.obj[self.item] = x     # Python 3 update
-
-
-class Button(ButtonBase, Label):
-    """
-    Eeks multiple inheritance
-    """
-
-    def __init__(self, text, action=None, enable=None, **kwds):
-        if action:
-            kwds['action'] = action
-        if enable:
-            kwds['enable'] = enable
-        Label.__init__(self, text, **kwds)
 
 
 class ImageButton(ButtonBase, Image):

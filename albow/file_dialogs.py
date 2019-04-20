@@ -6,7 +6,9 @@ import os
 from pygame import draw, Rect
 from albow.widget import Widget
 from albow.dialogs import Dialog, ask, alert
-from albow.controls import Label, Button 
+from albow.widgets.Button import Button
+from albow.widgets.Label import Label
+
 from albow.fields import TextField
 from albow.layout import Row, Column
 from albow.palette_view import PaletteView
