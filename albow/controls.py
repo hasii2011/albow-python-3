@@ -2,14 +2,8 @@
     Albow - Controls
 """
 
-from widget import Widget
-
 from albow.widgets.ButtonBase import ButtonBase
-from albow.widgets.Control import Control
-from albow.widgets.RadioControl import RadioControl
 from albow.widgets.Image import Image
-from albow.widgets.CheckWidget import CheckWidget
-from albow.widgets.CheckControl import CheckControl
 
 from theme import ThemeProperty
 
@@ -75,11 +69,3 @@ class ImageButton(ButtonBase, Image):
         fgi = self.image
         if fgi:
             self.draw_image(surf, fgi)
-
-
-class CheckBox(CheckControl, CheckWidget):
-    pass
-
-
-class RadioButton(RadioControl, CheckWidget):
-    pass
