@@ -9,6 +9,7 @@ from albow.widgets.Control import Control
 from albow.widgets.RadioControl import RadioControl
 from albow.widgets.Image import Image
 from albow.widgets.CheckWidget import CheckWidget
+from albow.widgets.CheckControl import CheckControl
 
 from theme import ThemeProperty
 from utils import blit_in_rect
@@ -99,15 +100,6 @@ class ValueDisplay(Control, Widget):
             return self.format % value
         else:
             return ""
-
-
-class CheckControl(Control):
-
-    def mouse_down(self, e):
-        self.value = not self.value
-
-    def get_highlighted(self):
-        return self.value
 
 
 class CheckBox(CheckControl, CheckWidget):
