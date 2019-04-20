@@ -8,6 +8,7 @@ from widget import Widget
 from albow.widgets.Control import Control
 from albow.widgets.Label import Label
 from albow.widgets.Image import Image
+from albow.widgets.CheckWidget import CheckWidget
 
 from theme import ThemeProperty
 from utils import blit_in_rect
@@ -156,32 +157,6 @@ class CheckControl(Control):
 
     def get_highlighted(self):
         return self.value
-
-
-class CheckWidget(Widget):
-
-    default_size = (16, 16)
-    margin = 4
-    border_width = 1
-    check_mark_tweak = 2
-
-    smooth = ThemeProperty('smooth')
-
-    def __init__(self, **kwds):
-        Widget.__init__(self, Rect((0, 0), self.default_size), **kwds)
-
-    def draw(self, surf):
-        if self.highlighted:
-            r = self.get_margin_rect()
-            fg = self.fg_color
-            d = self.check_mark_tweak
-            p1 = (r.left, r.centery - d)
-            p2 = (r.centerx - d, r.bottom)
-            p3 = (r.right, r.top - d)
-            if self.smooth:
-                draw.aalines(surf, fg, False, [p1, p2, p3])
-            else:
-                draw.lines(surf, fg, False, [p1, p2, p3])
 
 
 class CheckBox(CheckControl, CheckWidget):
