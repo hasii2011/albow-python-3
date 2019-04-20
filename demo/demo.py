@@ -22,9 +22,10 @@ from math import pi
 
 from albow.theme import root
 from albow.widgets.Label import Label
+from albow.widgets.Image import Image
 
 from albow.widget import Widget
-from albow.controls import Button, Image, AttrRef, RadioButton, ValueDisplay
+from albow.controls import Button, AttrRef, RadioButton, ValueDisplay
 from albow.layout import Row, Column, Grid
 from albow.fields import TextField, FloatField
 from albow.shell import Shell

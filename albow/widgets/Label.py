@@ -37,7 +37,7 @@ class Label(Widget):
         #
         self.logger = logging.getLogger(self.__class__.__name__)
 
-        Widget.__init__(self, **kwds)
+        super().__init__(**kwds)
         font = self.font
         lines = text.split("\n")
         tw, th = 0, 0
