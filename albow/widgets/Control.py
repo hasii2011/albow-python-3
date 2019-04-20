@@ -11,11 +11,11 @@ class Control():
     enabled     = overridable_property('enabled')
     value       = overridable_property('value')
 
-    enable       = None
-    ref          = None
-    _highlighted = False
-    _enabled     = True
-    _value       = None
+    enable              = None
+    ref                 = None
+    _highlighted: bool  = False
+    _enabled:     bool  = True
+    _value              = None
 
     def get_value(self):
         ref = self.ref

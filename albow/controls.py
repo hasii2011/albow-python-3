@@ -5,6 +5,7 @@
 from pygame import Rect, draw
 from widget import Widget
 
+from albow.widgets.ButtonBase import ButtonBase
 from albow.widgets.Control import Control
 from albow.widgets.Label import Label
 from albow.widgets.Image import Image
@@ -48,42 +49,6 @@ class ItemRef(object):
     def set(self, x):
         # self.obj[item] = x
         self.obj[self.item] = x     # Python 3 update
-
-
-class ButtonBase(Control):
-
-    align = 'c'
-    action = None
-
-    def mouse_down(self, event):
-        if self.enabled:
-            self._highlighted = True
-
-    def mouse_drag(self, event):
-        state = event in self
-        # if state <> self._highlighted:
-        if state != self._highlighted:
-            self._highlighted = state
-            self.invalidate()
-
-    def mouse_up(self, event):
-        if event in self:
-            self._highlighted = False
-            if self.enabled:
-                self.call_handler('action')
-
-    def get_highlighted(self):
-        return self._highlighted
-
-    def get_enabled(self):
-        enable = self.enable
-        if enable:
-            return enable()
-        else:
-            return self._enabled
-
-    def set_enabled(self, x):
-        self._enabled = x
 
 
 class Button(ButtonBase, Label):
