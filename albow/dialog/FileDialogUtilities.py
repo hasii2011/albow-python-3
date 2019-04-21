@@ -23,7 +23,7 @@ from albow.palette_view import PaletteView
 from albow.theme import ThemeProperty
 
 
-class DirPathView(Widget):
+class DirectoryPathView(Widget):
 
     def __init__(self, width, client, **kwds):
         Widget.__init__(self, **kwds)
@@ -115,7 +115,7 @@ class FileDialog(Dialog):
         d             = self.margin
         self.suffixes = suffixes or ()
         up_button     = Button(self.up_button_text, action=self.go_up)
-        dir_box       = DirPathView(self.box_width - up_button.width - 10, self)
+        dir_box       = DirectoryPathView(self.box_width - up_button.width - 10, self)
         self.dir_box  = dir_box
         top_row       = Row([dir_box, up_button])
         list_box      = FileListView(self.box_width - 16, self)
