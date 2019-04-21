@@ -25,7 +25,8 @@ from albow.widget import Widget
 from albow.controls import AttrRef
 from albow.layout import Row
 from albow.layout import Column
-from albow.layout import Grid
+from albow.layouts.Grid import Grid
+
 from albow.fields import TextField
 from albow.fields import FloatField
 from albow.shell import Shell
