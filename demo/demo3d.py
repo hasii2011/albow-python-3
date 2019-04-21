@@ -18,8 +18,10 @@ from pygame.color import Color
 from pygame.locals import *
 
 from albow.root import RootWidget
-from albow.controls import Button
-from albow.layout import Row, Frame
+
+from albow.widgets.Button import Button
+from albow.layouts.Row import Row
+
 from albow.opengl import GLOrtho, GLPerspective
 
 #--------------------------------------------------------------------------

@@ -154,7 +154,8 @@ def set_music_enabled(state):
 from pygame import Rect
 from albow.widget import Widget
 
-from albow.layout import Column, Grid
+from albow.layouts.Column import Column
+from albow.layouts.Grid import Grid
 
 from albow.dialog.Dialog import Dialog
 from albow.widgets.Label import Label
