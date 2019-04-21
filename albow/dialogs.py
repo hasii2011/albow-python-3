@@ -4,19 +4,11 @@ from albow.widgets.Button import Button
 from albow.widgets.Label import Label
 
 from widget import Widget
-from layout import Row, Column
+from layout import Row
+from layout import Column
 from fields import TextField
 
-class Modal(object):
-
-    enter_response = True
-    cancel_response = False
-
-    def ok(self):
-        self.dismiss(True)
-
-    def cancel(self):
-        self.dismiss(False)
+from albow.dialog.Modal import Modal
 
 
 class Dialog(Modal, Widget):
@@ -61,11 +53,13 @@ class Dialog(Modal, Widget):
 
 
 def wrapped_label(text, wrap_width, **kwds):
+
     paras = text.split("\n\n")
     text = "\n".join([textwrap.fill(para, wrap_width) for para in paras])
     return Label(text, **kwds)
 
 def alert(mess, wrap_width = 60, **kwds):
+
     box = Dialog(**kwds)
     d = box.margin
     lb = wrapped_label(mess, wrap_width)
@@ -77,8 +71,7 @@ def alert(mess, wrap_width = 60, **kwds):
 def alert(mess, **kwds):
     ask(mess, ["OK"], **kwds)
 
-def ask(mess, responses = ["OK", "Cancel"], default = 0, cancel = -1,
-        wrap_width = 60, **kwds):
+def ask(mess, responses = ["OK", "Cancel"], default = 0, cancel = -1, wrap_width = 60, **kwds):
     box = Dialog(**kwds)
     d = box.margin
     lb = wrapped_label(mess, wrap_width)
