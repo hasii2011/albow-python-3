@@ -8,6 +8,14 @@ class RowOrColumn(Widget):
 
     _is_gl_container = True
 
+    d:          tuple = None
+    minor_axis: str   = None
+    axis:       str   = None
+    longways:   str   = None
+    crossways:  str   = None
+    align_map:  dict  = None
+
+
     def __init__(self, size, items, kwds):
         """
 
