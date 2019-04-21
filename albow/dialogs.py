@@ -3,53 +3,11 @@ import textwrap
 from albow.widgets.Button import Button
 from albow.widgets.Label import Label
 
-from widget import Widget
+from albow.dialog.Dialog import Dialog
+
 from layout import Row
 from layout import Column
 from fields import TextField
-
-from albow.dialog.Modal import Modal
-
-
-class Dialog(Modal, Widget):
-
-    click_outside_response = None
-
-    def __init__(self, client = None, responses = None, default = 0, cancel = -1, **kwds):
-
-        Widget.__init__(self, **kwds)
-        if client or responses:
-            rows = []
-            w1 = 0
-            w2 = 0
-            if client:
-                rows.append(client)
-                w1 = client.width
-            if responses:
-                buttons = Row([
-                    Button(text, action = lambda t=text: self.dismiss(t))
-                    for text in responses], equalize = 'w')
-                rows.append(buttons)
-                w2 = buttons.width
-            if w1 < w2:
-                a = 'l'
-            else:
-                a = 'r'
-            contents = Column(rows, align = a)
-            m = self.margin
-            contents.topleft = (m, m)
-            self.add(contents)
-            self.shrink_wrap()
-        if responses and default is not None:
-            self.enter_response = responses[default]
-        if responses and cancel is not None:
-            self.cancel_response = responses[cancel]
-
-    def mouse_down(self, e):
-        if not e in self:
-            response = self.click_outside_response
-            if response is not None:
-                self.dismiss(response)
 
 
 def wrapped_label(text, wrap_width, **kwds):
@@ -57,16 +15,6 @@ def wrapped_label(text, wrap_width, **kwds):
     paras = text.split("\n\n")
     text = "\n".join([textwrap.fill(para, wrap_width) for para in paras])
     return Label(text, **kwds)
-
-def alert(mess, wrap_width = 60, **kwds):
-
-    box = Dialog(**kwds)
-    d = box.margin
-    lb = wrapped_label(mess, wrap_width)
-    lb.topleft = (d, d)
-    box.add(lb)
-    box.shrink_wrap()
-    return box.present()
 
 def alert(mess, **kwds):
     ask(mess, ["OK"], **kwds)

@@ -38,7 +38,9 @@ from albow.resource import get_font, get_image
 from albow.grid_view import GridView
 from albow.palette_view import PaletteView
 from albow.image_array import get_image_array
-from albow.dialogs import alert, ask
+from albow.dialogs import alert
+from albow.dialogs import ask
+
 from albow.file_dialogs import request_old_filename, request_new_filename, look_for_file_or_directory
 from albow.tab_panel import TabPanel
 from albow.table_view import TableView, TableColumn
