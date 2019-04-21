@@ -40,7 +40,7 @@ from albow.image_array import get_image_array
 from albow.dialog.DialogUtilities import alert
 from albow.dialog.DialogUtilities import ask
 
-from albow.file_dialogs import request_old_filename, request_new_filename, look_for_file_or_directory
+from albow.FileDialogs import request_old_filename, request_new_filename, look_for_file_or_directory
 from albow.tab_panel import TabPanel
 from albow.table_view import TableView, TableColumn
 
