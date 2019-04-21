@@ -6,6 +6,7 @@ import os
 
 
 from albow.dialog.FileDialog import FileDialog
+from albow.dialog.FileOpenDialog import FileOpenDialog
 
 from albow.dialog.DialogUtilities import ask
 
@@ -57,35 +58,6 @@ class FileSaveDialog(FileDialog):
     def ok_enable(self):
         # return self.filename_box.text <> ""
         return self.filename_box.text != ""
-
-
-class FileOpenDialog(FileDialog):
-
-    saving = False
-    ok_label = "Open"
-
-    def get_pathname(self):
-        name = self.list_box.get_selected_name()
-        if name:
-            return os.path.join(self.directory, name)
-        else:
-            return None
-
-    pathname = property(get_pathname)
-
-    #def update(self):
-    #	FileDialog.update(self)
-
-    def ok_enable(self):
-        path = self.pathname
-        enabled = self.item_is_choosable(path)
-        return enabled
-
-    def item_is_choosable(self, path):
-        return bool(path) and self.filter(path)
-
-    def double_click_file(self, name):
-        self.ok()
 
 
 class LookForFileDialog(FileOpenDialog):
