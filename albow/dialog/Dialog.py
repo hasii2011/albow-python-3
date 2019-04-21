@@ -3,8 +3,8 @@ from albow.dialog.Modal import Modal
 from albow.widgets.Button import Button
 
 from widget import Widget
-from layout import Column
-from layout import Row
+from albow.layouts.Row import Row
+from albow.layouts.Column import Column
 
 
 

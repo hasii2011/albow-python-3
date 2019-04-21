@@ -1,10 +1,9 @@
 """
 	Albow - Table View
 """
-# from itertools import izip   -- unused import -- hasii
 
 from pygame import Rect
-from layout import Column
+from albow.layouts.Column import Column
 from palette_view import PaletteView
 from utils import blit_in_rect
 
@@ -192,7 +191,7 @@ class TableHeaderView(TableRowBase):
 #		self.parent.draw_header_cell(surf, i, text, cell_rect, column)
 
 	def row_data(self, row):
-		None
+		pass
 			
 	def draw_table_cell(self, surf, i, data, cell_rect, column):
 		self.parent.draw_header_cell(surf, i, cell_rect, column)

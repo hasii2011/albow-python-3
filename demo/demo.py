@@ -23,8 +23,8 @@ from albow.widgets.ValueDisplay import ValueDisplay
 
 from albow.widget import Widget
 from albow.controls import AttrRef
-from albow.layout import Row
-from albow.layout import Column
+from albow.layouts.Row import Row
+from albow.layouts.Column import Column
 from albow.layouts.Grid import Grid
 
 from albow.fields import TextField
