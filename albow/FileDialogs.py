@@ -3,6 +3,10 @@
 #
 
 import os
+
+from pygame import Surface
+from pygame import Rect
+
 from albow.widget import Widget
 
 from albow.dialog.Dialog import Dialog
@@ -13,9 +17,11 @@ from albow.widgets.Button import Button
 from albow.widgets.Label import Label
 
 from albow.fields import TextField
-from albow.layout import Row, Column
+from albow.layout import Row
+from albow.layout import Column
 from albow.palette_view import PaletteView
 from albow.theme import ThemeProperty
+
 
 class DirPathView(Widget):
 
@@ -24,7 +30,8 @@ class DirPathView(Widget):
         self.set_size_for_text(width)
         self.client = client
 
-    def draw(self, surf):
+    def draw(self, surface: Surface):
+
         frame = self.get_margin_rect()
         image = self.font.render(self.client.directory, True, self.fg_color)
         tw = image.get_width()
@@ -33,34 +40,39 @@ class DirPathView(Widget):
             x = 0
         else:
             x = mw - tw
-        surf.blit(image, (frame.left + x, frame.top))
+        surface.blit(image, (frame.left + x, frame.top))
 
 
 class FileListView(PaletteView):
 
-    #scroll_button_color = (255, 255, 0)
-
     def __init__(self, width, client, **kwds):
+        """
+
+        :param width:
+        :param client:
+        :param kwds:
+        """
         font = self.predict_font(kwds)
         h = font.get_linesize()
         d = 2 * self.predict(kwds, 'margin')
-        PaletteView.__init__(self, (width - d, h), 10, 1, scrolling = True, **kwds)
+        super().__init__((width - d, h), 10, 1, scrolling=True, **kwds)
         self.client = client
         self.selection = None
         self.names = []
 
     def update(self):
-        client = self.client
-        dir = client.directory
-        suffixes = client.suffixes
+        client    = self.client
+        directory = client.directory
+
         def filter(name):
-            path = os.path.join(dir, name)
+            path = os.path.join(directory, name)
             return os.path.isdir(path) or self.client.filter(path)
+
         try:
-            names = [name for name in os.listdir(dir)
+            names = [name for name in os.listdir(directory)
                      if not name.startswith(".") and filter(name)]
         except EnvironmentError as e:
-            alert("%s: %s" % (dir, e))
+            alert("%s: %s" % (directory, e))
             names = []
         self.names = names
         self.selection = None
@@ -68,14 +80,11 @@ class FileListView(PaletteView):
     def num_items(self):
         return len(self.names)
 
-    #def draw_prehighlight(self, surf, item_no, rect):
-    #	draw.rect(surf, self.sel_color, rect)
+    def draw_item(self, surface: Surface, item_no: int, rect: Rect):
 
-    def draw_item(self, surf, item_no, rect):
-        font = self.font
         color = self.fg_color
         buf = self.font.render(self.names[item_no], True, color)
-        surf.blit(buf, rect)
+        surface.blit(buf, rect)
 
     def click_item(self, item_no, e):
         self.selection = item_no
