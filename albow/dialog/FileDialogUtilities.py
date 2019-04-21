@@ -7,9 +7,8 @@ import os
 from pygame import Surface
 from pygame import Rect
 
-from albow.widget import Widget
-
 from albow.dialog.Dialog import Dialog
+from albow.dialog.DirectoryPathView import DirectoryPathView
 from albow.dialog.DialogUtilities import ask
 from albow.dialog.DialogUtilities import alert
 
@@ -21,26 +20,6 @@ from albow.layout import Row
 from albow.layout import Column
 from albow.palette_view import PaletteView
 from albow.theme import ThemeProperty
-
-
-class DirectoryPathView(Widget):
-
-    def __init__(self, width, client, **kwds):
-        Widget.__init__(self, **kwds)
-        self.set_size_for_text(width)
-        self.client = client
-
-    def draw(self, surface: Surface):
-
-        frame = self.get_margin_rect()
-        image = self.font.render(self.client.directory, True, self.fg_color)
-        tw = image.get_width()
-        mw = frame.width
-        if tw <= mw:
-            x = 0
-        else:
-            x = mw - tw
-        surface.blit(image, (frame.left + x, frame.top))
 
 
 class FileListView(PaletteView):
