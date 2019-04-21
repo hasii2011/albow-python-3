@@ -24,10 +24,11 @@ from albow.theme import root
 from albow.widgets.Label import Label
 from albow.widgets.Image import Image
 from albow.widgets.Button import Button
+from albow.widgets.RadioButton import RadioButton
 from albow.widgets.ValueDisplay import ValueDisplay
 
 from albow.widget import Widget
-from albow.controls import AttrRef, RadioButton
+from albow.controls import AttrRef
 from albow.layout import Row, Column, Grid
 from albow.fields import TextField, FloatField
 from albow.shell import Shell
