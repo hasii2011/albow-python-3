@@ -6,8 +6,8 @@ import os
 from albow.widget import Widget
 
 from albow.dialog.Dialog import Dialog
-from albow.dialog.dialogs import ask
-from albow.dialog.dialogs import alert
+from albow.dialog.DialogUtilities import ask
+from albow.dialog.DialogUtilities import alert
 
 from albow.widgets.Button import Button
 from albow.widgets.Label import Label
