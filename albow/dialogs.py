@@ -16,21 +16,33 @@ def wrapped_label(text, wrap_width, **kwds):
     text = "\n".join([textwrap.fill(para, wrap_width) for para in paras])
     return Label(text, **kwds)
 
+
 def alert(mess, **kwds):
     ask(mess, ["OK"], **kwds)
 
-def ask(mess, responses = ["OK", "Cancel"], default = 0, cancel = -1, wrap_width = 60, **kwds):
+
+def ask(mess, responses=["OK", "Cancel"], default=0, cancel=-1, wrap_width=60, **kwds):
+    """
+
+    :param mess:
+    :param responses: This is a mutable default parameter;  TODO Fix this
+    :param default:
+    :param cancel:
+    :param wrap_width:
+    :param kwds:
+    :return:
+    """
     box = Dialog(**kwds)
     d = box.margin
     lb = wrapped_label(mess, wrap_width)
     lb.topleft = (d, d)
     buts = []
     for caption in responses:
-        but = Button(caption, action = lambda x = caption: box.dismiss(x))
+        but = Button(caption, action=lambda x=caption: box.dismiss(x))
         buts.append(but)
-    brow = Row(buts, spacing = d, equalize = 'w')
+    brow = Row(buts, spacing=d, equalize='w')
     lb.width = max(lb.width, brow.width)
-    col = Column([lb, brow], spacing = d, align ='r')
+    col = Column([lb, brow], spacing=d, align='r')
     col.topleft = (d, d)
     if default is not None:
         box.enter_response = responses[default]
@@ -44,13 +56,18 @@ def ask(mess, responses = ["OK", "Cancel"], default = 0, cancel = -1, wrap_width
     box.shrink_wrap()
     return box.present()
 
-def input_text(prompt, width, initial = None, **kwds):
+
+def input_text(prompt, width, initial=None, **kwds):
+
     box = Dialog(**kwds)
     d = box.margin
+
     def ok():
         box.dismiss(True)
+
     def cancel():
         box.dismiss(False)
+
     lb = Label(prompt)
     lb.topleft = (d, d)
     tf = TextField(width)
