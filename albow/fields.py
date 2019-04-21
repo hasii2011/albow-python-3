@@ -17,7 +17,7 @@ class TextEditor(Widget):
 
     def __init__(self, width, upper = None, **kwds):
         '''
-        
+
         :param width:
         :param upper:
         :param kwds:

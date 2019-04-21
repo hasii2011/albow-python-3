@@ -587,6 +587,7 @@ class DemoShell(Shell):
 def main():
 
     pygame.init()
+    pygame.display.set_caption("Albow Demonstration")
 
     logging.config.fileConfig('logging.conf')
 

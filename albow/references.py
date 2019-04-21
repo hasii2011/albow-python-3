@@ -28,12 +28,12 @@ class Ref(object):
         #print "%r.get()" % self ###
         return self.base
 
-#---------------------------------------------------------------------------
 
 class AttrRef(Ref):
 
     def __init__(self, base, name):
-        self.base = base
+
+        super().__init__(base)
         self.name = name
 
     def __repr__(self):
@@ -46,12 +46,12 @@ class AttrRef(Ref):
     def set(self, value):
         setattr(self.base.get(), self.name, value)
 
-#---------------------------------------------------------------------------
 
 class ItemRef(Ref):
 
     def __init__(self, base, index):
-        self.base = base
+
+        super().__init__(base)
         self.index = index
 
     def __repr__(self):
@@ -62,14 +62,14 @@ class ItemRef(Ref):
         return self.base.get()[self.index]
 
     def set(self, value):
-        self.base.get()[index] = value
+        self.base.get()[self.index] = value
 
-#---------------------------------------------------------------------------
 
 class CallRef(Ref):
 
     def __init__(self, base, args, kwds):
-        self.base = base
+
+        super().__init__(base)
         self.args = args
         self.kwds = kwds
 
@@ -80,9 +80,8 @@ class CallRef(Ref):
         #print "%r.get()" % self ###
         return self.base.get()(*self.args, **self.kwds)
 
-#---------------------------------------------------------------------------
 
-class RefCaller(object):
+class RefCaller():
 
     def __init__(self, base):
         self.base = base
