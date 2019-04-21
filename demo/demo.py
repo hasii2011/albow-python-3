@@ -1,22 +1,17 @@
 """
     Albow - Demonstration
 """
-# screen_size = (640, 480)
-screen_size = (480, 640)
+import os
+import sys
+import random
 
-flags       = 0
-frame_time  = 50 # ms
-
-import os, sys
 from os.path import dirname as d
-
-sys.path.insert(1, d(d(os.path.abspath(sys.argv[0]))))
 
 import pygame
 import logging.config
 
 from pygame.color import Color
-from pygame.locals import *
+# from pygame.locals import *
 
 from math import pi
 
@@ -28,8 +23,11 @@ from albow.widgets.ValueDisplay import ValueDisplay
 
 from albow.widget import Widget
 from albow.controls import AttrRef
-from albow.layout import Row, Column, Grid
-from albow.fields import TextField, FloatField
+from albow.layout import Row
+from albow.layout import Column
+from albow.layout import Grid
+from albow.fields import TextField
+from albow.fields import FloatField
 from albow.shell import Shell
 from albow.screen import Screen
 from albow.text_screen import TextScreen
@@ -40,12 +38,39 @@ from albow.image_array import get_image_array
 from albow.dialog.DialogUtilities import alert
 from albow.dialog.DialogUtilities import ask
 
-from albow.dialog.FileDialogUtilities import request_old_filename, request_new_filename, look_for_file_or_directory
+from albow.dialog.FileDialogUtilities import request_old_filename
+from albow.dialog.FileDialogUtilities import request_new_filename
+from albow.dialog.FileDialogUtilities import look_for_file_or_directory
+
 from albow.tab_panel import TabPanel
-from albow.table_view import TableView, TableColumn
+from albow.table_view import TableView
+from albow.table_view import TableColumn
+
+# screen_size = (640, 480)
+screen_size = (480, 640)
+
+flags       = 0
+frame_time  = 50  # ms
 
 BLACK = (0, 0, 0)
 WHITE = (255, 255, 255)
+
+demo_table_data = [
+    (1979, 12.5),
+    (1980, 13.2),
+    (1981, 13.5),
+    (1982, 13.1),
+    (1983, 14.3),
+    (1984, 15.4),
+    (1985, 16.4),
+    (1986, 17.4),
+    (1987, 18.4),
+    (1988, 19.4),
+    (2019, 23.0)
+]
+selected_table_row = None
+
+sys.path.insert(1, d(d(os.path.abspath(sys.argv[0]))))
 
 
 class MenuScreen(Screen):
@@ -66,8 +91,8 @@ class MenuScreen(Screen):
 
         self.shell     = shell
         f1             = get_font(24, "VeraBd.ttf")
-        title          = Label("Albow Demo", font = f1)
-        title.fg_color = (255,255,255)
+        title          = Label("Albow Demonstration", font = f1)
+        title.fg_color = (255, 255, 255)
 
 
         menu = Column([
@@ -125,7 +150,7 @@ class DemoTextFieldsScreen(Screen):
 
         self.fld1 = self.add_field("Name", 200)
         self.fld2 = self.add_field("Race", 250)
-        btn = Button("OK", action = self.ok)
+        btn = Button("OK", action=self.ok)
         btn.rect.midtop = (320, 300)
         self.add(btn)
         out = Label("")
@@ -133,7 +158,7 @@ class DemoTextFieldsScreen(Screen):
         out.rect.topleft = (200, 350)
         self.out = out
         self.add(out)
-        btn = Button("Menu", action = self.go_back)
+        btn = Button("Menu", action=self.go_back)
         btn.rect.midtop = (320, 400)
         self.add(btn)
         self.fld1.focus()
@@ -175,7 +200,7 @@ class DemoControlsScreen(Screen):
         #
         # Python 3 update
         #
-        attrs = {'bg_color' : WHITE}
+        attrs = {'bg_color':WHITE}
 
         super().__init__(shell, **attrs)
 
@@ -185,14 +210,14 @@ class DemoControlsScreen(Screen):
                   'fg_color':     BLACK,
                   'bg_color':     WHITE
                   }
-        width_field  = FloatField  (ref = AttrRef(model, 'width'),  **colors)
-        height_field = FloatField  (ref = AttrRef(model, 'height'), **colors)
-        area_display = ValueDisplay(ref = AttrRef(model, 'area'), format = "%.2f", **colors)
+        width_field  = FloatField  (ref=AttrRef(model, 'width'),  **colors)
+        height_field = FloatField  (ref=AttrRef(model, 'height'), **colors)
+        area_display = ValueDisplay(ref=AttrRef(model, 'area'), format="%.2f", **colors)
         shape        = AttrRef(model, 'shape')
         shape_choices = Row([
-            RadioButton(setting = 'rectangle', ref = shape), Label("Rectangle", **colors),
-            RadioButton(setting = 'triangle',  ref = shape), Label("Triangle",  **colors),
-            RadioButton(setting = 'ellipse',   ref = shape), Label("Ellipse",   **colors),
+            RadioButton(setting='rectangle', ref=shape), Label("Rectangle", **colors),
+            RadioButton(setting='triangle',  ref=shape), Label("Triangle",  **colors),
+            RadioButton(setting='ellipse',   ref=shape), Label("Ellipse",   **colors),
         ])
         grid = Grid([
             [Label("Width",      **colors), width_field],
@@ -200,7 +225,7 @@ class DemoControlsScreen(Screen):
             [Label("Shape",      **colors), shape_choices],
             [Label("Value Area", **colors), area_display],
         ])
-        back = Button("Menu", action = shell.show_menu)
+        back = Button("Menu", action=shell.show_menu)
         contents = Column([grid, back])
         self.add_centered(contents)
         width_field.focus()
@@ -239,11 +264,12 @@ class DemoAnimationScreen(Screen):
         self.rect = shell.rect.inflate(-100, -100)
         w, h = self.size
         self.points = [[100, 50], [w - 50, 100], [50, h - 50]]
-        from random import randint
-        def randv():
-            return randint(-5, 5)
+
+        def randomValue():
+            return random.randint(-5, 5)
+
         self.velocities = [
-            [randv(), randv()] for i in range(len(self.points))
+            [randomValue(), randomValue()] for i in range(len(self.points))
         ]
 
         btn = Button("Menu", action=self.go_back)
@@ -313,8 +339,8 @@ class DemoGridViewScreen(Screen):
         grid = DemoGridView()
         lbl = Label("Cl1ck a Squ4r3")
         grid.output = lbl
-        btn = Button("Menu", action = self.go_back)
-        contents = Column([grid, lbl, btn], align = 'l', spacing = 30)
+        btn = Button("Menu", action=self.go_back)
+        contents = Column([grid, lbl, btn], align='l', spacing=30)
         self.add_centered(contents)
 
     def go_back(self):
@@ -332,15 +358,17 @@ class DemoPaletteView(PaletteView):
     sel_width = 5
 
     def __init__(self):
-        PaletteView.__init__(self, (30, 30), 2, 2, scrolling = True)
+
+        super().__init__((30, 30), 2, 2, scrolling=True)
         self.selection = None
 
     def num_items(self):
         return len(self.info)
 
     def draw_item(self, surface, item_no, rect):
-        d = -2 * self.sel_width
-        r = rect.inflate(d, d)
+
+        inflationSize = -2 * self.sel_width
+        r = rect.inflate(inflationSize, inflationSize)
         color = Color(self.info[item_no])
         surface.fill(color, r)
 
@@ -359,7 +387,7 @@ class DemoPaletteViewScreen(Screen):
         grid = DemoPaletteView()
         grid.center = (w/2, h/2)
         self.add(grid)
-        btn = Button("Menu", action = self.go_back)
+        btn = Button("Menu", action=self.go_back)
         btn.center = (w/2, h - 50)
         self.add(btn)
 
@@ -374,15 +402,15 @@ class DemoImageArrayScreen(Screen):
 
     def __init__(self, shell):
         Screen.__init__(self, shell)
-        self.images = get_image_array("fruit.png", shape = 3, border = 2)
+        self.images = get_image_array("fruit.png", shape=3, border=2)
         self.image = Image(self.images[0])
         self.index = 0
         contents = Column([
-            Label("Image Array", font = get_font(18, "VeraBd.ttf")),
+            Label("Image Array", font=get_font(18, "VeraBd.ttf")),
             self.image,
-            Button("Next Fruit", action = self.next_image),
-            Button("Menu", action = shell.show_menu),
-        ], spacing = 30)
+            Button("Next Fruit", action=self.next_image),
+            Button("Menu", action=shell.show_menu),
+        ], spacing=30)
         self.add_centered(contents)
 
     def next_image(self):
@@ -398,21 +426,20 @@ class DemoDialogScreen(Screen):
     def __init__(self, shell):
         Screen.__init__(self, shell)
         menu = Column([
-            Button("Ask a Question", self.test_ask),
-            Button("Request Old Filename", self.test_old),
-            Button("Request New Filename", self.test_new),
+            Button("Ask a Question",             self.test_ask),
+            Button("Request Old Filename",       self.test_old),
+            Button("Request New Filename",       self.test_new),
             Button("Look for File or Directory", self.test_lookfor),
-        ], align = 'l')
+        ], align='l')
         contents = Column([
-            Label("File Dialogs", font = get_font(18, "VeraBd.ttf")),
+            Label("File Dialogs", font=get_font(18, "VeraBd.ttf")),
             menu,
-            Button("Menu", action = shell.show_menu),
-        ], align = 'l', spacing = 30)
+            Button("Menu", action=shell.show_menu),
+        ], align='l', spacing=30)
         self.add_centered(contents)
 
     def test_ask(self):
-        response = ask("Do you like mustard and avocado ice cream?",
-                       ["Yes", "No", "Undecided"])
+        response = ask("Do you like mustard and avocado ice cream?",["Yes", "No", "Undecided"])
         alert("You chose %r." % response)
 
     def test_old(self):
@@ -423,16 +450,14 @@ class DemoDialogScreen(Screen):
             alert("Cancelled.")
 
     def test_new(self):
-        path = request_new_filename(prompt = "Save booty as:",
-                                    filename = "treasure", suffix = ".dat")
+        path = request_new_filename(prompt="Save booty as:", filename="treasure", suffix=".dat")
         if path:
             alert("You chose %r." % path)
         else:
             alert("Cancelled.")
 
     def test_lookfor(self):
-        path = look_for_file_or_directory(prompt = "Please find 'Vera.ttf'",
-                                          target = "Vera.ttf")
+        path = look_for_file_or_directory(prompt="Please find 'Vera.ttf'", target="Vera.ttf")
         if path:
             alert("You chose %r." % path)
         else:
@@ -461,8 +486,8 @@ class TabPanelScreen(Screen):
         for i in range(1, 4):
             page = self.make_test_page(i)
             pages.add_page("Page %s" % i, page)
-        back = Button("Menu", action = shell.show_menu)
-        contents = Column([pages, back], spacing = 30)
+        back = Button("Menu", action=shell.show_menu)
+        contents = Column([pages, back], spacing=30)
         self.add_centered(contents)
 
     def make_test_page(self, pageNumber):
@@ -507,24 +532,10 @@ class DemoTableScreen(Screen):
         table.bg_color     = (45,137,239)
         table.sel_color    = (255,196,13)
         table.border_color = (0,0,0)
-        back     = Button("Back to Menu", action = shell.show_menu)
+        back     = Button("Back to Menu", action=shell.show_menu)
         contents = Column([title, table, back], spacing=30)
         self.add_centered(contents)
 
-demo_table_data = [
-    (1979, 12.5),
-    (1980, 13.2),
-    (1981, 13.5),
-    (1982, 13.1),
-    (1983, 14.3),
-    (1984, 15.4),
-    (1985, 16.4),
-    (1986, 17.4),
-    (1987, 18.4),
-    (1988, 19.4),
-    (2019, 23.0)
-]
-selected_table_row = None
 
 class DemoTableView(TableView):
 
@@ -561,12 +572,6 @@ class DemoShell(Shell):
         #
         attrs = {'bg_color': WHITE}
         super().__init__(display,**attrs)
-        self.create_demo_screens()
-        self.menu_screen = MenuScreen(self) # Do this last
-        self.set_timer(frame_time)
-        self.show_menu()
-
-    def create_demo_screens(self):
 
         self.text_screen        = TextScreen(self, "demo_text.txt")
         self.fields_screen      = DemoTextFieldsScreen(self)
@@ -579,11 +584,18 @@ class DemoShell(Shell):
         self.tab_panel_screen   = TabPanelScreen(self)
         self.table_screen       = DemoTableScreen(self)
 
+
+        self.menu_screen = MenuScreen(self)  # Do this last
+        self.set_timer(frame_time)
+        self.show_menu()
+
+
     def show_menu(self):
         self.show_screen(self.menu_screen)
 
     def begin_frame(self):
         self.anim_screen.begin_frame()
+
 
 def main():
 
@@ -599,5 +611,6 @@ def main():
     logger.info("Starting %s", __name__)
 
     shell.run()
+
 
 main()

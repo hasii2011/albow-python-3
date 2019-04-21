@@ -1,78 +1,14 @@
-#
-#   Albow - File Dialogs
-#
+
+"""
+    Albow file dialog utility methods
+"""
 
 import os
 
 
-from albow.dialog.FileDialog import FileDialog
 from albow.dialog.FileOpenDialog import FileOpenDialog
-
-from albow.dialog.DialogUtilities import ask
-
-
-
-class FileSaveDialog(FileDialog):
-
-    saving = True
-    default_prompt = "Save as:"
-    ok_label = "Save"
-
-    def get_filename(self):
-        return self.filename_box.value
-
-    def set_filename(self, x):
-        dsuf = self.suffixes[0]
-        if x.endswith(dsuf):
-            x = x[:-len(dsuf)]
-        self.filename_box.value = x
-
-    filename = property(get_filename, set_filename)
-
-    def get_pathname(self):
-        path = os.path.join(self.directory, self.filename_box.value)
-        suffixes = self.suffixes
-        if suffixes and not path.endswith(suffixes[0]):
-            path = path + suffixes[0]
-        return path
-
-    pathname = property(get_pathname)
-
-    def double_click_file(self, name):
-        self.filename_box.value = name
-
-    def ok(self):
-        path = self.pathname
-        if os.path.exists(path):
-            answer = ask("Replace existing '%s'?" % os.path.basename(path))
-            #
-            # Python 3 update
-            # if answer <> "OK":
-            if answer != "OK":
-                return
-        FileDialog.ok(self)
-
-    def update(self):
-        FileDialog.update(self)
-
-    def ok_enable(self):
-        # return self.filename_box.text <> ""
-        return self.filename_box.text != ""
-
-
-class LookForFileDialog(FileOpenDialog):
-
-    target = None
-
-    def __init__(self, target, **kwds):
-        FileOpenDialog.__init__(self, **kwds)
-        self.target = target
-
-    def item_is_choosable(self, path):
-        return path and os.path.basename(path) == self.target
-
-    def filter(self, name):
-        return name and os.path.basename(name) == self.target
+from albow.dialog.LookForFileDialog import LookForFileDialog
+from albow.dialog.FileSaveDialog import FileSaveDialog
 
 
 def request_new_filename(prompt=None, suffix=None, extra_suffixes=None, directory=None, filename=None, pathname=None):
