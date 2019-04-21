@@ -64,13 +64,13 @@ class FileListView(PaletteView):
         client    = self.client
         directory = client.directory
 
-        def filter(name):
+        def aFilter(name):
             path = os.path.join(directory, name)
             return os.path.isdir(path) or self.client.filter(path)
 
         try:
             names = [name for name in os.listdir(directory)
-                     if not name.startswith(".") and filter(name)]
+                     if not name.startswith(".") and aFilter(name)]
         except EnvironmentError as e:
             alert("%s: %s" % (directory, e))
             names = []
@@ -107,35 +107,39 @@ class FileDialog(Dialog):
     default_prompt = None
     up_button_text = ThemeProperty("up_button_text")
 
-    def __init__(self, prompt = None, suffixes = None, **kwds):
-        Dialog.__init__(self, **kwds)
-        label = None
-        d = self.margin
+    def __init__(self, prompt=None, suffixes=None, **kwds):
+
+        super().__init__(**kwds)
+
+        label         = None
+        d             = self.margin
         self.suffixes = suffixes or ()
-        up_button = Button(self.up_button_text, action = self.go_up)
-        dir_box = DirPathView(self.box_width - up_button.width - 10, self)
-        self.dir_box = dir_box
-        top_row = Row([dir_box, up_button])
-        list_box = FileListView(self.box_width - 16, self)
+        up_button     = Button(self.up_button_text, action=self.go_up)
+        dir_box       = DirPathView(self.box_width - up_button.width - 10, self)
+        self.dir_box  = dir_box
+        top_row       = Row([dir_box, up_button])
+        list_box      = FileListView(self.box_width - 16, self)
         self.list_box = list_box
-        ctrls = [top_row, list_box]
-        prompt = prompt or self.default_prompt
+        ctrls         = [top_row, list_box]
+        prompt         = prompt or self.default_prompt
+
         if prompt:
             label = Label(prompt)
         if self.saving:
             filename_box = TextField(self.box_width)
             filename_box.change_action = self.update
             self.filename_box = filename_box
-            ctrls.append(Column([label, filename_box], align = 'l', spacing = 0))
+            ctrls.append(Column([label, filename_box], align='l', spacing=0))
         else:
             if label:
                 ctrls.insert(0, label)
-        ok_button = Button(self.ok_label, action = self.ok, enable = self.ok_enable)
+
+        ok_button      = Button(self.ok_label, action=self.ok, enable=self.ok_enable)
         self.ok_button = ok_button
-        cancel_button = Button("Cancel", action = self.cancel)
-        vbox = Column(ctrls, align = 'l', spacing = d)
-        vbox.topleft = (d, d)
-        y = vbox.bottom + d
+        cancel_button  = Button("Cancel", action=self.cancel)
+        vbox           = Column(ctrls, align='l', spacing=d)
+        vbox.topleft   = (d, d)
+        y              = vbox.bottom + d
         ok_button.topleft = (vbox.left, y)
         cancel_button.topright = (vbox.right, y)
         self.add(vbox)
@@ -144,7 +148,7 @@ class FileDialog(Dialog):
         self.shrink_wrap()
         self._directory = None
         self.directory = os.getcwd()
-        #print "FileDialog: cwd =", repr(self.directory) ###
+        # print "FileDialog: cwd =", repr(self.directory) ###
         if self.saving:
             filename_box.focus()
 
@@ -232,6 +236,8 @@ class FileSaveDialog(FileDialog):
         path = self.pathname
         if os.path.exists(path):
             answer = ask("Replace existing '%s'?" % os.path.basename(path))
+            #
+            # Python 3 update
             # if answer <> "OK":
             if answer != "OK":
                 return
@@ -289,8 +295,7 @@ class LookForFileDialog(FileOpenDialog):
         return name and os.path.basename(name) == self.target
 
 
-def request_new_filename(prompt = None, suffix = None, extra_suffixes = None,
-                         directory = None, filename = None, pathname = None):
+def request_new_filename(prompt=None, suffix=None, extra_suffixes=None, directory=None, filename=None, pathname=None):
     if pathname:
         directory, filename = os.path.split(pathname)
     if extra_suffixes:
@@ -299,7 +304,7 @@ def request_new_filename(prompt = None, suffix = None, extra_suffixes = None,
         suffixes = []
     if suffix:
         suffixes = [suffix] + suffixes
-    dlog = FileSaveDialog(prompt = prompt, suffixes = suffixes)
+    dlog = FileSaveDialog(prompt=prompt, suffixes=suffixes)
     if directory:
         dlog.directory = directory
     if filename:
@@ -309,7 +314,8 @@ def request_new_filename(prompt = None, suffix = None, extra_suffixes = None,
     else:
         return None
 
-def request_old_filename(suffixes = None, directory = None):
+
+def request_old_filename(suffixes=None, directory=None):
     """
 
     :param suffixes:
@@ -318,7 +324,7 @@ def request_old_filename(suffixes = None, directory = None):
     """
     attrs = {'margin': 10}
 
-    dlog = FileOpenDialog(suffixes = suffixes, **attrs)
+    dlog = FileOpenDialog(suffixes=suffixes, **attrs)
     if directory:
         dlog.directory = directory
     if dlog.present():
@@ -326,8 +332,10 @@ def request_old_filename(suffixes = None, directory = None):
     else:
         return None
 
-def look_for_file_or_directory(target, prompt = None, directory = None):
-    dlog = LookForFileDialog(target = target, prompt = prompt)
+
+def look_for_file_or_directory(target, prompt=None, directory=None):
+
+    dlog = LookForFileDialog(target=target, prompt=prompt)
     if directory:
         dlog.directory = directory
     if dlog.present():
