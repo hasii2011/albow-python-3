@@ -15,14 +15,14 @@ class TextEditor(Widget):
 
     _text = ""
 
-    def __init__(self, width, upper = None, **kwds):
-        '''
+    def __init__(self, width, upper=None, **kwds):
+        """
 
         :param width:
         :param upper:
         :param kwds:
-        '''
-        Widget.__init__(self, **kwds)
+        """
+        super().__init__(**kwds)
         self.set_size_for_text(width)
         if upper is not None:
             self.upper = upper
@@ -69,7 +69,10 @@ class TextEditor(Widget):
                 c = event.unicode
             except ValueError:
                 c = ""
-            #if self.insert_char(c) <> 'pass':
+            #
+            # Python 3 update
+            #
+            # if self.insert_char(c) <> 'pass':
             if self.insert_char(c) != 'pass':
                 return
         if event.cmd and event.unicode:
@@ -135,9 +138,11 @@ class TextEditor(Widget):
         x, y = e.local
         text = self.get_text()
         font = self.font
-        n = len(text)
+        # n = len(text)
+
         def width(i):
             return font.size(text[:i])[0]
+
         i1 = 0
         i2 = len(text)
         x1 = 0
@@ -159,7 +164,6 @@ class TextEditor(Widget):
         self.set_text(text)
         self.call_handler('change_action')
 
-#---------------------------------------------------------------------------
 
 class Field(Control, TextEditor):
     #  type      func(string) -> value
@@ -170,10 +174,10 @@ class Field(Control, TextEditor):
     min = None
     max = None
 
-    def __init__(self, width = None, **kwds):
+    def __init__(self, width=None, **kwds):
 
-        min = self.predict_attr(kwds, 'min')
-        max = self.predict_attr(kwds, 'max')
+        minimum = self.predict_attr(kwds, 'min')
+        maximum = self.predict_attr(kwds, 'max')
         if 'format' in kwds:
             self.format = kwds.pop('format')
         if 'empty' in kwds:
@@ -181,10 +185,10 @@ class Field(Control, TextEditor):
         self.editing = False
         if width is None:
             w1 = w2 = ""
-            if min is not None:
-                w1 = self.format_value(min)
-            if max is not None:
-                w2 = self.format_value(max)
+            if minimum is not None:
+                w1 = self.format_value(minimum)
+            if maximum is not None:
+                w2 = self.format_value(maximum)
             if w2:
                 if len(w1) > len(w2):
                     width = w1
@@ -247,15 +251,6 @@ class Field(Control, TextEditor):
         else:
             self.insertion_point = None
 
-#	def get_value(self):
-#		self.commit()
-#		return Control.get_value(self)
-#	
-#	def set_value(self, x):
-#		Control.set_value(self, x)
-#		self.editing = False
-
-#---------------------------------------------------------------------------
 
 class TextField(Field):
     type = str
@@ -268,4 +263,3 @@ class IntField(Field):
 
 class FloatField(Field):
     type = float
-
