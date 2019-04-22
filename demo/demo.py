@@ -23,9 +23,9 @@ from albow.widgets.ValueDisplay import ValueDisplay
 
 from albow.widget import Widget
 from albow.controls import AttrRef
-from albow.layouts.Row import Row
-from albow.layouts.Column import Column
-from albow.layouts.Grid import Grid
+from albow.layout.Row import Row
+from albow.layout.Column import Column
+from albow.layout.Grid import Grid
 
 from albow.fields import TextField
 from albow.fields import FloatField

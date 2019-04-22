@@ -5,8 +5,8 @@ from albow.widgets.Label import Label
 
 from albow.dialog.Dialog import Dialog
 
-from albow.layouts.Row import Row
-from albow.layouts.Column import Column
+from albow.layout.Row import Row
+from albow.layout.Column import Column
 from fields import TextField
 
 

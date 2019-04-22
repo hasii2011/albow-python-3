@@ -20,7 +20,7 @@ from pygame.locals import *
 from albow.root import RootWidget
 
 from albow.widgets.Button import Button
-from albow.layouts.Row import Row
+from albow.layout.Row import Row
 
 from albow.opengl import GLOrtho, GLPerspective
 

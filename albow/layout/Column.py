@@ -1,5 +1,5 @@
 
-from albow.layouts.RowOrColumn import RowOrColumn
+from albow.layout.RowOrColumn import RowOrColumn
 
 
 class Column(RowOrColumn):

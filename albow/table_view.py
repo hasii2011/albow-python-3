@@ -3,7 +3,7 @@
 """
 
 from pygame import Rect
-from albow.layouts.Column import Column
+from albow.layout.Column import Column
 from palette_view import PaletteView
 from utils import blit_in_rect
 

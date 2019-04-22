@@ -10,8 +10,8 @@ from albow.dialog.FileListView import FileListView
 from albow.widgets.Label import Label
 from albow.widgets.Button import Button
 
-from albow.layouts.Row import Row
-from albow.layouts.Column import Column
+from albow.layout.Row import Row
+from albow.layout.Column import Column
 from albow.fields import TextField
 
 
