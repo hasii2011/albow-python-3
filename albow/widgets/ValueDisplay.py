@@ -1,7 +1,7 @@
 
 from pygame import Surface
 
-from widget import Widget
+from widget_file import Widget
 
 from albow.widgets.Control import Control
 

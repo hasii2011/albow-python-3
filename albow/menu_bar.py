@@ -3,7 +3,7 @@
 #
 
 from pygame import Rect
-from widget import Widget, overridable_property
+from widget_file import Widget, overridable_property
 
 class MenuBar(Widget):
 

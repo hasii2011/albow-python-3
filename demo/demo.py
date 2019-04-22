@@ -21,7 +21,7 @@ from albow.widgets.Button import Button
 from albow.widgets.RadioButton import RadioButton
 from albow.widgets.ValueDisplay import ValueDisplay
 
-from albow.widget import Widget
+from albow.widget_file import Widget
 from albow.controls import AttrRef
 from albow.layout.Row import Row
 from albow.layout.Column import Column

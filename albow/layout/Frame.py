@@ -1,5 +1,5 @@
 
-from albow.widget import Widget
+from albow.widget_file import Widget
 
 
 class Frame(Widget):

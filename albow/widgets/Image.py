@@ -1,6 +1,6 @@
 
-from widget import Widget
-from widget import overridable_property
+from widget_file import Widget
+from widget_file import overridable_property
 
 from theme import ThemeProperty
 

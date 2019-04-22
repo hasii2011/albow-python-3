@@ -1,5 +1,5 @@
 from pygame import Rect
-from widget import Widget
+from widget_file import Widget
 
 class GridView(Widget):
     #  cell_size   (width, height)   size of each cell
