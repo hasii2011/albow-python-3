@@ -112,7 +112,7 @@ class Widget(object):
 
     visible = overridable_property('visible')
 
-    def __init__(self, rect: Rect = None, **kwds):
+    def __init__(self, rect: Rect=None, **kwds):
         """
 
         :param rect:

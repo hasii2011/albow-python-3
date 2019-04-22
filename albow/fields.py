@@ -140,8 +140,8 @@ class TextEditor(Widget):
         font = self.font
         # n = len(text)
 
-        def width(i):
-            return font.size(text[:i])[0]
+        def width(idx):
+            return font.size(text[:idx])[0]
 
         i1 = 0
         i2 = len(text)
@@ -169,10 +169,11 @@ class Field(Control, TextEditor):
     #  type      func(string) -> value
     #  editing   boolean
 
-    empty = NotImplemented
+    empty  = NotImplemented
     format = "%s"
-    min = None
-    max = None
+    min    = None
+    max    = None
+    type   = None
 
     def __init__(self, width=None, **kwds):
 
@@ -253,13 +254,25 @@ class Field(Control, TextEditor):
 
 
 class TextField(Field):
-    type = str
+    # type = str
     _value = ""
+
+    def __init__(self, width=None, **kwds):
+        self.type = str
+        super().__init__(width, **kwds)
 
 
 class IntField(Field):
-    type = int
+    # type = int
+
+    def __init__(self, width=None, **kwds):
+        self.type = int
+        super().__init__(width, **kwds)
 
 
 class FloatField(Field):
-    type = float
+    # type = float
+
+    def __init__(self, width=None, **kwds):
+        self.type = float
+        super().__init__(width, **kwds)
