@@ -3,7 +3,7 @@ from pygame import Rect
 from pygame import Surface
 from pygame import draw
 
-from widget_file import Widget
+from Widget import Widget
 from theme import ThemeProperty
 
 class CheckWidget(Widget):

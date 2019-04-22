@@ -8,7 +8,7 @@ from __future__ import division
 from pygame import Rect, image
 from pygame.display import get_surface as get_display
 from OpenGL import GL, GLU
-from widget_file import Widget
+from Widget import Widget
 
 class GLViewport(Widget):
 

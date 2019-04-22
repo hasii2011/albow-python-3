@@ -4,7 +4,7 @@
 
 from pygame import draw
 from pygame.locals import K_LEFT, K_RIGHT, K_TAB
-from widget_file import Widget, overridable_property
+from Widget import Widget, overridable_property
 from albow.widgets.Control import Control
 
 

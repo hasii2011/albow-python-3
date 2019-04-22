@@ -1,5 +1,5 @@
 
-from widget_file import overridable_property
+from Widget import overridable_property
 
 class Control():
     """

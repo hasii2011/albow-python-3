@@ -2,7 +2,7 @@
     Albow - Tab Panel
 """
 from pygame import Rect
-from widget_file import Widget
+from Widget import Widget
 from theme import ThemeProperty, FontProperty
 from utils import brighten
 

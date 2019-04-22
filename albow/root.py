@@ -11,8 +11,8 @@ from pygame.locals import *
 from pygame.time import Clock, get_ticks, set_timer as set_pygame_timer
 from pygame.event import Event, get_grab, set_grab
 from pygame.mouse import set_visible as set_mouse_visible
-import widget_file
-from widget_file import Widget
+import Widget
+from Widget import Widget
 
 mod_cmd = KMOD_LCTRL | KMOD_RCTRL | KMOD_LMETA | KMOD_RMETA
 double_click_time = 300 # milliseconds
@@ -106,7 +106,7 @@ class RootWidget(Widget):
         init_timebase()
         self.surface = surface
         root_widget = self
-        widget_file.root_widget = self
+        Widget.root_widget = self
         #
         # Python 3 update
         #

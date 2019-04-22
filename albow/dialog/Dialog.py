@@ -2,7 +2,7 @@
 from albow.dialog.Modal import Modal
 from albow.widgets.Button import Button
 
-from widget_file import Widget
+from Widget import Widget
 from albow.layout.Row import Row
 from albow.layout.Column import Column
 

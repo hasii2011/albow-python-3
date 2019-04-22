@@ -1,8 +1,8 @@
 
 import logging
 
-from widget_file import overridable_property
-from widget_file import Widget
+from Widget import overridable_property
+from Widget import Widget
 from theme import ThemeProperty
 
 class Label(Widget):
