@@ -2,11 +2,11 @@
 #   Albow - Text Screen
 #
 
-from pygame import Rect
+
 from pygame.locals import *
 from screen import Screen
 from theme import FontProperty
-from resource import get_image, get_font, get_text
+from resource import get_text
 from vectors import add, maximum
 from albow.widgets.Button import Button
 
@@ -72,15 +72,14 @@ class TextScreen(Screen):
             page_size = maximum(page_size, page.size)
         self.pages = pages
         bf = self.button_font
-        b1 = Button("Prev Page", font = bf, action = self.prev_page)
-        b2 = Button("Menu",      font = bf, action = self.go_back)
-        b3 = Button("Next Page", font = bf, action = self.next_page)
+        b1 = Button("Prev Page", font=bf, action=self.prev_page)
+        b2 = Button("Menu",      font=bf, action=self.go_back)
+        b3 = Button("Next Page", font=bf, action=self.next_page)
         b  = self.margin
         # page_rect = Rect((b, b), page_size)
         width_height  = list(map(lambda x: x, page_size))
 
         page_rect = Rect((b, b),(width_height[0],width_height[1]))
-
 
         gap = (0, 18)
         #
@@ -136,4 +135,3 @@ class TextScreen(Screen):
 
     def go_back(self):
         self.parent.show_menu()
-

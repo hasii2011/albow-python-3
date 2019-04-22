@@ -254,7 +254,7 @@ class Field(Control, TextEditor):
 
 
 class TextField(Field):
-    # type = str
+
     _value = ""
 
     def __init__(self, width=None, **kwds):
@@ -263,7 +263,6 @@ class TextField(Field):
 
 
 class IntField(Field):
-    # type = int
 
     def __init__(self, width=None, **kwds):
         self.type = int
@@ -271,7 +270,6 @@ class IntField(Field):
 
 
 class FloatField(Field):
-    # type = float
 
     def __init__(self, width=None, **kwds):
         self.type = float
