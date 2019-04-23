@@ -27,8 +27,8 @@ from albow.layout.Row import Row
 from albow.layout.Column import Column
 from albow.layout.Grid import Grid
 
-from albow.input.Fields import TextField
-from albow.input.Fields import FloatField
+from albow.input.TextField import TextField
+from albow.input.FloatField import FloatField
 
 from albow.shell import Shell
 from albow.screen import Screen
