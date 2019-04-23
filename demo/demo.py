@@ -27,8 +27,9 @@ from albow.layout.Row import Row
 from albow.layout.Column import Column
 from albow.layout.Grid import Grid
 
-from albow.fields import TextField
-from albow.fields import FloatField
+from albow.input.fields import TextField
+from albow.input.fields import FloatField
+
 from albow.shell import Shell
 from albow.screen import Screen
 from albow.text_screen import TextScreen
@@ -108,15 +109,15 @@ class MenuScreen(Screen):
             self.screen_button("Tab Panel",      shell.tab_panel_screen),
             self.screen_button("Table View",     shell.table_screen),
             Button("Quit", shell.quit),
-        ], align = 'l')
+        ], align='l')
         contents = Column([
             title,
             menu,
-        ], align = 'l', spacing = 20)
+        ], align = 'l', spacing=20)
         self.add_centered(contents)
 
     def screen_button(self, text: str, screen: Screen):
-        return Button(text, action = lambda: self.shell.show_screen(screen))
+        return Button(text, action=lambda: self.shell.show_screen(screen))
 
     def show_text_screen(self):
         self.shell.show_screen(self.text_screen)
@@ -529,10 +530,10 @@ class DemoTableScreen(Screen):
         #
         # Python 3 update
         #
-        table.fg_color     = (255,255,255)
-        table.bg_color     = (45,137,239)
-        table.sel_color    = (255,196,13)
-        table.border_color = (0,0,0)
+        table.fg_color     = (255, 255, 255)
+        table.bg_color     = (45, 137, 239)
+        table.sel_color    = (255, 196, 13)
+        table.border_color = (0, 0, 0)
         back     = Button("Back to Menu", action=shell.show_menu)
         contents = Column([title, table, back], spacing=30)
         self.add_centered(contents)
@@ -589,7 +590,6 @@ class DemoShell(Shell):
         self.menu_screen = MenuScreen(self)  # Do this last
         self.set_timer(frame_time)
         self.show_menu()
-
 
     def show_menu(self):
         self.show_screen(self.menu_screen)

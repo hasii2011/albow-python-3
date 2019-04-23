@@ -7,7 +7,7 @@ from albow.dialog.Dialog import Dialog
 
 from albow.layout.Row import Row
 from albow.layout.Column import Column
-from fields import TextField
+from albow.input.fields import TextField
 
 
 def wrapped_label(text, wrap_width, **kwds):
