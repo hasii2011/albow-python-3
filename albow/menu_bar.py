@@ -58,8 +58,13 @@ class MenuBar(Widget):
 		menu.invoke_item(i)
 	
 	def handle_command_key(self, e):
+
 		menus = self.menus
-		for m in xrange(len(menus)-1, -1, -1):
+		#
+		# Python 3 update -- hasii
+		#
+		# for m in xrange(len(menus)-1, -1, -1):
+		for m in range(len(menus) - 1, -1, -1):
 			menu = menus[m]
 			i = menu.find_item_for_key(e)
 			if i >= 0:
