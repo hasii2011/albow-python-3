@@ -12,7 +12,7 @@ from albow.widgets.Button import Button
 
 from albow.layout.Row import Row
 from albow.layout.Column import Column
-from albow.input.Fields1 import TextField
+from albow.input.Fields import TextField
 
 
 class FileDialog(Dialog):
