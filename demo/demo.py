@@ -45,8 +45,8 @@ from albow.dialog.FileDialogUtilities import request_new_filename
 from albow.dialog.FileDialogUtilities import look_for_file_or_directory
 
 from albow.tab_panel import TabPanel
-from albow.table_view import TableView
-from albow.table_view import TableColumn
+from albow.table.table_view import TableView
+from albow.table.table_view import TableColumn
 
 # screen_size = (640, 480)
 screen_size = (480, 640)
