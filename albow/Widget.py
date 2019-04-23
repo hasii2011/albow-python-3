@@ -501,7 +501,8 @@ class Widget(object):
         return False
 
     def present(self, centered = True):
-        #print "Widget: presenting with rect", self.rect
+
+        # print "Widget: presenting with rect", self.rect
         root = self.get_root()
         if centered:
             self.center = root.center

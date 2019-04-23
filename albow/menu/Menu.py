@@ -1,52 +1,11 @@
-#---------------------------------------------------------------------------
-#
-#    Albow - Pull-down or pop-up menu
-#
-#---------------------------------------------------------------------------
 
-import sys
-from root import get_root, get_focus
+from root import get_root
+from root import get_focus
 
 from albow.dialog.Dialog import Dialog
-from theme import ThemeProperty
+from albow.theme import ThemeProperty
+from albow.menu.MenuItem import MenuItem
 
-#---------------------------------------------------------------------------
-
-class MenuItem(object):
-
-    keyname = ""
-    keycode = None
-    shift = False
-    alt = False
-    enabled = False
-
-    if sys.platform.startswith('darwin') or sys.platform.startswith('mac'):
-        cmd_name = "Cmd "
-        option_name = "Opt "
-    else:
-        cmd_name = "Ctrl "
-        option_name = "Alt "
-
-    def __init__(self, text="", command = None):
-        self.command = command
-        if "/" in text:
-            text, key = text.split("/", 1)
-        else:
-            key = ""
-        self.text = text
-        if key:
-            keyname = key[-1]
-            mods = key[:-1]
-            self.keycode = ord(keyname.lower())
-            if "^" in mods:
-                self.shift = True
-                keyname = "Shift " + keyname
-            if "@" in mods:
-                self.alt = True
-                keyname = self.option_name + keyname
-            self.keyname = self.cmd_name + keyname
-
-#---------------------------------------------------------------------------
 
 class Menu(Dialog):
 
@@ -54,12 +13,25 @@ class Menu(Dialog):
     click_outside_response = -1
 
     def __init__(self, title, items, **kwds):
-        self.title = title
-        self.items = items
-        self._items = [MenuItem(*item) for item in items]
-        Dialog.__init__(self, **kwds)
+
+        self._hilited    = None
+        self._key_margin = None
+        self.title       = title
+        self.items       = items
+        self._items      = [MenuItem(*item) for item in items]
+
+        super().__init__(**kwds)
 
     def present(self, client, pos):
+        """
+        TODO
+        Menu.present() signature does not match Widget.present
+
+        :param client:
+        :param pos:
+        :return:
+        """
+
         client = client or get_root()
         self.topleft = client.local_to_global(pos)
         focus = get_focus()
@@ -78,8 +50,7 @@ class Menu(Dialog):
         if w2 > 0:
             width += w2 + margin
         self.size = (width, height)
-        self._hilited = None
-        return Dialog.present(self, centered = False)
+        return Dialog.present(self, centered=False)
 
     def command_is_enabled(self, item, focus):
         cmd = item.command
