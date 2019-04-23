@@ -44,7 +44,7 @@ from albow.dialog.FileDialogUtilities import request_old_filename
 from albow.dialog.FileDialogUtilities import request_new_filename
 from albow.dialog.FileDialogUtilities import look_for_file_or_directory
 
-from albow.tab_panel import TabPanel
+from albow.TabPanel import TabPanel
 from albow.table.TableView import TableView
 from albow.table.TableColumn import TableColumn
 
