@@ -1,10 +1,10 @@
-"""
-    Albow - Tab Panel
-"""
+
 from pygame import Rect
-from Widget import Widget
-from theme import ThemeProperty, FontProperty
+from albow.Widget import Widget
+from albow.theme import ThemeProperty
+from albow.theme import FontProperty
 from utils import brighten
+
 
 class TabPanel(Widget):
 
@@ -18,9 +18,8 @@ class TabPanel(Widget):
     default_tab_bg_color = ThemeProperty('default_tab_bg_color')
     tab_area_bg_color    = ThemeProperty('tab_area_bg_color')
     tab_dimming          = ThemeProperty('tab_dimming')
-    #use_page_bg_color_for_tabs = ThemeProperty('use_page_bg_color_for_tabs')
 
-    def __init__(self, pages = None, **kwds):
+    def __init__(self, pages=None, **kwds):
         """
 
         :param pages:
@@ -42,7 +41,7 @@ class TabPanel(Widget):
             self.show_page(pages[0][1])
 
     def content_size(self):
-        return (self.width, self.height - self.tab_height)
+        return self.width, self.height - self.tab_height
 
     def content_rect(self):
         return Rect((0, self.tab_height), self.content_size())
@@ -123,7 +122,7 @@ class TabPanel(Widget):
         width = self.width - 2 * m + s - b
         x0 = m
         for i, page in enumerate(pages):
-            x1 = m + (i + 1) * width // n #self.tab_boundary(i + 1)
+            x1 = m + (i + 1) * width // n
             selected = page is current_page
             yield i, page.tab_title, page, selected, Rect(x0, 0, x1 - x0 - s + b, h)
             x0 = x1
