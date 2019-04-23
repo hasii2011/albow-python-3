@@ -41,38 +41,43 @@ clicked_widget = None  # Target of mouse_drag and mouse_up events
 timer_event = None     # Timer event pending delivery
 next_frame_due = 0.0   #
 
-#---------------------------------------------------------------------------
 
 class ApplicationError(Exception):
     pass
 
+
 class Cancel(ApplicationError):
     pass
 
-#---------------------------------------------------------------------------
 
 def set_modifier(key, value):
     attr = modkeys.get(key)
     if attr:
         modifiers[attr] = value
 
+
 def add_modifiers(event):
     d = event.dict
     d.update(modifiers)
     d['cmd'] = event.ctrl or event.meta
 
+
 def get_root():
     return root_widget
+
 
 def get_top_widget():
     return top_widget
 
+
 def get_focus():
     return top_widget.get_focus()
+
 
 def init_timebase():
     global time_base
     time_base = time() * 1000.0 - get_ticks()
+
 
 def timestamp():
     return time() * 1000.0 - time_base
@@ -143,14 +148,17 @@ class RootWidget(Widget):
             if not modal_widget.focus_switch:
                 modal_widget.tab_to_first()
             mouse_widget = None
-            #if clicked_widget:
+            # if clicked_widget:
             #	clicked_widget = modal_widget
             num_clicks = 0
             last_click_time = 0
             self.do_draw = True
             use_sleep = self._use_sleep
             while modal_widget.modal_result is None:
-                #print "RootWidget: frame_time =", self.frame_time ###
+                # print "RootWidget: frame_time =", self.frame_time ###
+                #
+                # Python 3 update
+                #
                 # defer_drawing = self.frame_time <> 0.0 and modal_widget.defer_drawing()
                 defer_drawing = self.frame_time != 0.0 and modal_widget.defer_drawing()
                 try:
@@ -168,14 +176,14 @@ class RootWidget(Widget):
                             timer_event = None
                         else:
                             if defer_drawing:
-                                #print "RootWidget: Clearing do_draw because of defer_drawing" ###
+                                # print "RootWidget: Clearing do_draw because of defer_drawing" ###
                                 self.do_draw = False
-                    #print "RootWidget: do_draw =", self.do_draw ###
+                    # print "RootWidget: do_draw =", self.do_draw ###
                     if self.do_draw:
                         if self.is_gl:
-                            #self.gl_clear()
-                            #self.gl_draw_all(self, (0, 0))
-                            #GL.glFlush()
+                            # self.gl_clear()
+                            # self.gl_draw_all(self, (0, 0))
+                            # GL.glFlush()
                             gl_surface = self.gl_surface
                             gl_surface.gl_clear(self.bg_color)
                             self.gl_draw_all(gl_surface)
@@ -183,27 +191,27 @@ class RootWidget(Widget):
                         else:
                             self.draw_all(self.surface)
                         self.do_draw = False
-                        #tb1 = timestamp() ###
+                        # tb1 = timestamp() ###
                         pygame.display.flip()
-                    #tb2 = timestamp() ###
-                    #print "RootWidget: Flip block  %5d" % (tb2 - tb1) ###
+                    # tb2 = timestamp() ###
+                    # print "RootWidget: Flip block  %5d" % (tb2 - tb1) ###
                     in_relative_mode = bool(modal_widget.relative_mode())
                     grab = in_relative_mode and not relative_pause
-                    #if grab <> get_grab():
+                    # if grab <> get_grab():
                     if grab != get_grab():
                         set_grab(grab)
                         set_mouse_visible(not grab)
                         relative_warmup = 3 # Ignore spurious deltas on entering relative mode
-                    #tb1 = timestamp() ###
-                    #print "RootWidget: use_sleep =", use_sleep, "defer_drawing =", defer_drawing ###
+                    # tb1 = timestamp() ###
+                    # print "RootWidget: use_sleep =", use_sleep, "defer_drawing =", defer_drawing ###
                     if use_sleep and defer_drawing:
-                        #print "RootWidget: Handling timing" ###
+                        # print "RootWidget: Handling timing" ###
                         time_now = timestamp()
-                        #print "RootWidget: Time is now", time_now ###
+                        # print "RootWidget: Time is now", time_now ###
                         if next_frame_due < time_now:
                             #print "RootWidget: Adjusting next frame due time to time now" ###
                             next_frame_due = time_now
-                        #print "RootWidget: Waiting for next frame due at", next_frame_due ###
+                        # print "RootWidget: Waiting for next frame due at", next_frame_due ###
                         while 1:
                             sleep_time = make_due_calls(time_now, next_frame_due)
                             if sleep_time <= 0.0:
@@ -212,14 +220,14 @@ class RootWidget(Widget):
                             sleep(sleep_time / 1000.0)
                             time_now = timestamp()
                         next_frame_due += self.frame_time
-                        #print "RootWidget: Next frame now due at", next_frame_due ###
+                        # print "RootWidget: Next frame now due at", next_frame_due ###
                         timer_event = Event(USEREVENT, time = time_now)
                         events = []
                     else:
                         events = [pygame.event.wait()]
-                    #tb2 = timestamp() ###
-                    #tb = tb2 - tb1 ###
-                    #if tb: ###
+                    # tb2 = timestamp() ###
+                    # tb = tb2 - tb1 ###
+                    # if tb: ###
                     #	print "RootWidget: Event block %5d" % tb ###
                     events.extend(pygame.event.get())
                     for event in events:
@@ -288,7 +296,7 @@ class RootWidget(Widget):
                             if in_relative_mode:
                                 event.dict['local'] = (0, 0)
                                 if not relative_pause:
-                                    #modal_widget.dispatch_key('mouse_up', event)
+
                                     if clicked_widget:
                                         mouse_widget = clicked_widget
                                         clicked_widget = None
@@ -333,6 +341,10 @@ class RootWidget(Widget):
                                 timer_event = event
                 except Cancel:
                     pass
+                #
+                # Python 3 update
+                #
+                # except ApplicationError, e:
                 except ApplicationError as e:
                     self.report_error(e)
         finally:
@@ -401,12 +413,12 @@ class RootWidget(Widget):
     def report_error(self, e):
         pass
 
-#---------------------------------------------------------------------------
 
 from time import time
 from bisect import insort
 
 scheduled_calls = []
+
 
 def make_scheduled_calls():
     #  Legacy
@@ -415,6 +427,7 @@ def make_scheduled_calls():
     while sched and sched[0][0] <= t:
         sched[0][1]()
         sched.pop(0)
+
 
 class ScheduledCall(object):
 
@@ -426,11 +439,12 @@ class ScheduledCall(object):
     def __cmp__(self, other):
         return cmp(self.time, other.time)
 
+
 def make_due_calls(time_now, until_time):
     #  Call all functions scheduled at or before time_now.
     #  Return the time remaining until the next scheduled call
     #  or until_time, whichever is sooner.
-    #print "albow.root.make_due_calls:", time_now, until_time ###
+    # print "albow.root.make_due_calls:", time_now, until_time ###
     sched = scheduled_calls
     while sched and sched[0].time <= time_now:
         item = sched.pop(0)
@@ -449,16 +463,22 @@ def make_due_calls(time_now, until_time):
         next_time = until_time
     return next_time - time_now
 
+
 def schedule(delay, func):
-    """Deprecated, use schedule_call or schedule_event instead."""
+    """
+    Deprecated, use schedule_call or schedule_event instead.
+    """
     schedule_call(delay * 1000.0, func)
 
+
 def schedule_call(delay, func, repeat = False):
-    """Arrange for the given function to be called after the specified
+    """
+    Arrange for the given function to be called after the specified
     delay in milliseconds. Scheduled functions are called synchronously from
     the event loop, and only when the frame timer is running. If repeat is
     true, call will be made repeatedly at the specified interval, otherwise
-    it will only be made once."""
+    it will only be made once.
+    """
     t = timestamp() + delay
     if repeat:
         r = delay
@@ -468,6 +488,7 @@ def schedule_call(delay, func, repeat = False):
     insort(scheduled_calls, item)
     return item
 
+
 def schedule_event(delay, func, repeat = False):
     def thunk():
         event = Event(USEREVENT, time = timestamp())
@@ -475,9 +496,12 @@ def schedule_event(delay, func, repeat = False):
         func(event)
     schedule_call(delay, thunk, repeat)
 
+
 def cancel_call(token):
-    """Cancel a previously scheduled call, given a token returned by
-    schedule_call or schedule_event."""
+    """
+    Cancel a previously scheduled call, given a token returned by
+    schedule_call or schedule_event.
+    """
     try:
         scheduled_calls.remove(token)
     except ValueError:

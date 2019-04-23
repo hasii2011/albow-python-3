@@ -124,11 +124,12 @@ class Widget(object):
         if rect and not isinstance(rect, Rect):
             raise TypeError("Widget rect not a pygame.Rect")
 
-        self._rect = Rect(rect or (0, 0, 100, 50))
+        self._rect = Rect(rect or (0, 0, 100, 100))
         self.parent = None
         self.subwidgets = []
         self.focus_switch = None
         self.is_modal = False
+
         self.set(**kwds)
 
     def set(self, **kwds):
@@ -316,6 +317,9 @@ class Widget(object):
                 if sub_rect.width > 0 and sub_rect.height > 0:
                     try:
                         sub = surface.subsurface(sub_rect)
+                    #
+                    # Python 3 update
+                    #
                     # except ValueError, e:
                     except ValueError as e:
                         if str(e) == "subsurface rectangle outside surface area":
@@ -502,8 +506,14 @@ class Widget(object):
 
     def present(self, centered = True):
 
+        #
+        # TODO  somethjng about my re-packaging cause me to lose
+        # visibility to the root widget;  Figure it out later
+        #
+        global root_widget
         # print "Widget: presenting with rect", self.rect
-        root = self.get_root()
+        # root = self.get_root()
+        root = Widget.root_widget
         if centered:
             self.center = root.center
         root.add(self)
@@ -606,7 +616,9 @@ class Widget(object):
         if width is not None:
             font = self.font
             d = 2 * self.margin
-            #if isinstance(width, basestring):    Python 3 change
+            #
+            # Python 3 update
+            # if isinstance(width, basestring):
             if isinstance(width, str):
                 width, height = font.size(width)
                 width += d + 2
