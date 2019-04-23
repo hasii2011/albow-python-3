@@ -10,7 +10,7 @@ from pygame.transform import rotozoom
 from vectors import add, subtract
 from utils import frame_rect
 import theme
-from theme import ThemeProperty, FontProperty
+from albow.theme import ThemeProperty, FontProperty
 
 
 debug_rect = False
