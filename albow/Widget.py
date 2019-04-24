@@ -2,15 +2,15 @@ from __future__ import division
 import sys
 import logging
 
-from pygame import Rect, Surface, draw, image
+from pygame import Rect, Surface
 from pygame.locals import K_RETURN, K_KP_ENTER, K_ESCAPE, K_TAB, KEYDOWN, SRCALPHA
 from pygame.mouse import set_cursor
 from pygame.cursors import arrow as arrow_cursor
 from pygame.transform import rotozoom
 from vectors import add, subtract
 from utils import frame_rect
-import theme_1
-from albow.theme_1 import ThemeProperty, FontProperty
+from themes import theme_1
+from themes.theme_1 import ThemeProperty, FontProperty
 
 
 debug_rect = False

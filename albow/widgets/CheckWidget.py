@@ -4,7 +4,7 @@ from pygame import Surface
 from pygame import draw
 
 from Widget import Widget
-from theme_1 import ThemeProperty
+from themes.theme_1 import ThemeProperty
 
 class CheckWidget(Widget):
 

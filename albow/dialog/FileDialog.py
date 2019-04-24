@@ -1,7 +1,7 @@
 
 import os
 
-from albow.theme_1 import ThemeProperty
+from themes.theme_1 import ThemeProperty
 
 from albow.dialog.Dialog import Dialog
 from albow.dialog.DirectoryPathView import DirectoryPathView
