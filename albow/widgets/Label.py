@@ -3,7 +3,7 @@ import logging
 
 from Widget import overridable_property
 from Widget import Widget
-from theme import ThemeProperty
+from theme_1 import ThemeProperty
 
 class Label(Widget):
     """

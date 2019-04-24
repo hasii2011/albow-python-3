@@ -1,8 +1,8 @@
 
 from pygame import Rect
 from albow.Widget import Widget
-from albow.theme import ThemeProperty
-from albow.theme import FontProperty
+from albow.theme_1 import ThemeProperty
+from albow.theme_1 import FontProperty
 from utils import brighten
 
 

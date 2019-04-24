@@ -7,7 +7,7 @@
 from albow.widgets.Control import Control
 from palette_view import PaletteView
 from albow.utils import blit_in_rect
-from theme import ThemeProperty
+from theme_1 import ThemeProperty
 from pygame import draw
 from pygame.locals import K_LEFT, K_RIGHT
 

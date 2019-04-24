@@ -2,7 +2,7 @@
 from Widget import Widget
 from Widget import overridable_property
 
-from theme import ThemeProperty
+from theme_1 import ThemeProperty
 
 class Image(Widget):
     #  image   Image to display

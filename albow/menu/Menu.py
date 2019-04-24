@@ -3,7 +3,7 @@ from root import get_root
 from root import get_focus
 
 from albow.dialog.Dialog import Dialog
-from albow.theme import ThemeProperty
+from albow.theme_1 import ThemeProperty
 from albow.menu.MenuItem import MenuItem
 
 

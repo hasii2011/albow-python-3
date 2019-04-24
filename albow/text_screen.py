@@ -5,7 +5,7 @@
 
 from pygame.locals import *
 from screen import Screen
-from theme import FontProperty
+from theme_1 import FontProperty
 from resource import get_text
 from vectors import add, maximum
 from albow.widgets.Button import Button
