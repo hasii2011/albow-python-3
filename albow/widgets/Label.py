@@ -3,7 +3,8 @@ import logging
 
 from Widget import overridable_property
 from Widget import Widget
-from themes.theme_1 import ThemeProperty
+from albow.themes.ThemeProperty import ThemeProperty
+
 
 class Label(Widget):
     """

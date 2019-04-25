@@ -1,9 +1,10 @@
 
 from pygame import Rect
 from albow.Widget import Widget
-from themes.theme_1 import ThemeProperty
-from themes.theme_1 import FontProperty
-from utils import brighten
+from albow.themes.ThemeProperty import ThemeProperty
+from albow.themes.FontProperty import FontProperty
+
+from albow.utils import brighten
 
 
 class TabPanel(Widget):

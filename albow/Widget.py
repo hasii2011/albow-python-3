@@ -9,9 +9,10 @@ from pygame.cursors import arrow as arrow_cursor
 from pygame.transform import rotozoom
 from vectors import add, subtract
 from utils import frame_rect
-from themes import theme_1
-from themes.theme_1 import ThemeProperty, FontProperty
 
+from albow.themes.ThemeProperty import ThemeProperty
+from albow.themes.FontProperty import FontProperty
+from albow.themes.Theme import root
 
 debug_rect = False
 debug_tab = True
@@ -589,7 +590,7 @@ class Widget(object):
         try:
             return kwds[name]
         except KeyError:
-            return theme_1.root.get(self.__class__, name)
+            return root.get(self.__class__, name)
 
     def predict_attr(self, kwds, name):
         try:
@@ -604,7 +605,7 @@ class Widget(object):
             return getattr(self, name)
 
     def predict_font(self, kwds, name='font'):
-        return kwds.get(name) or theme_1.root.get_font(self.__class__, name)
+        return kwds.get(name) or root.get_font(self.__class__, name)
 
     def get_margin_rect(self):
         r = Rect((0, 0), self.size)

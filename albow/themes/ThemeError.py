@@ -1,0 +1,3 @@
+
+class ThemeError(Exception):
+    pass

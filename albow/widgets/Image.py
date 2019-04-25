@@ -1,8 +1,10 @@
 
-from Widget import Widget
-from Widget import overridable_property
+import resource
 
-from themes.theme_1 import ThemeProperty
+from albow.Widget import Widget
+from albow.Widget import overridable_property
+
+from albow.themes.ThemeProperty import ThemeProperty
 
 class Image(Widget):
     #  image   Image to display

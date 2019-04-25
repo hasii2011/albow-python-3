@@ -3,8 +3,9 @@ from pygame import Rect
 from pygame import Surface
 from pygame import draw
 
-from Widget import Widget
-from themes.theme_1 import ThemeProperty
+from albow.Widget import Widget
+
+from albow.themes.ThemeProperty import ThemeProperty
 
 class CheckWidget(Widget):
 

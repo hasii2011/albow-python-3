@@ -3,10 +3,14 @@
 """
 import logging
 
-from pygame import Rect, draw
-from grid_view import GridView
-from utils import frame_rect
-from themes.theme_1 import ThemeProperty
+from pygame import Rect
+from pygame import draw
+
+from albow.grid_view import GridView
+from albow.utils import frame_rect
+
+from albow.themes.ThemeProperty import ThemeProperty
+
 
 class PaletteView(GridView):
     #  nrows   int   No. of displayed rows
