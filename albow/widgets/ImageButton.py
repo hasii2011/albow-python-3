@@ -3,8 +3,8 @@ from pygame import Surface
 
 from albow.widgets.ButtonBase import ButtonBase
 from albow.widgets.Image import Image
+from albow.themes.ThemeProperty import ThemeProperty
 
-from themes.theme_1 import ThemeProperty
 
 class ImageButton(ButtonBase, Image):
 
