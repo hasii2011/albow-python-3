@@ -47,9 +47,10 @@ from albow.themes.Theme import Theme
 from albow.demo.screens.DemoMultiChoiceScreen import DemoMultiChoiceScreen
 from albow.demo.screens.DemoTableScreen import DemoTableScreen
 from albow.demo.screens.DemoTabPanelScreen import DemoTabPanelScreen
+from albow.demo.screens.DemoGridViewScreen import DemoGridViewScreen
 
 from albow.demo.views.DemoPaletteView import DemoPaletteView
-from albow.demo.views.DemoGridView import DemoGridView
+
 
 # screen_size = (640, 480)
 screen_size = (480, 640)
@@ -280,21 +281,6 @@ class DemoAnimationScreen(Screen):
             if not 0 <= p[1] <= h:
                 v[1] = -v[1]
         self.invalidate()
-
-    def go_back(self):
-        self.parent.show_menu()
-
-
-class DemoGridViewScreen(Screen):
-
-    def __init__(self, shell):
-        Screen.__init__(self, shell)
-        grid = DemoGridView()
-        lbl = Label("Cl1ck a Squ4r3")
-        grid.output = lbl
-        btn = Button("Menu", action=self.go_back)
-        contents = Column([grid, lbl, btn], align='l', spacing=30)
-        self.add_centered(contents)
 
     def go_back(self):
         self.parent.show_menu()
