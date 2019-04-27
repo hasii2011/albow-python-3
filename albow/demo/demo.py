@@ -48,9 +48,7 @@ from albow.demo.screens.DemoMultiChoiceScreen import DemoMultiChoiceScreen
 from albow.demo.screens.DemoTableScreen import DemoTableScreen
 from albow.demo.screens.DemoTabPanelScreen import DemoTabPanelScreen
 from albow.demo.screens.DemoGridViewScreen import DemoGridViewScreen
-
-from albow.demo.views.DemoPaletteView import DemoPaletteView
-
+from albow.demo.screens.DemoPaletteViewScreen import DemoPaletteViewScreen
 
 # screen_size = (640, 480)
 screen_size = (480, 640)
@@ -281,22 +279,6 @@ class DemoAnimationScreen(Screen):
             if not 0 <= p[1] <= h:
                 v[1] = -v[1]
         self.invalidate()
-
-    def go_back(self):
-        self.parent.show_menu()
-
-
-class DemoPaletteViewScreen(Screen):
-
-    def __init__(self, shell):
-        Screen.__init__(self, shell)
-        w, h = self.size
-        grid = DemoPaletteView()
-        grid.center = (w/2, h/2)
-        self.add(grid)
-        btn = Button("Menu", action=self.go_back)
-        btn.center = (w/2, h - 50)
-        self.add(btn)
 
     def go_back(self):
         self.parent.show_menu()
