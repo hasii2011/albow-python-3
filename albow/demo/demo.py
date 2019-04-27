@@ -49,6 +49,7 @@ from albow.themes.Theme import Theme
 
 from albow.demo.screens.DemoMultiChoiceScreen import DemoMultiChoiceScreen
 from albow.demo.screens.DemoTableScreen import DemoTableScreen
+from albow.demo.screens.DemoTabPanelScreen import DemoTabPanelScreen
 
 from albow.demo.views.DemoPaletteView import DemoPaletteView
 
@@ -419,48 +420,6 @@ class DemoDialogScreen(Screen):
             alert("You chose %r." % path)
         else:
             alert("Cancelled.")
-
-
-class DemoTabPanelScreen(Screen):
-    """
-
-    """
-    def __init__(self, shell):
-        """
-
-        :param shell:
-        """
-        #
-        # Python 3 update
-        #
-        super().__init__(shell)
-        pages = TabPanel()
-        pages.size = 300, 200
-        self.pages = pages
-        #
-        # Python 3 update
-        # for i in xrange(1, 4):
-        for i in range(1, 4):
-            page = self.make_test_page(i)
-            pages.add_page("Page %s" % i, page)
-        back = Button("Menu", action=shell.show_menu)
-        contents = Column([pages, back], spacing=30)
-        self.add_centered(contents)
-
-    def make_test_page(self, pageNumber):
-        """
-
-        :param pageNumber: Guess :-)
-        :return:
-        """
-        page_size = self.pages.content_size()
-        #
-        #
-        # page = Widget(size = page_size, bg_color = (128, 64, 32))
-        page = Widget(size=page_size, bg_color=(208, 210, 211))
-        lbl  = Label("This is page %s" % pageNumber)
-        page.add_centered(lbl)
-        return page
 
 
 class DemoShell(Shell):
