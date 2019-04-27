@@ -668,18 +668,19 @@ class Widget():
         r.left = 0
         r.top = 0
 
-        # p = None
-        # try:
-        p = self.global_to_local(event.pos)
-        # except AttributeError as ae:
-            # self.logger.error("Attribute error %s", ae.__cause__)
-
-        pList = list(p)
+        answer: bool = False
+        try:
+            p      = self.global_to_local(event.pos)
+            pList  = list(p)
+            answer = r.collidepoint(pList[0], pList[1])
+        except AttributeError as ae:
+            self.logger.error("Attribute error %s", ae.__repr__())
         #
         # Python 3 method signature change
         #
         # return r.collidepoint(p)
-        return r.collidepoint(pList[0], pList[1])
+        # return r.collidepoint(pList[0], pList[1])
+        return answer
 
     def get_mouse(self):
         root = self.get_root()
