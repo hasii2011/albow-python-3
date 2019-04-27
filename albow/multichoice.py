@@ -76,7 +76,7 @@ class TextMultichoice(Multichoice):
             hmax = max(hmax, h)
         cw = wmax + cd
         ch = hmax + cd
-        Multichoice.__init__(self, (cw, ch), values, **kwds)
+        super().__init__((cw, ch), values, **kwds)
         self.labels = labels
 
     def draw_item(self, surf, n, rect):

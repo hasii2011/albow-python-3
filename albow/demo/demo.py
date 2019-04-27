@@ -48,6 +48,8 @@ from albow.TabPanel import TabPanel
 from albow.table.TableView import TableView
 from albow.table.TableColumn import TableColumn
 
+from albow.demo.screens.DemoMultiChoiceScreen import DemoMultiChoiceScreen
+
 # screen_size = (640, 480)
 screen_size = (480, 640)
 
@@ -108,6 +110,7 @@ class MenuScreen(Screen):
             self.screen_button("Modal Dialogs",  shell.dialog_screen),
             self.screen_button("Tab Panel",      shell.tab_panel_screen),
             self.screen_button("Table View",     shell.table_screen),
+            self.screen_button("MultiChoice",    shell.multiChoiceScreen),
             Button("Quit", shell.quit),
         ], align='l')
         contents = Column([
@@ -585,6 +588,7 @@ class DemoShell(Shell):
         self.dialog_screen      = DemoDialogScreen(self)
         self.tab_panel_screen   = TabPanelScreen(self)
         self.table_screen       = DemoTableScreen(self)
+        self.multiChoiceScreen  = DemoMultiChoiceScreen(self)
 
 
         self.menu_screen = MenuScreen(self)  # Do this last
