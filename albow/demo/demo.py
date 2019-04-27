@@ -421,7 +421,7 @@ class DemoDialogScreen(Screen):
             alert("Cancelled.")
 
 
-class TabPanelScreen(Screen):
+class DemoTabPanelScreen(Screen):
     """
 
     """
@@ -486,7 +486,7 @@ class DemoShell(Shell):
         self.palette_screen     = DemoPaletteViewScreen(self)
         self.image_array_screen = DemoImageArrayScreen(self)
         self.dialog_screen      = DemoDialogScreen(self)
-        self.tab_panel_screen   = TabPanelScreen(self)
+        self.tab_panel_screen   = DemoTabPanelScreen(self)
         self.table_screen       = DemoTableScreen(self)
         self.multiChoiceScreen  = DemoMultiChoiceScreen(self)
 
