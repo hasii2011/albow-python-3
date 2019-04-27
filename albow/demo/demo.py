@@ -45,10 +45,10 @@ from albow.dialog.FileDialogUtilities import request_new_filename
 from albow.dialog.FileDialogUtilities import look_for_file_or_directory
 
 from albow.TabPanel import TabPanel
-from albow.table.TableView import TableView
-from albow.table.TableColumn import TableColumn
+from albow.themes.Theme import Theme
 
 from albow.demo.screens.DemoMultiChoiceScreen import DemoMultiChoiceScreen
+from albow.demo.screens.DemoTableView import DemoTableView
 
 # screen_size = (640, 480)
 screen_size = (480, 640)
@@ -529,38 +529,19 @@ class DemoTableScreen(Screen):
 
         f        = get_font(15, "VeraBd.ttf")
         title    = Label("Norwegian Butter Exports", font=f)
-        table    = DemoTableView()
         #
-        # Python 3 update
+        # Python 3/pygame 1.9 update
         #
-        table.fg_color     = (255, 255, 255)
-        table.bg_color     = (45, 137, 239)
-        table.sel_color    = (255, 196, 13)
-        table.border_color = (0, 0, 0)
+        attrs    = {
+            'fg_color':     Theme.WHITE,
+            'border_color': Theme.BLACK,
+            'sel_color':    (255, 196, 13),
+            'bg_color':     (45, 137, 239)
+        }
+        table    = DemoTableView(**attrs)
         back     = Button("Back to Menu", action=shell.show_menu)
         contents = Column([title, table, back], spacing=30)
         self.add_centered(contents)
-
-
-class DemoTableView(TableView):
-
-    columns = [
-        TableColumn("Year", 70),
-        TableColumn("Amount", 50, 'r', "%.1f"),
-    ]
-
-    def num_rows(self):
-        return len(demo_table_data)
-
-    def row_data(self, i):
-        return demo_table_data[i]
-
-    def row_is_selected(self, i):
-        return selected_table_row == i
-
-    def click_row(self, i, e):
-        global selected_table_row
-        selected_table_row = i
 
 
 class DemoShell(Shell):
