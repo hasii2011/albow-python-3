@@ -35,7 +35,7 @@ from albow.screen import Screen
 from albow.text_screen import TextScreen
 from albow.resource import get_font
 from albow.grid_view import GridView
-from albow.palette_view import PaletteView
+
 from albow.image_array import get_image_array
 from albow.dialog.DialogUtilities import alert
 from albow.dialog.DialogUtilities import ask
@@ -48,7 +48,9 @@ from albow.TabPanel import TabPanel
 from albow.themes.Theme import Theme
 
 from albow.demo.screens.DemoMultiChoiceScreen import DemoMultiChoiceScreen
-from albow.demo.screens.DemoTableView import DemoTableView
+from albow.demo.screens.DemoTableScreen import DemoTableScreen
+
+from albow.demo.views.DemoPaletteView import DemoPaletteView
 
 # screen_size = (640, 480)
 screen_size = (480, 640)
@@ -334,38 +336,6 @@ class DemoGridViewScreen(Screen):
         self.parent.show_menu()
 
 
-class DemoPaletteView(PaletteView):
-    """
-    Palette View
-    """
-
-    info = ["red", "green", "blue", "cyan", "magenta", "yellow"]
-
-    sel_color = Color("white")
-    sel_width = 5
-
-    def __init__(self):
-
-        super().__init__((30, 30), 2, 2, scrolling=True)
-        self.selection = None
-
-    def num_items(self):
-        return len(self.info)
-
-    def draw_item(self, surface, item_no, rect):
-
-        inflationSize = -2 * self.sel_width
-        r = rect.inflate(inflationSize, inflationSize)
-        color = Color(self.info[item_no])
-        surface.fill(color, r)
-
-    def click_item(self, item_no, event):
-        self.selection = item_no
-
-    def item_is_selected(self, item_no):
-        return self.selection == item_no
-
-
 class DemoPaletteViewScreen(Screen):
 
     def __init__(self, shell):
@@ -491,39 +461,6 @@ class TabPanelScreen(Screen):
         lbl  = Label("This is page %s" % pageNumber)
         page.add_centered(lbl)
         return page
-
-
-class DemoTableScreen(Screen):
-    """
-    Table View
-    """
-
-    def __init__(self, shell):
-        """
-
-        :param shell:
-        """
-        #
-        # Python 3 update
-        #
-        # Screen.__init__(self, shell)
-        super().__init__(shell)
-
-        f        = get_font(15, "VeraBd.ttf")
-        title    = Label("Norwegian Butter Exports", font=f)
-        #
-        # Python 3/pygame 1.9 update
-        #
-        attrs    = {
-            'fg_color':     Theme.WHITE,
-            'border_color': Theme.BLACK,
-            'sel_color':    (255, 196, 13),
-            'bg_color':     (45, 137, 239)
-        }
-        table    = DemoTableView(**attrs)
-        back     = Button("Back to Menu", action=shell.show_menu)
-        contents = Column([title, table, back], spacing=30)
-        self.add_centered(contents)
 
 
 class DemoShell(Shell):
