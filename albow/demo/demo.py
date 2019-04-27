@@ -88,15 +88,15 @@ class MenuScreen(Screen):
     def screen_button(self, text: str, screen: Screen):
         return Button(text, action=lambda: self.shell.show_screen(screen))
 
-    def show_text_screen(self):
-        self.shell.show_screen(self.text_screen)
-
-    def show_fields_screen(self):
-        self.shell.show_screen(self.fields_screen)
-        self.fields_screen.fld1.focus()
-
-    def show_animation_screen(self):
-        self.shell.show_screen(self.anim_screen)
+    # def show_text_screen(self):
+    #     self.shell.show_screen(self.text_screen)
+    #
+    # def show_fields_screen(self):
+    #     self.shell.show_screen(self.fields_screen)
+    #     self.fields_screen.fld1.focus()
+    #
+    # def show_animation_screen(self):
+    #     self.shell.show_screen(self.anim_screen)
 
     def quit(self):
         sys.exit(0)
