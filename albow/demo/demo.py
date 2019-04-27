@@ -10,7 +10,6 @@ from os.path import dirname as d
 import pygame
 import logging.config
 
-from pygame.color import Color
 # from pygame.locals import *
 
 from math import pi
@@ -21,7 +20,7 @@ from albow.widgets.Button import Button
 from albow.widgets.RadioButton import RadioButton
 from albow.widgets.ValueDisplay import ValueDisplay
 
-from albow.Widget import Widget
+
 from albow.controls import AttrRef
 from albow.layout.Row import Row
 from albow.layout.Column import Column
@@ -34,7 +33,6 @@ from albow.shell import Shell
 from albow.screen import Screen
 from albow.text_screen import TextScreen
 from albow.resource import get_font
-from albow.grid_view import GridView
 
 from albow.image_array import get_image_array
 from albow.dialog.DialogUtilities import alert
@@ -44,7 +42,6 @@ from albow.dialog.FileDialogUtilities import request_old_filename
 from albow.dialog.FileDialogUtilities import request_new_filename
 from albow.dialog.FileDialogUtilities import look_for_file_or_directory
 
-from albow.TabPanel import TabPanel
 from albow.themes.Theme import Theme
 
 from albow.demo.screens.DemoMultiChoiceScreen import DemoMultiChoiceScreen
@@ -52,6 +49,7 @@ from albow.demo.screens.DemoTableScreen import DemoTableScreen
 from albow.demo.screens.DemoTabPanelScreen import DemoTabPanelScreen
 
 from albow.demo.views.DemoPaletteView import DemoPaletteView
+from albow.demo.views.DemoGridView import DemoGridView
 
 # screen_size = (640, 480)
 screen_size = (480, 640)
@@ -285,41 +283,6 @@ class DemoAnimationScreen(Screen):
 
     def go_back(self):
         self.parent.show_menu()
-
-
-class DemoGridView(GridView):
-    """
-    Grid View
-    """
-
-    info = [
-        [("red", "r3d"), ("green", "gr33n"), ("blue", "blu3")],
-        [("cyan", "cy4n"), ("magenta", "m4g3nt4"), ("yellow", "y3ll0w")]
-    ]
-
-    def __init__(self):
-        """
-
-        """
-        attrs = {'bg_color': Theme.WHITE}
-        #
-        # Python 3 update
-        #
-        # GridView.__init__(self, (30, 30), 2, 3)
-        super().__init__((30, 30), 2, 3, **attrs)
-
-    def num_rows(self):
-        return 2
-
-    def num_cols(self):
-        return 3
-
-    def draw_cell(self, surface, row, col, rect):
-        color = Color(self.info[row][col][0])
-        surface.fill(color, rect)
-
-    def click_cell(self, row, col, event):
-        self.output.text = self.info[row][col][1]
 
 
 class DemoGridViewScreen(Screen):
