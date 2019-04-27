@@ -56,24 +56,6 @@ screen_size = (480, 640)
 flags       = 0
 frame_time  = 50  # ms
 
-BLACK = (0, 0, 0)
-WHITE = (255, 255, 255)
-
-demo_table_data = [
-    (1979, 12.5),
-    (1980, 13.2),
-    (1981, 13.5),
-    (1982, 13.1),
-    (1983, 14.3),
-    (1984, 15.4),
-    (1985, 16.4),
-    (1986, 17.4),
-    (1987, 18.4),
-    (1988, 19.4),
-    (2019, 23.0)
-]
-selected_table_row = None
-
 sys.path.insert(1, d(d(os.path.abspath(sys.argv[0]))))
 
 
@@ -146,7 +128,7 @@ class DemoTextFieldsScreen(Screen):
 
         :param shell:
         """
-        attrs = {'bg_color': WHITE}
+        attrs = {'bg_color': Theme.WHITE}
         #
         # Python 3 update
         #
@@ -205,15 +187,15 @@ class DemoControlsScreen(Screen):
         #
         # Python 3 update
         #
-        attrs = {'bg_color':WHITE}
+        attrs = {'bg_color':Theme.WHITE}
 
         super().__init__(shell, **attrs)
 
         model        = DemoControlsModel()
 
-        colors = {'border_color': WHITE,
-                  'fg_color':     BLACK,
-                  'bg_color':     WHITE
+        colors = {'border_color': Theme.WHITE,
+                  'fg_color':     Theme.BLACK,
+                  'bg_color':     Theme.WHITE
                   }
         width_field  = FloatField  (ref=AttrRef(model, 'width'),  **colors)
         height_field = FloatField  (ref=AttrRef(model, 'height'), **colors)
@@ -316,7 +298,7 @@ class DemoGridView(GridView):
         """
 
         """
-        attrs = {'bg_color': WHITE}
+        attrs = {'bg_color': Theme.WHITE}
         #
         # Python 3 update
         #
@@ -556,7 +538,7 @@ class DemoShell(Shell):
         #
         # Python 3 update
         #
-        attrs = {'bg_color': WHITE}
+        attrs = {'bg_color': Theme.WHITE}
         super().__init__(display,**attrs)
 
         self.text_screen        = TextScreen(self, "demo_text.txt")
