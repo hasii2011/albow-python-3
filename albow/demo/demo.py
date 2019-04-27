@@ -3,7 +3,6 @@
 """
 import os
 import sys
-import random
 
 from os.path import dirname as d
 
@@ -15,7 +14,7 @@ import logging.config
 from math import pi
 
 from albow.widgets.Label import Label
-from albow.widgets.Image import Image
+
 from albow.widgets.Button import Button
 from albow.widgets.RadioButton import RadioButton
 from albow.widgets.ValueDisplay import ValueDisplay
@@ -34,7 +33,6 @@ from albow.screen import Screen
 from albow.text_screen import TextScreen
 from albow.resource import get_font
 
-from albow.image_array import get_image_array
 from albow.dialog.DialogUtilities import alert
 from albow.dialog.DialogUtilities import ask
 
@@ -49,6 +47,8 @@ from albow.demo.screens.DemoTableScreen import DemoTableScreen
 from albow.demo.screens.DemoTabPanelScreen import DemoTabPanelScreen
 from albow.demo.screens.DemoGridViewScreen import DemoGridViewScreen
 from albow.demo.screens.DemoPaletteViewScreen import DemoPaletteViewScreen
+from  albow.demo.screens.DemoImageArrayScreen import DemoImageArrayScreen
+from  albow.demo.screens.DemoAnimationScreen import DemoAnimationScreen
 
 # screen_size = (640, 480)
 screen_size = (480, 640)
@@ -235,76 +235,6 @@ class DemoControlsModel(object):
             return 0.25 * pi * a
 
     area = property(get_area)
-
-
-class DemoAnimationScreen(Screen):
-    """
-    Animation
-    """
-
-    def __init__(self, shell):
-
-        #
-        # Python 3 update
-        #
-        super().__init__(shell)
-        self.rect = shell.rect.inflate(-100, -100)
-        w, h = self.size
-        self.points = [[100, 50], [w - 50, 100], [50, h - 50]]
-
-        def randomValue():
-            return random.randint(-5, 5)
-
-        self.velocities = [
-            [randomValue(), randomValue()] for i in range(len(self.points))
-        ]
-
-        btn = Button("Menu", action=self.go_back)
-        btn.rect.center = (w/2, h - 20)
-        self.add(btn)
-
-    def draw(self, surface):
-        from pygame.draw import polygon
-        polygon(surface, (128, 200, 255), self.points)
-        polygon(surface, (255, 128, 0), self.points, 5)
-
-    def begin_frame(self):
-        r = self.rect
-        w, h = r.size
-        for p, v in zip(self.points, self.velocities):
-            p[0] += v[0]
-            p[1] += v[1]
-            if not 0 <= p[0] <= w:
-                v[0] = -v[0]
-            if not 0 <= p[1] <= h:
-                v[1] = -v[1]
-        self.invalidate()
-
-    def go_back(self):
-        self.parent.show_menu()
-
-
-class DemoImageArrayScreen(Screen):
-    """
-    Image Array
-    """
-
-    def __init__(self, shell):
-        Screen.__init__(self, shell)
-        self.images = get_image_array("fruit.png", shape=3, border=2)
-        self.image = Image(self.images[0])
-        self.index = 0
-        contents = Column([
-            Label("Image Array", font=get_font(18, "VeraBd.ttf")),
-            self.image,
-            Button("Next Fruit", action=self.next_image),
-            Button("Menu", action=shell.show_menu),
-        ], spacing=30)
-        self.add_centered(contents)
-
-    def next_image(self):
-        self.index = (self.index + 1) % 3
-        self.image.image = self.images[self.index]
 
 
 class DemoDialogScreen(Screen):

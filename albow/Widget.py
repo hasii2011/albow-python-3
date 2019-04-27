@@ -54,7 +54,7 @@ def rect_property(name):
     return property(get, set)
 
 
-class Widget(object):
+class Widget():
     #  rect            Rect       bounds in parent's coordinates
     #  parent          Widget     containing widget
     #  subwidgets      [Widget]   contained widgets
@@ -667,7 +667,13 @@ class Widget(object):
         r = Rect(self._rect)
         r.left = 0
         r.top = 0
+
+        # p = None
+        # try:
         p = self.global_to_local(event.pos)
+        # except AttributeError as ae:
+            # self.logger.error("Attribute error %s", ae.__cause__)
+
         pList = list(p)
         #
         # Python 3 method signature change
