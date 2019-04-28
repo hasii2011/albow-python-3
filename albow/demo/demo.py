@@ -9,16 +9,9 @@ from os.path import dirname as d
 import pygame
 import logging.config
 
-from albow.widgets.Label import Label
-
-from albow.widgets.Button import Button
-
-from albow.layout.Column import Column
 
 from albow.shell import Shell
-from albow.screen import Screen
 from albow.text_screen import TextScreen
-from albow.resource import get_font
 
 
 from albow.themes.Theme import Theme
@@ -33,73 +26,16 @@ from albow.demo.screens.DemoAnimationScreen import DemoAnimationScreen
 from albow.demo.screens.DemoControlsScreen import DemoControlsScreen
 from albow.demo.screens.DemoTextFieldsScreen import DemoTextFieldsScreen
 from albow.demo.screens.DemoDialogScreen import DemoDialogScreen
+from albow.demo.screens.MenuScreen import MenuScreen
 
-# screen_size = (640, 480)
-screen_size = (480, 640)
-
-flags       = 0
-frame_time  = 50  # ms
+# SCREEN_SIZE   = (640, 480)
+# DISPLAY_FLAGS = pygame.RESIZABLE
+SCREEN_SIZE = (480, 640)
+DISPLAY_FLAGS    = 0
+DEMO_FRAME_TIME  = 50  # ms
 
 sys.path.insert(1, d(d(os.path.abspath(sys.argv[0]))))
 
-
-class MenuScreen(Screen):
-    """
-    Buttons
-    """
-
-    def __init__(self, shell):
-        """
-
-        :param shell:
-        """
-        #
-        # Python 3 update
-        #
-        # Screen.__init__(self, shell)
-        super().__init__(shell)
-
-        self.shell     = shell
-        f1             = get_font(24, "VeraBd.ttf")
-        title          = Label("Albow Demonstration", font = f1)
-        title.fg_color = (255, 255, 255)
-
-
-        menu = Column([
-            self.screen_button("Text Screen",    shell.text_screen),
-            self.screen_button("Text Fields",    shell.fields_screen),
-            self.screen_button("Controls",       shell.controls_screen),
-            self.screen_button("Timing",         shell.anim_screen),
-            self.screen_button("Grid View",      shell.grid_screen),
-            self.screen_button("Palette View",   shell.palette_screen),
-            self.screen_button("Image Array",    shell.image_array_screen),
-            self.screen_button("Modal Dialogs",  shell.dialog_screen),
-            self.screen_button("Tab Panel",      shell.tab_panel_screen),
-            self.screen_button("Table View",     shell.table_screen),
-            self.screen_button("MultiChoice",    shell.multiChoiceScreen),
-            Button("Quit", shell.quit),
-        ], align='l')
-        contents = Column([
-            title,
-            menu,
-        ], align = 'l', spacing=20)
-        self.add_centered(contents)
-
-    def screen_button(self, text: str, screen: Screen):
-        return Button(text, action=lambda: self.shell.show_screen(screen))
-
-    # def show_text_screen(self):
-    #     self.shell.show_screen(self.text_screen)
-    #
-    # def show_fields_screen(self):
-    #     self.shell.show_screen(self.fields_screen)
-    #     self.fields_screen.fld1.focus()
-    #
-    # def show_animation_screen(self):
-    #     self.shell.show_screen(self.anim_screen)
-
-    def quit(self):
-        sys.exit(0)
 
 class DemoShell(Shell):
     """
@@ -129,14 +65,11 @@ class DemoShell(Shell):
         self.multiChoiceScreen  = DemoMultiChoiceScreen(self)
 
         self.menu_screen = MenuScreen(self)  # Do this last
-        self.set_timer(frame_time)
+        self.set_timer(DEMO_FRAME_TIME)
         self.show_menu()
 
     def show_menu(self):
         self.show_screen(self.menu_screen)
-
-    def begin_frame(self):
-        self.anim_screen.begin_frame()
 
 
 def main():
@@ -147,7 +80,7 @@ def main():
     logging.config.fileConfig('logging.conf')
 
     logger  = logging.getLogger(__name__)
-    display = pygame.display.set_mode(screen_size, flags)
+    display = pygame.display.set_mode(SCREEN_SIZE, DISPLAY_FLAGS)
     shell   = DemoShell(display)
 
     logger.info("Starting %s", __name__)

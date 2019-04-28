@@ -8,6 +8,7 @@ class Theme:
 
     BLACK = (0, 0, 0)
     WHITE = (255, 255, 255)
+    BUILT_IN_FONT = "VeraBd.ttf"
 
     def __init__(self, name, base = None):
         """
