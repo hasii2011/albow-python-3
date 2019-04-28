@@ -3,19 +3,23 @@
 """
 import os
 import sys
+import json
 
 from os.path import dirname
 
 import pygame
 import logging.config
 
-LOGGING_CONFIG_FILENAME = "logging.conf"
+JSON_LOGGING_CONFIG_FILENAME = "loggingConfiguration.json"
 #
 # This has to be done as early as possible to affect the logging
 # statements in the class files
 # Pycharm gives a warning on the order of imports, Oh well
 #
-logging.config.fileConfig("%s" % LOGGING_CONFIG_FILENAME)
+with open(JSON_LOGGING_CONFIG_FILENAME, 'r') as loggingConfigurationFile:
+    configurationDictionary = json.load(loggingConfigurationFile)
+
+logging.config.dictConfig(configurationDictionary)
 logging.logProcesses = False
 logging.logThreads   = False
 
@@ -35,6 +39,13 @@ def main():
     pygame.init()
     pygame.display.set_caption("%s" % DEMO_WINDOW_TITLE)
 
+    # "file_handler": {
+    #   "class": "logging.FileHandler",
+    #   "level": "DEBUG",
+    #   "formatter": "simple",
+    #   "filename": "demo_logging.log",
+    #   "encoding": "utf8"
+    #   },
     logger  = logging.getLogger(__name__)
     display = pygame.display.set_mode(SCREEN_SIZE, DISPLAY_FLAGS)
     shell   = DemoShell(display)
