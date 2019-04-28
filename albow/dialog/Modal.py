@@ -1,5 +1,5 @@
 
-class Modal(object):
+class Modal:
 
     enter_response = True
     cancel_response = False

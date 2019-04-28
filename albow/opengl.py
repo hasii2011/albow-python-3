@@ -101,9 +101,8 @@ class GLPerspective(GLViewport):
 		aspect = self.width / self.height
 		GLU.gluPerspective(self.fovy, aspect, self.near, self.far)
 
-#-------------------------------------------------------------------------
 
-class GLSurface(object):
+class GLSurface:
 
 	def __init__(self, display, rect):
 		self.display = display

@@ -39,8 +39,9 @@ class ThemeProperty:
             #
             # except AttributeError, e:
             except AttributeError as e:
-                if debug_theme:
-                    print(e)
+                # if debug_theme:
+                #     print(e)
+                self.logger.exception("Attribute error: %s", e)
                 value = self.get_from_theme(obj.__class__, self.name)
                 obj.__dict__[cache_name] = value
                 return value

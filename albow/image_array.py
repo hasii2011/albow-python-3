@@ -1,7 +1,8 @@
 from pygame import Rect
 from albow.resource import get_image
 
-class ImageArray(object):
+
+class ImageArray:
 
 	def __init__(self, image, shape):
 		self.image = image

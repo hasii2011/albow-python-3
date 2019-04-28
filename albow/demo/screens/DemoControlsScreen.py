@@ -18,7 +18,7 @@ from albow.layout.Grid import Grid
 from albow.layout.Row import Row
 
 
-class DemoControlsModel(object):
+class DemoControlsModel:
 
     width = 0.0
     height = 0.0

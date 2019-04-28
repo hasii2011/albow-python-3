@@ -45,7 +45,7 @@ class MenuScreen(Screen):
             self.screen_button("Modal Dialogs",  shell.dialog_screen),
             self.screen_button("Tab Panel",      shell.tab_panel_screen),
             self.screen_button("Table View",     shell.table_screen),
-            self.screen_button("MultiChoice",    shell.multiChoiceScreen),
+            # self.screen_button("MultiChoice",    shell.multiChoiceScreen),
             Button("Quit", shell.quit),
         ], align='l')
         contents = Column([

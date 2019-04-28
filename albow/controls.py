@@ -1,6 +1,6 @@
 
 
-class AttrRef(object):
+class AttrRef:
     """
     AttrRef is here for backwards compatibility.
     New code should use references.Ref instead.
@@ -17,7 +17,7 @@ class AttrRef(object):
         setattr(self.obj, self.attr, x)
 
 
-class ItemRef(object):
+class ItemRef:
     """
     ItemRef is here for backwards compatibility.
     New code should use references.Ref instead.
@@ -34,4 +34,3 @@ class ItemRef(object):
     def set(self, x):
         # self.obj[item] = x
         self.obj[self.item] = x     # Python 3 update
-

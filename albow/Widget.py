@@ -21,9 +21,11 @@ root_widget = None
 current_cursor = None
 
 def overridable_property(name, doc = None):
-    """Creates a property which calls methods get_xxx and set_xxx of
+    """
+    Creates a property which calls methods get_xxx and set_xxx of
     the underlying object to get and set the property value, so that
-    the property's behaviour may be easily overridden by subclasses."""
+    the property's behaviour may be easily overridden by subclasses.
+    """
 
     getter_name = sys.intern('get_' + name)
     setter_name = sys.intern('set_' + name)

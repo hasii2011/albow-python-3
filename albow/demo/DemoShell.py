@@ -45,7 +45,7 @@ class DemoShell(Shell):
         self.dialog_screen      = DemoDialogScreen(self)
         self.tab_panel_screen   = DemoTabPanelScreen(self)
         self.table_screen       = DemoTableScreen(self)
-        self.multiChoiceScreen  = DemoMultiChoiceScreen(self)
+        # self.multiChoiceScreen  = DemoMultiChoiceScreen(self)
 
         self.menu_screen = MenuScreen(self)  # Do this last
         self.set_timer(DEMO_FRAME_TIME)

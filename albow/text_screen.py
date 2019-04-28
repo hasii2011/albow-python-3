@@ -14,7 +14,7 @@ from resource import get_text
 from vectors import add, maximum
 
 
-class Page(object):
+class Page:
 
     def __init__(self, text_screen, heading, lines):
         """

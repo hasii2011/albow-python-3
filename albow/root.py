@@ -429,7 +429,7 @@ def make_scheduled_calls():
         sched.pop(0)
 
 
-class ScheduledCall(object):
+class ScheduledCall:
 
     def __init__(self, time, func, interval):
         self.time = time
