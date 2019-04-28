@@ -1,6 +1,7 @@
-#
-#   Albow - Shell
-#
+
+from pygame.event import Event
+
+from pygame import Surface
 
 from albow.core.RootWidget import RootWidget
 
@@ -10,7 +11,7 @@ class Shell(RootWidget):
 
     """
 
-    def __init__(self, surface, **kwds):
+    def __init__(self, surface: Surface, **kwds):
         #
         # Python 3 update
         #
@@ -18,6 +19,12 @@ class Shell(RootWidget):
         self.current_screen = None
 
     def show_screen(self, new_screen):
+        """
+
+        :param new_screen:   TODO fix screen imports shell & shell imports screen
+        :return:
+        """
+
         old_screen = self.current_screen
         if old_screen is not new_screen:
             if old_screen:
@@ -30,7 +37,7 @@ class Shell(RootWidget):
                 new_screen.enter_screen()
                 self.invalidate()
 
-    def timer_event(self, event):
+    def timer_event(self, event: Event):
         screen = self.current_screen
         if screen:
             return screen.timer_event(event)
