@@ -87,7 +87,7 @@ class RootWidget(Widget):
         self.is_gl = surface.get_flags() & OPENGL != 0
         if self.is_gl:
 
-            from opengl import GLSurface
+            from albow.opengl import GLSurface
             self.gl_surface = GLSurface(surface, self.rect)
 
     def set_timer(self, ms):

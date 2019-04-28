@@ -17,7 +17,7 @@ pygame.init()
 from pygame.color import Color
 from pygame.locals import *
 
-from albow.core.root import RootWidget
+from albow.core.RootWidget import RootWidget
 
 from albow.widgets.Button import Button
 from albow.layout.Row import Row
