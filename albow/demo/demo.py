@@ -4,7 +4,7 @@
 import os
 import sys
 
-from os.path import dirname as d
+from os.path import dirname
 
 import pygame
 import logging.config
@@ -17,8 +17,8 @@ DEMO_WINDOW_TITLE       = "Albow Demonstration"
 SCREEN_SIZE             = (480, 640)
 DISPLAY_FLAGS           = 0
 
-sys.path.insert(1, d(d(os.path.abspath(sys.argv[0]))))
-
+WTH = dirname(dirname(os.path.abspath(sys.argv[0])))
+sys.path.insert(1, WTH)
 
 def main():
 
@@ -34,6 +34,5 @@ def main():
     logger.info("Starting %s", __name__)
 
     shell.run()
-
 
 main()
