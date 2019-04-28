@@ -1,4 +1,6 @@
-import os, sys
+import os
+import sys
+
 import pygame
 from pygame.locals import RLEACCEL
 
@@ -7,17 +9,20 @@ run_length_encode = False
 
 default_resource_dir_names = ["Resources", "resources"]
 
+
 def find_resource_dir():
-    dir = sys.path[0]
+
+    directory = sys.path[0]
     while 1:
         for name in default_resource_dir_names:
-            path = os.path.join(dir, name)
+            path = os.path.join(directory, name)
             if os.path.exists(path):
                 return path
-        parent = os.path.dirname(dir)
-        if parent == dir:
+        parent = os.path.dirname(directory)
+        if parent == directory:
             raise SystemError("albow: Unable to find Resources directory")
-        dir = parent
+        directory = parent
+
 
 resource_dir = find_resource_dir()
 
@@ -27,17 +32,20 @@ sound_cache = {}
 text_cache = {}
 cursor_cache = {}
 
-def _resource_path(default_prefix, names, prefix = ""):
+
+def _resource_path(default_prefix, names, prefix=""):
     return os.path.join(resource_dir, prefix or default_prefix, *names)
+
 
 def resource_path(*names, **kwds):
     return _resource_path("", names, **kwds)
 
+
 def resource_exists(*names, **kwds):
     return os.path.exists(_resource_path("", names, **kwds))
 
-def _get_image(path, border = 0, optimize = optimize_images, noalpha = False,
-               rle = run_length_encode):
+
+def _get_image(path, border=0, optimize=optimize_images, noalpha=False, rle=run_length_encode):
     image = image_cache.get(path)
     if not image:
         image = pygame.image.load(path)
@@ -55,10 +63,13 @@ def _get_image(path, border = 0, optimize = optimize_images, noalpha = False,
         image_cache[path] = image
     return image
 
+
 def get_image(*names, **kwds):
+
     prefix = kwds.pop('prefix', "images")
     path = _resource_path(prefix, names)
     return _get_image(path, **kwds)
+
 
 def get_font(size, *names, **kwds):
     path = _resource_path("fonts", names, **kwds)
@@ -73,16 +84,25 @@ def get_font(size, *names, **kwds):
         font_cache[key] = font
     return font
 
+
 class DummySound:
     def fadeout(self, x): pass
+
     def get_length(self): return 0.0
+
     def get_num_channels(self): return 0
+
     def get_volume(self): return 0.0
+
     def play(self, *args): pass
+
     def set_volume(self, x): pass
+
     def stop(self): pass
 
+
 dummy_sound = DummySound()
+
 
 def load_sound(path):
     if sound_cache is None:
@@ -91,22 +111,30 @@ def load_sound(path):
     if not sound:
         try:
             from pygame.mixer import Sound
-        #except ImportError, e:
+        #
+        # Python 3 update
+        #
+        # except ImportError, e:
         except ImportError as e:
             no_sound(e)
             return dummy_sound
         try:
             sound = Sound(path)
-        #except pygame.error, e:
+        #
+        # Python 3 update
+        #
+        # except pygame.error, e:
         except pygame.error as e:
             missing_sound(e, path)
             return dummy_sound
         sound_cache[path] = sound
     return sound
 
+
 def get_sound(*names, **kwds):
     path = _resource_path("sounds", names, **kwds)
     return load_sound(path)
+
 
 def no_sound(e):
     global sound_cache
@@ -114,8 +142,10 @@ def no_sound(e):
     print("albow.resource.get_sound: Sound not available, continuing without it")
     sound_cache = None
 
+
 def missing_sound(e, name):
     print("albow.resource.get_sound: %s: %s" % (name, e))
+
 
 def get_text(*names, **kwds):
     path = _resource_path("text", names, **kwds)
@@ -125,6 +155,7 @@ def get_text(*names, **kwds):
         text_cache[path] = text
     return text
 
+
 def load_cursor(path):
     image = _get_image(path)
     width, height = image.get_size()
@@ -132,8 +163,14 @@ def load_cursor(path):
     data = []
     mask = []
     rowbytes = (width + 7) // 8
-    xr = xrange(width)
-    yr = xrange(height)
+    #
+    # Python 3 update
+    #
+    # xr = xrange(width)
+    # yr = xrange(height)
+    xr = range(width)
+    yr = range(height)
+
     for y in yr:
         bit = 0x80
         db = mb = 0
@@ -155,7 +192,8 @@ def load_cursor(path):
         if bit != 0x80:
             data.append(db)
             mask.append(mb)
-    return ((8 * rowbytes, height), hot, data, mask)
+    return (8 * rowbytes, height), hot, data, mask
+
 
 def get_cursor(*names, **kwds):
     path = _resource_path("cursors", names, **kwds)
