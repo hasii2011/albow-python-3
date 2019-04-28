@@ -3,7 +3,7 @@ from pygame.locals import K_LEFT
 from pygame.locals import K_RIGHT
 
 from albow.widgets.Control import Control
-from albow.PaletteView import PaletteView
+from albow.containers.PaletteView import PaletteView
 from albow.themes.ThemeProperty import ThemeProperty
 
 

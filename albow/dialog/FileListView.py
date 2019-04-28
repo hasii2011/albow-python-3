@@ -4,7 +4,7 @@ import os
 from pygame import Surface
 from pygame import Rect
 
-from albow.PaletteView import PaletteView
+from albow.containers.PaletteView import PaletteView
 from albow.dialog.DialogUtilities import alert
 
 
