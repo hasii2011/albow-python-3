@@ -1,5 +1,5 @@
 
-from albow.core.screen import Screen
+from albow.core.ScreenTmp import Screen
 from albow.resource import get_font
 
 from albow.widgets.Label import Label

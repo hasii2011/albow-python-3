@@ -4,7 +4,7 @@
 
 
 from pygame.locals import *
-from albow.core.screen import Screen
+from albow.core.ScreenTmp import Screen
 
 from albow.themes.FontProperty import FontProperty
 

@@ -1,7 +1,7 @@
 
 from math import pi
 
-from albow.core.screen import Screen
+from albow.core.ScreenTmp import Screen
 from albow.controls import AttrRef
 
 from albow.themes.Theme import Theme
