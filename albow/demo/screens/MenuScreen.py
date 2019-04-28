@@ -33,7 +33,6 @@ class MenuScreen(Screen):
         title          = Label("Albow Demonstration", font = f1)
         title.fg_color = Theme.WHITE
 
-
         menu = Column([
             self.screen_button("Text Screen",    shell.text_screen),
             self.screen_button("Text Fields",    shell.fields_screen),
@@ -45,7 +44,7 @@ class MenuScreen(Screen):
             self.screen_button("Modal Dialogs",  shell.dialog_screen),
             self.screen_button("Tab Panel",      shell.tab_panel_screen),
             self.screen_button("Table View",     shell.table_screen),
-            # self.screen_button("MultiChoice",    shell.multiChoiceScreen),
+            self.screen_button("MultiChoice",    shell.multiChoiceScreen),
             Button("Quit", shell.quit),
         ], align='l')
         contents = Column([

@@ -5,6 +5,8 @@ from albow.text_screen import TextScreen
 
 from albow.themes.Theme import Theme
 
+from albow.screen import Screen
+
 from albow.demo.screens.DemoMultiChoiceScreen import DemoMultiChoiceScreen
 from albow.demo.screens.DemoTableScreen import DemoTableScreen
 from albow.demo.screens.DemoTabPanelScreen import DemoTabPanelScreen
@@ -21,6 +23,7 @@ DEMO_FRAME_TIME  = 50  # ms
 
 
 class DemoShell(Shell):
+
     """
     Shell
     """
@@ -45,7 +48,7 @@ class DemoShell(Shell):
         self.dialog_screen      = DemoDialogScreen(self)
         self.tab_panel_screen   = DemoTabPanelScreen(self)
         self.table_screen       = DemoTableScreen(self)
-        # self.multiChoiceScreen  = DemoMultiChoiceScreen(self)
+        self.multiChoiceScreen  = DemoMultiChoiceScreen(self)
 
         self.menu_screen = MenuScreen(self)  # Do this last
         self.set_timer(DEMO_FRAME_TIME)

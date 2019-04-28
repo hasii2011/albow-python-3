@@ -156,20 +156,19 @@ root.TabPanel.tab_dimming = 0.75
 
 root.CheckWidget.smooth = True
 
-root.Multichoice = Theme("Multichoice")
-root.Multichoice.sel_width = 1
-root.Multichoice.highlight_color = root.sel_color
-root.Multichoice.margin = 8
-root.Multichoice.cell_margin = 2
+root.MultiChoice = Theme("MultiChoice")
+root.MultiChoice.sel_width = 1
+root.MultiChoice.highlight_color = root.sel_color
+root.MultiChoice.margin = 8
+root.MultiChoice.cell_margin = 2
 
-root.TextMultichoice = Theme("TextMultichoice")
-root.TextMultichoice.sel_color = None
-root.TextMultichoice.highlight_style = 'arrows'
+root.TextMultiChoice = Theme("TextMultiChoice")
+root.TextMultiChoice.sel_color = None
+root.TextMultiChoice.highlight_style = 'arrows'
 
-root.ImageMultichoice = Theme("ImageMultichoice")
-# root.ImageMultichoice = Theme("ImageMultichoice")   # Bug duplicate line -- hasii
-root.ImageMultichoice.sel_color = (192, 192, 192)
-root.ImageMultichoice.highlight_style = 'fill'
+root.ImageMultiChoice = Theme("ImageMultiChoice")
+root.ImageMultiChoice.sel_color = (192, 192, 192)
+root.ImageMultiChoice.highlight_style = 'fill'
 
 menu = Theme('menu')
 menu.bg_color = (255, 255, 255)
