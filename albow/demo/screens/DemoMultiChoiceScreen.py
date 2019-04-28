@@ -5,7 +5,7 @@ import pygame
 import logging
 
 from albow.core.Screen import Screen
-from albow.shell import Shell
+from albow.core.shell import Shell
 from albow.resource import resource_dir
 
 from albow.themes.Theme import Theme

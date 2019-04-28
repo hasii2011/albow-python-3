@@ -1,6 +1,6 @@
 
 from albow.core.Screen import Screen
-from albow.shell import Shell
+from albow.core.shell import Shell
 
 from albow.widgets.Label import Label
 from albow.widgets.Button import Button
