@@ -9,10 +9,20 @@ from os.path import dirname
 import pygame
 import logging.config
 
+LOGGING_CONFIG_FILENAME = "logging.conf"
+#
+# This has to be done as early as possible to affect the logging
+# statements in the class files
+# Pycharm gives a warning on the order of imports, Oh well
+#
+logging.config.fileConfig("%s" % LOGGING_CONFIG_FILENAME)
+logging.logProcesses = False
+logging.logThreads   = False
+
+
 from albow.demo.DemoShell import DemoShell
 # SCREEN_SIZE   = (640, 480)
 # DISPLAY_FLAGS = pygame.RESIZABLE
-LOGGING_CONFIG_FILENAME = "logging.conf"
 DEMO_WINDOW_TITLE       = "Albow Demonstration"
 SCREEN_SIZE             = (480, 640)
 DISPLAY_FLAGS           = 0
@@ -24,8 +34,6 @@ def main():
 
     pygame.init()
     pygame.display.set_caption("%s" % DEMO_WINDOW_TITLE)
-
-    logging.config.fileConfig("%s" % LOGGING_CONFIG_FILENAME)
 
     logger  = logging.getLogger(__name__)
     display = pygame.display.set_mode(SCREEN_SIZE, DISPLAY_FLAGS)

@@ -36,7 +36,7 @@ class Label(Widget):
         #
         # Use this naming convention, until I break these out into separate packages
         #
-        self.logger = logging.getLogger(self.__class__.__name__)
+        self.logger = logging.getLogger(__name__)
 
         super().__init__(**kwds)
         font = self.font
