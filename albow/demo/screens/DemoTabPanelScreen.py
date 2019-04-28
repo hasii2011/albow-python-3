@@ -1,6 +1,6 @@
 
 from albow.core.Screen import Screen
-from albow.TabPanel import TabPanel
+from albow.containers.TabPanel import TabPanel
 from albow.core.Widget import Widget
 from albow.core.Shell import Shell
 
