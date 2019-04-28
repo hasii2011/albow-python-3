@@ -1,5 +1,5 @@
 
-from albow.core.shell_tmp import Shell
+from albow.core.Shell import Shell
 from albow.text_screen import TextScreen
 
 

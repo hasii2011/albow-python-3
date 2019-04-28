@@ -1,6 +1,6 @@
 
 from albow.core.Screen import Screen
-from albow.core.shell_tmp import Shell
+from albow.core.Shell import Shell
 from albow.resource import get_font
 
 from albow.image_array import get_image_array
