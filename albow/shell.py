@@ -2,7 +2,7 @@
 #   Albow - Shell
 #
 
-from albow.root import RootWidget
+from albow.core.root import RootWidget
 
 
 class Shell(RootWidget):
