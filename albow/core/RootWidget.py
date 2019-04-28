@@ -30,7 +30,7 @@ from albow.core.root import ApplicationError
 
 MUSIC_END_EVENT = USEREVENT + 1
 
-double_click_time = 300 # milliseconds
+DOUBLE_CLICK_TIME = 300 # milliseconds
 
 last_mouse_event = Event(0, pos = (0, 0), local = (0, 0))
 last_mouse_event_handler = None
@@ -118,9 +118,11 @@ class RootWidget(Widget):
             modal_widget.modal_result = None
             if not modal_widget.focus_switch:
                 modal_widget.tab_to_first()
-            mouse_widget = None
-            # if clicked_widget:
-            #	clicked_widget = modal_widget
+                #
+                #  mouse_widget = None
+                #  if clicked_widget:
+                #  clicked_widget = modal_widget
+                #
             num_clicks = 0
             last_click_time = 0
             self.do_draw = True
@@ -172,46 +174,50 @@ class RootWidget(Widget):
                     if grab != get_grab():
                         set_grab(grab)
                         set_mouse_visible(not grab)
-                        relative_warmup = 3 # Ignore spurious deltas on entering relative mode
-                    # tb1 = timestamp() ###
-                    # print "RootWidget: use_sleep =", use_sleep, "defer_drawing =", defer_drawing ###
+                        relative_warmup = 3     # Ignore spurious deltas on entering relative mode
+                        # tb1 = timestamp() ###
+                        # print "RootWidget: use_sleep =", use_sleep, "defer_drawing =", defer_drawing ###
                     if use_sleep and defer_drawing:
-                        # print "RootWidget: Handling timing" ###
+                        #  print "RootWidget: Handling timing" ###
                         time_now = timestamp()
-                        # print "RootWidget: Time is now", time_now ###
+                        #  print "RootWidget: Time is now", time_now ###
                         if next_frame_due < time_now:
-                            #print "RootWidget: Adjusting next frame due time to time now" ###
+                            #  print "RootWidget: Adjusting next frame due time to time now" ###
                             next_frame_due = time_now
-                        # print "RootWidget: Waiting for next frame due at", next_frame_due ###
+                            #  print "RootWidget: Waiting for next frame due at", next_frame_due ###
                         while 1:
                             sleep_time = make_due_calls(time_now, next_frame_due)
                             if sleep_time <= 0.0:
                                 break
-                            #print "RootWidget: Sleeping for", sleep_time ###
+                            # print "RootWidget: Sleeping for", sleep_time ###
                             sleep(sleep_time / 1000.0)
                             time_now = timestamp()
                         next_frame_due += self.frame_time
                         # print "RootWidget: Next frame now due at", next_frame_due ###
-                        timer_event = Event(USEREVENT, time = time_now)
+                        #
+                        # Pygame 1.9 update
+                        #
+                        # timer_event = Event(USEREVENT, time = time_now)
+                        timer_event = Event(USEREVENT, dict=None)
                         events = []
                     else:
                         events = [pygame.event.wait()]
                     # tb2 = timestamp() ###
                     # tb = tb2 - tb1 ###
                     # if tb: ###
-                    #	print "RootWidget: Event block %5d" % tb ###
+                    # print "RootWidget: Event block %5d" % tb ###
                     events.extend(pygame.event.get())
                     for event in events:
                         t = timestamp()
                         event.dict['time'] = t
                         event.dict['local'] = getattr(event, 'pos', (0, 0))
-                        type = event.type
-                        if type == QUIT:
+                        eventType = event.type
+                        if eventType == QUIT:
                             self.quit()
-                        elif type == MOUSEBUTTONDOWN:
+                        elif eventType == MOUSEBUTTONDOWN:
                             # print "RootWidget: MOUSEBUTTONDOWN: setting do_draw" ###
                             self.do_draw = True
-                            if t - last_click_time <= double_click_time:
+                            if t - last_click_time <= DOUBLE_CLICK_TIME:
                                 num_clicks += 1
                             else:
                                 num_clicks = 1
@@ -224,7 +230,7 @@ class RootWidget(Widget):
                                 if relative_pause:
                                     relative_pause = False
                                 else:
-                                    #modal_widget.dispatch_key('mouse_down', event)
+                                    #  modal_widget.dispatch_key('mouse_down', event)
                                     mouse_widget = modal_widget.get_focus()
                                     clicked_widget = mouse_widget
                                     last_mouse_event_handler = mouse_widget
@@ -237,7 +243,7 @@ class RootWidget(Widget):
                                 last_mouse_event_handler = mouse_widget
                                 mouse_widget.notify_attention_loss()
                                 mouse_widget.handle_mouse('mouse_down', event)
-                        elif type == MOUSEMOTION:
+                        elif eventType == MOUSEMOTION:
                             add_modifiers(event)
                             last_mouse_event = event
                             if in_relative_mode:
@@ -246,21 +252,21 @@ class RootWidget(Widget):
                                     if relative_warmup:
                                         relative_warmup -= 1
                                     else:
-                                        #modal_widget.dispatch_key('mouse_delta', event)
+                                        #  modal_widget.dispatch_key('mouse_delta', event)
                                         mouse_widget = clicked_widget or modal_widget.get_focus()
                                         last_mouse_event_handler = mouse_widget
                                         mouse_widget.handle_event('mouse_delta', event)
                             else:
-                                mouse_widget = self.find_widget(event.pos) # Do this in else branch?
+                                mouse_widget = self.find_widget(event.pos)   # Do this in else branch?
                                 if clicked_widget:
-                                    last_mouse_event_handler = mouse_widget # Should this be clicked_widget?
+                                    last_mouse_event_handler = mouse_widget  # Should this be clicked_widget?
                                     clicked_widget.handle_mouse('mouse_drag', event)
                                 else:
                                     if not mouse_widget.is_inside(modal_widget):
                                         mouse_widget = modal_widget
                                     last_mouse_event_handler = mouse_widget
                                     mouse_widget.handle_mouse('mouse_move', event)
-                        elif type == MOUSEBUTTONUP:
+                        elif eventType == MOUSEBUTTONUP:
                             add_modifiers(event)
                             last_mouse_event = event
                             self.do_draw = True
@@ -276,12 +282,12 @@ class RootWidget(Widget):
                                     last_mouse_event_handler = mouse_widget
                                     mouse_widget.handle_event('mouse_up', event)
                             else:
-                                mouse_widget = self.find_widget(event.pos) # Not necessary?
+                                #  mouse_widget = self.find_widget(event.pos) # Not necessary?
                                 if clicked_widget:
                                     last_mouse_event_handler = clicked_widget
                                     clicked_widget = None
                                     last_mouse_event_handler.handle_mouse('mouse_up', event)
-                        elif type == KEYDOWN:
+                        elif eventType == KEYDOWN:
                             key = event.key
                             if key == K_ESCAPE and in_relative_mode and \
                                     event.mod & KMOD_CTRL and event.mod & KMOD_SHIFT:
@@ -296,7 +302,7 @@ class RootWidget(Widget):
                                     event.dict['pos'] = last_mouse_event.pos
                                     event.dict['local'] = last_mouse_event.local
                                     last_mouse_event_handler.setup_cursor(event)
-                        elif type == KEYUP:
+                        elif eventType == KEYUP:
                             key = event.key
                             set_modifier(key, False)
                             self.do_draw = True
@@ -305,9 +311,9 @@ class RootWidget(Widget):
                                 event.dict['pos'] = last_mouse_event.pos
                                 event.dict['local'] = last_mouse_event.local
                                 last_mouse_event_handler.setup_cursor(event)
-                        elif type == MUSIC_END_EVENT:
+                        elif eventType == MUSIC_END_EVENT:
                             self.music_end()
-                        elif type == USEREVENT:
+                        elif eventType == USEREVENT:
                             if defer_drawing and not use_sleep:
                                 timer_event = event
                 except Cancel:
@@ -358,29 +364,9 @@ class RootWidget(Widget):
         add_modifiers(event)
         return event
 
-    #	def gl_clear(self):
-    #		bg = self.bg_color
-    #		if bg:
-    #			r = bg[0] / 255.0
-    #			g = bg[1] / 255.0
-    #			b = bg[2] / 255.0
-    #			GL.glClearColor(r, g, b, 0.0)
-    #		GL.glClear(GL.GL_COLOR_BUFFER_BIT | GL.GL_DEPTH_BUFFER_BIT
-    #			| GL.GL_ACCUM_BUFFER_BIT | GL.GL_STENCIL_BUFFER_BIT)
-
     def music_end(self):
         import albow.music
         albow.music.music_end()
 
-    #	def pause_relative_mode(self):
-    #		set_grab(False)
-    #		set_mouse_visible(True)
-    #		while 1:
-    #			e = event.wait()
-    #			type = e.type
-    #			if type == MOUSEBUTTONDOWN or type == KEYDOWN:
-    #				return
-
     def report_error(self, e):
         pass
-

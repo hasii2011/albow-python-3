@@ -1,3 +1,7 @@
+
+from time import time
+from bisect import insort
+
 from pygame.locals import *
 from pygame.time import get_ticks
 from pygame.event import Event
@@ -5,10 +9,10 @@ from pygame.event import Event
 mod_cmd = KMOD_LCTRL | KMOD_RCTRL | KMOD_LMETA | KMOD_RMETA
 
 modifiers = dict(
-    shift = False,
-    ctrl = False,
-    alt = False,
-    meta = False,
+    shift=False,
+    ctrl=False,
+    alt=False,
+    meta=False,
 )
 
 modkeys = {
@@ -17,6 +21,8 @@ modkeys = {
     K_LALT:   'alt',    K_RALT:   'alt',
     K_LMETA:  'meta',   K_RMETA:  'meta',
 }
+
+scheduled_calls = []
 
 
 class ApplicationError(Exception):
@@ -48,12 +54,6 @@ def timestamp():
     return time() * 1000.0 - time_base
 
 
-from time import time
-from bisect import insort
-
-scheduled_calls = []
-
-
 def make_scheduled_calls():
     #  Legacy
     sched = scheduled_calls
@@ -65,13 +65,22 @@ def make_scheduled_calls():
 
 class ScheduledCall:
 
-    def __init__(self, time, func, interval):
-        self.time = time
+    def __init__(self, timeParam, func, interval):
+
+        self.time = timeParam
         self.func = func
         self.interval = interval
 
     def __cmp__(self, other):
-        return cmp(self.time, other.time)
+        #
+        # Python 3 update;  cmp is gone
+        # https://docs.python.org/3.0/whatsnew/3.0.html#ordering-comparisons
+        #
+        a = self.time
+        b = other.time
+
+        # return cmp(self.time, other.time)
+        return (a > b) - (a < b)
 
 
 def make_due_calls(time_now, until_time):
@@ -105,7 +114,7 @@ def schedule(delay, func):
     schedule_call(delay * 1000.0, func)
 
 
-def schedule_call(delay, func, repeat = False):
+def schedule_call(delay, func, repeat=False):
     """
     Arrange for the given function to be called after the specified
     delay in milliseconds. Scheduled functions are called synchronously from
@@ -123,11 +132,17 @@ def schedule_call(delay, func, repeat = False):
     return item
 
 
-def schedule_event(delay, func, repeat = False):
+def schedule_event(delay, func, repeat=False):
+
     def thunk():
-        event = Event(USEREVENT, time = timestamp())
+        #
+        # Pygame 1.9 update
+        #
+        # event = Event(USEREVENT, time = timestamp())
+        event = Event(USEREVENT, dict=None)
         add_modifiers(event)
         func(event)
+
     schedule_call(delay, thunk, repeat)
 
 
