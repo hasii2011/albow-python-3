@@ -4,7 +4,7 @@ from albow.shell import Shell
 from albow.themes.Theme import Theme
 from albow.widgets.Button import Button
 
-from albow.multichoice import TextMultiChoice
+from albow.choices.TextMultiChoice import TextMultiChoice
 from albow.layout.Column import Column
 
 
