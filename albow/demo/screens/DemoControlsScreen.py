@@ -6,7 +6,6 @@ from albow.controls import AttrRef
 
 from albow.themes.Theme import Theme
 
-
 from albow.input.FloatField import FloatField
 
 from albow.widgets.ValueDisplay import ValueDisplay

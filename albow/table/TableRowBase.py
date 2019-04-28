@@ -1,7 +1,7 @@
 
 from pygame import Rect
 
-from palette_view import PaletteView
+from albow.PaletteView import PaletteView
 
 
 class TableRowBase(PaletteView):
