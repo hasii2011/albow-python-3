@@ -4,7 +4,7 @@ from albow.shell import Shell
 from albow.themes.Theme import Theme
 from albow.widgets.Button import Button
 
-from albow.multichoice import TextMultichoice
+from albow.multichoice import TextMultiChoice
 from albow.layout.Column import Column
 
 
@@ -18,7 +18,7 @@ class DemoMultiChoiceScreen(Screen):
 
         textValues      = ["Value 1", "Value 2", "Value 3"]
         labelValues     = ["Choice 1", "Choice 2", "Choice 3"]
-        textMultiChoice = TextMultichoice(values=textValues, labels=labelValues)
+        textMultiChoice = TextMultiChoice(values=textValues, labels=labelValues)
         backButton      = Button("Menu", action=shell.show_menu)
 
         contents = Column([textMultiChoice, backButton])

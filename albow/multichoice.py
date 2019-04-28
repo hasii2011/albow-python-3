@@ -8,7 +8,7 @@ from albow.utils import blit_in_rect
 from albow.themes.ThemeProperty import ThemeProperty
 
 
-class Multichoice(PaletteView, Control):
+class MultiChoice(PaletteView, Control):
 
     highlight_color = ThemeProperty('highlight_color')
     cell_margin = ThemeProperty('cell_margin')
@@ -62,7 +62,7 @@ class Multichoice(PaletteView, Control):
             self.set_value(values[i])
 
 
-class TextMultichoice(Multichoice):
+class TextMultiChoice(MultiChoice):
 
     def __init__(self, values, labels=None, **kwds):
         if not labels:
@@ -87,7 +87,7 @@ class TextMultichoice(Multichoice):
         if self.highlight_style == 'arrows':
             self.draw_arrows(surf, i, rect)
         else:
-            Multichoice.draw_prehighlight(self, surf, i, rect)
+            MultiChoice.draw_prehighlight(self, surf, i, rect)
 
     def draw_arrows(self, surf, i, rect):
 
@@ -102,7 +102,7 @@ class TextMultichoice(Multichoice):
         draw.polygon(surf, color, pts)
 
 
-class ImageMultichoice(Multichoice):
+class ImageMultiChoice(MultiChoice):
 
     highlight_style = 'fill'
     sel_color = (255, 192, 19)
@@ -113,7 +113,7 @@ class ImageMultichoice(Multichoice):
         w, h = image0.get_size()
         d = 2 * self.predict(kwds, 'margin')
         cell_size = w + d, h + d
-        Multichoice.__init__(self, cell_size, values, **kwds)
+        MultiChoice.__init__(self, cell_size, values, **kwds)
         self.images = images
 
     def draw_item(self, surf, n, rect):
