@@ -10,11 +10,13 @@ from albow.resource import resource_dir
 
 from albow.themes.Theme import Theme
 from albow.widgets.Button import Button
+from albow.widgets.Label import Label
 
 from albow.choices.TextMultiChoice import TextMultiChoice
 from albow.choices.ImageMultiChoice import ImageMultiChoice
 
 from albow.layout.Column import Column
+from albow.layout.Row import Row
 
 IMAGE_RESOURCES_SUBDIR = "images"
 DEMO_CHOICE_IMAGE_1    = "EnterpriseD.png"
@@ -36,15 +38,29 @@ class DemoMultiChoiceScreen(Screen):
     def __init__(self, shell: Shell):
 
         self.logger = logging.getLogger(__name__)
-        attrs = {'bg_color': Theme.WHITE}
+        screenAttrs = {'bg_color': Theme.WHITE}
 
-        super().__init__(shell=shell, **attrs)
+        super().__init__(shell=shell, **screenAttrs)
 
+        labelAttrs = {
+            'bg_color': Theme.WHITE,
+            'fg_color': Theme.BLACK
+        }
+        textLabel        = Label("Make a choice: ", **labelAttrs)
         textMultiChoice  = self.makeTextMultiChoice()
+
+        imageLabel       = Label("Pick your ship: ", **labelAttrs)
         imageMultiChoice = self.makeImageMultiChoice()
+
+        textRow  = Row([textLabel, textMultiChoice])
+        imageRow = Row([imageLabel, imageMultiChoice])
+
         backButton       = Button("Menu", action=shell.show_menu)
 
-        contents = Column([textMultiChoice, imageMultiChoice, backButton])
+        columnAttrs = {
+            "align": "l"
+        }
+        contents = Column([textRow, imageRow, backButton], **columnAttrs)
 
         self.add_centered(contents)
         backButton.focus()
