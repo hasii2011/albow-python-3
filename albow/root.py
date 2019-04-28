@@ -5,14 +5,14 @@
 #---------------------------------------------------------------------------
 
 import sys
-from time import time, sleep
+from time import sleep
 import pygame
 from pygame.locals import *
-from pygame.time import Clock, get_ticks, set_timer as set_pygame_timer
+from pygame.time import get_ticks, set_timer as set_pygame_timer
 from pygame.event import Event, get_grab, set_grab
 from pygame.mouse import set_visible as set_mouse_visible
-import Widget
-from Widget import Widget
+from albow.core import Widget
+from albow.core.Widget import Widget
 
 mod_cmd = KMOD_LCTRL | KMOD_RCTRL | KMOD_LMETA | KMOD_RMETA
 double_click_time = 300 # milliseconds

@@ -1,6 +1,7 @@
 
 import logging
-import resource
+
+import albow
 
 from albow.themes.ThemeError import ThemeError
 
@@ -54,7 +55,7 @@ class Theme:
         if spec:
 
             self.logger.debug("font spec = %s", spec)
-            return resource.get_font(*spec)
+            return albow.resource.get_font(*spec)
 
     def add_theme(self, name):
         setattr(self, name, Theme(name))

@@ -1,5 +1,5 @@
 
-from Widget import overridable_property
+from albow.core.Widget import overridable_property
 
 class Control():
     """

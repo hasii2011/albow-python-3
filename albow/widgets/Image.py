@@ -1,8 +1,8 @@
 
 import resource
 
-from albow.Widget import Widget
-from albow.Widget import overridable_property
+from albow.core.Widget import Widget
+from albow.core.Widget import overridable_property
 
 from albow.themes.ThemeProperty import ThemeProperty
 

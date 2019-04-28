@@ -4,14 +4,15 @@
 
 
 from pygame.locals import *
-from screen import Screen
+from albow.screen import Screen
 
 from albow.themes.FontProperty import FontProperty
 
 from albow.widgets.Button import Button
 
-from resource import get_text
-from vectors import add, maximum
+from albow.resource import get_text
+from albow.vectors import add
+from albow.vectors import maximum
 
 
 class Page:

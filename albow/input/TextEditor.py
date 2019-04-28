@@ -4,8 +4,8 @@ from pygame.locals import K_RIGHT
 from pygame.locals import K_TAB
 from pygame import draw
 
-from albow.Widget import Widget
-from albow.Widget import overridable_property
+from albow.core.Widget import Widget
+from albow.core.Widget import overridable_property
 
 class TextEditor(Widget):
 

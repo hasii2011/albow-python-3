@@ -1,5 +1,5 @@
 
-from albow.Widget import Widget
+from albow.core.Widget import Widget
 
 
 class RowOrColumn(Widget):

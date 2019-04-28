@@ -1,7 +1,7 @@
 
 from albow.screen import Screen
 from albow.TabPanel import TabPanel
-from albow.Widget import Widget
+from albow.core.Widget import Widget
 from albow.shell import Shell
 
 from albow.widgets.Button import Button

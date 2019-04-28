@@ -1,11 +1,11 @@
 
 from pygame import Surface
 
-from Widget import Widget
+from albow.core.Widget import Widget
 
 from albow.widgets.Control import Control
 
-from utils import blit_in_rect
+from albow.utils import blit_in_rect
 
 class ValueDisplay(Control, Widget):
 

@@ -1,14 +1,22 @@
-from __future__ import division
+
 import sys
 import logging
 
-from pygame import Rect, Surface
-from pygame.locals import K_RETURN, K_KP_ENTER, K_ESCAPE, K_TAB, KEYDOWN, SRCALPHA
+from pygame import Rect
+from pygame import  Surface
+from pygame.locals import K_RETURN
+from pygame.locals import K_KP_ENTER
+from pygame.locals import K_ESCAPE
+from pygame.locals import K_TAB
+from pygame.locals import KEYDOWN
+from pygame.locals import SRCALPHA
+
 from pygame.mouse import set_cursor
 from pygame.cursors import arrow as arrow_cursor
 from pygame.transform import rotozoom
-from vectors import add, subtract
-from utils import frame_rect
+from albow.vectors import add
+from albow.vectors import subtract
+from albow.utils import frame_rect
 
 from albow.themes.ThemeProperty import ThemeProperty
 from albow.themes.FontProperty import FontProperty

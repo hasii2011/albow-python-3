@@ -1,8 +1,8 @@
 
 import logging
 
-from Widget import overridable_property
-from Widget import Widget
+from albow.core.Widget import overridable_property
+from albow.core.Widget import Widget
 from albow.themes.ThemeProperty import ThemeProperty
 
 

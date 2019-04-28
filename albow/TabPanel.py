@@ -1,6 +1,6 @@
 
 from pygame import Rect
-from albow.Widget import Widget
+from albow.core.Widget import Widget
 from albow.themes.ThemeProperty import ThemeProperty
 from albow.themes.FontProperty import FontProperty
 

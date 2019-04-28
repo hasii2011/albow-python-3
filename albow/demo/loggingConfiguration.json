@@ -31,7 +31,7 @@
             ]
         },
 
-        "Widget": {
+        "albow.core.Widget": {
             "level": "INFO",
             "handlers": [
                 "consoleHandler"

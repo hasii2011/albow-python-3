@@ -1,7 +1,7 @@
 
 from pygame import Rect
 
-from albow.Widget import Widget
+from albow.core.Widget import Widget
 
 
 class Grid(Widget):
