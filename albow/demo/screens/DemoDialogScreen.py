@@ -1,6 +1,6 @@
 
 from albow.shell import Shell
-from albow.screen import Screen
+from albow.core.screen import Screen
 from albow.resource import get_font
 
 from albow.layout.Column import Column

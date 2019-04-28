@@ -1,7 +1,7 @@
 
 import random
 
-from albow.screen import Screen
+from albow.core.screen import Screen
 from albow.shell import Shell
 
 from albow.widgets.Button import Button

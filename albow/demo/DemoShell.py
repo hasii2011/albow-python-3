@@ -5,8 +5,6 @@ from albow.text_screen import TextScreen
 
 from albow.themes.Theme import Theme
 
-from albow.screen import Screen
-
 from albow.demo.screens.DemoMultiChoiceScreen import DemoMultiChoiceScreen
 from albow.demo.screens.DemoTableScreen import DemoTableScreen
 from albow.demo.screens.DemoTabPanelScreen import DemoTabPanelScreen
