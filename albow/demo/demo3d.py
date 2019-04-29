@@ -22,8 +22,8 @@ from albow.core.RootWidget import RootWidget
 from albow.widgets.Button import Button
 from albow.layout.Row import Row
 
-from albow.open_gl_tmp import GLOrtho
-from albow.open_gl_tmp import GLPerspective
+from albow.opengl.open_gl_tmp import GLOrtho
+from albow.opengl.open_gl_tmp import GLPerspective
 
 
 class DemoButton(Button):
