@@ -23,7 +23,7 @@ from albow.widgets.Button import Button
 from albow.layout.Row import Row
 
 from albow.openGL.GLOrtho import GLOrtho
-from albow.openGL.open_gl import GLPerspective
+from albow.openGL.GLPerspective import GLPerspective
 
 
 class DemoButton(Button):
