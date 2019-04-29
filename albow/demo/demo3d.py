@@ -58,6 +58,7 @@ class OrthoDemo(GLOrtho):
     def darker(self):
         self.sat = min(1.0, self.sat + 0.1)
 
+
 def ortho_controls(ortho):
     bl = DemoButton("Lighter", ortho.lighter)
     bd = DemoButton("Darker", ortho.darker)
@@ -96,8 +97,9 @@ class PerspectiveDemo(GLPerspective):
         glRotatef(self.arot[1], 0, 1, 0)
         glRotatef(self.arot[2], 0, 0, 1)
         glBegin(GL_QUADS)
-        for color, face in zip(cube_colors, cube_faces):
-            glColor3fv(color)
+
+        for aColor, face in zip(cube_colors, cube_faces):
+            glColor3fv(aColor)
             for i in face:
                 glVertex3fv(cube_pts[i])
         glEnd()
