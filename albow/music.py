@@ -18,8 +18,8 @@ if music:
     import root
     music.set_endevent(root.MUSIC_END_EVENT)
 
-from resource import resource_path
-from root import schedule
+from albow.resource import resource_path
+from albow.core.root import schedule
 
 #---------------------------------------------------------------------------
 
@@ -151,7 +151,7 @@ def set_music_enabled(state):
 #---------------------------------------------------------------------------
 
 from pygame import Rect
-from core.Widget import Widget
+from albow.core.Widget import Widget
 
 from albow.layout.Column import Column
 from albow.layout.Grid import Grid
