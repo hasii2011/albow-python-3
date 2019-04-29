@@ -1,10 +1,4 @@
-#---------------------------------------------------------------------------
-#
-#   Albow - Music
-#
-#---------------------------------------------------------------------------
 
-from __future__ import division
 import os
 from random import randrange
 
@@ -15,8 +9,10 @@ except ImportError:
     print("Music not available")
 
 if music:
-    import root
-    music.set_endevent(root.MUSIC_END_EVENT)
+    #
+    #  Pygame 1.9 update
+    #  music.set_endevent(MUSIC_END_EVENT)
+    music.set_endevent()
 
 from albow.resource import resource_path
 from albow.core.root import schedule
@@ -61,7 +57,6 @@ class PlayList:
                 items.append(item)
             return item
 
-#---------------------------------------------------------------------------
 
 def get_music(*names, **kwds):
     """Return the full pathname of a music file from the "music" resource

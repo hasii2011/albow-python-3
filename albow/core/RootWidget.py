@@ -28,6 +28,8 @@ from albow.core.root import set_modifier
 from albow.core.root import Cancel
 from albow.core.root import ApplicationError
 
+import albow.media.music
+
 MUSIC_END_EVENT = USEREVENT + 1
 
 DOUBLE_CLICK_TIME = 300 # milliseconds
@@ -365,8 +367,7 @@ class RootWidget(Widget):
         return event
 
     def music_end(self):
-        import albow.music
-        albow.music.music_end()
+        albow.media.music.music_end()
 
     def report_error(self, e):
         pass
