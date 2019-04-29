@@ -30,4 +30,3 @@ class Control():
             ref.set(x)
         else:
             self._value = x
-

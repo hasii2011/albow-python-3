@@ -3,6 +3,7 @@ from pygame import event
 
 from albow.widgets.Control import Control
 
+
 class ButtonBase(Control):
 
     align = 'c'

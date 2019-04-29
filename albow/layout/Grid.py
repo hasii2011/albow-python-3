@@ -4,12 +4,17 @@ from pygame import Rect
 from albow.core.Widget import Widget
 
 
+DEFAULT_GRID_COLUMN_SPACING = 10
+DEFAULT_GRID_ROW_SPACING    = 10
+
+
 class Grid(Widget):
 
     _is_gl_container = True
     margin = 0
 
-    def __init__(self, rows, row_spacing=10, column_spacing=10, **kwds):
+    def __init__(self, rows, row_spacing=DEFAULT_GRID_ROW_SPACING, column_spacing=DEFAULT_GRID_COLUMN_SPACING, **kwds):
+
         self.margin = m = kwds.pop('margin', self.margin)
         col_widths = [0] * len(rows[0])
         row_heights = [0] * len(rows)

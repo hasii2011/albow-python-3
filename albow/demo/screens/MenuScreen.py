@@ -9,8 +9,12 @@ from albow.widgets.Button import Button
 from albow.widgets.Label import Label
 
 from albow.layout.Column import Column
+from albow.layout.Grid import Grid
 
 from albow.themes.Theme import Theme
+
+DEMO_TITLE_TEXT_SIZE = 24
+DEMO_BUTTON_TEXT_SIZE = 14
 
 class MenuScreen(Screen):
     """
@@ -29,32 +33,56 @@ class MenuScreen(Screen):
         super().__init__(shell)
 
         self.shell     = shell
-        f1             = get_font(24, Theme.BUILT_IN_FONT)
-        title          = Label("Albow Demonstration", font = f1)
-        title.fg_color = Theme.WHITE
+        f1             = get_font(DEMO_TITLE_TEXT_SIZE, Theme.BUILT_IN_FONT)
+        titleAttrs = {
+            'fg_color': Theme.BLACK,
+            'enabled_bg_color': Theme.WHITE,
+            'highlight_color': True,
+            'align': 'c'
+        }
+        title = Label("Albow Demonstration", font=f1, **titleAttrs)
 
-        menu = Column([
-            self.screen_button("Text Screen",    shell.text_screen),
-            self.screen_button("Text Fields",    shell.fields_screen),
-            self.screen_button("Controls",       shell.controls_screen),
-            self.screen_button("Timing",         shell.anim_screen),
-            self.screen_button("Grid View",      shell.grid_screen),
-            self.screen_button("Palette View",   shell.palette_screen),
-            self.screen_button("Image Array",    shell.image_array_screen),
-            self.screen_button("Modal Dialogs",  shell.dialog_screen),
-            self.screen_button("Tab Panel",      shell.tab_panel_screen),
-            self.screen_button("Table View",     shell.table_screen),
-            self.screen_button("MultiChoice",    shell.multiChoiceScreen),
-            Button("Quit", shell.quit),
-        ], align='l')
+        menuArray = [
+            [
+                self.screen_button("Text Screen",    shell.text_screen),
+                self.screen_button("Text Fields",    shell.fields_screen),
+                self.screen_button("Controls",       shell.controls_screen),
+            ],
+            [
+                self.screen_button("Timing",       shell.anim_screen),
+                self.screen_button("Grid View",    shell.grid_screen),
+                self.screen_button("Palette View", shell.palette_screen),
+            ],
+            [
+                self.screen_button("Image Array",   shell.image_array_screen),
+                self.screen_button("Modal Dialogs", shell.dialog_screen),
+                self.screen_button("Tab Panel",     shell.tab_panel_screen),
+            ],
+            [
+                self.screen_button("Table View",  shell.table_screen),
+                self.screen_button("MultiChoice", shell.multiChoiceScreen),
+                Button("Quit", shell.quit)
+            ]
+        ]
+
+        menuGrid = Grid(rows=menuArray, column_spacing=5, row_spacing=2)
+        quitButton = Button("Quit", shell.quit),
+
+
         contents = Column([
             title,
-            menu,
-        ], align = 'l', spacing=20)
+            menuGrid
+        ], align='c', spacing=10)
         self.add_centered(contents)
 
     def screen_button(self, text: str, screen: Screen):
-        return Button(text, action=lambda: self.shell.show_screen(screen))
+
+        buttFont = get_font(DEMO_BUTTON_TEXT_SIZE, Theme.BUILT_IN_FONT)
+        buttAttrs = {
+            'font': buttFont
+        }
+        retButton = Button(text, action=lambda: self.shell.show_screen(screen), **buttAttrs)
+        return retButton
 
     def quit(self):
         sys.exit(0)
