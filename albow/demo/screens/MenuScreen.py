@@ -1,6 +1,8 @@
 
 import sys
 
+import logging
+
 from albow.resource import get_font
 from albow.core.Screen import Screen
 from albow.core.Shell import Shell
@@ -26,6 +28,7 @@ class MenuScreen(Screen):
 
         :param shell:
         """
+        self.logger = logging.getLogger(__name__)
         #
         # Python 3 update
         #
@@ -68,6 +71,7 @@ class MenuScreen(Screen):
         menuGrid = Grid(rows=menuArray, column_spacing=5, row_spacing=2)
         quitButton = Button("Quit", shell.quit),
 
+        self.equallySizeButtons(menuArray)
 
         contents = Column([
             title,
@@ -83,6 +87,22 @@ class MenuScreen(Screen):
         }
         retButton = Button(text, action=lambda: self.shell.show_screen(screen), **buttAttrs)
         return retButton
+
+    def equallySizeButtons(self, menuArray):
+
+        largestWidth: int = 0
+        for buttRow in menuArray:
+            for butt in buttRow:
+                self.logger.debug("Button text: %s, width: %s", butt.text, butt.width)
+                currWidth = butt.width
+                if currWidth > largestWidth:
+                    largestWidth = currWidth
+
+        self.logger.debug("largestWidth: %s", largestWidth)
+
+        for buttRow in menuArray:
+            for butt in buttRow:
+                butt.width = largestWidth
 
     def quit(self):
         sys.exit(0)
