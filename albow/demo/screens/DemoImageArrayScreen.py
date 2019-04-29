@@ -3,7 +3,7 @@ from albow.core.Screen import Screen
 from albow.core.Shell import Shell
 from albow.resource import get_font
 
-from albow.image_array import get_image_array
+from albow.containers.image_array import get_image_array
 
 from albow.widgets.Label import Label
 from albow.widgets.Button import Button
