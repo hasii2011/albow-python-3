@@ -1,14 +1,9 @@
-#-------------------------------------------------------------------------
-#
-#   Albow - OpenGL widgets
-#
-#-------------------------------------------------------------------------
 
-from __future__ import division
 from pygame import Rect, image
 from pygame.display import get_surface as get_display
 from OpenGL import GL, GLU
-from core.Widget import Widget
+from albow.core.Widget import Widget
+
 
 class GLViewport(Widget):
 
@@ -22,7 +17,7 @@ class GLViewport(Widget):
         # glPushClientAttrib insists on an unsigned long.
         GL.glPushClientAttrib(0xffffffff)
         GL.glPushAttrib(GL.GL_ALL_ATTRIB_BITS)
-        #GL.glViewport(rect.left, root.height - rect.bottom, rect.width, rect.height)
+        # GL.glViewport(rect.left, root.height - rect.bottom, rect.width, rect.height)
         self.gl_draw_viewport()
         GL.glPopAttrib()
         GL.glPopClientAttrib()
@@ -56,7 +51,7 @@ class GLViewport(Widget):
         w, h = self.size
         viewport = (0, 0, w, h)
         self.setup_matrices()
-        #gf = GL.glGetFloatv
+        # gf = GL.glGetFloatv
         gf = GL.glGetDoublev
         pr_mat = gf(GL.GL_PROJECTION_MATRIX)
         mv_mat = gf(GL.GL_MODELVIEW_MATRIX)
@@ -67,13 +62,10 @@ class GLViewport(Widget):
         p1 = up(x, y, 1.0, mv_mat, pr_mat, viewport)
         event.dict['ray'] = (p0, p1)
 
-#-------------------------------------------------------------------------
 
 class GLOrtho(GLViewport):
 
-    def __init__(self, rect = None,
-                 xmin = -1, xmax = 1, ymin = -1, ymax = 1,
-                 near = -1, far = 1, **kwds):
+    def __init__(self, rect=None, xmin=-1, xmax=1, ymin=-1, ymax=1, near=-1, far=1, **kwds):
         GLViewport.__init__(self, rect, **kwds)
         self.xmin = xmin
         self.xmax = xmax
@@ -86,12 +78,10 @@ class GLOrtho(GLViewport):
         GL.glOrtho(self.xmin, self.xmax, self.ymin, self.ymax,
                    self.near, self.far)
 
-#-------------------------------------------------------------------------
 
 class GLPerspective(GLViewport):
 
-    def __init__(self, rect = None, fovy = 20,
-                 near = 0.1, far = 1000, **kwds):
+    def __init__(self, rect=None, fovy=20, near=0.1, far=1000, **kwds):
         GLViewport.__init__(self, rect, **kwds)
         self.fovy = fovy
         self.near = near
@@ -157,9 +147,10 @@ class GLSurface:
     def get_rect(self):
         return Rect(self.rect)
 
-    def blit(self, src, dst = (0, 0), area = None, flags = 0):
+    def blit(self, src, dst=(0, 0), area=None, flags=0):
+        #
         # TODO: flags
-        #print "GLSurface.blit:", src, "at", dst, "area =", area ###
+        # print "GLSurface.blit:", src, "at", dst, "area =", area ###
         if isinstance(dst, Rect):
             dst = dst.topleft
         x, y = dst
@@ -170,12 +161,12 @@ class GLSurface:
             y += area.top
         w, h = src.get_size()
         data = image.tostring(src, 'RGBA', 1)
-        #print "GLSurface: Drawing %sx%s pixels at %s,%s" % (w, h, x, y + h) ###
+        #  print "GLSurface: Drawing %sx%s pixels at %s,%s" % (w, h, x, y + h) ###
         gl = GL
         gl.glRasterPos2i(x, y + h)
         gl.glDrawPixels(w, h, gl.GL_RGBA, gl.GL_UNSIGNED_BYTE, data)
 
-    def fill(self, color, rect = None, flags = 0):
+    def fill(self, color, rect=None, flags=0):
         # TODO: flags
         if rect:
             x, y, w, h = rect
@@ -196,4 +187,3 @@ class GLSurface:
         r = self.rect
         subrect = rect.move(r.left, r.top)
         return GLSurface(self.display, r.clip(subrect))
-

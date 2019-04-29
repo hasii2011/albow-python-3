@@ -756,7 +756,8 @@ class Widget():
     #		pass
 
     def gl_draw_all(self, gl_surface):
-        #print "Widget.gl_draw_all:", self, "on", gl_surface ###
+
+        # print "Widget.gl_draw_all:", self, "on", gl_surface ###
         if self.visible:
             if self.is_gl_container:
                 self.gl_draw_self(gl_surface)
@@ -771,7 +772,8 @@ class Widget():
                 gl_surface.gl_exit()
 
     def gl_draw_self(self, gl_surface):
-        #print "Widget.gl_draw_self:", self ###
+
+        # print "Widget.gl_draw_self:", self ###
         gl_surface.gl_enter()
         # TODO: draw background and border here
         self.draw(gl_surface)
