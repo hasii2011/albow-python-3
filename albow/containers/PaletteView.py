@@ -6,7 +6,7 @@ import logging
 from pygame import Rect
 from pygame import draw
 
-from albow.grid_view import GridView
+from albow.containers.grid_view import GridView
 from albow.utils import frame_rect
 
 from albow.themes.ThemeProperty import ThemeProperty

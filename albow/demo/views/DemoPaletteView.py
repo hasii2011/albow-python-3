@@ -2,7 +2,7 @@
 
 from pygame.color import Color
 
-from albow.PaletteView import PaletteView
+from albow.containers.PaletteView import PaletteView
 
 
 class DemoPaletteView(PaletteView):

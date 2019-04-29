@@ -3,7 +3,7 @@
 from pygame.color import Color
 
 from albow.themes.Theme import Theme
-from albow.grid_view import GridView
+from albow.containers.grid_view import GridView
 
 DEMO_NCOLS = 3
 DEMO_NROWS = 2
