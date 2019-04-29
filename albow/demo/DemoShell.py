@@ -1,6 +1,6 @@
 
 from albow.core.Shell import Shell
-from albow.text.text_screen import TextScreen
+from albow.text.TextScreen import TextScreen
 
 
 from albow.themes.Theme import Theme
