@@ -1,19 +1,19 @@
-#--------------------------------------------------------------------------
-#
-#   Albow - OpenGL Demo
-#
-#--------------------------------------------------------------------------
 
 screen_size = (640, 480)
 flags = 0
 
-import os, sys
+import os
+import sys
+
 from os.path import dirname as d
 sys.path.insert(1, d(d(os.path.abspath(sys.argv[0]))))
 
 from OpenGL.GL import *
+
 import pygame
+
 pygame.init()
+
 from pygame.color import Color
 from pygame.locals import *
 
@@ -22,16 +22,15 @@ from albow.core.RootWidget import RootWidget
 from albow.widgets.Button import Button
 from albow.layout.Row import Row
 
-from albow.opengl import GLOrtho, GLPerspective
+from albow.open_gl_tmp import GLOrtho
+from albow.open_gl_tmp import GLPerspective
 
-#--------------------------------------------------------------------------
 
 class DemoButton(Button):
 	bg_color = Color("brown")
 	border_width = 2
 	margin = 4
 
-#--------------------------------------------------------------------------
 
 class OrthoDemo(GLOrtho):
 
@@ -65,7 +64,6 @@ def ortho_controls(ortho):
 	row = Row([bl, bd])
 	return row
 
-#--------------------------------------------------------------------------
 
 cube_pts = [
 	(-1, -1, -1), (1, -1, -1), (1, 1, -1), (-1, 1, -1),
@@ -82,6 +80,7 @@ cube_colors = [
 	(1, 0, 0), (0, 1, 0), (0.5, 0.75, 1),
 	(1, 1, 0), (1, 0, 1), (0, 1, 1),
 ]
+
 
 class PerspectiveDemo(GLPerspective):
 
@@ -109,6 +108,7 @@ class PerspectiveDemo(GLPerspective):
 	def rot(self, i):
 		self.arot[i] = (self.arot[i] + 10) % 360
 
+
 def persp_controls(persp):
 	bx = DemoButton("RotX", lambda: persp.rot(0))
 	by = DemoButton("RotY", lambda: persp.rot(1))
@@ -116,7 +116,6 @@ def persp_controls(persp):
 	row = Row([bx, by, bz])
 	return row
 
-#--------------------------------------------------------------------------
 
 def add_demo_widgets(root):
 	ortho = OrthoDemo()
@@ -132,10 +131,11 @@ def add_demo_widgets(root):
 	pcon.midtop = (persp.centerx, persp.bottom + 20)
 	root.add(pcon)
 
+
 def main():
 	gl_flags = flags | OPENGL
 	if "-s" in sys.argv:
-		print("Using single buffering")
+	    print("Using single buffering")
 	else:
 		print("Using double buffering")
 		gl_flags |= DOUBLEBUF
@@ -144,5 +144,6 @@ def main():
 	root.bg_color = Color("blue")
 	add_demo_widgets(root)
 	root.run()
+
 
 main()
