@@ -484,9 +484,18 @@ class Widget():
         return d
 
     def get_global_rect(self):
+
         p = self.local_to_global_offset()
+        #
+        # Python 3 update
+        #
+        pTuple = tuple(p)
         s = self.rect.size
-        return Rect(p, s)
+        #
+        # Python 3 update
+        #
+        # return Rect(p, s)
+        return Rect(pTuple, s)
 
     def key_down(self, event):
         k = event.key

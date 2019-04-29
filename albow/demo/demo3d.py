@@ -104,7 +104,7 @@ class PerspectiveDemo(GLPerspective):
 		glEnd()
 	
 	def mouse_down(self, e):
-		print "Perspective: mouse_down: ray =", e.ray
+		print("Perspective: mouse_down: ray =", e.ray)
 	
 	def rot(self, i):
 		self.arot[i] = (self.arot[i] + 10) % 360
@@ -135,9 +135,9 @@ def add_demo_widgets(root):
 def main():
 	gl_flags = flags | OPENGL
 	if "-s" in sys.argv:
-		print "Using single buffering"
+		print("Using single buffering")
 	else:
-		print "Using double buffering"
+		print("Using double buffering")
 		gl_flags |= DOUBLEBUF
 	display = pygame.display.set_mode(screen_size, gl_flags)
 	root = RootWidget(display)
