@@ -26,10 +26,10 @@ class DemoMenuBarScreen(Screen):
         super().__init__(shell=shell, **screenAttrs)
 
         items = [
-            MenuItem(text="Item 1"),
-            MenuItem(text="Item 2"),
-            MenuItem(text="Item 3"),
-            MenuItem(text="Item 4")
+            MenuItem(text="Item 1", command="menuItem1"),
+            MenuItem(text="Item 2", command="menuItem2"),
+            MenuItem(text="Item 3", command="menuItem3"),
+            MenuItem(text="Item 4", command="menuItem4")
         ]
         fileMenu = Menu(title="File", items=items)
         editMenu = Menu(title="Edit", items=items)
@@ -51,3 +51,15 @@ class DemoMenuBarScreen(Screen):
 
         self.add_centered(contents)
         backButton.focus()
+
+    def menuItem1_cmd(self):
+        self.logger.info("Executed menu item 1 command")
+
+    def menuItem2_cmd(self):
+        self.logger.info("Executed menu item 2 command")
+
+    def menuItem3_cmd(self):
+        self.logger.info("Executed menu item 3 command")
+
+    def menuItem4_cmd(self):
+        self.logger.info("Executed menu item 4 command")

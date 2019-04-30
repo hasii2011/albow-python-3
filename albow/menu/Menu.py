@@ -27,8 +27,6 @@ class Menu(Dialog):
 
     def show(self, client, pos):
         """
-        TODO
-        Menu.present() signature does not match Widget.present
 
         :param client:
         :param pos:
