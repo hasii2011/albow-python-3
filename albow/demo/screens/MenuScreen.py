@@ -69,15 +69,17 @@ class MenuScreen(Screen):
         ]
 
         menuGrid = Grid(rows=menuArray, column_spacing=5, row_spacing=2)
-        quitButton = Button("Quit", shell.quit),
+        quitButton = Button("Quit", shell.quit)
 
         self.equallySizeButtons(menuArray)
 
         contents = Column([
             title,
-            menuGrid
+            menuGrid,
+            quitButton
         ], align='c', spacing=10)
         self.add_centered(contents)
+
 
     def screen_button(self, text: str, screen: Screen):
 
@@ -103,6 +105,8 @@ class MenuScreen(Screen):
         for buttRow in menuArray:
             for butt in buttRow:
                 butt.width = largestWidth
+
+        return menuArray
 
     def quit(self):
         sys.exit(0)

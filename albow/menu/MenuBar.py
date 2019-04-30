@@ -1,7 +1,8 @@
 
 from pygame import Rect
-from core.Widget import Widget
-from core.Widget import overridable_property
+
+from albow.core.Widget import Widget
+from albow.core.Widget import overridable_property
 
 
 class MenuBar(Widget):

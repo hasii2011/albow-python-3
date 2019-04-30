@@ -264,7 +264,7 @@ class Widget():
             if isinstance(arg, Widget) or not hasattr(arg, '__iter__' ):
                 arg.set_parent(self)
             else:
-                #print("arg: {}".format(arg.__str__()))
+                # print("arg: {}".format(arg.__str__()))
                 self.logger.debug("arg is container: %s", arg.__str__)
                 for item in arg:
                     self.add(item)
@@ -381,7 +381,7 @@ class Widget():
         :return:
         """
         posMap = self.global_to_local(event.pos)
-        #event.dict['local'] = self.global_to_local(event.pos)
+        # event.dict['local'] = self.global_to_local(event.pos)
         event.dict['local'] = list(posMap)
 
     def setup_cursor(self, event):

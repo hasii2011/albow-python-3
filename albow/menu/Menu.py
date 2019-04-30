@@ -1,6 +1,6 @@
 
-from root import get_root
-from root import get_focus
+from albow.core.RootWidget import get_root
+from albow.core.RootWidget import get_focus
 
 from albow.dialog.Dialog import Dialog
 from albow.themes.ThemeProperty import ThemeProperty
