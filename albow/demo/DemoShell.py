@@ -15,7 +15,7 @@ from albow.demo.screens.DemoAnimationScreen import DemoAnimationScreen
 from albow.demo.screens.DemoControlsScreen import DemoControlsScreen
 from albow.demo.screens.DemoTextFieldsScreen import DemoTextFieldsScreen
 from albow.demo.screens.DemoDialogScreen import DemoDialogScreen
-from albow.demo.screens.DemonMenuBarScreen import DemoMenuBarScreen
+from albow.demo.screens.DemoMenuBarScreen import DemoMenuBarScreen
 from albow.demo.screens.MenuScreen import MenuScreen
 
 DEMO_FRAME_TIME  = 50  # ms
