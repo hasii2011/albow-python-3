@@ -64,7 +64,7 @@ class MenuScreen(Screen):
             [
                 self.screen_button("Table View",  shell.table_screen),
                 self.screen_button("MultiChoice", shell.multiChoiceScreen),
-                Button("Quit", shell.quit)
+                self.screen_button("MenuBar",     shell.menuBarScreen)
             ]
         ]
 

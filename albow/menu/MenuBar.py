@@ -55,7 +55,7 @@ class MenuBar(Widget):
     def show_menu(self, menu, x):
         self._hilited_menu = menu
         try:
-            i = menu.present(self, (x, self.height))
+            i = menu.show(self, (x, self.height))
         finally:
             self._hilited_menu = None
         menu.invoke_item(i)

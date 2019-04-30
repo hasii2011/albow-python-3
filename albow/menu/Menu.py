@@ -18,11 +18,14 @@ class Menu(Dialog):
         self._key_margin = None
         self.title       = title
         self.items       = items
-        self._items      = [MenuItem(*item) for item in items]
-
+        #
+        # Python 3 update
+        #
+        # self._items      = [MenuItem(*item) for item in items]
+        self._items      = items
         super().__init__(**kwds)
 
-    def present(self, client, pos):
+    def show(self, client, pos):
         """
         TODO
         Menu.present() signature does not match Widget.present
@@ -33,7 +36,12 @@ class Menu(Dialog):
         """
 
         client = client or get_root()
-        self.topleft = client.local_to_global(pos)
+        #
+        # Python 3 update
+        #
+        aValue = list(client.local_to_global(pos))
+        # self.topleft = client.local_to_global(pos)
+        self.topleft = aValue
         focus = get_focus()
         font = self.font
         h = font.get_linesize()
