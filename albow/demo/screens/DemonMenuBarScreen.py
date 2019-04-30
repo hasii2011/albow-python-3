@@ -9,10 +9,12 @@ from albow.core.Shell import Shell
 from albow.widgets.Button import Button
 
 from albow.layout.Column import Column
+from albow.layout.Frame import Frame
 
 from albow.menu.MenuBar import MenuBar
 from albow.menu.Menu import Menu
 from albow.menu.MenuItem import MenuItem
+
 
 class DemoMenuBarScreen(Screen):
 
@@ -37,13 +39,15 @@ class DemoMenuBarScreen(Screen):
             fileMenu, editMenu, viewMenu, helpMenu
         ]
 
-        menuBar = MenuBar(menus=menus)
-        backButton       = Button("Menu", action=shell.show_menu)
+        menuBar = MenuBar(menus=menus, width=self.width/2)
+        backButton = Button("Menu", action=shell.show_menu)
 
+        framedMenuBar = Frame(client=menuBar)
         columnAttrs = {
-            "align": "l"
+            "align": "l",
+            'expand': 0
         }
-        contents = Column([menuBar, backButton], **columnAttrs)
+        contents = Column([framedMenuBar, backButton], **columnAttrs)
 
         self.add_centered(contents)
         backButton.focus()

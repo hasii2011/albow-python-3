@@ -4,6 +4,7 @@ from pygame.event import Event
 from albow.core.Shell import Shell
 from albow.core.Widget import Widget
 
+
 class Screen(Widget):
 
     def __init__(self, shell: Shell, **kwds):
@@ -31,4 +32,3 @@ class Screen(Widget):
 
     def leave_screen(self):
         pass
-
