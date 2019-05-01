@@ -29,3 +29,6 @@ class MusicOptionsDialog(Dialog):
         contents.topleft = (20, 20)
         self.add(contents)
         self.shrink_wrap()
+
+    def ok(self):
+        self.dismiss(True)

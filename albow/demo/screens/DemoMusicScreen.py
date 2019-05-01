@@ -1,11 +1,16 @@
 
 import logging
 
-from albow.layout.Column import Column
-
 from albow.core.Shell import Shell
 
+from albow.layout.Column import Column
+
+from albow.widgets.Button import Button
+
 from albow.demo.screens.BaseDemoScreen import BaseDemoScreen
+
+from albow.media.MusicOptionsDialog import MusicOptionsDialog
+
 
 class DemoMusicScreen(BaseDemoScreen):
 
@@ -21,7 +26,17 @@ class DemoMusicScreen(BaseDemoScreen):
             "align": "c",
             'expand': 0
         }
-        contents = Column([self.backButton], **columnAttrs)
+        attrs = {
+            'font': self.smallButtonFont
+        }
+        launchMusicDialog: Button = Button(text="Options Dialog", action=self.testOptionsDialog, **attrs)
+
+        contents = Column([launchMusicDialog, self.backButton], **columnAttrs)
         self.add_centered(contents)
         self.backButton.focus()
 
+    def testOptionsDialog(self):
+
+        dialog: MusicOptionsDialog = MusicOptionsDialog()
+
+        dialog.present()
