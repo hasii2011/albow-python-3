@@ -3,7 +3,6 @@ import logging
 
 from albow.themes.Theme import Theme
 
-from albow.core.Screen import Screen
 from albow.core.Shell import Shell
 
 from albow.widgets.Button import Button
@@ -15,15 +14,16 @@ from albow.menu.MenuBar import MenuBar
 from albow.menu.Menu import Menu
 from albow.menu.MenuItem import MenuItem
 
+from albow.demo.screens.BaseDemoScreen import BaseDemoScreen
 
-class DemoMenuBarScreen(Screen):
+
+class DemoMenuBarScreen(BaseDemoScreen):
 
     def __init__(self, shell: Shell):
 
         self.logger = logging.getLogger(__name__)
-        screenAttrs = {'bg_color': Theme.WHITE}
 
-        super().__init__(shell=shell, **screenAttrs)
+        super().__init__(shell=shell)
 
         items = [
             MenuItem(text="Item 1", command="menuItem1"),
@@ -40,17 +40,16 @@ class DemoMenuBarScreen(Screen):
         ]
 
         menuBar = MenuBar(menus=menus, width=self.width/2)
-        backButton = Button("Menu", action=shell.show_menu)
 
         framedMenuBar = Frame(client=menuBar)
         columnAttrs = {
             "align": "l",
             'expand': 0
         }
-        contents = Column([framedMenuBar, backButton], **columnAttrs)
+        contents = Column([framedMenuBar, self.backButton], **columnAttrs)
 
         self.add_centered(contents)
-        backButton.focus()
+        self.backButton.focus()
 
     def menuItem1_cmd(self):
         self.logger.info("Executed menu item 1 command")

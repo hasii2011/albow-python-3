@@ -44,6 +44,10 @@ class LaunchDemosScreen(Screen):
             'align': 'c'
         }
         title = Label("Albow Demonstration", font=f1, **titleAttrs)
+        emptyButtFont = get_font(DEMO_BUTTON_TEXT_SIZE, Theme.BUILT_IN_FONT)
+        emptyButtAttrs = {
+            'font': emptyButtFont
+        }
 
         menuArray = [
             [
@@ -65,6 +69,11 @@ class LaunchDemosScreen(Screen):
                 self.screen_button("Table View",  shell.table_screen),
                 self.screen_button("MultiChoice", shell.multiChoiceScreen),
                 self.screen_button("MenuBar",     shell.menuBarScreen)
+            ],
+            [
+                self.screen_button("Music", shell.musicScreen),
+                Button("Empty", **emptyButtAttrs),
+                Button("Empty", **emptyButtAttrs)
             ]
         ]
 

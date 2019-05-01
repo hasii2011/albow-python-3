@@ -72,6 +72,14 @@
                 "consoleHandler"
             ],
             "propagate": "0"
+        },
+        "albow.demo.screens.DemoMenuScreen": {
+            "level": "INFO",
+            "handlers": [
+                "consoleHandler"
+            ],
+            "propagate": "0"
         }
+
     }
 }
