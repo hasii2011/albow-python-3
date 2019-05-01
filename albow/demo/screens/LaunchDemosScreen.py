@@ -18,7 +18,7 @@ from albow.themes.Theme import Theme
 DEMO_TITLE_TEXT_SIZE = 24
 DEMO_BUTTON_TEXT_SIZE = 14
 
-class MenuScreen(Screen):
+class LaunchDemosScreen(Screen):
     """
     Buttons
     """
