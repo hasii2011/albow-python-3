@@ -1,5 +1,8 @@
 
 import logging
+
+musicLogger = logging.getLogger(__name__)
+
 from albow.core.root import schedule
 
 from albow.widgets.CheckBox import CheckBox
@@ -10,18 +13,17 @@ try:
     from pygame.mixer import music
 except ImportError:
     music = None
-    print("Music not available")
+    musicLogger.error("* * * Music module not available * * *")
 
-music_enabled:bool = True
+
+music_enabled: bool = True
 current_music = None
 current_playlist: PlayList = None
 
-change_delay: int = 2  # Delay between end of one item and starting the next (sec)
+change_delay:       int = 2  # Delay between end of one item and starting the next (sec)
+next_change_delay:  int = 0
+fadeout_time:       int = 1  # Time over which to fade out music (sec)
 
-next_change_delay: int = 0
-fadeout_time: int = 1  # Time over which to fade out music (sec)
-
-musicLogger = logging.getLogger(__name__)
 
 def get_music_enabled():
     return music_enabled
@@ -37,7 +39,8 @@ def jog_music():
 
 
 def music_end():
-    # print "albow.music: music_end" ###
+
+    musicLogger.info("music_end")
     schedule(next_change_delay, jog_music)
 
 
@@ -58,7 +61,7 @@ def start_next_music():
         current_music = next_music
 
 
-def set_music_enabled(state):
+def set_music_enabled(state:  bool):
 
     global music_enabled
     if music_enabled != state:
@@ -79,7 +82,7 @@ def set_music_enabled(state):
             music.stop()
 
 
-def change_playlist(new_playlist):
+def change_playlist(new_playlist: PlayList):
     """
     Fade out any currently playing music and start playing from the given
     playlist.
@@ -103,7 +106,6 @@ def change_music(new_music, repeat=False):
     music file
     """
 
-    #  print "albow.music: change_music" ###
     musicLogger.info("change_music")
     if music and new_music is not current_music:
         if new_music:
