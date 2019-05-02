@@ -8,7 +8,7 @@ from albow.core.root import schedule
 from albow.resource import resource_path
 
 from albow.media.PlayList import PlayList
-from albow.media.MusicOptionsDialog import MusicOptionsDialog
+# from albow.media.MusicOptionsDialog import MusicOptionsDialog
 
 try:
     from pygame.mixer import music
@@ -49,16 +49,16 @@ def get_playlist(*names, **kwds) -> PlayList:
     return PlayList(items, **kwds)
 
 
-def show_music_options_dialog():
-    dlog = MusicOptionsDialog()
-    dlog.present()
+# def show_music_options_dialog():
+#     dlog = MusicOptionsDialog()
+#     dlog.present()
 
 
 def get_music_enabled():
     return music_enabled
 
 
-def set_music_enabled(state:  bool):
+def set_music_enabled(state: bool):
 
     global music_enabled
     if music_enabled != state:

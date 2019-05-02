@@ -2,12 +2,13 @@
 
 from albow.widgets.CheckBox import CheckBox
 
-import albow.media.MusicUtilities
+from albow.media.MusicUtilities import get_music_enabled
+from albow.media.MusicUtilities import set_music_enabled
 
 class EnableMusicControl(CheckBox):
 
     def get_value(self):
-        return MusicUtilities.get_music_enabled()
+        return get_music_enabled()
 
-    def set_value(self, x):
-        MusicUtilities.set_music_enabled(x)
+    def set_value(self, newState: bool):
+        set_music_enabled(newState)

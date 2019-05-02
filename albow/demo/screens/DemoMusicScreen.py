@@ -20,6 +20,7 @@ from albow.media.MusicUtilities import set_music_enabled
 from albow.media.MusicUtilities import start_next_music
 from albow.media.MusicUtilities import get_music
 
+
 class DemoMusicScreen(BaseDemoScreen):
 
     def __init__(self, shell: Shell):
@@ -37,9 +38,9 @@ class DemoMusicScreen(BaseDemoScreen):
         attrs = {
             'font': self.smallButtonFont
         }
-        launchMusicDialogButt: Button = Button(text="Options Dialog", action=self.testOptionsDialog, **attrs)
-        loadDemoMusicButt:     Button = Button(text="Load Music",     action=self.testLoadMusic,     **attrs)
-        playMusicButt:         Button = Button(text="Play Music",     action=self.playMusic,         **attrs)
+        launchMusicDialogButt: Button = Button(text="Options Dialog", action=DemoMusicScreen.testOptionsDialog, **attrs)
+        loadDemoMusicButt:     Button = Button(text="Load Music",     action=DemoMusicScreen.testLoadMusic,     **attrs)
+        playMusicButt:         Button = Button(text="Play Music",     action=DemoMusicScreen.playMusic,         **attrs)
 
         contents = Column([launchMusicDialogButt,
                            loadDemoMusicButt,
@@ -48,13 +49,15 @@ class DemoMusicScreen(BaseDemoScreen):
         self.add_centered(contents)
         self.backButton.focus()
 
-    def testOptionsDialog(self):
+    @staticmethod
+    def testOptionsDialog():
 
         dialog: MusicOptionsDialog = MusicOptionsDialog()
 
         dialog.present()
 
-    def testLoadMusic(self):
+    @staticmethod
+    def testLoadMusic():
 
         path1 = get_music("ElecPiK04 75E-01.mp3")
         path2 = get_music("ElecPiK04 75E-02.mp3")
@@ -68,9 +71,10 @@ class DemoMusicScreen(BaseDemoScreen):
 
         alert("Music Loaded")
 
-    def playMusic(self):
+    @staticmethod
+    def playMusic():
 
-        if get_current_playlist() == None:
+        if get_current_playlist() is None:
             alert("Please load music")
         else:
             set_music_enabled(True)
