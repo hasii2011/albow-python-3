@@ -1,4 +1,5 @@
 
+import logging
 from albow.core.root import schedule
 
 from albow.widgets.CheckBox import CheckBox
@@ -11,23 +12,26 @@ except ImportError:
     music = None
     print("Music not available")
 
-music_enabled = True
+music_enabled:bool = True
 current_music = None
-current_playlist = None
+current_playlist: PlayList = None
 
-change_delay = 2  # Delay between end of one item and starting the next (sec)
+change_delay: int = 2  # Delay between end of one item and starting the next (sec)
 
-next_change_delay = 0
-fadeout_time = 1  # Time over which to fade out music (sec)
+next_change_delay: int = 0
+fadeout_time: int = 1  # Time over which to fade out music (sec)
 
+musicLogger = logging.getLogger(__name__)
 
 def get_music_enabled():
     return music_enabled
 
 
 def jog_music():
-    """If no music is currently playing, start playing the next item
-    from the current playlist."""
+    """
+    If no music is currently playing, start playing the next item
+    from the current playlist.
+    """
     if music_enabled and not music.get_busy():
         start_next_music()
 
@@ -41,7 +45,8 @@ def start_next_music():
     """
     Start playing the next item from the current playlist immediately.
     """
-    # print "albow.music: start_next_music" ###
+
+    musicLogger.info("start_music")
     global current_music, next_change_delay
     if music_enabled and current_playlist:
         next_music = current_playlist.next()
@@ -80,7 +85,7 @@ def change_playlist(new_playlist):
     playlist.
     """
 
-    # print "albow.music: change_playlist" ###
+    musicLogger.info("change_playlist")
     global current_music, current_playlist, next_change_delay
     if music and new_playlist is not current_playlist:
         current_playlist = new_playlist
@@ -99,6 +104,7 @@ def change_music(new_music, repeat=False):
     """
 
     #  print "albow.music: change_music" ###
+    musicLogger.info("change_music")
     if music and new_music is not current_music:
         if new_music:
             new_playlist = PlayList([new_music], repeat=repeat)

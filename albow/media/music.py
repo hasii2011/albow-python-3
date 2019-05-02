@@ -24,8 +24,10 @@ except ImportError:
 
 
 def get_music(*names, **kwds):
-    """Return the full pathname of a music file from the "music" resource
-    subdirectory."""
+    """
+    Return the full pathname of a music file from the "music" resource
+    subdirectory.
+    """
     prefix = kwds.pop('prefix', "music")
     return resource_path(prefix, *names)
 
