@@ -34,7 +34,10 @@ MUSIC_END_EVENT = USEREVENT + 1
 
 DOUBLE_CLICK_TIME = 300 # milliseconds
 
-last_mouse_event = Event(0, pos = (0, 0), local = (0, 0))
+#
+# Ignore PyCharm warning about unexpected arguments
+#
+last_mouse_event: Event = Event(0, pos=(0, 0), local=(0, 0))
 last_mouse_event_handler = None
 
 root_widget = None     # Root of the containment hierarchy
