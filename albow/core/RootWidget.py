@@ -28,7 +28,7 @@ from albow.core.root import set_modifier
 from albow.core.root import Cancel
 from albow.core.root import ApplicationError
 
-import albow.media.music
+import albow.media.MusicUtilities
 
 MUSIC_END_EVENT = USEREVENT + 1
 
@@ -367,7 +367,7 @@ class RootWidget(Widget):
         return event
 
     def music_end(self):
-        albow.media.music.music_end()
+        albow.media.MusicUtilities.music_end()
 
     def report_error(self, e):
         pass

@@ -70,12 +70,12 @@ def start_next_music():
     Start playing the next item from the current playlist immediately.
     """
 
-    musicLogger.info("start_music")
+    musicLogger.info("start_next_music")
     global current_music, next_change_delay
     if music_enabled and current_playlist:
         next_music = current_playlist.next()
         if next_music:
-            # print "albow.music: loading", repr(next_music) ###
+            musicLogger.info("albow.music: loading %s", repr(next_music))
             music.load(next_music)
             music.play()
             next_change_delay = change_delay
@@ -89,7 +89,9 @@ def change_playlist(new_playlist: PlayList):
     """
 
     musicLogger.info("change_playlist")
+
     global current_music, current_playlist, next_change_delay
+
     if music and new_playlist is not current_playlist:
         current_playlist = new_playlist
         if music_enabled:
@@ -98,6 +100,9 @@ def change_playlist(new_playlist: PlayList):
             jog_music()
         else:
             current_music = None
+
+def get_current_playlist() -> PlayList:
+    return current_playlist
 
 
 def change_music(new_music, repeat=False):

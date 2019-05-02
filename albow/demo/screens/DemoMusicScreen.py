@@ -15,9 +15,11 @@ from albow.media.MusicOptionsDialog import MusicOptionsDialog
 from albow.media.PlayList import PlayList
 
 from albow.media.EnableMusicControl import change_playlist
+from albow.media.EnableMusicControl import get_current_playlist
 from albow.media.EnableMusicControl import set_music_enabled
+from albow.media.EnableMusicControl import start_next_music
 
-from albow.media.music import get_music
+from albow.media.MusicUtilities import get_music
 
 class DemoMusicScreen(BaseDemoScreen):
 
@@ -37,10 +39,12 @@ class DemoMusicScreen(BaseDemoScreen):
             'font': self.smallButtonFont
         }
         launchMusicDialogButt: Button = Button(text="Options Dialog", action=self.testOptionsDialog, **attrs)
-        loadDemoMusicButt:     Button = Button(text="Load Music",     action=self.testLoadMusic, **attrs)
+        loadDemoMusicButt:     Button = Button(text="Load Music",     action=self.testLoadMusic,     **attrs)
+        playMusicButt:         Button = Button(text="Play Music",     action=self.playMusic,         **attrs)
 
         contents = Column([launchMusicDialogButt,
                            loadDemoMusicButt,
+                           playMusicButt,
                            self.backButton], **columnAttrs)
         self.add_centered(contents)
         self.backButton.focus()
@@ -60,7 +64,15 @@ class DemoMusicScreen(BaseDemoScreen):
 
         set_music_enabled(False)
         paths = {path1, path2, path3, path4}
-        playList = PlayList(paths)
+        playList = PlayList(items=paths, random=True, repeat=True)
         change_playlist(new_playlist=playList)
 
         alert("Music Loaded")
+
+    def playMusic(self):
+
+        if get_current_playlist() == None:
+            alert("Please load music")
+        else:
+            set_music_enabled(True)
+            start_next_music()
