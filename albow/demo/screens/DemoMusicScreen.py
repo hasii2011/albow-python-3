@@ -14,11 +14,7 @@ from albow.demo.screens.BaseDemoScreen import BaseDemoScreen
 from albow.media.MusicOptionsDialog import MusicOptionsDialog
 from albow.media.PlayList import PlayList
 
-from albow.media.MusicUtilities import change_playlist
-from albow.media.MusicUtilities import get_current_playlist
-from albow.media.MusicUtilities import set_music_enabled
-from albow.media.MusicUtilities import start_next_music
-from albow.media.MusicUtilities import get_music
+from albow.media.MusicUtilities import MusicUtilities
 
 
 class DemoMusicScreen(BaseDemoScreen):
@@ -41,10 +37,12 @@ class DemoMusicScreen(BaseDemoScreen):
         launchMusicDialogButt: Button = Button(text="Options Dialog", action=DemoMusicScreen.testOptionsDialog, **attrs)
         loadDemoMusicButt:     Button = Button(text="Load Music",     action=DemoMusicScreen.testLoadMusic,     **attrs)
         playMusicButt:         Button = Button(text="Play Music",     action=DemoMusicScreen.playMusic,         **attrs)
+        stopMusicButt:         Button = Button(text="Stop Music",     action=DemoMusicScreen.stopMusic,         **attrs)
 
         contents = Column([launchMusicDialogButt,
                            loadDemoMusicButt,
                            playMusicButt,
+                           stopMusicButt,
                            self.backButton], **columnAttrs)
         self.add_centered(contents)
         self.backButton.focus()
@@ -59,23 +57,36 @@ class DemoMusicScreen(BaseDemoScreen):
     @staticmethod
     def testLoadMusic():
 
-        path1 = get_music("ElecPiK04 75E-01.mp3")
-        path2 = get_music("ElecPiK04 75E-02.mp3")
-        path3 = get_music("ElecPiK04 75E-03.mp3")
-        path4 = get_music("ElecPiK04 75E-04.mp3")
+        path1 = MusicUtilities.get_music("ElecPiK04 75E-01.mp3")
+        path2 = MusicUtilities.get_music("ElecPiK04 75E-02.mp3")
+        path3 = MusicUtilities.get_music("ElecPiK04 75E-03.mp3")
+        path4 = MusicUtilities.get_music("ElecPiK04 75E-04.mp3")
 
-        set_music_enabled(False)
+        MusicUtilities.set_music_enabled(False)
         paths = {path1, path2, path3, path4}
         playList = PlayList(items=paths, random=True, repeat=True)
-        change_playlist(new_playlist=playList)
+        MusicUtilities.change_playlist(new_playlist=playList)
 
         alert("Music Loaded")
 
     @staticmethod
     def playMusic():
 
-        if get_current_playlist() is None:
-            alert("Please load music")
+        if MusicUtilities.get_current_playlist() is None:
+
+            alert("Demo music not loaded. Loading my favorite track")
+
+            favPath = MusicUtilities.get_music("Zoe_Poledouris_-_I_Have_Not_Been_To_Paradise_David_Bowie_Cover.mp3")
+            paths   = {favPath}
+            favPlayList = PlayList(items=paths, random=True, repeat=True)
+            favPlayList.repeat = False
+            favPlayList.random = False
+            MusicUtilities.change_playlist(new_playlist=favPlayList)
+
         else:
-            set_music_enabled(True)
-            start_next_music()
+            MusicUtilities.set_music_enabled(True)
+            MusicUtilities.start_next_music()
+
+    @staticmethod
+    def stopMusic():
+        MusicUtilities.music_end()

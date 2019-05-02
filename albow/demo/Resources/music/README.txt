@@ -11,3 +11,5 @@ ffmpeg -i ElecPiK04\ 75E-02.wav new02.mp3
 ffmpeg -i ElecPiK04\ 75E-01.wav new01.mp3
 
 See https://ffmpeg.org
+
+The Zoe Poledouris soundtrack is on several web sites on the 'Net;  Google it, Bing it, Yahoo it.  :-)
