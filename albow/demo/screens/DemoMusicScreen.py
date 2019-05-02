@@ -14,11 +14,10 @@ from albow.demo.screens.BaseDemoScreen import BaseDemoScreen
 from albow.media.MusicOptionsDialog import MusicOptionsDialog
 from albow.media.PlayList import PlayList
 
-from albow.media.EnableMusicControl import change_playlist
-from albow.media.EnableMusicControl import get_current_playlist
-from albow.media.EnableMusicControl import set_music_enabled
-from albow.media.EnableMusicControl import start_next_music
-
+from albow.media.MusicUtilities import change_playlist
+from albow.media.MusicUtilities import get_current_playlist
+from albow.media.MusicUtilities import set_music_enabled
+from albow.media.MusicUtilities import start_next_music
 from albow.media.MusicUtilities import get_music
 
 class DemoMusicScreen(BaseDemoScreen):
