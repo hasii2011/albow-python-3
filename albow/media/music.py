@@ -13,16 +13,15 @@ except ImportError:
     print("Music not available")
 
 
-def get_music(*names, **kwds):
+def get_music(*names, **kwds) -> str:
     """
-    Return the full pathname of a music file from the "music" resource
-    subdirectory.
+    Return the full pathname of a music file from the "music" resource subdirectory.
     """
     prefix = kwds.pop('prefix', "music")
     return resource_path(prefix, *names)
 
 
-def get_playlist(*names, **kwds):
+def get_playlist(*names, **kwds) -> PlayList:
 
     prefix = kwds.pop('prefix', "music")
 

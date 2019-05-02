@@ -33,15 +33,15 @@ text_cache = {}
 cursor_cache = {}
 
 
-def _resource_path(default_prefix, names, prefix=""):
+def _resource_path(default_prefix, names, prefix="") -> str:
     return os.path.join(resource_dir, prefix or default_prefix, *names)
 
 
-def resource_path(*names, **kwds):
+def resource_path(*names, **kwds) -> str:
     return _resource_path("", names, **kwds)
 
 
-def resource_exists(*names, **kwds):
+def resource_exists(*names, **kwds) -> bool:
     return os.path.exists(_resource_path("", names, **kwds))
 
 
