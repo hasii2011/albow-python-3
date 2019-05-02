@@ -29,6 +29,27 @@ def get_music_enabled():
     return music_enabled
 
 
+def set_music_enabled(state:  bool):
+
+    global music_enabled
+    if music_enabled != state:
+        music_enabled = state
+        if state:
+            # Music pausing doesn't always seem to work.
+            # music.unpause()
+            if current_music:
+                # After stopping and restarting currently loaded music,
+                # fadeout no longer works.
+                # print "albow.music: reloading", repr(current_music) ###
+                music.load(current_music)
+                music.play()
+            else:
+                jog_music()
+        else:
+            # music.pause()
+            music.stop()
+
+
 def jog_music():
     """
     If no music is currently playing, start playing the next item
@@ -59,27 +80,6 @@ def start_next_music():
             music.play()
             next_change_delay = change_delay
         current_music = next_music
-
-
-def set_music_enabled(state:  bool):
-
-    global music_enabled
-    if music_enabled != state:
-        music_enabled = state
-        if state:
-            # Music pausing doesn't always seem to work.
-            # music.unpause()
-            if current_music:
-                # After stopping and restarting currently loaded music,
-                # fadeout no longer works.
-                # print "albow.music: reloading", repr(current_music) ###
-                music.load(current_music)
-                music.play()
-            else:
-                jog_music()
-        else:
-            # music.pause()
-            music.stop()
 
 
 def change_playlist(new_playlist: PlayList):

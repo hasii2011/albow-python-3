@@ -16,7 +16,9 @@ class PlayList:
         self.repeat = repeat
 
     def next(self):
-        """Returns the next item to be played."""
+        """
+        Returns the next item to be played.
+        """
         items = self.items
         if items:
             if self.random:

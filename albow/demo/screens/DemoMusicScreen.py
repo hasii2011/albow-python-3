@@ -59,3 +59,5 @@ class DemoMusicScreen(BaseDemoScreen):
         paths = {path1, path2, path3, path4}
         playList = PlayList(paths)
         change_playlist(new_playlist=playList)
+
+
