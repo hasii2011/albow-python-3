@@ -17,6 +17,7 @@ from albow.demo.screens.DemoTextFieldsScreen import DemoTextFieldsScreen
 from albow.demo.screens.DemoDialogScreen import DemoDialogScreen
 from albow.demo.screens.DemoMenuBarScreen import DemoMenuBarScreen
 from albow.demo.screens.DemoMusicScreen import DemoMusicScreen
+from albow.demo.screens.DemoListBoxScreen import DemoListBoxScreen
 
 from albow.demo.screens.LaunchDemosScreen import LaunchDemosScreen
 
@@ -52,6 +53,7 @@ class DemoShell(Shell):
         self.multiChoiceScreen  = DemoMultiChoiceScreen(self)
         self.menuBarScreen      = DemoMenuBarScreen(self)
         self.musicScreen        = DemoMusicScreen(self)
+        self.listBoxScreen      = DemoListBoxScreen(self)
 
         self.menu_screen = LaunchDemosScreen(self)  # Do this last
         self.set_timer(DEMO_FRAME_TIME)

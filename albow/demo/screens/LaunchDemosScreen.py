@@ -71,8 +71,8 @@ class LaunchDemosScreen(Screen):
                 self.screen_button("MenuBar",     shell.menuBarScreen)
             ],
             [
-                self.screen_button("Music", shell.musicScreen),
-                Button("Empty", **emptyButtAttrs),
+                self.screen_button("Music",   shell.musicScreen),
+                self.screen_button("ListBox", shell.listBoxScreen),
                 Button("Empty", **emptyButtAttrs)
             ]
         ]

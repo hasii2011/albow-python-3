@@ -19,6 +19,7 @@ class DemoPaletteView(PaletteView):
 
         super().__init__((60, 60), 2, 2, scrolling=True)
         self.selection = None
+        self.border_width = 1
 
     def num_items(self):
         return len(self.info)

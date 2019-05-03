@@ -13,15 +13,18 @@ from albow.themes.ThemeProperty import ThemeProperty
 
 
 class PaletteView(GridView):
-    #  nrows   int   No. of displayed rows
-    #  ncols   int   No. of displayed columns
-    #
-    #  Abstract methods:
-    #
-    #    num_items()  -->  no. of items
-    #    draw_item(surface, item_no, rect)
-    #    click_item(item_no, event)
-    #    item_is_selected(item_no)  -->  bool
+    """
+       nrows   int   No. of displayed rows
+       ncols   int   No. of displayed columns
+
+       Abstract methods:
+
+         num_items()  -->  no. of items
+         draw_item(surface, item_no, rect)
+         click_item(item_no, event)
+         item_is_selected(item_no)  -->  bool
+
+    """
 
     sel_width = ThemeProperty('sel_width')
     scroll_button_size = ThemeProperty('scroll_button_size')

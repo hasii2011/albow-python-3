@@ -32,10 +32,6 @@ class Label(Widget):
         :param kwds:
         """
 
-        # print( "__class__: '" + self.__class__.__name__ + "'")
-        #
-        # Use this naming convention, until I break these out into separate packages
-        #
         self.logger = logging.getLogger(__name__)
 
         super().__init__(**kwds)

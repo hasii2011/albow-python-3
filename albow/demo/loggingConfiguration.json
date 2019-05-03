@@ -86,6 +86,13 @@
                 "consoleHandler"
             ],
             "propagate": "0"
+        },
+        "albow.widgets.ListBox": {
+            "level": "INFO",
+            "handlers": [
+                "consoleHandler"
+            ],
+            "propagate": "0"
         }
 
     }
