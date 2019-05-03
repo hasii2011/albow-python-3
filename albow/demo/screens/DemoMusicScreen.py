@@ -25,8 +25,6 @@ class DemoMusicScreen(BaseDemoScreen):
 
         super().__init__(shell=shell)
 
-        self.logger.info("Use back button: %s", self.backButton)
-
         columnAttrs = {
             "align": "c",
             'expand': 0
