@@ -1,15 +1,16 @@
 
-from albow.core.Screen import Screen
 from albow.containers.TabPanel import TabPanel
 from albow.core.Widget import Widget
 from albow.core.Shell import Shell
 
-from albow.widgets.Button import Button
 from albow.widgets.Label import Label
 
 from albow.layout.Column import Column
 
-class DemoTabPanelScreen(Screen):
+from albow.demo.screens.BaseDemoScreen import BaseDemoScreen
+
+
+class DemoTabPanelScreen(BaseDemoScreen):
     """
 
     """
@@ -31,8 +32,8 @@ class DemoTabPanelScreen(Screen):
         for i in range(1, 4):
             page = self.make_test_page(i)
             pages.add_page("Page %s" % i, page)
-        back = Button("Menu", action=shell.show_menu)
-        contents = Column([pages, back], spacing=30)
+
+        contents = Column([pages, self.backButton], spacing=BaseDemoScreen.DEFAULT_CONTENT_SPACING)
         self.add_centered(contents)
 
     def make_test_page(self, pageNumber: int):
@@ -42,10 +43,8 @@ class DemoTabPanelScreen(Screen):
         :return:
         """
         page_size = self.pages.content_size()
-        #
-        #
-        # page = Widget(size = page_size, bg_color = (128, 64, 32))
         page = Widget(size=page_size, bg_color=(208, 210, 211))
         lbl  = Label("This is page %s" % pageNumber)
         page.add_centered(lbl)
+
         return page

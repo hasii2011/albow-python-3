@@ -10,11 +10,12 @@ from albow.core.Shell import Shell
 
 from albow.widgets.Button import Button
 
-SMALL_BUTTON_TEXT_SIZE = 14
-SMALL_LABEL_TEXT_SIZE  = 14
-
 
 class BaseDemoScreen(Screen):
+
+    SMALL_BUTTON_TEXT_SIZE:  int = 14
+    SMALL_LABEL_TEXT_SIZE:   int = 14
+    DEFAULT_CONTENT_SPACING: int = 30
 
     def __init__(self, shell: Shell):
 
@@ -24,9 +25,9 @@ class BaseDemoScreen(Screen):
 
         super().__init__(shell=shell, **screenAttrs)
 
-        self.smallButtonFont = get_font(SMALL_BUTTON_TEXT_SIZE, Theme.BUILT_IN_FONT)
+        self.smallButtonFont = get_font(BaseDemoScreen.SMALL_BUTTON_TEXT_SIZE, Theme.BUILT_IN_FONT)
         self.backButton      = Button("Back", action=shell.show_menu)
-        self.labelFont       = get_font(SMALL_LABEL_TEXT_SIZE, Theme.BUILT_IN_FONT)
+        self.labelFont       = get_font(BaseDemoScreen.SMALL_LABEL_TEXT_SIZE, Theme.BUILT_IN_FONT)
 
         self.labelAttrs = {
             "bg_color": Theme.WHITE,

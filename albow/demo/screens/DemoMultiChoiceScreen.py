@@ -4,12 +4,10 @@ import pygame
 
 import logging
 
-from albow.core.Screen import Screen
 from albow.core.Shell import Shell
 from albow.resource import resource_dir
 
 from albow.themes.Theme import Theme
-from albow.widgets.Button import Button
 from albow.widgets.Label import Label
 
 from albow.choices.TextMultiChoice import TextMultiChoice
@@ -17,6 +15,8 @@ from albow.choices.ImageMultiChoice import ImageMultiChoice
 
 from albow.layout.Column import Column
 from albow.layout.Row import Row
+
+from albow.demo.screens.BaseDemoScreen import BaseDemoScreen
 
 IMAGE_RESOURCES_SUBDIR = "images"
 DEMO_CHOICE_IMAGE_1    = "EnterpriseD.png"
@@ -33,14 +33,15 @@ DEMO_IMAGE_VALUES = [
     "Klingon D7",
     "Med Fighter"
 ]
-class DemoMultiChoiceScreen(Screen):
+
+
+class DemoMultiChoiceScreen(BaseDemoScreen):
 
     def __init__(self, shell: Shell):
 
         self.logger = logging.getLogger(__name__)
-        screenAttrs = {'bg_color': Theme.WHITE}
 
-        super().__init__(shell=shell, **screenAttrs)
+        super().__init__(shell=shell)
 
         labelAttrs = {
             'bg_color': Theme.WHITE,
@@ -52,18 +53,26 @@ class DemoMultiChoiceScreen(Screen):
         imageLabel       = Label("Pick your ship: ", **labelAttrs)
         imageMultiChoice = self.makeImageMultiChoice()
 
-        textRow  = Row([textLabel, textMultiChoice])
-        imageRow = Row([imageLabel, imageMultiChoice])
+        rowAttrs = {
+            'spacing': 2
+        }
+        textRow  = Row([textLabel, textMultiChoice],   **rowAttrs)
+        imageRow = Row([imageLabel, imageMultiChoice], **rowAttrs)
 
-        backButton       = Button("Menu", action=shell.show_menu)
-
-        columnAttrs = {
+        innerColumnAttrs = {
             "align": "l"
         }
-        contents = Column([textRow, imageRow, backButton], **columnAttrs)
+        innerColumn: Column = Column([textRow, imageRow], spacing=10, **innerColumnAttrs)
+
+        columnAttrs = {
+            "align": "c",
+            "margin": 5,
+            'border_width': 1
+        }
+        contents = Column([innerColumn, self.backButton], spacing=10, **columnAttrs)
 
         self.add_centered(contents)
-        backButton.focus()
+        self.backButton.focus()
 
     def makeTextMultiChoice(self):
 
