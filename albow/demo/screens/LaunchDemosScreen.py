@@ -56,7 +56,7 @@ class LaunchDemosScreen(Screen):
                 self.screen_button("Controls",       shell.controls_screen),
             ],
             [
-                self.screen_button("Timing",       shell.anim_screen),
+                self.screen_button("Animation",    shell.anim_screen),
                 self.screen_button("Grid View",    shell.grid_screen),
                 self.screen_button("Palette View", shell.palette_screen),
             ],
