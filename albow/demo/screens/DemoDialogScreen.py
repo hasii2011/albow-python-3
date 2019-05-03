@@ -1,6 +1,6 @@
 
 from albow.core.Shell import Shell
-from albow.core.Screen import Screen
+
 from albow.resource import get_font
 
 from albow.layout.Column import Column
@@ -15,8 +15,10 @@ from albow.dialog.FileDialogUtilities import request_old_filename
 from albow.dialog.FileDialogUtilities import request_new_filename
 from albow.dialog.FileDialogUtilities import look_for_file_or_directory
 
+from albow.demo.screens.BaseDemoScreen import BaseDemoScreen
 
-class DemoDialogScreen(Screen):
+
+class DemoDialogScreen(BaseDemoScreen):
     """
     Dialogs
     """
@@ -27,38 +29,45 @@ class DemoDialogScreen(Screen):
         # Python 3 update
         #
         super().__init__(shell)
+        buttAttrs = {
+            "font": self.smallButtonFont
+        }
         menu = Column([
-            Button("Ask a Question",             self.test_ask),
-            Button("Request Old Filename",       self.test_old),
-            Button("Request New Filename",       self.test_new),
-            Button("Look for File or Directory", self.test_lookfor),
+            Button(text="Ask a Question",             action=self.test_ask,     **buttAttrs),
+            Button(text="Request Old Filename",       action=self.test_old,     **buttAttrs),
+            Button(text="Request New Filename",       action=self.test_new,     **buttAttrs),
+            Button(text="Look for File or Directory", action=self.test_lookfor, **buttAttrs),
         ], align='l')
         contents = Column([
-            Label("File Dialogs", font=get_font(18, "VeraBd.ttf")),
+            Label("File Dialogs", font=get_font(18, "VeraBd.ttf"), **self.labelAttrs),
             menu,
-            Button("Menu", action=shell.show_menu),
-        ], align='l', spacing=30)
+            self.backButton,
+        ], align='c', spacing=30)
         self.add_centered(contents)
 
-    def test_ask(self):
+    @staticmethod
+    def test_ask():
         response = ask("Do you like mustard and avocado ice cream?", ["Yes", "No", "Undecided"])
         alert("You chose %r." % response)
 
-    def test_old(self):
+    @staticmethod
+    def test_old():
         path = request_old_filename()
         if path:
             alert("You chose %r." % path)
         else:
             alert("Cancelled.")
 
-    def test_new(self):
+    @staticmethod
+    def test_new():
         path = request_new_filename(prompt="Save booty as:", filename="treasure", suffix=".dat")
         if path:
             alert("You chose %r." % path)
         else:
             alert("Cancelled.")
 
-    def test_lookfor(self):
+    @staticmethod
+    def test_lookfor():
         path = look_for_file_or_directory(prompt="Please find 'Vera.ttf'", target="Vera.ttf")
         if path:
             alert("You chose %r." % path)

@@ -1,16 +1,16 @@
 
-from albow.core.Screen import Screen
 from albow.core.Shell import Shell
 
 from albow.widgets.Label import Label
-from albow.widgets.Button import Button
 
 from albow.layout.Column import Column
 
 from albow.demo.views.DemoGridView import DemoGridView
 
+from albow.demo.screens.BaseDemoScreen import BaseDemoScreen
 
-class DemoGridViewScreen(Screen):
+
+class DemoGridViewScreen(BaseDemoScreen):
 
     def __init__(self, shell: Shell):
 
@@ -22,9 +22,6 @@ class DemoGridViewScreen(Screen):
         grid        = DemoGridView()
         lbl         = Label("Cl1ck a Squ4r3")
         grid.output = lbl
-        btn         = Button("Menu", action=self.go_back)
-        contents    = Column([grid, lbl, btn], align='l', spacing=30)
+        contents    = Column([grid, lbl, self.backButton],
+                             align='c', spacing=30)
         self.add_centered(contents)
-
-    def go_back(self):
-        self.parent.show_menu()

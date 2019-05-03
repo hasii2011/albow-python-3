@@ -17,6 +17,7 @@ from albow.layout.Column import Column
 from albow.layout.Grid import Grid
 from albow.layout.Row import Row
 
+from albow.demo.screens.BaseDemoScreen import BaseDemoScreen
 
 class DemoControlsModel:
 
@@ -37,7 +38,7 @@ class DemoControlsModel:
     area = property(get_area)
 
 
-class DemoControlsScreen(Screen):
+class DemoControlsScreen(BaseDemoScreen):
     """
     Controls
     """
@@ -48,12 +49,7 @@ class DemoControlsScreen(Screen):
 
         :param shell:
         """
-        #
-        # Python 3 update
-        #
-        attrs = {'bg_color':Theme.WHITE}
-
-        super().__init__(shell, **attrs)
+        super().__init__(shell)
 
         model= DemoControlsModel()
 
@@ -76,7 +72,7 @@ class DemoControlsScreen(Screen):
             [Label("Shape",      **colors), shape_choices],
             [Label("Value Area", **colors), area_display],
         ])
-        back = Button("Menu", action=shell.show_menu)
-        contents = Column([grid, back])
+
+        contents = Column([grid, self.backButton])
         self.add_centered(contents)
         width_field.focus()
