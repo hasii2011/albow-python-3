@@ -10,6 +10,7 @@ from albow.input.TextField import TextField
 
 from albow.layout.Row import Row
 from albow.layout.Column import Column
+from albow.layout.Grid import Grid
 
 from albow.demo.screens.BaseDemoScreen import BaseDemoScreen
 
@@ -41,15 +42,11 @@ class DemoTextFieldsScreen(BaseDemoScreen):
         raceLabel: Label          = Label("Race: ", **labelAttrs)
         self.raceField: TextField = TextField(width=150)
 
-        rowAttrs = {
-            "align":    'c',
-            'equalize': 'w'
-        }
-        nameRow: Row = Row([nameLabel, self.nameField], **rowAttrs)
-        raceRow: Row = Row([raceLabel, self.raceField], **rowAttrs)
-
-        fieldColumnAttrs = {'equalize': 'w', 'border_width': 1, 'margin': 5}
-        fieldColumn: Column =  Column([nameRow, raceRow], **fieldColumnAttrs)
+        rows = [
+            [nameLabel, self.nameField],
+            [raceLabel, self.raceField]
+        ]
+        fieldGrid: Grid = Grid(rows)
 
         self.resultLabel = Label("", font=self.labelFont, **self.labelAttrs)
         self.resultLabel.width = 400
@@ -64,9 +61,9 @@ class DemoTextFieldsScreen(BaseDemoScreen):
             "align": "c"
         }
 
-        contents: Column = Column([fieldColumn, self.resultLabel, okBtn, self.backButton], **contentAttrs)
+        contents: Column = Column([fieldGrid, self.resultLabel, okBtn, self.backButton], **contentAttrs)
 
         self.add_centered(contents)
 
     def ok(self):
-        self.resultLabel.text = "You are a %s called %s." % (self.nameField.text, self.raceField.text)
+        self.resultLabel.text = "You are a %s called %s." % (self.raceField.text, self.nameField.text)
