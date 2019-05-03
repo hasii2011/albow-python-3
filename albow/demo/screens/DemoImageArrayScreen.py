@@ -1,5 +1,4 @@
 
-from albow.core.Screen import Screen
 from albow.core.Shell import Shell
 from albow.resource import get_font
 
@@ -11,22 +10,37 @@ from albow.widgets.Image import Image
 
 from albow.layout.Column import Column
 
-class DemoImageArrayScreen(Screen):
+from albow.demo.screens.BaseDemoScreen import BaseDemoScreen
+
+
+class DemoImageArrayScreen(BaseDemoScreen):
     """
     Image Array
     """
 
     def __init__(self, shell: Shell):
-        Screen.__init__(self, shell)
+
+        super().__init__(shell)
         self.images = get_image_array("fruit.png", shape=3, border=2)
         self.image = Image(self.images[0])
         self.index = 0
+
+        buttAttrs = {
+            'font': self.smallButtonFont
+        }
+        contentAttrs = {
+            "align": "c",
+            "margin": 10,
+            'border_width': 1
+        }
+
         contents = Column([
-            Label("Image Array", font=get_font(18, "VeraBd.ttf")),
+            Label("Image Array", font=self.labelFont, **self.labelAttrs),
             self.image,
-            Button("Next Fruit", action=self.next_image),
-            Button("Menu", action=shell.show_menu),
-        ], spacing=30)
+            Button("Next Fruit", action=self.next_image, **buttAttrs),
+            self.backButton,
+        ], spacing=10, **contentAttrs)
+
         self.add_centered(contents)
 
     def next_image(self):
