@@ -76,8 +76,7 @@ class TableView(Column):
             x += width
 
     def draw_header_cell(self, surf, i, cell_rect, column):
-        self.draw_text_cell(surf, i, column.title, cell_rect,
-                            column.alignment, self.font)
+        self.draw_text_cell(surf, i, column.title, cell_rect, column.alignment, self.font)
 
     def draw_table_cell(self, surf, i, data, cell_rect, column):
         text = column.format(data)

@@ -51,7 +51,7 @@ class ThemeProperty:
             if debug_theme:
                 import traceback
                 traceback.print_exc()
-                print("-------------------------------------------------------")
+                self.logger.debug("-------------------------------------------------------")
             raise
 
     def __set__(self, obj, value):

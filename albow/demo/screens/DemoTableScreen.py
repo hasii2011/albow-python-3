@@ -1,9 +1,5 @@
 
-from albow.core.Screen import Screen
-from albow.resource import get_font
-
 from albow.widgets.Label import Label
-from albow.widgets.Button import Button
 
 from albow.layout.Column import Column
 
@@ -11,8 +7,10 @@ from albow.themes.Theme import Theme
 
 from albow.demo.views.DemoTableView import DemoTableView
 
+from albow.demo.screens.BaseDemoScreen import BaseDemoScreen
 
-class DemoTableScreen(Screen):
+
+class DemoTableScreen(BaseDemoScreen):
     """
     Table View
     """
@@ -28,19 +26,19 @@ class DemoTableScreen(Screen):
         # Screen.__init__(self, shell)
         super().__init__(shell)
 
-        f        = get_font(15, "VeraBd.ttf")
-        title    = Label("Norwegian Butter Exports", font=f)
+        title    = Label("Norwegian Butter Exports", font=self.labelFont, **self.labelAttrs)
         #
         # Python 3/pygame 1.9 update
         #
         attrs = {
-            'fg_color':     Theme.WHITE,
-            'border_color': Theme.BLACK,
-            'sel_color':    (255, 196, 13),
-            'bg_color':     (45, 137, 239)
+            'fg_color':            Theme.WHITE,
+            'border_color':        Theme.BLACK,
+            'sel_color':           (208,210,211),
+            'bg_color':            (24,189,207),
+            'header_bg_color':     Theme.BLACK
         }
-        table    = DemoTableView(**attrs)
-        back     = Button("Back to Menu", action=shell.show_menu)
-        contents = Column([title, table, back], spacing=30)
+        table: DemoTableView = DemoTableView(**attrs)
+
+        contents = Column([title, table, self.backButton], spacing=30)
 
         self.add_centered(contents)

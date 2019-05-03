@@ -15,7 +15,6 @@ class RowOrColumn(Widget):
     crossways:  str   = None
     align_map:  dict  = None
 
-
     def __init__(self, size, items, kwds):
         """
 
