@@ -4,6 +4,8 @@ import sys
 import pygame
 from pygame.locals import RLEACCEL
 
+from albow.core.DummySound import DummySound
+
 optimize_images = True
 run_length_encode = False
 
@@ -83,22 +85,6 @@ def get_font(size, *names, **kwds):
             raise e.__class__("%s: %s" % (e, path))
         font_cache[key] = font
     return font
-
-
-class DummySound:
-    def fadeout(self, x): pass
-
-    def get_length(self): return 0.0
-
-    def get_num_channels(self): return 0
-
-    def get_volume(self): return 0.0
-
-    def play(self, *args): pass
-
-    def set_volume(self, x): pass
-
-    def stop(self): pass
 
 
 dummy_sound = DummySound()
