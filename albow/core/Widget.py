@@ -44,6 +44,7 @@ def overridable_property(name, doc = None):
         None,
         doc)
 
+
 def rect_property(name):
 
     def get(self):

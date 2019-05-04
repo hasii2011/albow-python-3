@@ -10,6 +10,8 @@ from os.path import dirname
 import pygame
 import logging.config
 
+from albow.themes.Theme import Theme
+
 JSON_LOGGING_CONFIG_FILENAME = "loggingConfiguration.json"
 #
 # This has to be done as early as possible to affect the logging
@@ -48,6 +50,7 @@ def main():
     #   },
     logger  = logging.getLogger(__name__)
     display = pygame.display.set_mode(SCREEN_SIZE, DISPLAY_FLAGS)
+    # Theme.initializeDefaultTheme()
     shell   = DemoShell(display)
 
     logger.info("Starting %s", __name__)

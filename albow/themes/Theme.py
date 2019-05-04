@@ -5,7 +5,6 @@ from albow.core.ResourceUtility import ResourceUtility
 
 from albow.themes.ThemeError import ThemeError
 
-
 class Theme:
 
     BLACK = (0, 0, 0)
@@ -60,6 +59,12 @@ class Theme:
 
     def add_theme(self, name):
         setattr(self, name, Theme(name))
+
+    @staticmethod
+    def initializeDefaultTheme():
+
+        global themeRoot
+        print("")
 
 
 themeRoot = Theme('root')
