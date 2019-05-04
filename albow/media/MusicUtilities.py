@@ -5,7 +5,7 @@ import logging
 
 from albow.core.root import schedule
 
-from albow.core.Res import resource_path
+from albow.core.ResourceUtility import resource_path
 
 from albow.media.PlayList import PlayList
 

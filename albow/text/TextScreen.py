@@ -7,7 +7,7 @@ from albow.themes.FontProperty import FontProperty
 from albow.widgets.Button import Button
 from albow.text.Page import Page
 
-from albow.core.Res import get_text
+from albow.core.ResourceUtility import get_text
 from albow.vectors import add
 from albow.vectors import maximum
 

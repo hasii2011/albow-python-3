@@ -55,7 +55,7 @@ class Theme:
         if spec:
 
             self.logger.debug("font spec = %s", spec)
-            return albow.core.Res.get_font(*spec)
+            return albow.core.ResourceUtility.get_font(*spec)
 
     def add_theme(self, name):
         setattr(self, name, Theme(name))
