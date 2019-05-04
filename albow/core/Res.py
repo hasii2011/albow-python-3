@@ -6,10 +6,18 @@ from pygame.locals import RLEACCEL
 
 from albow.core.DummySound import DummySound
 
-optimize_images = True
+optimize_images   = True
 run_length_encode = False
 
 default_resource_dir_names = ["Resources", "resources"]
+
+image_cache  = {}
+font_cache   = {}
+sound_cache  = {}
+text_cache   = {}
+cursor_cache = {}
+
+dummy_sound = DummySound()
 
 
 def find_resource_dir():
@@ -28,11 +36,6 @@ def find_resource_dir():
 
 resource_dir = find_resource_dir()
 
-image_cache = {}
-font_cache = {}
-sound_cache = {}
-text_cache = {}
-cursor_cache = {}
 
 
 def _resource_path(default_prefix, names, prefix="") -> str:
@@ -85,9 +88,6 @@ def get_font(size, *names, **kwds):
             raise e.__class__("%s: %s" % (e, path))
         font_cache[key] = font
     return font
-
-
-dummy_sound = DummySound()
 
 
 def load_sound(path):

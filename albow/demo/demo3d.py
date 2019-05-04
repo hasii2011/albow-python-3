@@ -147,5 +147,5 @@ def main():
     add_demo_widgets(root)
     root.run()
 
-
-main()
+if __name__ == '__main__':
+    main()
