@@ -1,7 +1,7 @@
 
 import logging
 
-from albow.resource import get_font
+from albow.Res import get_font
 
 from albow.core.Shell import Shell
 

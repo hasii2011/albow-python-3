@@ -3,7 +3,7 @@ import sys
 
 import logging
 
-from albow.resource import get_font
+from albow.Res import get_font
 from albow.core.Screen import Screen
 from albow.core.Shell import Shell
 
