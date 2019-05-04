@@ -21,7 +21,7 @@ from albow.utils import frame_rect
 from albow.themes.ThemeProperty import ThemeProperty
 from albow.themes.FontProperty import FontProperty
 
-from albow.themes.Theme import root as themeRoot
+from albow.themes.Theme import themeRoot
 
 debug_rect = False
 debug_tab = True

@@ -3,7 +3,7 @@ import sys
 
 import logging
 
-from albow.themes.Theme import root
+from albow.themes.Theme import themeRoot
 
 debug_theme = False
 
@@ -65,4 +65,4 @@ class ThemeProperty:
         obj.__dict__[self.cache_name] = value
 
     def get_from_theme(self, cls, name):
-        return root.get(cls, name)
+        return themeRoot.get(cls, name)
