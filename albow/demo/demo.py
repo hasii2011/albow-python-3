@@ -1,5 +1,5 @@
 """
-    Albow - Demonstration
+    The Albow Demonstration Program
 """
 import os
 import sys
