@@ -1,7 +1,7 @@
 
 from albow.core.Shell import Shell
 
-from albow.Res import get_font
+from albow.core.Res import get_font
 
 from albow.layout.Column import Column
 

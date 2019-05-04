@@ -1,5 +1,5 @@
 from pygame import Rect
-from albow.Res import get_image
+from albow.core.Res import get_image
 
 
 class ImageArray:

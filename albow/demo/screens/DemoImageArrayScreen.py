@@ -1,6 +1,5 @@
 
 from albow.core.Shell import Shell
-from albow.Res import get_font
 
 from albow.containers.image_array import get_image_array
 
