@@ -7,7 +7,8 @@ from albow.themes.FontProperty import FontProperty
 from albow.widgets.Button import Button
 from albow.text.Page import Page
 
-from albow.core.ResourceUtility import get_text
+from albow.core.ResourceUtility import ResourceUtility
+
 from albow.vectors import add
 from albow.vectors import maximum
 
@@ -23,7 +24,7 @@ class TextScreen(Screen):
 
     def __init__(self, shell, filename, **kwds):
         """"""
-        text = get_text(filename)
+        text = ResourceUtility.get_text(filename)
         text_pages = text.split("\nPAGE\n")
         pages = []
         page_size = (0, 0)

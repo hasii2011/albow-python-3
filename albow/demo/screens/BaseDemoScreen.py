@@ -1,7 +1,7 @@
 
 import logging
 
-from albow.core.ResourceUtility import get_font
+from albow.core.ResourceUtility import ResourceUtility
 
 from albow.themes.Theme import Theme
 
@@ -25,9 +25,9 @@ class BaseDemoScreen(Screen):
 
         super().__init__(shell=shell, **screenAttrs)
 
-        self.smallButtonFont = get_font(BaseDemoScreen.SMALL_BUTTON_TEXT_SIZE, Theme.BUILT_IN_FONT)
+        self.smallButtonFont = ResourceUtility.get_font(BaseDemoScreen.SMALL_BUTTON_TEXT_SIZE, Theme.BUILT_IN_FONT)
         self.backButton      = Button("Back", action=shell.show_menu)
-        self.labelFont       = get_font(BaseDemoScreen.SMALL_LABEL_TEXT_SIZE, Theme.BUILT_IN_FONT)
+        self.labelFont       = ResourceUtility.get_font(BaseDemoScreen.SMALL_LABEL_TEXT_SIZE, Theme.BUILT_IN_FONT)
 
         self.labelAttrs = {
             "bg_color": Theme.WHITE,

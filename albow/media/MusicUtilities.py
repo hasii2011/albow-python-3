@@ -5,7 +5,7 @@ import logging
 
 from albow.core.root import schedule
 
-from albow.core.ResourceUtility import resource_path
+from albow.core.ResourceUtility import ResourceUtility
 
 from albow.media.PlayList import PlayList
 
@@ -90,7 +90,7 @@ class MusicUtilities:
         Return the full pathname of a music file from the "music" resource subdirectory.
         """
         prefix = kwds.pop('prefix', "music")
-        return resource_path(prefix, *names)
+        return ResourceUtility.resource_path(prefix, *names)
 
     @staticmethod
     def start_next_music():

@@ -5,7 +5,7 @@ import pygame
 import logging
 
 from albow.core.Shell import Shell
-from albow.core.ResourceUtility import resource_dir
+from albow.core.ResourceUtility import ResourceUtility
 
 from albow.themes.Theme import Theme
 from albow.widgets.Label import Label
@@ -84,9 +84,9 @@ class DemoMultiChoiceScreen(BaseDemoScreen):
 
     def makeImageMultiChoice(self):
 
-        self.logger.debug("Resource directory: %s", resource_dir)
+        self.logger.debug("Resource directory: %s", ResourceUtility.find_resource_dir())
 
-        pathToImages = resource_dir +"/" + IMAGE_RESOURCES_SUBDIR
+        pathToImages = ResourceUtility.find_resource_dir() + "/" + IMAGE_RESOURCES_SUBDIR
 
         self.logger.debug("Path to images: %s", pathToImages)
 

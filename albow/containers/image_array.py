@@ -1,9 +1,18 @@
+
 from pygame import Rect
-from albow.core.ResourceUtility import get_image
+
+from albow.core.ResourceUtility import ResourceUtility
 
 
 class ImageArray:
+    """
+    An ImageArray is an indexed collection of images created by dividing up a master image into equal-sized subimages.
 
+    Image arrays can be one-dimensional or two-dimensional. A one-dimensional image array has its
+    subimages arranged horizontally in the master image and is indexed by an integer. A two-dimensional image array is
+    indexed by a tuple (row, col).
+
+    """
     def __init__(self, image, shape):
 
         self.image = image
@@ -49,8 +58,9 @@ class ImageArray:
 image_array_cache = {}
 
 def get_image_array(name, shape, **kwds):
+
     result = image_array_cache.get(name)
     if result is None:
-        result = ImageArray(get_image(name, **kwds), shape)
+        result = ImageArray(ResourceUtility.get_image(name, **kwds), shape)
         image_array_cache[name] = result
     return result

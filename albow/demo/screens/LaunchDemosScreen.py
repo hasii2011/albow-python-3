@@ -3,7 +3,7 @@ import sys
 
 import logging
 
-from albow.core.ResourceUtility import get_font
+from albow.core.ResourceUtility import ResourceUtility
 from albow.core.Screen import Screen
 from albow.core.Shell import Shell
 
@@ -36,7 +36,7 @@ class LaunchDemosScreen(Screen):
         super().__init__(shell)
 
         self.shell     = shell
-        f1             = get_font(DEMO_TITLE_TEXT_SIZE, Theme.BUILT_IN_FONT)
+        f1             = ResourceUtility.get_font(DEMO_TITLE_TEXT_SIZE, Theme.BUILT_IN_FONT)
         titleAttrs = {
             'fg_color': Theme.BLACK,
             'enabled_bg_color': Theme.WHITE,
@@ -44,7 +44,7 @@ class LaunchDemosScreen(Screen):
             'align': 'c'
         }
         title = Label("Albow Demonstration", font=f1, **titleAttrs)
-        emptyButtFont = get_font(DEMO_BUTTON_TEXT_SIZE, Theme.BUILT_IN_FONT)
+        emptyButtFont = ResourceUtility.get_font(DEMO_BUTTON_TEXT_SIZE, Theme.BUILT_IN_FONT)
         emptyButtAttrs = {
             'font': emptyButtFont
         }
@@ -92,7 +92,7 @@ class LaunchDemosScreen(Screen):
 
     def screen_button(self, text: str, screen: Screen):
 
-        buttFont = get_font(DEMO_BUTTON_TEXT_SIZE, Theme.BUILT_IN_FONT)
+        buttFont = ResourceUtility.get_font(DEMO_BUTTON_TEXT_SIZE, Theme.BUILT_IN_FONT)
         buttAttrs = {
             'font': buttFont
         }

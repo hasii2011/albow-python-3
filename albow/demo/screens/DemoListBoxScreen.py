@@ -1,7 +1,7 @@
 
 import logging
 
-from albow.core.ResourceUtility import get_font
+from albow.core.ResourceUtility import ResourceUtility
 
 from albow.core.Shell import Shell
 
@@ -31,7 +31,7 @@ class DemoListBoxScreen(BaseDemoScreen):
 
         super().__init__(shell=shell)
 
-        labelFont = get_font(DEMO_LABEL_TEXT_SIZE, Theme.BUILT_IN_FONT)
+        labelFont = ResourceUtility.get_font(DEMO_LABEL_TEXT_SIZE, Theme.BUILT_IN_FONT)
 
         labelAttrs = {
             "bg_color": Theme.WHITE,

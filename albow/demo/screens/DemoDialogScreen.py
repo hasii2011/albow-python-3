@@ -1,7 +1,7 @@
 
 from albow.core.Shell import Shell
 
-from albow.core.ResourceUtility import get_font
+from albow.core.ResourceUtility import ResourceUtility
 
 from albow.layout.Column import Column
 
@@ -39,7 +39,7 @@ class DemoDialogScreen(BaseDemoScreen):
             Button(text="Look for File or Directory", action=self.test_lookfor, **buttAttrs),
         ], align='l')
         contents = Column([
-            Label("File Dialogs", font=get_font(18, "VeraBd.ttf"), **self.labelAttrs),
+            Label("File Dialogs", font=ResourceUtility.get_font(18, "VeraBd.ttf"), **self.labelAttrs),
             menu,
             self.backButton,
         ], align='c', spacing=30)
