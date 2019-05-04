@@ -5,6 +5,9 @@ from albow.core.ResourceUtility import ResourceUtility
 
 from albow.themes.ThemeError import ThemeError
 
+themeRoot = None
+
+
 class Theme:
 
     BLACK = (0, 0, 0)
@@ -64,131 +67,129 @@ class Theme:
     def initializeDefaultTheme():
 
         global themeRoot
-        print("")
+
+        themeRoot = Theme('root')
+        themeRoot.font = (15, "Vera.ttf")
+        themeRoot.fg_color = (0, 0, 0)
+        themeRoot.bg_color = None
+        themeRoot.bg_image = None
+        themeRoot.scale_bg = False
+        themeRoot.border_width = 0
+        themeRoot.border_color = None
+        themeRoot.margin = 0
+        themeRoot.tab_bg_color = None
+        # root.sel_color = (63, 165, 254)
+        themeRoot.sel_color = (208, 210, 211)
+        themeRoot.highlight_color = None
+        themeRoot.disabled_color = None
+        themeRoot.highlight_bg_color = None
+        themeRoot.enabled_bg_color = None
+        themeRoot.disabled_bg_color = None
+
+        themeRoot.RootWidget = Theme('RootWidget')
+        themeRoot.RootWidget.bg_color = (0, 0, 0)
+
+        themeRoot.Label = Theme("Label")
+        themeRoot.Label.bg_color = (65, 108, 178)
+        themeRoot.Label.fg_color = Theme.WHITE
+
+        themeRoot.Button = Theme('Button')
+        themeRoot.Button.margin = 8
+        themeRoot.Button.border_width = 2
+        themeRoot.Button.font = (18, "VeraBd.ttf")
+        themeRoot.Button.fg_color = Theme.WHITE
+        themeRoot.Button.highlight_color = (0, 0, 0) # fg
+        # root.Button.disabled_color = (64, 64, 64) # fg
+        themeRoot.Button.disabled_color = (23, 62, 67) # fg  17 3e 43
+
+        themeRoot.Button.highlight_bg_color = (255, 165, 78)
+
+        themeRoot.Button.enabled_bg_color = (65, 108, 178)
+        themeRoot.Button.disabled_bg_color = (106, 148, 204)
+
+        themeRoot.ImageButton = Theme('ImageButton')
+        themeRoot.ImageButton.highlight_color = (0, 128, 255)
+
+        themeRoot.CheckWidget = Theme('CheckWidget')
+        themeRoot.CheckWidget.smooth = False
+
+        themeRoot.framed = Theme('framed')
+        themeRoot.framed.border_width = 1
+        themeRoot.framed.margin = 3
+
+        themeRoot.Field = Theme('Field', base=themeRoot.framed)
+
+        themeRoot.Dialog = Theme('Dialog')
+        themeRoot.Dialog.bg_color = (224, 224, 224)
+        themeRoot.Dialog.border_width = 2
+        themeRoot.Dialog.margin = 15
+
+        themeRoot.DirPathView = Theme('DirPathView', base=themeRoot.framed)
+
+        themeRoot.FileListView = Theme('FileListView', base=themeRoot.framed)
+        themeRoot.FileListView.scroll_button_color = (64, 64, 64)
+
+        themeRoot.FileDialog = Theme("FileDialog")
+        themeRoot.FileDialog.up_button_text = "<--"
 
 
-themeRoot = Theme('root')
-themeRoot.font = (15, "Vera.ttf")
-themeRoot.fg_color = (0, 0, 0)
-themeRoot.bg_color = None
-themeRoot.bg_image = None
-themeRoot.scale_bg = False
-themeRoot.border_width = 0
-themeRoot.border_color = None
-themeRoot.margin = 0
-themeRoot.tab_bg_color = None
-# root.sel_color = (63, 165, 254)
-themeRoot.sel_color = (208, 210, 211)
-themeRoot.highlight_color = None
-themeRoot.disabled_color = None
-themeRoot.highlight_bg_color = None
-themeRoot.enabled_bg_color = None
-themeRoot.disabled_bg_color = None
+        themeRoot.PaletteView = Theme('PaletteView')
+        themeRoot.PaletteView.sel_width = 2
+        themeRoot.PaletteView.scroll_button_size = 16
+        themeRoot.PaletteView.scroll_button_color = (64, 64, 64)
+        themeRoot.PaletteView.highlight_style = 'reverse'
 
-themeRoot.RootWidget = Theme('RootWidget')
-themeRoot.RootWidget.bg_color = (0, 0, 0)
+        themeRoot.TableView = Theme("TableView")
+        themeRoot.TableView.bg_color = (65, 108, 178)
 
-themeRoot.Label = Theme("Label")
-themeRoot.Label.bg_color = (65, 108, 178)
-themeRoot.Label.fg_color = Theme.WHITE
+        themeRoot.TextScreen = Theme('TextScreen')
+        themeRoot.TextScreen.heading_font = (24, "VeraBd.ttf")
+        themeRoot.TextScreen.button_font = (18, "VeraBd.ttf")
+        themeRoot.TextScreen.margin = 20
 
-themeRoot.Button = Theme('Button')
-themeRoot.Button.margin = 8
-themeRoot.Button.border_width = 2
-themeRoot.Button.font = (18, "VeraBd.ttf")
-themeRoot.Button.fg_color = Theme.WHITE
-themeRoot.Button.highlight_color = (0, 0, 0) # fg
-# root.Button.disabled_color = (64, 64, 64) # fg
-themeRoot.Button.disabled_color = (23, 62, 67) # fg  17 3e 43
+        themeRoot.TabPanel = Theme('TabPanel')
+        themeRoot.TabPanel.tab_font = (18, "Vera.ttf")
+        themeRoot.TabPanel.tab_height = 24
+        themeRoot.TabPanel.tab_border_width = 0
+        themeRoot.TabPanel.tab_spacing = 4
+        themeRoot.TabPanel.tab_margin = 0
+        #
+        # There is a bug here;  These colors are not being properly applied
+        #
+        themeRoot.TabPanel.tab_fg_color = (24, 189, 207)
+        themeRoot.TabPanel.default_tab_bg_color = (106, 148, 204)
+        themeRoot.TabPanel.tab_area_bg_color = (208, 210, 211)
 
-themeRoot.Button.highlight_bg_color = (255, 165, 78)
+        themeRoot.TabPanel.tab_dimming = 0.75
+        # root.TabPanel.use_page_bg_color_for_tabs = True
 
-themeRoot.Button.enabled_bg_color = (65, 108, 178)
-themeRoot.Button.disabled_bg_color = (106, 148, 204)
+        themeRoot.CheckWidget.smooth = True
 
-themeRoot.ImageButton = Theme('ImageButton')
-themeRoot.ImageButton.highlight_color = (0, 128, 255)
+        themeRoot.MultiChoice = Theme("MultiChoice")
+        themeRoot.MultiChoice.sel_width = 1
+        themeRoot.MultiChoice.highlight_color = themeRoot.sel_color
+        themeRoot.MultiChoice.margin = 8
+        themeRoot.MultiChoice.cell_margin = 2
 
-themeRoot.CheckWidget = Theme('CheckWidget')
-themeRoot.CheckWidget.smooth = False
+        themeRoot.TextMultiChoice = Theme("TextMultiChoice")
+        themeRoot.TextMultiChoice.sel_color = None
+        themeRoot.TextMultiChoice.highlight_style = 'arrows'
 
-themeRoot.framed = Theme('framed')
-themeRoot.framed.border_width = 1
-themeRoot.framed.margin = 3
+        themeRoot.ImageMultiChoice = Theme("ImageMultiChoice")
+        themeRoot.ImageMultiChoice.sel_color = (192, 192, 192)
+        themeRoot.ImageMultiChoice.highlight_style = 'fill'
 
-themeRoot.Field = Theme('Field', base=themeRoot.framed)
+        themeRoot.menu = Theme('menu')
+        themeRoot.menu.bg_color = (255, 255, 255)
+        themeRoot.menu.fg_color = (0, 0, 0)
+        themeRoot.menu.disabled_color = (128, 128, 128)
+        themeRoot.menu.margin = 8
 
-themeRoot.Dialog = Theme('Dialog')
-themeRoot.Dialog.bg_color = (224, 224, 224)
-themeRoot.Dialog.border_width = 2
-themeRoot.Dialog.margin = 15
+        themeRoot.MenuBar = Theme('MenuBar', base=themeRoot.menu)
+        themeRoot.MenuBar.border_width = 0
 
-themeRoot.DirPathView = Theme('DirPathView', base=themeRoot.framed)
+        themeRoot.Menu = Theme('Menu', base=themeRoot.menu)
+        themeRoot.Menu.border_width = 1
 
-themeRoot.FileListView = Theme('FileListView', base=themeRoot.framed)
-themeRoot.FileListView.scroll_button_color = (64, 64, 64)
-
-themeRoot.FileDialog = Theme("FileDialog")
-themeRoot.FileDialog.up_button_text = "<--"
-
-
-themeRoot.PaletteView = Theme('PaletteView')
-themeRoot.PaletteView.sel_width = 2
-themeRoot.PaletteView.scroll_button_size = 16
-themeRoot.PaletteView.scroll_button_color = (64, 64, 64)
-themeRoot.PaletteView.highlight_style = 'reverse'
-
-themeRoot.TableView = Theme("TableView")
-themeRoot.TableView.bg_color = (65, 108, 178)
-
-themeRoot.TextScreen = Theme('TextScreen')
-themeRoot.TextScreen.heading_font = (24, "VeraBd.ttf")
-themeRoot.TextScreen.button_font = (18, "VeraBd.ttf")
-themeRoot.TextScreen.margin = 20
-
-themeRoot.TabPanel = Theme('TabPanel')
-themeRoot.TabPanel.tab_font = (18, "Vera.ttf")
-themeRoot.TabPanel.tab_height = 24
-themeRoot.TabPanel.tab_border_width = 0
-themeRoot.TabPanel.tab_spacing = 4
-themeRoot.TabPanel.tab_margin = 0
-#
-# There is a bug here;  These colors are not being properly applied
-#
-themeRoot.TabPanel.tab_fg_color = (24, 189, 207)
-themeRoot.TabPanel.default_tab_bg_color = (106, 148, 204)
-themeRoot.TabPanel.tab_area_bg_color = (208, 210, 211)
-
-themeRoot.TabPanel.tab_dimming = 0.75
-# root.TabPanel.use_page_bg_color_for_tabs = True
-
-themeRoot.CheckWidget.smooth = True
-
-themeRoot.MultiChoice = Theme("MultiChoice")
-themeRoot.MultiChoice.sel_width = 1
-themeRoot.MultiChoice.highlight_color = themeRoot.sel_color
-themeRoot.MultiChoice.margin = 8
-themeRoot.MultiChoice.cell_margin = 2
-
-themeRoot.TextMultiChoice = Theme("TextMultiChoice")
-themeRoot.TextMultiChoice.sel_color = None
-themeRoot.TextMultiChoice.highlight_style = 'arrows'
-
-themeRoot.ImageMultiChoice = Theme("ImageMultiChoice")
-themeRoot.ImageMultiChoice.sel_color = (192, 192, 192)
-themeRoot.ImageMultiChoice.highlight_style = 'fill'
-
-themeRoot.menu = Theme('menu')
-themeRoot.menu.bg_color = (255, 255, 255)
-themeRoot.menu.fg_color = (0, 0, 0)
-themeRoot.menu.disabled_color = (128, 128, 128)
-themeRoot.menu.margin = 8
-
-themeRoot.MenuBar = Theme('MenuBar', base=themeRoot.menu)
-themeRoot.MenuBar.border_width = 0
-
-themeRoot.Menu = Theme('Menu', base=themeRoot.menu)
-themeRoot.Menu.border_width = 1
-
-themeRoot.MusicVolumeControl = Theme('MusicVolumeControl', base=themeRoot.framed)
-themeRoot.MusicVolumeControl.fg_color = (0x40, 0x40, 0x40)
+        themeRoot.MusicVolumeControl = Theme('MusicVolumeControl', base=themeRoot.framed)
+        themeRoot.MusicVolumeControl.fg_color = (0x40, 0x40, 0x40)
