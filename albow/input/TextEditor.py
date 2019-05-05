@@ -7,32 +7,76 @@ from pygame import draw
 from albow.core.Widget import Widget
 from albow.core.Widget import overridable_property
 
+
 class TextEditor(Widget):
 
+    """
+    A TextEditor provides simple single-line text editing. Typed characters are inserted into the text, and
+    characters are deleted using Delete or Backspace. Clicking on the text field gives it the keyboard focus
+    and sets the insertion point. Pressing the Tab key moves to the next tabbable widget.
+
+    There is currently no support for selecting or copying and pasting text.
+
+    """
+
+    text = overridable_property('text')
+    """
+    The current text, provided the get_text and set_text methods have not been overridden.
+    """
     upper    = False
+    """
+    If true, text typed into the field is forced to upper case.
+    """
     tab_stop = True
+    """
+    If True this widget is a tab stop
+    """
+    insertionPoint = None
+    """
+    The current position of the insertion point. May be set to None to position it at the end of the text.
+    """
+    enterAction    = None
+    """
+    TODO
+    A function of no arguments to be called when Return or Enter is pressed. If not specified, Return and Enter 
+    key events are passed to the parent widget.
+    """
+    escapeAction   = None
+    """
+    TODO
+    A function of no arguments to be called when Escape is pressed. If not specified, Escape key events are 
+    passed to the parent widget.
+    """
     _text    = ""
 
     def __init__(self, width, upper=None, **kwds):
         """
 
-        :param width:
-        :param upper:
-        :param kwds:
+        Args:
+            width:
+            upper:
+            **kwds:
         """
         super().__init__(**kwds)
         self.set_size_for_text(width)
         if upper is not None:
             self.upper = upper
-        self.insertion_point = None
+        self.insertionPoint = None
 
     def get_text(self):
         return self._text
 
-    def set_text(self, text):
-        self._text = text
+    def set_text(self, theNewText):
+        """
+        Internally, the widget uses these methods to access the text being edited. By default they access text held 
+        in a private attribute. By overriding them, you can arrange for the widget to edit text being held 
+        somewhere else.
+        
+        Args:
+            theNewText: 
 
-    text = overridable_property('text')
+        """
+        self._text = theNewText
 
     def draw(self, surface):
         frame = self.get_margin_rect()
@@ -108,7 +152,7 @@ class TextEditor(Widget):
                     text = text[:i-1] + text[i:]
                     i -= 1
                 self.change_text(text)
-                self.insertion_point = i
+                self.insertionPoint = i
                 return
             elif c == "\r" or c == "\x03":
                 return self.call_handler('enter_action')
@@ -124,14 +168,27 @@ class TextEditor(Widget):
                         text = text[:i] + c + text[i:]
                         i += 1
                     self.change_text(text)
-                    self.insertion_point = i
+                    self.insertionPoint = i
                     return
         return 'pass'
 
     def allow_char(self, c):
+        """
+        This method meant to be overriden
+
+        Called to determine whether typing the character c into the text editor should be allowed. The default
+        implementation returns true for all characters.
+
+        Args:
+            c: The character to determine if allowed
+
+        Returns: If allowed True, else false
+
+        """
         return True
 
     def mouse_down(self, e):
+
         self.focus()
         x, y = e.local
         text = self.get_text()
@@ -156,7 +213,7 @@ class TextEditor(Widget):
             i = i2
         else:
             i = i1
-        self.insertion_point = i
+        self.insertionPoint = i
 
     def change_text(self, text):
         self.set_text(text)

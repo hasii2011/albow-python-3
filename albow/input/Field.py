@@ -6,14 +6,53 @@ from albow.input.TextEditor import TextEditor
 
 class Field(Control, TextEditor):
 
+    """
+    Field is an abstract base class for controls that edit a value with a textual representation. It provides
+    facilities for
+        converting between the text and internal representations of the value,
+        for specifying minimum and maximum allowed values, and
+        controlling whether the value is allowed to be empty and what representation to use for an empty value.
+
+    A Field can be in two states, editing and non-editing. In the non-editing state, the control displays
+    the value to which it is linked via its "ref" attribute. When the user focuses the control and begins typing,
+    it switches to the editing state. In this state, the text may be edited but the associated value is not yet
+    updated. When the Return, Enter or Tab key is pressed, or a mouse click occurs anywhere outside the field,
+    the value is updated and the control returns to the non-editing state. Updating of the value can also be
+    forced by calling the commit() method.
+    """
+
     empty  = NotImplemented
+    """
+    Internal value to use when the field is empty. If set to NotImplemented, the user is not allowed to enter 
+    an empty value.
+    """
     format = "%s"
+    """
+    Format string to use when converting the internal representation to text. See also format_value() below.
+    """
     min    = None
+    """
+    Minimum allowable value. If None, no minimum value will be enforced.
+    """
     max    = None
+    """
+    Maximum allowable value. If None, no maximum value will be enforced.
+    """
     type   = None
+    """
+    A function for converting from text to the internal representation. Typically a type object, but can be any callable object.
+    """
 
     def __init__(self, width=None, **kwds):
+        """
 
+        Args:
+            width:  The width may be an integer or a string, as for TextEditor. If no width is specified, but a
+                    value for min and/or max is specified at construction time, the width will be determined from
+                    the min or max value. If no other way of determining the width is available, it defaults to 100.
+
+            **kwds:
+        """
         minimum = self.predict_attr(kwds, 'min')
         maximum = self.predict_attr(kwds, 'max')
         if 'format' in kwds:
@@ -36,11 +75,21 @@ class Field(Control, TextEditor):
             width = 100
         TextEditor.__init__(self, width, **kwds)
 
-    def format_value(self, x):
-        if x == self.empty:
+    def format_value(self, theValueToFormat):
+        """
+        This method is called to format the value for display. By default it uses the format string specified by
+        the format attribute. You can override this method to format the value in a different way.
+
+        Args:
+            theValueToFormat:  The value
+
+        Returns:  The formatted value
+
+        """
+        if theValueToFormat == self.empty:
             return ""
         else:
-            return self.format % x
+            return self.format % theValueToFormat
 
     def get_text(self):
         if self.editing:
@@ -48,9 +97,9 @@ class Field(Control, TextEditor):
         else:
             return self.format_value(self.value)
 
-    def set_text(self, text):
+    def set_text(self, theNewText):
         self.editing = True
-        self._text = text
+        self._text = theNewText
 
     def enter_action(self):
         if self.editing:
@@ -68,6 +117,13 @@ class Field(Control, TextEditor):
         self.commit()
 
     def commit(self):
+        """
+        When in the editing state, causes the control's value to be updated and places the control
+        in the non-editing state.
+
+        Returns:
+
+        """
         if self.editing:
             text = self._text
             if text:
