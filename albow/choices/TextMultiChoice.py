@@ -33,11 +33,11 @@ class TextMultiChoice(MultiChoice):
         buf = self.font.render(self.labels[n], True, self.fg_color)
         blit_in_rect(surf, buf, rect, self.align, self.margin)
 
-    def draw_prehighlight(self, surf, i, rect):
+    def draw_prehighlight(self, surf, theItemNumber, theRect):
         if self.highlight_style == 'arrows':
-            self.draw_arrows(surf, i, rect)
+            self.draw_arrows(surf, theItemNumber, theRect)
         else:
-            MultiChoice.draw_prehighlight(self, surf, i, rect)
+            MultiChoice.draw_prehighlight(self, surf, theItemNumber, theRect)
 
     def draw_arrows(self, surf, i, rect):
         """

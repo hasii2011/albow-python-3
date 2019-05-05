@@ -31,7 +31,7 @@ class DemoPaletteView(PaletteView):
         color = Color(self.info[item_no])
         surface.fill(color, r)
 
-    def click_item(self, item_no, event):
+    def click_item(self, item_no, theEvent):
         self.selection = item_no
 
     def item_is_selected(self, item_no):

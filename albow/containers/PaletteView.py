@@ -1,10 +1,11 @@
-"""
 
-"""
 import logging
 
 from pygame import Rect
+from pygame import Surface
 from pygame import draw
+
+from pygame.event import Event
 
 from albow.containers.grid_view import GridView
 from albow.utils import frame_rect
@@ -13,6 +14,14 @@ from albow.themes.ThemeProperty import ThemeProperty
 
 
 class PaletteView(GridView):
+    """
+    The PaletteView class is an abstract base class for implementing tool palettes and similar things. A PaletteView
+    displays an array of items which can be selected by clicking, with the selected item being highlighted. There
+    is provision for scrolling, so that the palette can contain more items than are displayed at one time.
+
+    The PaletteView does not maintain the items themselves or keep track of which one is selected; these things
+    are responsibilities of the subclass.
+    """
     """
        nrows   int   No. of displayed rows
        ncols   int   No. of displayed columns
@@ -27,32 +36,46 @@ class PaletteView(GridView):
     """
 
     sel_width = ThemeProperty('sel_width')
+    """
+    Width of the border drawn around the selected item when the highlight_style is 'frame'.
+    """
     scroll_button_size = ThemeProperty('scroll_button_size')
+    """
+    Size of the scrolling buttons. (This is a number, not a tuple -- the scroll buttons are square.)
+    """
     scroll_button_color = ThemeProperty('scroll_button_color')
+    """
+    Color in which to draw the scrolling buttons.
+    """
     highlight_style = ThemeProperty('highlight_style')
-    # 'frame' or 'fill' or 'reverse' or None
+    """
+    Determines the way in which a selected cell is highlighted. Values are 'frame' to draw a frame around 
+    the cell, 'fill' to fill its background with the sel_color, and 'reverse' to swap the 
+    foreground and background colours.
+    """
 
     def __init__(self, cell_size, nrows, ncols, scrolling=False, **kwds):
         """
+        Initializes the palette view with the specified cell_size, and a rect sized for displaying
+        nrows rows and ncols columns of items. If scrolling is true, controls will be
+        displayed for scrolling the view.
 
-        :param cell_size:
-        :param nrows:
-        :param ncols:
-        :param scrolling:
-        :param kwds:
+        Args:
+            cell_size:  A tuple that specifies the cell size (width, height)
+            nrows:      The # of rows
+            ncols:      The # of columns
+            scrolling:  True to display scroll bars, else false
+            **kwds:
         """
 
-        # print( "__class__: '" + self.__class__.__name__ + "'")
-        #
-        # Use this naming convention, until I break these out into separate packages
-        #
-        self.logger = logging.getLogger(self.__class__.__name__)
+        self.logger = logging.getLogger(__name__)
 
         #
         # Python 3 update
         #
         # GridView.__init__(self, cell_size, nrows, ncols, **kwds)
         super().__init__(cell_size, nrows, ncols, **kwds)
+
         self.scrolling = scrolling
         if scrolling:
             d = self.scroll_button_size
@@ -107,17 +130,6 @@ class PaletteView(GridView):
             highlight = self.item_is_selected(i)
             self.draw_item_and_highlight(surface, i, rect, highlight)
 
-    def draw_item_and_highlight(self, surface, i, rect, highlight):
-        if highlight:
-            self.draw_prehighlight(surface, i, rect)
-        if highlight and self.highlight_style == 'reverse':
-            fg = self.inherited('bg_color') or self.sel_color
-        else:
-            fg = self.fg_color
-        self.draw_item_with(surface, i, rect, fg)
-        if highlight:
-            self.draw_posthighlight(surface, i, rect)
-
     def draw_item_with(self, surface, i, rect, fg):
         old_fg = self.fg_color
         self.fg_color = fg
@@ -126,22 +138,13 @@ class PaletteView(GridView):
         finally:
             self.fg_color = old_fg
 
-    def draw_prehighlight(self, surface, i, rect):
-        if self.highlight_style == 'reverse':
-            color = self.fg_color
-        else:
-            color = self.sel_color
-        self.draw_prehighlight_with(surface, i, rect, color)
+    def draw_prehighlight_with(self, theSurface: Surface, theItemNumber: int, theRect: Rect, color):
 
-    def draw_prehighlight_with(self, surface, i, rect, color):
         style = self.highlight_style
         if style == 'frame':
-            frame_rect(surface, color, rect, self.sel_width)
+            frame_rect(theSurface, color, theRect, self.sel_width)
         elif style == 'fill' or style == 'reverse':
-            surface.fill(color, rect)
-
-    def draw_posthighlight(self, surface, i, rect):
-        pass
+            theSurface.fill(color, theRect)
 
     def mouse_down(self, event):
 
@@ -220,8 +223,89 @@ class PaletteView(GridView):
         else:
             return 0
 
-    def item_is_selected(self, n):
+    # ========================================================================
+    #
+    #  Abstract methods follow;  Some implemented with default behavior
+    #
+    # ========================================================================
+
+    def draw_item_and_highlight(self, theSurface: Surface, theItemNumber: int, theRect: Rect, highlight: bool):
+        """
+        Draws the cell for item theItemNumber, together with highlighting if highlight is true. The default
+        implementation calls draw_prehighlight, draw_item and draw_posthighlight.
+
+        Args:
+            theSurface:     The surface to drawn on
+            theItemNumber:  The item # of highlight
+            theRect:        The pygame rect to use
+            highlight:      If True highlight
+
+        Returns:
+
+        """
+        if highlight:
+            self.draw_prehighlight(theSurface, theItemNumber, theRect)
+        if highlight and self.highlight_style == 'reverse':
+            fg = self.inherited('bg_color') or self.sel_color
+        else:
+            fg = self.fg_color
+        self.draw_item_with(theSurface, theItemNumber, theRect, fg)
+        if highlight:
+            self.draw_posthighlight(theSurface, theItemNumber, theRect)
+
+    def draw_prehighlight(self, theSurface: Surface, theItemNumber: int, theRect: Rect):
+        """
+        Called for highlighted cells before draw_item, to draw highlighting that is to appear
+        underneath the cell's contents.
+
+        Args:
+            theSurface:
+            theItemNumber:
+            theRect:
+
+        """
+
+        if self.highlight_style == 'reverse':
+            color = self.fg_color
+        else:
+            color = self.sel_color
+        self.draw_prehighlight_with(theSurface, theItemNumber, theRect, color)
+
+    def draw_posthighlight(self, theSurface: Surface, theItemNumber: int, theRect: Rect):
+        """
+        Called for highlighted cells after draw_item, to draw highlighting that is to appear
+        on top of the cell's contents.
+
+        Args:
+            theSurface:
+            theItemNumber:
+            theRect:
+
+        """
+        pass
+
+    def item_is_selected(self, theItemNumber: int) -> bool:
+        """
+        Should return a boolean indicating whether item number item_no is currently to be considered selected.
+
+        Args:
+            theItemNumber:
+
+        Returns True if it is, False
+        """
+
         return False
 
-    def click_item(self, n, e):
+    def click_item(self, theItemNumber: int, theEvent: Event):
+        """
+        Called when a mouse-down event occurs in item theItemNumber. Typically the subclass will record the fact that
+        the item is selected so that this can be reported later via item_is_selected().
+
+        Args:
+            theItemNumber:
+            theEvent:
+
+        Returns:
+
+        """
         pass

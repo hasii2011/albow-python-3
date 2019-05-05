@@ -31,7 +31,7 @@ class ImageMultiChoice(MultiChoice):
         image = self.images[imageIndex]
         blit_in_rect(surface, image, rect, self.align, self.margin)
 
-    def draw_prehighlight(self, surf: Surface, i: int, rect: Rect):
+    def draw_prehighlight(self, surf: Surface, theItemNumber: int, theRect: Rect):
 
         color = self.sel_color
-        surf.fill(color, rect)
+        surf.fill(color, theRect)
