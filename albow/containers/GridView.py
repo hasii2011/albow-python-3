@@ -1,26 +1,35 @@
 
 from pygame import Rect
+from pygame import Surface
+
+from pygame.event import Event
 
 from albow.core.Widget import Widget
 
 
 class GridView(Widget):
-    #  cell_size   (width, height)   size of each cell
-    #
-    #  Abstract methods:
-    #
-    #    num_rows()  -->  no. of rows
-    #    num_cols()  -->  no. of columns
-    #    draw_cell(surface, row, col, rect)
-    #    click_cell(row, col, event)
+    """
+    The GridView class is an abstract base class for widgets that display information in a regular grid of
+    rows and columns. Subclasses implement methods that define the size of the grid, for drawing a cell of
+    the grid and for responding to mouse clicks in a cell.
+    """
 
     def __init__(self, cell_size, nrows, ncols, **kwds):
         """
+        Initializes the grid view with the specified cell_size, and a rect sized to show nrows rows and ncols
+        columns of cells.
 
-        :param cell_size:
-        :param nrows: are for calculating initial size of widget"
-        :param ncols: are for calculating initial size of widget"
-        :param kwds:
+        Note that nrows and ncols are used only for calculating the initial size of the widget, and are not stored.
+
+        Args:
+            cell_size:  The cell_size as a tuple (width, height)
+
+            nrows:  The # of rows
+
+            ncols:  The number of columns
+
+            **kwds: Additional property values in keyword:value format
+
         """
         #
         # Python 3 update
@@ -41,15 +50,24 @@ class GridView(Widget):
                 r = self.cell_rect(row, col)
                 self.draw_cell(surface, row, col, r)
 
-    def cell_rect(self, row, col):
+    def cell_rect(self, theRow: int, theColumn: int) -> Rect:
+        """
+        Returns a rectangle covering the cell for row 'theRow' and column 'theColumn'.
+
+        Args:
+            theRow: The Row
+
+            theColumn: The column
+
+        Returns:    A pygame rectangle
+
+        """
         w, h = self.cell_size
         d = self.margin
-        x = col * w + d
-        y = row * h + d
-        return Rect(x, y, w, h)
+        x = theColumn * w + d
+        y = theRow * h + d
 
-    def draw_cell(self, surface, row, col, rect):
-        pass
+        return Rect(x, y, w, h)
 
     def mouse_down(self, event):
 
@@ -62,5 +80,26 @@ class GridView(Widget):
             col = (x - d) // w
             self.click_cell(row, col, event)
 
-    def click_cell(self, row, col, event):
+    #
+    # Abstract methods follow
+    #
+
+    def click_cell(self, theRow: int, theColumn: int, theEvent: Event):
+        pass
+
+    def draw_cell(self, theSurface: Surface, theRow: int, theColumn: int, rect: Rect):
+        pass
+
+    def num_rows(self) -> int:
+        """
+
+        Returns:  The # of rows
+        """
+        pass
+
+    def num_cols(self) -> int:
+        """
+
+        Returns: The # of columns
+        """
         pass
