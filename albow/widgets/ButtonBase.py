@@ -5,9 +5,19 @@ from albow.widgets.Control import Control
 
 
 class ButtonBase(Control):
+    """
+    ButtonBase is a mixin class for use by widgets having button-like behaviour. It provides handlers for
+    mouse events that maintain a "highlighted" state, support for enabling and disabling the button, and s
+    upport for calling a function when the button is clicked.
 
+    It does not provide any functionality for drawing; that is the responsibility of the subclass using it.
+    """
     align = 'c'
     action = None
+    """
+    A function of no arguments to be called when the button is clicked. May also be defined as 
+    a method in the subclass.
+    """
 
     def mouse_down(self, event):
         if self.enabled:

@@ -28,7 +28,7 @@ from albow.core.root import set_modifier
 from albow.core.root import Cancel
 from albow.core.root import ApplicationError
 
-import albow.media.MusicUtilities
+from albow.media.MusicUtilities import MusicUtilities
 
 MUSIC_END_EVENT = USEREVENT + 1
 
@@ -47,6 +47,7 @@ clicked_widget = None  # Target of mouse_drag and mouse_up events
 timer_event = None     # Timer event pending delivery
 next_frame_due = 0.0   #
 
+
 def get_top_widget():
     return top_widget
 
@@ -54,15 +55,30 @@ def get_top_widget():
 def get_focus():
     return top_widget.get_focus()
 
+
 def get_root():
     return root_widget
 
+
 class RootWidget(Widget):
+    """
+    For the GUI to function, there must be exactly one instance of RootWidget. It implements the main event loop
+    and serves as the ultimate container for all other visible widgets.
+
+    The root widget can be found using the get_root() function of the RootWidget module.
+
+    """
     #
     #  surface   Pygame display surface
     #  is_gl     True if OpenGL surface
 
     redraw_every_frame = False
+    """
+    If true, all widgets will be redrawn on every animation frame (i.e. after every call to begin_frame()). If false, 
+    redrawing only occurs after user input events, such as mouse clicks and keystrokes, or if a widget calls 
+    its invalidate() method. The default is false.
+
+    """
     do_draw            = False
     _is_gl_container   = True
     frame_time         = 0.0
@@ -70,9 +86,13 @@ class RootWidget(Widget):
 
     def __init__(self, surface: Surface, **kwds):
         """
+        Initialises the root widget with the given surface, which will normally be the PyGame screen,
+        but could be a subsurface of it.
 
-        :param surface:
-        :param kwds:
+        Args:
+            surface:  A pygame surface
+
+            **kwds:
         """
         global root_widget
         #
@@ -96,19 +116,39 @@ class RootWidget(Widget):
             self.gl_surface = GLSurface(surface, self.rect)
 
     def set_timer(self, ms):
+        """
+        Arranges for timer events to be generated every interval milliseconds. See timer_event().
+
+        Args:
+            ms:  The timer interval in milli-seconds
+
+        """
         self.frame_time = ms
         if not self._use_sleep:
             set_pygame_timer(USEREVENT, max(1, int(round(ms))))
 
     def run(self):
+        """
+        Runs the main event loop. Control is retained until a QUIT event is received, whereupon the quit() method i
+        s called.
+
+        """
         self.run_modal(None)
 
-    def run_modal(self, modal_widget):
+    def run_modal(self, modal_widget: Widget):
+        """
+            Runs a modal event loop. The widget is run as a modal dialog until its dismiss() method is called.
+        Args:
+            modal_widget:  The modal widget
+        """
 
-        global last_mouse_event, last_mouse_event_handler
-        global top_widget, clicked_widget
+        global last_mouse_event
+        global last_mouse_event_handler
+        global top_widget
+        global clicked_widget
         global timer_event
         global next_frame_due
+
         is_modal = modal_widget is not None
         modal_widget = modal_widget or self
         relative_pause = False
@@ -338,13 +378,6 @@ class RootWidget(Widget):
         add_modifiers(event)
         widget.dispatch_key(name, event)
 
-    def defer_drawing(self):
-        return True
-
-    def timer_event(self, event):
-        self.begin_frame()
-        return True
-
     def begin_frame(self):
         """Deprecated, use timer_event() instead."""
         pass
@@ -356,11 +389,12 @@ class RootWidget(Widget):
         return True
 
     def quit(self):
+        """
+        This method is called when a QUIT event is received. The default implementation first calls
+        confirm_quit(), and if it returns true, calls sys.exit(0).
+        """
         if self.confirm_quit():
             sys.exit(0)
-
-    def confirm_quit(self):
-        return True
 
     def get_mouse_for(self, widget):
         last = last_mouse_event
@@ -372,6 +406,53 @@ class RootWidget(Widget):
     def music_end(self):
         MusicUtilities.music_end()
 
+    # ========================================================================
+    #
+    #  Abstract methods follow
+    #
+    # ========================================================================
 
     def report_error(self, e):
         pass
+
+    def confirm_quit(self) -> bool:
+        """
+        Called to give an opportunity to ask the user to confirm quitting the main event loop. If it returns
+        true, sys.exit(0) is performed, otherwise nothing is done. The default implementation unconditionally
+        returns true.
+
+        Returns: True to confirm else False
+
+        """
+        return True
+
+    def defer_drawing(self) -> bool:
+        """
+        f this method returns true, pending display updates are only performed when a timer event occurs and the
+        timer_event() method of the root widget returns true. Otherwise, the display is updated after every input
+        event except for mouse-move events. The default implementation returns True.
+
+        Returns: True to defer else False
+
+        """
+        return True
+
+    def timer_event(self, event):
+        """
+        Called when a timer event occurs. See set_timer(). If it returns true, a display update is performed. T
+        he default implementation returns true.
+
+        Note:
+            If multiple timer events occur during a single pass through the event loop, only the most recent
+            one is passed to timer_event() and the others are discarded. Also, if other types of event occur during
+            the same pass through the event loop, all the other events are processed before calling timer_event(), even
+            if the timer event was not the last to occur chronologically.
+
+        Args:
+            event:
+
+        Returns:  True
+
+        """
+        self.begin_frame()
+        return True
