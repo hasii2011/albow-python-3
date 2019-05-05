@@ -7,7 +7,7 @@ from pygame import draw
 
 from pygame.event import Event
 
-from albow.containers.grid_view import GridView
+from albow.containers.GridView import GridView
 from albow.utils import frame_rect
 
 from albow.themes.ThemeProperty import ThemeProperty
