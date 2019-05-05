@@ -39,8 +39,10 @@ class LaunchDemosScreen(Screen):
         f1             = ResourceUtility.get_font(DEMO_TITLE_TEXT_SIZE, Theme.BUILT_IN_FONT)
         titleAttrs = {
             'fg_color': Theme.BLACK,
+            'bg_color': Theme.WHITE,
             'enabled_bg_color': Theme.WHITE,
-            'highlight_color': True,
+            'highlight_color': (208,210,211),
+            'highlighted': True,
             'align': 'c'
         }
         title = Label("Albow Demonstration", font=f1, **titleAttrs)
@@ -88,7 +90,6 @@ class LaunchDemosScreen(Screen):
             quitButton
         ], align='c', spacing=10)
         self.add_centered(contents)
-
 
     def screen_button(self, text: str, screen: Screen):
 
