@@ -67,6 +67,28 @@ def rect_property(name):
 
 
 class Widget():
+    """
+    The Widget class is the base class for all widgets. A widget occupies a rectangular area of the PyGame screen
+    to which all drawing in it is clipped, and it may receive mouse and keyboard events. A widget may also
+    contain subwidgets.
+
+    NOTE: Due to a limitation of PyGame subsurfaces, a widget's rectangle must be entirely contained within that of\
+     its parent widget. An exception will occur if this is violated.
+
+
+    Reading the following attributes retrieves the corresponding values from the widget's rect. Assigning to them
+    changes the size and position of the widget. Additionally, if the size of the widget is changed via these
+    attributes, the size and position of its subwidgets is updated according to each subwidget's anchor attribute.
+    (This does not happen if the rect is modified directly.)
+
+        left, right, top, bottom, width, height, size,
+        topleft, topright, bottomleft, bottomright,
+        midleft, midright, midtop, midbottom,
+        center, centerx, centery
+
+
+
+    """
     #  rect            Rect       bounds in parent's coordinates
     #  parent          Widget     containing widget
     #  subwidgets      [Widget]   contained widgets
@@ -101,21 +123,91 @@ class Widget():
     centery = rect_property('centery')
 
     font = FontProperty('font')
+    """
+    Font to use for drawing text in the widget. How this property is used depends on the widget. Some widgets have 
+    additional font properties for specific parts of the widget.
+    """
     fg_color = ThemeProperty('fg_color')
+    """
+    Foreground colour for the contents of the widget. How this property is used depends on the widget. Some widgets 
+    have additional colour properties for specific parts of the widget.
+    """
     bg_color = ThemeProperty('bg_color')
+    """
+    Background colour of the widget. If specified, the widget's rect is filled with this colour before drawing its 
+    contents. If no background colour is specified or it is set to None, the widget has no background and is drawn 
+    transparently over its parent. For most widgets, it defaults to None.
+    """
     bg_image = ThemeProperty('bg_image')
+    """
+    An image to be displayed in the background. If specified, this overrides any bg_color.
+    """
     scale_bg = ThemeProperty('scale_bg')
+    """
+    If true, and the background image is smaller than the widget in either direction, the background image is scaled 
+    to fill the widget, otherwise it is centered. Note: Due to a limitation of the pygame rotozoom function, scaling 
+    is currently uniform in both directions, with the scale factor being that required to ensure that the whole 
+    widget is covered.
+    """
     border_width = ThemeProperty('border_width')
+    """
+    Width of a border to be drawn inside the outer edge of the widget. If this is unspecified or set to zero, 
+    no border is drawn.
+    """
     border_color = ThemeProperty('border_color')
+    """
+    Color in which to draw the border specified by border_width.
+    """
     sel_color = ThemeProperty('sel_color')
     margin = ThemeProperty('margin')
+    """
+    The amount of space to leave between the edge of the widget and its contents. Note that this distance includes the 
+    border_width, e.g. if border_width == 1 and margin == 3, then there is 2 pixels of space between the inside of 
+    the border and the contents.
+
+    Most of the predefined Albow widgets honour the margin property, but this is not automatic for your own widget 
+    subclasses. You may find the get_margin_rect() method helpful in implementing support for the margin property 
+    in your widget classes.
+    """
+
     menu_bar = overridable_property('menu_bar')
+    """
+    A MenuBar to be attached to and managed by this widget. Assigning to the menu_bar property automatically adds the 
+    menu bar as a child widget. Also, if the width of the menu bar has not already been set, it is set to be the same 
+    width as this widget and to stretch horizontally with it.
+
+    When a key down event with the platform's standard menu command modifier (Command on Mac, Control on other 
+    platforms) is dispatched through this widget, the menu bar is first given a chance to handle the event. If the 
+    menu bar does not handle it, dispatching continues as normal.
+
+    """
     is_gl_container = overridable_property('is_gl_container')
+    """
+    Controls the drawing behaviour of the widget when used in an OpenGL window. When true, no 2D drawing is performed 
+    for the widget itself -- its background colour and border properties are ignored, and its draw() and draw_over() 
+    methods are never called. If it has 3D subwidgets, 3D drawing is performed for them.
+
+    When false, the widget and its subwidgets are rendered to a temporary surface which is then drawn to the window 
+    using glDrawPixels() with blending. No 3D drawing is performed for any of its subwidgets.
+
+    In either case, input events are handled in the usual way.
+
+    This property has no effect on widgets in a non-OpenGL window.
+    """
 
     tab_stop = False
+    """
+    True if this widget should receive the keyboard focus when the user presses the Tab key. Defaults to false.
+    """
     enter_response = None
     cancel_response = None
     anchor = 'lt'
+    """
+    A string specifying how this widget is to change in size and position when its parent widget changes size. The 
+    letters 'l', 'r', 't' and 'b' are used to anchor the widget to the left, right, top or bottom sides of its 
+    parent. Anchoring it to both left and right, or both top and bottom, causes the widget to stretch or shrink when 
+    its parent changes in width or height.
+    """
     _menubar = None
     _visible = True
     _is_gl_container = False
@@ -124,14 +216,30 @@ class Widget():
     resizing_values = {'': [0], 'm': [1], 's': [0, 1]}
 
     visible = overridable_property('visible')
-
+    """
+    When true, the widget is visible and active. When false, the widget is invisible and will not receive events. 
+    Defaults to true. The behaviour of this property can be customized by overriding the get_visible method.
+    """
+    parent = None
+    """
+    Read-only. The widget having this widget as a subwidget, or None if the widget is not contained in another 
+    widget. A widget must ultimately be contained in the root widget in order to be drawn and to receive events.
+    """
+    subwidgets = []
+    """
+    """
     def __init__(self, rect: Rect=None, **kwds):
-        """
 
-        :param rect:
-        :param kwds:
         """
+        Creates a new widget, initially without any parent. If a rect is given, it specifies the new widget's initial s
+        ize and position relative to its parent.
 
+        Args:
+            rect:   A PyGame rectangle defining the portion of the parent widget's coordinate system occupied by the\
+             widget. Modifying this rectangle changes the widget's size and position.
+
+            **kwds: Additional attributes specified as key-value pairs
+        """
         self.logger = logging.getLogger(__name__)
 
         if rect and not isinstance(rect, Rect):
@@ -297,7 +405,7 @@ class Widget():
             self.focus_switch = None
 
     def draw_all(self, surface):
-        #print "Widget.draw_all:", self, "on", surface ###
+        # print "Widget.draw_all:", self, "on", surface ###
         if self.visible:
             surf_rect = surface.get_rect()
             bg_image = self.bg_image
@@ -350,7 +458,7 @@ class Widget():
         surface.fill((255, 0, 0), widget.rect)
 
     def draw(self, surface):
-        #print "Widget.draw:", self ###
+        # print "Widget.draw:", self ###
         pass
 
     def draw_over(self, surface):
@@ -501,7 +609,7 @@ class Widget():
 
     def key_down(self, event):
         k = event.key
-        #print "Widget.key_down:", k ###
+        # print "Widget.key_down:", k ###
         if k == K_RETURN or k == K_KP_ENTER:
             if self.enter_response is not None:
                 self.dismiss(self.enter_response)
@@ -542,7 +650,7 @@ class Widget():
         root.run_modal(self)
         self.dispatch_attention_loss()
         root.remove(self)
-        #print "Widget.present: returning", self.modal_result
+        # print "Widget.present: returning", self.modal_result
         return self.modal_result
 
     def dismiss(self, value = True):

@@ -123,7 +123,7 @@ class TextEditor(Widget):
 
     def get_text_and_insertion_point(self):
         text = self.get_text()
-        i = self.insertion_point
+        i = self.insertionPoint
         if i is not None:
             i = max(0, min(i, len(text)))
         return text, i
@@ -137,7 +137,7 @@ class TextEditor(Widget):
                 i = 0
         else:
             i = max(0, min(i + d, len(text)))
-        self.insertion_point = i
+        self.insertionPoint = i
 
     def insert_char(self, c):
         if self.upper:
