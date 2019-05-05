@@ -94,9 +94,9 @@ class TextEditor(Widget):
             y = frame.top
             draw.line(surface, fg, (x, y), (x, y + h - 1))
 
-    def key_down(self, event):
-        if not (event.cmd or event.alt):
-            k = event.key
+    def key_down(self, theKeyEvent):
+        if not (theKeyEvent.cmd or theKeyEvent.alt):
+            k = theKeyEvent.key
             if k == K_LEFT:
                 self.move_insertion_point(-1)
                 return
@@ -108,7 +108,7 @@ class TextEditor(Widget):
                 self.tab_to_next()
                 return
             try:
-                c = event.unicode
+                c = theKeyEvent.unicode
             except ValueError:
                 c = ""
             #
@@ -117,9 +117,9 @@ class TextEditor(Widget):
             # if self.insert_char(c) <> 'pass':
             if self.insert_char(c) != 'pass':
                 return
-        if event.cmd and event.unicode:
+        if theKeyEvent.cmd and theKeyEvent.unicode:
             self.attention_lost()
-        self.call_parent_handler('key_down', event)
+        self.call_parent_handler('key_down', theKeyEvent)
 
     def get_text_and_insertion_point(self):
         text = self.get_text()
