@@ -1,1 +1,1 @@
-"""ALBOW - A Little Bit of Widgetry for PyGameby Gregory Ewinggreg.ewing@canterbury.ac.nz"""from albow.version import version
+"""ALBOW - A Little Bit of Widgetry for PyGameby Gregory Ewinggreg.ewing@canterbury.ac.nzPorted to Python 3 and extended by Humberto A. Sanchez II(https://www.linkedin.com/in/hasii/)"""from albow.version import version

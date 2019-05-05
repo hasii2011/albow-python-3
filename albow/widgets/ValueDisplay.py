@@ -9,8 +9,18 @@ from albow.utils import blit_in_rect
 
 class ValueDisplay(Control, Widget):
 
+    """
+    A ValueDisplay is a Control that provides a read-only textual display of a value.
+    """
     format = "%s"
+    """
+    Format string to be used when displaying the value. Also see the format_value() method below.
+
+    """
     align  = 'l'
+    """
+        How to align the value.  Default is 'l'
+    """
 
     def __init__(self, width=100, **kwds):
 
@@ -30,4 +40,3 @@ class ValueDisplay(Control, Widget):
             return self.format % value
         else:
             return ""
-

@@ -72,11 +72,13 @@ class ResourceUtility:
     def get_image(*names, **kwds):
         """
 
-        :param names:
-        :param kwds:
-        :return:
-        """
+        Args:
+            *names:
+            **kwds:
 
+        Returns:
+
+        """
         prefix = kwds.pop('prefix', "%s" % DEFAULT_IMAGES_DIRECTORY)
         path = ResourceUtility._resource_path(prefix, names)
         return ResourceUtility._get_image(path, **kwds)
@@ -274,11 +276,15 @@ class ResourceUtility:
     def _get_image(path, border=0, optimize=optimize_images, noalpha=False, rle=run_length_encode):
         """
 
-        :param border:
-        :param optimize:
-        :param noalpha:
-        :param rle:
-        :return:
+        Args:
+            path:
+            border:
+            optimize:
+            noalpha:
+            rle:
+
+        Returns:
+
         """
         image = image_cache.get(path)
         if not image:

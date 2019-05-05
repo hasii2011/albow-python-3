@@ -7,10 +7,23 @@ from albow.themes.ThemeProperty import ThemeProperty
 
 
 class ImageButton(ButtonBase, Image):
+    """
+    TODO:  We need a demo screen for this class
 
+    An ImageButton is a button whose appearance is defined by an image.
+    """
     disabled_bg_image    = ThemeProperty('disabled_bg_image')
+    """
+        This disabled background image
+    """
     enabled_bg_image     = ThemeProperty('enabled_bg_image')
+    """
+    The enabled background image
+    """
     highlighted_bg_image = ThemeProperty('highlighted_bg_image')
+    """
+        The highlighted background image
+    """
 
     def draw(self, surface: Surface):
 
