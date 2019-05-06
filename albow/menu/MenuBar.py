@@ -38,7 +38,7 @@ class MenuBar(Widget):
 
     .. Tip:: See Also
         - Menu for details of creating menu items and associating them with command names and key combinations.
-        - `albow.core.Widget`.menu_bar for attaching the menu bar to a widget.
+        - `albow.core.Widget.menu_bar` for attaching the menu bar to a widget.
 
     """
     menus: List[Menu] = overridable_property('menus', "List of Menu instances")

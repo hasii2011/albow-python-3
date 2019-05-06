@@ -86,7 +86,7 @@ class RootWidget(Widget):
 
     def __init__(self, surface: Surface, **kwds):
         """
-        Initialises the root widget with the given surface, which will normally be the PyGame screen,
+        Initializes the root widget with the given surface, which will normally be the PyGame screen,
         but could be a subsurface of it.
 
         Args:
