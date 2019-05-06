@@ -9,25 +9,32 @@ debug_theme = False
 
 
 class ThemeProperty:
+    """
+    The ThemeProperty class is a property descriptor used for defining theme properties.
 
+    Example
+    --------
+    <pre>
+
+        class Battlefield(Widget):
+
+        phaser_color = ThemeProperty('phaser_color')
+    </pre>
+    """
     def __init__(self, name):
         """
+        Constructs a theme property. The name given is used to derive the name under which the
+        property value is cached, by pre-pending an underscore. Normally name should be the same as
+        the name being used for the property.
 
-        :param name:
+        Args:
+            name:   The property name
         """
-
         self.logger = logging.getLogger(__name__)
         self.name = name
         self.cache_name = sys.intern("_" + name)
 
     def __get__(self, obj, owner):
-        """
-        TODO use python logging instead of print
-
-        :param obj:
-        :param owner:
-        :return:
-        """
         self.logger.debug("%s(%s).__get__(%s)", self.__class__.__name__, self.name, obj)
 
         try:
