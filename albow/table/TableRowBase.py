@@ -28,10 +28,10 @@ class TableRowBase(PaletteView):
         row_data = self.row_data(row)
         for i, x, width, column, cell_data in table.column_info(row_data):
             cell_rect = Rect(x, row_rect.top, width, height)
-            self.draw_table_cell(surf, i, cell_data, cell_rect, column)
+            self.draw_table_cell(surf, cell_data, cell_rect, column)
 
     def row_data(self, row):
         return self.parent.row_data(row)
 
-    def draw_table_cell(self, surf, i, data, cell_rect, column):
-        self.parent.draw_table_cell(surf, i, data, cell_rect, column)
+    def draw_table_cell(self, surf, data, cell_rect, column):
+        self.parent.draw_table_cell(surf, data, cell_rect, column)

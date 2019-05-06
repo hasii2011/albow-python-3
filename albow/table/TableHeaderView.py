@@ -10,5 +10,5 @@ class TableHeaderView(TableRowBase):
     def row_data(self, row):
         pass
 
-    def draw_table_cell(self, surf, i, data, cell_rect, column):
-        self.parent.draw_header_cell(surf, i, cell_rect, column)
+    def draw_table_cell(self, surf, data, cell_rect, column):
+        self.parent.draw_header_cell(surf, cell_rect, column)

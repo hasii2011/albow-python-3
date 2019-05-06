@@ -127,7 +127,7 @@ class TableView(Column):
             yield i, x + m, width - d, column, data
             x += width
 
-    def draw_header_cell(self, theSurface: Surface, i, cell_rect: Rect, theTableColumn: TableColumn):
+    def draw_header_cell(self, theSurface: Surface, cell_rect: Rect, theTableColumn: TableColumn):
         """
         Draws the header of TableColumn
         By default, the column's title is displayed
@@ -135,16 +135,14 @@ class TableView(Column):
         Args:
             theSurface:       The pygame surface to use
 
-            i:          TODO not used remove
-
             cell_rect: The rect is the rectangle corresponding to the header area,
 
             theTableColumn:  The table column header to render
 
         """
-        self.draw_text_cell(theSurface, i, theTableColumn.title, cell_rect, theTableColumn.alignment, self.font)
+        self.draw_text_cell(theSurface, theTableColumn.title, cell_rect, theTableColumn.alignment, self.font)
 
-    def draw_table_cell(self, surf: Surface, i: int, data: str, cell_rect: Rect, tableColumn: TableColumn):
+    def draw_table_cell(self, surf: Surface, data: str, cell_rect: Rect, tableColumn: TableColumn):
         """
         Draws a cell of the table. data is the data item to be displayed, rect is the rectangle corresponding to the
         cell, By default, the data is formatted as
@@ -153,8 +151,6 @@ class TableView(Column):
         Args:
             surf:       The pygame Surface
 
-            i:          TODO unused
-
             data:   The data to display
 
             cell_rect: The rect is the rectangle corresponding to the header area,
@@ -162,14 +158,13 @@ class TableView(Column):
             theTableColumn:  The table column header to render
         """
         text = tableColumn.format(data)
-        self.draw_text_cell(surf, i, text, cell_rect, tableColumn.alignment, self.font)
+        self.draw_text_cell(surf, text, cell_rect, tableColumn.alignment, self.font)
 
-    def draw_text_cell(self, theSurface: Surface, i, data, cell_rect: Rect, align: str, theFont: font):
+    def draw_text_cell(self, theSurface: Surface, data, cell_rect: Rect, align: str, theFont: font):
         """
 
         Args:
             theSurface:
-            i:
             data:
             cell_rect:
             align:
