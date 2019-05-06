@@ -12,7 +12,7 @@ class Dialog(Modal, Widget):
     The Dialog class provides a convenient container for implementing modal dialogs. Pressing Return or
     Enter dismisses the dialog with the value True, and pressing Escape dismisses it with the value False.
 
-    See the present() and dismiss() methods of class Widget for showing and dismissing the dialog.
+    See the `albow.core.Widget` ``dismiss()`` and ``present()`` methods
     """
     click_outside_response = None
     """

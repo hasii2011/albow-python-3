@@ -12,29 +12,64 @@ from albow.input.TextField import TextField
 DEFAULT_ASK_RESPONSES = ["OK", "Cancel"]
 
 
-def wrapped_label(text, wrap_width, **kwds):
+def wrapped_label(text, wrap_width, **kwds) -> Label:
+    """
+    Constructs a `albow.widgets.Label` widget from the given text after using the ``textwrap`` module to wrap it to
+    the specified width in
+    characters.
+    Additional keyword parameters are passed to the Label constructor.
 
+    Args:
+        text:       The text to wrap in a label
+
+        wrap_width: The wrap width
+
+        **kwds:     Pass these to the Label constructor
+
+    Returns:    A Label widget
+
+    """
     paras = text.split("\n\n")
     text = "\n".join([textwrap.fill(para, wrap_width) for para in paras])
     return Label(text, **kwds)
 
 
-def alert(mess, **kwds):
-    ask(mess, ["OK"], **kwds)
-
-
-def ask(mess, theResponses=None, default=0, cancel=-1, wrap_width=60, **kwds):
+def alert(theMessage: str, theWrapWidth=60, **kwds):
     """
+    Displays a message in a modal dialog, wrapped to the specified width in characters. The dialog can be dismissed by
+    pressing Return, Enter or Escape.
 
     Args:
-        mess:
-        theResponses:
-        default:
-        cancel:
-        wrap_width:
-        **kwds:
+        theMessage:  The alert message to display
 
-    Returns:
+        theWrapWidth:  The wrap width in characters
+
+        **kwds: Additional keyword parameters passed to the `albow.dialog.Dialog` constructor.
+    """
+    ask(theMessage, ["OK"], wrap_width=theWrapWidth**kwds)
+
+
+def ask(theMessage: str, theResponses=None, default=0, cancel=-1, wrap_width=60, **kwds):
+    """
+    Displays a message in a modal dialog with a set of buttons labelled with the specified responses. Clicking a
+    button causes the ask function to return the corresponding response string as its value. The default and
+    cancel parameters are indexes into the response list specifying the values to be returned by Return/Enter
+    and Escape, respectively.
+
+    Args:
+        theMessage: The message to display
+
+        theResponses:  Possible responses
+
+        default:  The index to the default message
+
+        cancel: The index to the cancel message
+
+        wrap_width:  The wrap width in characters
+
+        **kwds: Additional keyword parameters passed to the Dialog constructor.
+
+    Returns:    The dialog modal result
 
     """
 
@@ -45,7 +80,7 @@ def ask(mess, theResponses=None, default=0, cancel=-1, wrap_width=60, **kwds):
         theResponses = DEFAULT_ASK_RESPONSES
     box = Dialog(**kwds)
     d = box.margin
-    lb = wrapped_label(mess, wrap_width)
+    lb = wrapped_label(theMessage, wrap_width)
     lb.topleft = (d, d)
     buts = []
     for caption in theResponses:
@@ -65,11 +100,29 @@ def ask(mess, theResponses=None, default=0, cancel=-1, wrap_width=60, **kwds):
         box.cancel_response = None
     box.add(col)
     box.shrink_wrap()
+
     return box.present()
 
 
-def input_text(prompt, width, initial=None, **kwds):
+def input_text(thePrompt: str, theInputWidth: int, theDefaultInput: str=None, **kwds):
 
+    """
+    Presents a modal dialog containing the given prompt and a text field. The theInputWidth is the width of
+    the text field, and the theDefaultInput, if any, is its initial contents. If the dialog is dismissed by pressing
+    Return or Enter, the contents of the text field is returned. If it is dismissed by pressing Escape, None
+    is returned.
+
+    Args:
+        thePrompt:      The message to prompt with
+
+        theInputWidth:  The width of the input text widget
+
+        theDefaultInput: A possible default input
+
+        **kwds:  Additional keyword parameters passed to the Dialog constructor.
+
+    Returns:  The value that the user input
+    """
     box = Dialog(**kwds)
     d = box.margin
 
@@ -79,11 +132,11 @@ def input_text(prompt, width, initial=None, **kwds):
     def cancel():
         box.dismiss(False)
 
-    lb = Label(prompt)
+    lb = Label(thePrompt)
     lb.topleft = (d, d)
-    tf = TextField(width)
-    if initial:
-        tf.set_text(initial)
+    tf = TextField(theInputWidth)
+    if theDefaultInput:
+        tf.set_text(theDefaultInput)
     tf.enter_action = ok
     tf.escape_action = cancel
     tf.top = lb.top
