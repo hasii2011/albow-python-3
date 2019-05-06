@@ -30,9 +30,6 @@ class PaletteView(GridView):
 
          num_items()  -->  no. of items
          draw_item(surface, item_no, rect)
-         click_item(item_no, event)
-         item_is_selected(item_no)  -->  bool
-
     """
 
     sel_width = ThemeProperty('sel_width')

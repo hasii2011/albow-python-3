@@ -1,18 +1,82 @@
 
+from pygame import Surface
+
+from pygame.event import Event
+
 from albow.core.RootWidget import get_root
 from albow.core.RootWidget import get_focus
 
 from albow.dialog.Dialog import Dialog
 from albow.themes.ThemeProperty import ThemeProperty
-from albow.menu.MenuItem import MenuItem
 
 
 class Menu(Dialog):
+    """
+    The Menu class provides a drop-down command menu for use with a MenuBar. It can also be used on its
+    own as a pop-up menu of selectable items.
 
+    Using Menus
+    -----------
+
+    There are two ways that a Menu can be used: as a drop-down menu in a menu bar, or as a stand-alone pop-up menu.
+
+    - To use it as a drop-down menu, simply add it to the menus list of a MenuBar. The menu bar takes care of showing
+    and interacting with the menu automatically.
+
+    - To use it as a pop-up menu, you will need to call the present() method, and possibly the find_item_for_key()
+    and/or invoke_command() methods yourself
+
+    Menu item specifications
+    ------------------------
+
+    When creating the menu, items are specified as a list of tuples:
+
+    ``(text, command_name)``
+
+    where ``text`` is the title to be displayed for the item, optionally followed by a slash and a key
+    combination specifier.
+
+    A key combination specifier consists of a single printable ASCII character, optionally preceded by one or more of
+    the following modifiers:
+
+        Character   Key
+        ^           Shift
+        @           Alt or Option
+
+    The command_name is an internal name used to associate the item with handling methods. Two method names are
+    derived from the command name: a handler method (suffixed with ``_cmd``) and an enabling method
+    (suffixed with ``_enabled``). See `albow.menu.MenuBar` for details of how these methods are used.
+
+    An empty tuple may be used to create a separator between groups of menu items.
+
+    Example
+    -------
+    <pre>
+    file_menu = Menu('File', [
+        ('Open/O', 'open'),
+        (),
+        ('Save/S', 'save'),
+        (Save As/^S', 'save_as')
+    ])
+    </pre>
+    """
     disabled_color = ThemeProperty('disabled_color')
+    """
+    The color with which disabled menu items are displayed
+    """
     click_outside_response = -1
 
     def __init__(self, title, items, **kwds):
+        """
+        Creates a Menu with the specified title and item list. The title is not displayed in the menu itself,
+        but is used when the menu is attached to a MenuBar.
+
+        Args:
+            title:  The menu title
+
+            items:  The menu items
+            **kwds:
+        """
 
         self._hilited    = None
         self._key_margin = None
@@ -22,7 +86,7 @@ class Menu(Dialog):
         # Python 3 update
         #
         # self._items      = [MenuItem(*item) for item in items]
-        self._items      = items
+        self._items = items
         super().__init__(**kwds)
 
     def show(self, client, pos):
@@ -56,6 +120,7 @@ class Menu(Dialog):
         if w2 > 0:
             width += w2 + margin
         self.size = (width, height)
+
         return Dialog.present(self, centered=False)
 
     def command_is_enabled(self, item, focus):
@@ -70,7 +135,8 @@ class Menu(Dialog):
                 handler = handler.next_handler()
         return True
 
-    def draw(self, surf):
+    def draw(self, surf: Surface):
+
         font = self.font
         h = font.get_linesize()
         sep = surf.get_rect()
@@ -128,10 +194,18 @@ class Menu(Dialog):
                 if item.enabled:
                     return item
 
-    def find_item_for_key(self, e):
+    def find_item_for_key(self, theEvent: Event):
+        """
+        Given a key event, finds a matching enabled item and returns its index (0-based).
+
+        Args:
+            theEvent: The key event to match up against
+
+        Returns:  Returns -1 if no matching item is found or the matching item is not enabled.
+
+        """
         for item in self._items:
-            if item.keycode == e.key \
-                    and item.shift == e.shift and item.alt == e.alt:
+            if item.keycode == theEvent.key and item.shift == theEvent.shift and item.alt == theEvent.alt:
                 focus = get_focus()
                 if self.command_is_enabled(item, focus):
                     return self._items.index(item)
@@ -146,7 +220,17 @@ class Menu(Dialog):
             if cmd:
                 return cmd + '_cmd'
 
-    def invoke_item(self, i):
-        cmd = self.get_command(i)
+    def invoke_item(self, theCommandIndex):
+        """
+        Locates and calls a command handler for the item with the given index (0-based). Does nothing if
+        the index is -1.
+
+        .. Note::
+            Does not check whether the item is enabled.
+
+        Args:
+            theCommandIndex: The command handler index
+        """
+        cmd = self.get_command(theCommandIndex)
         if cmd:
             get_focus().handle_command(cmd)

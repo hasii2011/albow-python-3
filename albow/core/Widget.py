@@ -75,36 +75,23 @@ class Widget():
     to which all drawing in it is clipped, and it may receive mouse and keyboard events. A widget may also
     contain subwidgets.
 
-    NOTE: Due to a limitation of PyGame subsurfaces, a widget's rectangle must be entirely contained within that of\
-     its parent widget. An exception will occur if this is violated.
+    .. Note::
+        Due to a limitation of PyGame subsurfaces, a widget's rectangle must be entirely contained within that of
+        its parent widget. An exception will occur if this is violated.
 
 
-    Reading the following attributes retrieves the corresponding values from the widget's rect. Assigning to them
-    changes the size and position of the widget. Additionally, if the size of the widget is changed via these
+    Reading the following attributes retrieves the corresponding values from the widget's rect.  Assigning to them
+    changes the size and position of the widget.  Additionally, if the size of the widget is changed via these
     attributes, the size and position of its subwidgets is updated according to each subwidget's anchor attribute.
-    (This does not happen if the rect is modified directly.)
+
+    This does not happen if the rect is modified directly.
 
         left, right, top, bottom, width, height, size,
         topleft, topright, bottomleft, bottomright,
         midleft, midright, midtop, midbottom,
         center, centerx, centery
 
-
-
     """
-    #  rect            Rect       bounds in parent's coordinates
-    #  parent          Widget     containing widget
-    #  subwidgets      [Widget]   contained widgets
-    #  focus_switch    Widget     subwidget to receive key events
-    #  fg_color        color      or None to inherit from parent
-    #  bg_color        color      to fill background, or None
-    #  visible         boolean
-    #  border_width    int        width of border to draw around widget, or None
-    #  border_color    color      or None to use widget foreground color
-    #  tab_stop        boolean    stop on this widget when tabbing
-    #  anchor          string     of 'ltrb'
-
-    debug_resize = False
 
     left = rect_property('left')
     right = rect_property('right')
@@ -184,7 +171,7 @@ class Widget():
     menu bar does not handle it, dispatching continues as normal.
 
     """
-    is_gl_container = overridable_property('is_gl_container')
+    is_gl_container: bool = overridable_property('is_gl_container')
     """
     Controls the drawing behaviour of the widget when used in an OpenGL window. When true, no 2D drawing is performed 
     for the widget itself -- its background colour and border properties are ignored, and its draw() and draw_over() 
@@ -198,7 +185,7 @@ class Widget():
     This property has no effect on widgets in a non-OpenGL window.
     """
 
-    tab_stop = False
+    tab_stop: bool = False
     """
     True if this widget should receive the keyboard focus when the user presses the Tab key. Defaults to false.
     """
@@ -231,6 +218,13 @@ class Widget():
     subwidgets = []
     """
     """
+    focus_switch: "Widget" = None
+    """
+    subwidget to receive key events
+    """
+    debug_resize = False
+
+
     def __init__(self, rect: Rect = None, **kwds):
 
         """
@@ -274,8 +268,10 @@ class Widget():
         # self._resized(old_size)
         self._resized(old_size[0], old_size[1])
 
-
     rect = property(get_rect, set_rect)
+    """
+    bounds in parent's coordinates
+    """
 
     def add_anchor(self, mode: str):
         """
