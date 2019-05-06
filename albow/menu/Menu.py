@@ -45,7 +45,8 @@ class Menu(Dialog):
 
     The command_name is an internal name used to associate the item with handling methods. Two method names are
     derived from the command name: a handler method (suffixed with ``_cmd``) and an enabling method
-    (suffixed with ``_enabled``). See `albow.menu.MenuBar` for details of how these methods are used.
+    (suffixed with ``_enabled``).
+    See `albow.menu.MenuBar` for details of how these methods are used.
 
     An empty tuple may be used to create a separator between groups of menu items.
 
