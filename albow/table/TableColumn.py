@@ -6,12 +6,12 @@ class TableColumn:
     def __init__(self, title: str, width: int, align: str = 'l', fmt: str = None):
         """
 
-        :param title:
-        :param width:
-        :param align: 'l', 'c', or 'r
-        :param fmt:     used by default formatter
+        Args:
+            title:
+            width:
+            align:
+            fmt:
         """
-
         self.title = title
         self.width = width
         self.alignment = align
