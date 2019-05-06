@@ -9,6 +9,8 @@ from albow.layout.Row import Row
 from albow.layout.Column import Column
 from albow.input.TextField import TextField
 
+DEFAULT_ASK_RESPONSES = ["OK", "Cancel"]
+
 
 def wrapped_label(text, wrap_width, **kwds):
 
@@ -21,23 +23,32 @@ def alert(mess, **kwds):
     ask(mess, ["OK"], **kwds)
 
 
-def ask(mess, responses=["OK", "Cancel"], default=0, cancel=-1, wrap_width=60, **kwds):
+def ask(mess, theResponses=None, default=0, cancel=-1, wrap_width=60, **kwds):
     """
 
-    :param mess:
-    :param responses: This is a mutable default parameter;  TODO Fix this
-    :param default:
-    :param cancel:
-    :param wrap_width:
-    :param kwds:
-    :return:
+    Args:
+        mess:
+        theResponses:
+        default:
+        cancel:
+        wrap_width:
+        **kwds:
+
+    Returns:
+
     """
+
+    #
+    # Fix 'Mutable default arguments'
+    #
+    if theResponses is None:
+        theResponses = DEFAULT_ASK_RESPONSES
     box = Dialog(**kwds)
     d = box.margin
     lb = wrapped_label(mess, wrap_width)
     lb.topleft = (d, d)
     buts = []
-    for caption in responses:
+    for caption in theResponses:
         but = Button(caption, action=lambda x=caption: box.dismiss(x))
         buts.append(but)
     brow = Row(buts, spacing=d, equalize='w')
@@ -45,11 +56,11 @@ def ask(mess, responses=["OK", "Cancel"], default=0, cancel=-1, wrap_width=60, *
     col = Column([lb, brow], spacing=d, align='r')
     col.topleft = (d, d)
     if default is not None:
-        box.enter_response = responses[default]
+        box.enter_response = theResponses[default]
     else:
         box.enter_response = None
     if cancel is not None:
-        box.cancel_response = responses[cancel]
+        box.cancel_response = theResponses[cancel]
     else:
         box.cancel_response = None
     box.add(col)
