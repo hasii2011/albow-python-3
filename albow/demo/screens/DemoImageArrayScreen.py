@@ -1,7 +1,7 @@
 
 from albow.core.Shell import Shell
 
-from albow.containers.image_array import get_image_array
+from albow.containers.ImageArray import get_image_array
 
 from albow.widgets.Label import Label
 from albow.widgets.Button import Button
