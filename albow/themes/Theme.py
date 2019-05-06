@@ -6,10 +6,38 @@ from albow.core.ResourceUtility import ResourceUtility
 from albow.themes.ThemeError import ThemeError
 
 themeRoot = None
+"""
+A Theme instance constituting the root of the theme hierarchy. It holds other Theme objects corresponding 
+to particular classes, and default values for any theme attributes not specified by the class-specific 
+themes. See Theme Lookup for an example of a partial theme hierarchy.
+
+Applications can modify the contents of the theme hierarchy, or replace it altogether by assigning to theme.root.
+"""
 
 
 class Theme:
+    """
+    Instances of the Theme class are used to construct the theme hierarchy in which the values of theme
+    properties are looked up. See Theme Lookup for details of how the theme hierarchy is structured and
+    how the lookup process works.
 
+    Theme Lookup
+    ------------
+    Values for theme properties are looked up in a hierarchy of Theme objects, beginning with
+    themeRoot.
+    The root Theme object contains two kinds of attributes: default values for theme properties, and other
+    Theme objects containing values pertaining to specific classes.
+
+    A value for a particular class *C* is looked up as follows. First, theme.themeRoot is looked in for a Theme object
+    for class *C*, and that Theme object is looked in for a value for the attribute in question. If a value is found,
+    it is returned. Otherwise, the process is repeated for each of *C*'s base classes, in method resolution order. If a
+    value is still not found for the attribute, theme.root itself is looked in for a default value. (If it's not
+    there either, an AttributeError results.)
+
+    As a further refinement, a Theme object can be based on another Theme object. When looking in a Theme object
+    for an attribute, if not found it will be looked for in the base theme, if any, and so forth.
+
+    """
     BLACK = (0, 0, 0)
     WHITE = (255, 255, 255)
     BUILT_IN_FONT = "VeraBd.ttf"
@@ -17,8 +45,11 @@ class Theme:
     def __init__(self, name, base = None):
         """
 
-        :param name:    Name of theme, for debugging
-        :param base:    Theme or None   Theme on which this theme is based
+        Args:
+            name:  The name of the theme
+
+            base: A Theme object can be based on another Theme object. When looking in a Theme object
+                for an attribute, if not found it will be looked for in the base theme
         """
         self.logger = logging.getLogger(__name__)
         self.name = name
@@ -65,7 +96,12 @@ class Theme:
 
     @staticmethod
     def initializeDefaultTheme():
+        """
+        You have to get all the theme attributes defined first before anything is imported with
+        ThemeProperty attributes
 
+        Call this method or initialize themeRoot early in the python start up process
+        """
         global themeRoot
 
         themeRoot = Theme('root')
