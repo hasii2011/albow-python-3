@@ -3,7 +3,9 @@ from albow.core.Widget import Widget
 
 
 class RowOrColumn(Widget):
+    """
 
+    """
     axis_anchors = {'w': 'lr', 'h': 'tb'}
 
     _is_gl_container = True
@@ -18,9 +20,10 @@ class RowOrColumn(Widget):
     def __init__(self, size, items, kwds):
         """
 
-        :param size:
-        :param items:
-        :param kwds:
+        Args:
+            size:
+            items:
+            kwds:
         """
         align    = kwds.pop('align', 'c')
         spacing  = kwds.pop('spacing', 10)

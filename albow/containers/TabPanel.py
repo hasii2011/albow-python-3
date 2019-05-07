@@ -8,7 +8,11 @@ from albow.utils import brighten
 
 
 class TabPanel(Widget):
-
+    """
+    A `TabPanel` is a widget that manages a collection of pages and displays one of them at a time. Switching
+    between pages is accomplished by means of a row of 'tabs' at the top of the TabPanel, one for each page.
+    Clicking on a tab brings its corresponding page to the front.
+    """
 
     tab_font             = FontProperty('tab_font')
     tab_height           = ThemeProperty('tab_height')
@@ -23,8 +27,10 @@ class TabPanel(Widget):
     def __init__(self, pages=None, **kwds):
         """
 
-        :param pages:
-        :param kwds:
+        Args:
+            pages:
+
+            **kwds:
         """
         #
         # Python 3 update

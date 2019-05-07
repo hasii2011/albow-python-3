@@ -80,16 +80,19 @@ class Widget():
         its parent widget. An exception will occur if this is violated.
 
 
-    Reading the following attributes retrieves the corresponding values from the widget's rect.  Assigning to them
-    changes the size and position of the widget.  Additionally, if the size of the widget is changed via these
-    attributes, the size and position of its subwidgets is updated according to each subwidget's anchor attribute.
+    - Reading the following attributes retrieves the corresponding values from the widget's rect.
+    - Assigning to them changes the size and position of the widget.
+    - Additionally, if the size of the widget is changed via these
+      attributes, the size and position of its subwidgets is updated according to each subwidget's anchor attribute.
 
-    This does not happen if the rect is modified directly.
-
+        <pre>
         left, right, top, bottom, width, height, size,
         topleft, topright, bottomleft, bottomright,
         midleft, midright, midtop, midbottom,
         center, centerx, centery
+        </pre>
+
+    This does not happen if the rect is modified directly.
 
     """
 
@@ -173,9 +176,13 @@ class Widget():
     """
     is_gl_container: bool = overridable_property('is_gl_container')
     """
-    Controls the drawing behaviour of the widget when used in an OpenGL window. When true, no 2D drawing is performed 
-    for the widget itself -- its background colour and border properties are ignored, and its draw() and draw_over() 
-    methods are never called. If it has 3D subwidgets, 3D drawing is performed for them.
+    Controls the drawing behaviour of the widget when used in an OpenGL window. When true, 
+    
+    - no 2D drawing is performed for the widget itself
+    - its background colour and border properties are ignored 
+    - its draw() and draw_over() methods are never called. 
+        
+    If it has 3D subwidgets, 3D drawing is performed for them.
 
     When false, the widget and its subwidgets are rendered to a temporary surface which is then drawn to the window 
     using glDrawPixels() with blending. No 3D drawing is performed for any of its subwidgets.
