@@ -9,39 +9,46 @@ class Field(Control, TextEditor):
     """
     Field is an abstract base class for controls that edit a value with a textual representation. It provides
     facilities for
-        converting between the text and internal representations of the value,
-        for specifying minimum and maximum allowed values, and
-        controlling whether the value is allowed to be empty and what representation to use for an empty value.
 
-    A Field can be in two states, editing and non-editing. In the non-editing state, the control displays
-    the value to which it is linked via its "ref" attribute. When the user focuses the control and begins typing,
+    - Converting between the text and internal representations of the value,
+    - For specifying minimum and maximum allowed values, and
+    - Controlling whether the value is allowed to be empty and what representation to use for an empty value.
+
+    A Field can be in two states, _editing_ and _non-editing_. In the non-editing state, the control displays
+    the value to which it is linked via its `ref` attribute. When the user focuses the control and begins typing,
     it switches to the editing state. In this state, the text may be edited but the associated value is not yet
-    updated. When the Return, Enter or Tab key is pressed, or a mouse click occurs anywhere outside the field,
+    updated. When the `Return`, `Enter` or `Tab key` is pressed, or a mouse click occurs anywhere outside the field,
     the value is updated and the control returns to the non-editing state. Updating of the value can also be
-    forced by calling the commit() method.
+    forced by calling the `commit()` method.
     """
 
-    empty  = NotImplemented
+    empty = NotImplemented
     """
-    Internal value to use when the field is empty. If set to NotImplemented, the user is not allowed to enter 
+    Internal value to use when the field is empty.  If set to NotImplemented, the user is not allowed to enter 
     an empty value.
     """
     format = "%s"
     """
     Format string to use when converting the internal representation to text. See also format_value() below.
     """
-    min    = None
+    min: int = None
     """
-    Minimum allowable value. If None, no minimum value will be enforced.
+    Minimum allowable value.  If `None`, no minimum value will be enforced.
     """
-    max    = None
+    max: int = None
     """
-    Maximum allowable value. If None, no maximum value will be enforced.
+    Maximum allowable value.  If `None`, no maximum value will be enforced.
     """
-    type   = None
+    type = None
     """
-    A function for converting from text to the internal representation. Typically a type object, but can be any callable object.
+    A function for converting from text to the internal representation.  Typically a type object, but 
+    can be any callable object.
     """
+    editing: bool = None
+    """
+    _Read only_. A boolean which is true when the control is in the editing state.
+    """
+    insertion_point = None
 
     def __init__(self, width=None, **kwds):
         """
@@ -120,9 +127,6 @@ class Field(Control, TextEditor):
         """
         When in the editing state, causes the control's value to be updated and places the control
         in the non-editing state.
-
-        Returns:
-
         """
         if self.editing:
             text = self._text

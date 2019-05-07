@@ -9,21 +9,20 @@ from albow.core.Widget import overridable_property
 
 
 class TextEditor(Widget):
-
     """
-    A TextEditor provides simple single-line text editing. Typed characters are inserted into the text, and
-    characters are deleted using Delete or Backspace. Clicking on the text field gives it the keyboard focus
-    and sets the insertion point. Pressing the Tab key moves to the next tabbable widget.
+    A TextEditor provides simple single-line text editing.  Typed characters are inserted into the text, and
+    characters are deleted using `Delete` or `Backspace`.  Clicking on the text field gives it the keyboard focus
+    and sets the insertion point.  Pressing the Tab key moves to the next widget that has a tab stop.
 
-    There is currently no support for selecting or copying and pasting text.
-
+    .. Note::
+        There is currently no support for selecting or copying and pasting text.
     """
 
     text = overridable_property('text')
     """
     The current text, provided the get_text and set_text methods have not been overridden.
     """
-    upper    = False
+    upper = False
     """
     If true, text typed into the field is forced to upper case.
     """
@@ -35,26 +34,30 @@ class TextEditor(Widget):
     """
     The current position of the insertion point. May be set to None to position it at the end of the text.
     """
-    enterAction    = None
+    enterAction = None
     """
-    TODO
-    A function of no arguments to be called when Return or Enter is pressed. If not specified, Return and Enter 
-    key events are passed to the parent widget.
+    .. TODO::
+        A function of no arguments to be called when Return or Enter is pressed. If not specified, `Return` and `Enter` 
+        key events are passed to the parent widget.
     """
-    escapeAction   = None
+    escapeAction = None
     """
-    TODO
-    A function of no arguments to be called when Escape is pressed. If not specified, Escape key events are 
-    passed to the parent widget.
+    .. TODO::
+        A function of no arguments to be called when `Escape` is pressed. If not specified, Escape key events are 
+        passed to the parent widget.
     """
     _text    = ""
 
-    def __init__(self, width, upper=None, **kwds):
+    def __init__(self, width, upper: bool=None, **kwds):
         """
+        The height is determined by the height of a line of text in the font in effect at construction time.
 
         Args:
-            width:
-            upper:
+            width:  The width can be either an integer or a string.  If an integer, it specifies the width in
+                    pixels; if a string, the widget is made just wide enough to contain the given text.
+
+            upper:  If `True` then upper-case the next; If `False` or `None` then we keep out mitts of the text ;-)
+
             **kwds:
         """
         super().__init__(**kwds)
