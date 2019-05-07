@@ -15,7 +15,7 @@ class FontProperty(ThemeProperty):
 
     Example
     --------
-    <pre>
+    ```python
         class DramaticScene(Widget):
 
         villain_gloat_font = FontProperty('villain_gloat_font')
@@ -24,7 +24,8 @@ class FontProperty(ThemeProperty):
 
         themeRoot.DramaticScene = theme.Theme('DramaticScene')
         themeRoot.DramaticScene.villain_gloat_font = (27, "EvilLaughter.ttf")
-    </pre>
+    ```
+
     """
     def __init__(self, name):
         """

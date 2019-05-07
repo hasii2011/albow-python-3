@@ -14,12 +14,13 @@ class ThemeProperty:
 
     Example
     --------
-    <pre>
+    ```python
 
         class Battlefield(Widget):
 
         phaser_color = ThemeProperty('phaser_color')
-    </pre>
+
+    ```
     """
     def __init__(self, name):
         """

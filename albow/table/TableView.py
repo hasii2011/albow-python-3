@@ -54,11 +54,11 @@ class TableView(Column):
 
         The TableView is initialized with a width and height determined as follows:
 
-            #. The initial width is calculated from the information in the *columns* attribute.
-            #. The initial height, excluding the header, is determined either directly by the height parameter or by the
-            row height and number of rows *nrows*. If no *row_height* is specified, it is calculated from the size of
-            the font.
-            #. The height of the header is determined by ''header_height'', or the size of the header font.
+        - The initial width is calculated from the information in the *columns* attribute.
+        - The initial height, excluding the header, is determined either directly by the height parameter or by the
+          row height and number of rows *nrows*. If no *row_height* is specified, it is calculated from the size of
+          the font.
+        - The height of the header is determined by ''header_height'', or the size of the header font.
 
 
         Args:

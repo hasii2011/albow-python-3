@@ -52,14 +52,17 @@ class Menu(Dialog):
 
     Example
     -------
-    <pre>
+    ```python
+
     file_menu = Menu('File', [
         ('Open/O', 'open'),
         (),
         ('Save/S', 'save'),
         (Save As/^S', 'save_as')
     ])
-    </pre>
+
+    ```
+
     """
     disabled_color = ThemeProperty('disabled_color')
     """
