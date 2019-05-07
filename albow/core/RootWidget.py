@@ -57,6 +57,11 @@ def get_focus():
 
 
 def get_root():
+    """
+
+    Returns:  The root widget.
+
+    """
     return root_widget
 
 
