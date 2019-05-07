@@ -11,7 +11,10 @@ from albow.media.MusicVolumeControl import MusicVolumeControl
 
 
 class MusicOptionsDialog(Dialog):
-
+    """
+    A simple dialog for controlling music-playing options. Incorporates an
+    `albow.media.EnableMusicControl` and an `albow.media.MusicVolumeControl`.
+    """
     def __init__(self):
 
         #

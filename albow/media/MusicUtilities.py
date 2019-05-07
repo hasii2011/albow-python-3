@@ -19,12 +19,19 @@ except ImportError:
 
 
 music_enabled: bool = True
-current_music       = None
+current_music = None
 current_playlist: PlayList = None
 
-change_delay:       int = 2  # Delay between end of one item and starting the next (sec)
+change_delay:       int = 2
+"""
+Time in seconds between stopping the previously playing music and starting the next piece of music.
+"""
 next_change_delay:  int = 0
-fadeout_time:       int = 1  # Time over which to fade out music (sec)
+fadeout_time:       int = 1
+"""
+Time in seconds over which the currently playing music is faded out when stopping or changing to a different
+piece of music.
+"""
 
 
 class MusicUtilities:
@@ -40,11 +47,25 @@ class MusicUtilities:
 
     @staticmethod
     def get_music_enabled():
+        """
+
+        Returns:  Returns `True` if music is currently enabled, else `False`
+
+        """
         return music_enabled
 
     @staticmethod
     def set_music_enabled(state: bool):
+        """
+        Enables or disables music.
 
+        .. Note::
+            To work around a bug in the pygame music system, disabling music will cause the currently playing
+            music to be started again from the beginning when music is re-enabled.
+
+        Args:
+            state:   The new state
+        """
         global music_enabled
         if music_enabled != state:
             music_enabled = state
@@ -87,7 +108,13 @@ class MusicUtilities:
     @staticmethod
     def get_music(*names, **kwds) -> str:
         """
-        Return the full pathname of a music file from the "music" resource subdirectory.
+
+        Args:
+            *names:
+
+            **kwds: Keyword/Value pairs passed along
+
+        Returns:  The full pathname of a music file from the `music` resource subdirectory.
         """
         prefix = kwds.pop('prefix', "music")
         return ResourceUtility.resource_path(prefix, *names)
@@ -111,7 +138,15 @@ class MusicUtilities:
 
     @staticmethod
     def get_playlist(*names, **kwds) -> PlayList:
+        """
 
+        Args:
+            *names:
+
+            **kwds: The _random_ and _repeat_ keyword/value pairs are passed on to the `PlayList` constructor.
+
+        Returns: Returns a `PlayList` constructed from a resource consisting of a directory of music files.
+        """
         prefix = kwds.pop('prefix', "music")
 
         directoryPath = MusicUtilities.get_music(*names, **{'prefix': prefix})
@@ -144,4 +179,3 @@ class MusicUtilities:
             else:
                 new_playlist = None
             MusicUtilities.change_playlist(new_playlist)
-

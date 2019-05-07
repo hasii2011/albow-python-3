@@ -10,7 +10,27 @@ class PlayList:
     each item will only be played once.
     """
 
-    def __init__(self, items, random = False, repeat = False):
+    random: bool = None
+    """
+    If true, items will be played in a random order. Otherwise, they will be played in the order they were supplied 
+    to the constructor.
+    """
+    repeat: bool = None
+    """
+    If true, the list will be repeated indefinitely. Otherwise, each item will only be played once.
+    """
+
+    def __init__(self, items, random: bool=False, repeat: bool=False):
+        """
+        Constructs a PlayList from a list of music file pathnames.
+
+        Args:
+            items:  Music file pathnames
+
+            random: The new random state
+
+            repeat: The new repeat state
+        """
         self.items = list(items)
         self.random = random
         self.repeat = repeat
