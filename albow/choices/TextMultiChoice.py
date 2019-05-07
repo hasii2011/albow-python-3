@@ -8,8 +8,28 @@ from albow.choices.MultiChoice import MultiChoice
 
 
 class TextMultiChoice(MultiChoice):
+    """
+    TextMultichoice is a Multichoice control that displays its values in the form of text.
 
+    .. Note::
+        In addition to the highlight styles defined by PaletteView,
+        TextMultichoice also provides 'arrows', which highlights the selected value with a pair of
+        arrowheads above and below.
+
+    """
     def __init__(self, values, labels=None, **kwds):
+        """
+
+        Initializes the control with the given values and corresponding labels. If no labels are specified,
+        they are derived by applying str() to the values
+
+        Args:
+            values: The values
+
+            labels: The displayed associated labels
+
+            **kwds:
+        """
 
         if not labels:
             labels = map(str, values)
