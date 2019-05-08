@@ -25,8 +25,8 @@ from albow.core.root import make_due_calls
 from albow.core.root import timestamp
 
 from albow.core.root import set_modifier
-from albow.core.root import Cancel
-from albow.core.root import ApplicationError
+from albow.core.root import CancelException
+from albow.core.root import ApplicationException
 
 from albow.media.MusicUtilities import MusicUtilities
 
@@ -366,13 +366,13 @@ class RootWidget(Widget):
                         elif eventType == USEREVENT:
                             if defer_drawing and not use_sleep:
                                 timer_event = event
-                except Cancel:
+                except CancelException:
                     pass
                 #
                 # Python 3 update
                 #
                 # except ApplicationError, e:
-                except ApplicationError as e:
+                except ApplicationException as e:
                     self.report_error(e)
         finally:
             modal_widget.is_modal = was_modal

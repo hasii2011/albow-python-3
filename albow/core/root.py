@@ -6,6 +6,8 @@ from pygame.locals import *
 from pygame.time import get_ticks
 from pygame.event import Event
 
+from albow.core.ScheduledCall import ScheduledCall
+
 mod_cmd = KMOD_LCTRL | KMOD_RCTRL | KMOD_LMETA | KMOD_RMETA
 
 modifiers = dict(
@@ -25,11 +27,11 @@ modkeys = {
 scheduled_calls = []
 
 
-class ApplicationError(Exception):
+class ApplicationException(Exception):
     pass
 
 
-class Cancel(ApplicationError):
+class CancelException(ApplicationException):
     pass
 
 
@@ -61,26 +63,6 @@ def make_scheduled_calls():
     while sched and sched[0][0] <= t:
         sched[0][1]()
         sched.pop(0)
-
-
-class ScheduledCall:
-
-    def __init__(self, timeParam, func, interval):
-
-        self.time = timeParam
-        self.func = func
-        self.interval = interval
-
-    def __cmp__(self, other):
-        #
-        # Python 3 update;  cmp is gone
-        # https://docs.python.org/3.0/whatsnew/3.0.html#ordering-comparisons
-        #
-        a = self.time
-        b = other.time
-
-        # return cmp(self.time, other.time)
-        return (a > b) - (a < b)
 
 
 def make_due_calls(time_now, until_time):
