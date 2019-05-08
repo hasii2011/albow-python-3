@@ -33,16 +33,16 @@ from pygame.locals import *
 
 from pygame.time import get_ticks
 
-mod_cmd = KMOD_LCTRL | KMOD_RCTRL | KMOD_LMETA | KMOD_RMETA
+MOD_CMD = KMOD_LCTRL | KMOD_RCTRL | KMOD_LMETA | KMOD_RMETA
 
-modifiers = dict(
+MODIFIERS = dict(
     shift=False,
     ctrl=False,
     alt=False,
     meta=False,
 )
 
-modkeys = {
+MOD_KEYS = {
     K_LSHIFT: 'shift',  K_RSHIFT: 'shift',
     K_LCTRL:  'ctrl',   K_RCTRL:  'ctrl',
     K_LALT:   'alt',    K_RALT:   'alt',
@@ -58,14 +58,14 @@ class CoreUtilities:
     """
     @staticmethod
     def set_modifier(key, value):
-        attr = modkeys.get(key)
+        attr = MOD_KEYS.get(key)
         if attr:
-            modifiers[attr] = value
+            MODIFIERS[attr] = value
 
     @staticmethod
     def add_modifiers(event):
         d = event.dict
-        d.update(modifiers)
+        d.update(MODIFIERS)
         d['cmd'] = event.ctrl or event.meta
 
     @staticmethod
