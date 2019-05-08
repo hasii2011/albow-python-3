@@ -17,12 +17,11 @@ from pygame.event import set_grab
 
 from albow.core.Widget import Widget
 
+from albow.core.Scheduler import Scheduler
+
 from albow.core.root import init_timebase
 
-from albow.core.root import make_scheduled_calls
 from albow.core.root import add_modifiers
-from albow.core.root import make_due_calls
-from albow.core.root import timestamp
 
 from albow.core.root import set_modifier
 
@@ -189,7 +188,7 @@ class RootWidget(Widget):
                     if not is_modal:
                         if timer_event:
                             if not use_sleep and defer_drawing:
-                                make_scheduled_calls()
+                                Scheduler.make_scheduled_calls()
                             add_modifiers(timer_event)
                             if last_mouse_event:
                                 timer_event.dict['pos'] = last_mouse_event.pos
@@ -230,19 +229,19 @@ class RootWidget(Widget):
                         # print "RootWidget: use_sleep =", use_sleep, "defer_drawing =", defer_drawing ###
                     if use_sleep and defer_drawing:
                         #  print "RootWidget: Handling timing" ###
-                        time_now = timestamp()
+                        time_now = Scheduler.timestamp()
                         #  print "RootWidget: Time is now", time_now ###
                         if next_frame_due < time_now:
                             #  print "RootWidget: Adjusting next frame due time to time now" ###
                             next_frame_due = time_now
                             #  print "RootWidget: Waiting for next frame due at", next_frame_due ###
                         while 1:
-                            sleep_time = make_due_calls(time_now, next_frame_due)
+                            sleep_time = Scheduler.make_due_calls(time_now, next_frame_due)
                             if sleep_time <= 0.0:
                                 break
                             # print "RootWidget: Sleeping for", sleep_time ###
                             sleep(sleep_time / 1000.0)
-                            time_now = timestamp()
+                            time_now = Scheduler.timestamp()
                         next_frame_due += self.frame_time
                         # print "RootWidget: Next frame now due at", next_frame_due ###
                         #
@@ -259,7 +258,7 @@ class RootWidget(Widget):
                     # print "RootWidget: Event block %5d" % tb ###
                     events.extend(pygame.event.get())
                     for event in events:
-                        t = timestamp()
+                        t = Scheduler.timestamp()
                         event.dict['time'] = t
                         event.dict['local'] = getattr(event, 'pos', (0, 0))
                         eventType = event.type

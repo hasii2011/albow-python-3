@@ -93,7 +93,13 @@
                 "consoleHandler"
             ],
             "propagate": "0"
+        },
+        "albow.core.root": {
+            "level": "INFO",
+            "handlers": [
+                "consoleHandler"
+            ],
+            "propagate": "0"
         }
-
     }
 }

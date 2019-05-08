@@ -3,7 +3,7 @@ import os
 
 import logging
 
-from albow.core.root import Scheduler
+from albow.core.Scheduler import Scheduler
 
 from albow.core.ResourceUtility import ResourceUtility
 
