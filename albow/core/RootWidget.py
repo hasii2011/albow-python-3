@@ -19,11 +19,11 @@ from albow.core.Widget import Widget
 
 from albow.core.Scheduler import Scheduler
 
-from albow.core.root import init_timebase
+from albow.core.CoreUtilities import init_timebase
 
-from albow.core.root import add_modifiers
+from albow.core.CoreUtilities import add_modifiers
 
-from albow.core.root import set_modifier
+from albow.core.CoreUtilities import set_modifier
 
 from albow.core.CancelException import CancelException
 from albow.core.ApplicationException import ApplicationException

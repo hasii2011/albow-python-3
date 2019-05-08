@@ -8,8 +8,8 @@ from pygame.locals import USEREVENT
 
 from pygame.event import Event
 
-from albow.core.root import add_modifiers
-from albow.core.root import  time_base
+from albow.core.CoreUtilities import add_modifiers
+from albow.core.CoreUtilities import  time_base
 
 from albow.core.ScheduledCall import ScheduledCall
 
