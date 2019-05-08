@@ -3,11 +3,9 @@ class ScheduledCall:
     """
     Fixed the
 
-        TypeError: '<' not supported between instances of 'ScheduledCall' and 'ScheduledCall'
+    > TypeError: '<' not supported between instances of 'ScheduledCall' and 'ScheduledCall'
 
-        in `Scheduler.schedule_call`
-
-        bye implementing '__lt__'
+    in `Scheduler.schedule_call`,  by implementing the method '\\_\\_lt\\_\\_()'
 
     """
     def __init__(self, timeParam, func, interval):

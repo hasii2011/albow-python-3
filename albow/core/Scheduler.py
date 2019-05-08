@@ -13,12 +13,12 @@ from albow.core.root import  time_base
 
 from albow.core.ScheduledCall import ScheduledCall
 
+
 class Scheduler:
 
     ourLogger = logging.getLogger(__name__)
 
     ourScheduledCalls = []
-
 
     """
     A static class to avoid using module functions
@@ -72,9 +72,6 @@ class Scheduler:
             func:  The function to call
 
             repeat: Set to _True_ to repeat, else _False_
-
-        Returns:
-
         """
         def thunk():
             # TODO:  Fix to include the time attribute
@@ -99,7 +96,7 @@ class Scheduler:
         `Scheduler.schedule_call` or `Scheduler.schedule_event`.
 
         Args:
-            token:  The token that represents call to cancel
+            token:  The token that represents the call to cancel
 
         """
         try:
@@ -127,8 +124,7 @@ class Scheduler:
 
             until_time:  Until time ?
 
-        Returns:    Return the time remaining until the next scheduled call
-        or until_time, whichever is sooner.
+        Returns:    The time remaining until the next scheduled call or `until_time`, whichever is sooner.
 
         """
         Scheduler.ourLogger.debug("make_due_calls - time_now: %s, until_time: %s", time_now, until_time)
