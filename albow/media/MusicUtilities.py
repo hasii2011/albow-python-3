@@ -3,7 +3,7 @@ import os
 
 import logging
 
-from albow.core.root import schedule
+from albow.core.root import Scheduler
 
 from albow.core.ResourceUtility import ResourceUtility
 
@@ -163,7 +163,11 @@ class MusicUtilities:
     def music_end():
 
         musicLogger.info("music_end")
-        schedule(next_change_delay, MusicUtilities.jog_music)
+        """
+        .. Note::
+            `schedule_call()` or `schedule_event()` instead.
+        """
+        Scheduler.schedule(next_change_delay, MusicUtilities.jog_music)
 
     @staticmethod
     def change_music(new_music, repeat=False):

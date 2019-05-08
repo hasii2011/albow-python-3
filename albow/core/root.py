@@ -81,31 +81,6 @@ def make_due_calls(time_now, until_time):
     return next_time - time_now
 
 
-def schedule(delay, func):
-    """
-    Deprecated, use schedule_call or schedule_event instead.
-    """
-    schedule_call(delay * 1000.0, func)
-
-
-def schedule_call(delay, func, repeat=False):
-    """
-    Arrange for the given function to be called after the specified
-    delay in milliseconds. Scheduled functions are called synchronously from
-    the event loop, and only when the frame timer is running. If repeat is
-    true, call will be made repeatedly at the specified interval, otherwise
-    it will only be made once.
-    """
-    t = timestamp() + delay
-    if repeat:
-        r = delay
-    else:
-        r = 0.0
-    item = ScheduledCall(t, func, r)
-    insort(scheduled_calls, item)
-    return item
-
-
 def schedule_event(delay, func, repeat=False):
 
     def thunk():
@@ -117,7 +92,7 @@ def schedule_event(delay, func, repeat=False):
         add_modifiers(event)
         func(event)
 
-    schedule_call(delay, thunk, repeat)
+    Scheduler.schedule_call(delay, thunk, repeat)
 
 
 def cancel_call(token):
@@ -129,3 +104,33 @@ def cancel_call(token):
         scheduled_calls.remove(token)
     except ValueError:
         pass
+
+
+class Scheduler:
+    """
+    A static class to avoid using module functions
+    """
+    @staticmethod
+    def schedule(delay, func):
+        """
+        Deprecated, use schedule_call or schedule_event instead.
+        """
+        Scheduler.schedule_call(delay * 1000.0, func)
+
+    @staticmethod
+    def schedule_call(delay, func, repeat=False):
+        """
+        Arrange for the given function to be called after the specified
+        delay in milliseconds. Scheduled functions are called synchronously from
+        the event loop, and only when the frame timer is running. If repeat is
+        true, call will be made repeatedly at the specified interval, otherwise
+        it will only be made once.
+        """
+        t = timestamp() + delay
+        if repeat:
+            r = delay
+        else:
+            r = 0.0
+        item = ScheduledCall(t, func, r)
+        insort(scheduled_calls, item)
+        return item

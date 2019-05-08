@@ -69,7 +69,7 @@ def rect_property(name):
     return property(get, set)
 
 
-class Widget():
+class Widget:
     """
     The Widget class is the base class for all widgets. A widget occupies a rectangular area of the PyGame screen
     to which all drawing in it is clipped, and it may receive mouse and keyboard events. A widget may also
