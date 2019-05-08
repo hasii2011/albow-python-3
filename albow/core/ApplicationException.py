@@ -1,0 +1,3 @@
+
+class ApplicationException(Exception):
+    pass

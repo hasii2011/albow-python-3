@@ -25,8 +25,9 @@ from albow.core.root import make_due_calls
 from albow.core.root import timestamp
 
 from albow.core.root import set_modifier
-from albow.core.root import CancelException
-from albow.core.root import ApplicationException
+
+from albow.core.CancelException import CancelException
+from albow.core.ApplicationException import ApplicationException
 
 from albow.media.MusicUtilities import MusicUtilities
 

@@ -27,14 +27,6 @@ modkeys = {
 scheduled_calls = []
 
 
-class ApplicationException(Exception):
-    pass
-
-
-class CancelException(ApplicationException):
-    pass
-
-
 def set_modifier(key, value):
     attr = modkeys.get(key)
     if attr:
