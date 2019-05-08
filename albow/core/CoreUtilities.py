@@ -51,19 +51,25 @@ modkeys = {
 
 time_base = 0
 
-def set_modifier(key, value):
-    attr = modkeys.get(key)
-    if attr:
-        modifiers[attr] = value
 
+class CoreUtilities:
+    """
+    A static class for some leftover module functions
+    """
+    @staticmethod
+    def set_modifier(key, value):
+        attr = modkeys.get(key)
+        if attr:
+            modifiers[attr] = value
 
-def add_modifiers(event):
-    d = event.dict
-    d.update(modifiers)
-    d['cmd'] = event.ctrl or event.meta
+    @staticmethod
+    def add_modifiers(event):
+        d = event.dict
+        d.update(modifiers)
+        d['cmd'] = event.ctrl or event.meta
 
-
-def init_timebase():
-    global time_base
-    time_base = time() * 1000.0 - get_ticks()
-    print("time_base: " + str(time_base))
+    @staticmethod
+    def init_timebase():
+        global time_base
+        time_base = time() * 1000.0 - get_ticks()
+        print("time_base: " + str(time_base))

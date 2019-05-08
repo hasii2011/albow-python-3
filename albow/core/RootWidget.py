@@ -19,11 +19,7 @@ from albow.core.Widget import Widget
 
 from albow.core.Scheduler import Scheduler
 
-from albow.core.CoreUtilities import init_timebase
-
-from albow.core.CoreUtilities import add_modifiers
-
-from albow.core.CoreUtilities import set_modifier
+from albow.core.CoreUtilities import CoreUtilities
 
 from albow.core.CancelException import CancelException
 from albow.core.ApplicationException import ApplicationException
@@ -106,7 +102,7 @@ class RootWidget(Widget):
         # Widget.__init__(self, surface.get_rect())
         super().__init__(surface.get_rect(), **kwds)
 
-        init_timebase()
+        CoreUtilities.init_timebase()
         self.surface = surface
         root_widget = self
         Widget.root_widget = self
@@ -189,7 +185,7 @@ class RootWidget(Widget):
                         if timer_event:
                             if not use_sleep and defer_drawing:
                                 Scheduler.make_scheduled_calls()
-                            add_modifiers(timer_event)
+                            CoreUtilities.add_modifiers(timer_event)
                             if last_mouse_event:
                                 timer_event.dict['pos'] = last_mouse_event.pos
                                 timer_event.dict['local'] = last_mouse_event.local
@@ -273,7 +269,7 @@ class RootWidget(Widget):
                                 num_clicks = 1
                             last_click_time = t
                             event.dict['num_clicks'] = num_clicks
-                            add_modifiers(event)
+                            CoreUtilities.add_modifiers(event)
                             last_mouse_event = event
                             if in_relative_mode:
                                 event.dict['local'] = (0, 0)
@@ -294,7 +290,7 @@ class RootWidget(Widget):
                                 mouse_widget.notify_attention_loss()
                                 mouse_widget.handle_mouse('mouse_down', event)
                         elif eventType == MOUSEMOTION:
-                            add_modifiers(event)
+                            CoreUtilities.add_modifiers(event)
                             last_mouse_event = event
                             if in_relative_mode:
                                 event.dict['local'] = (0, 0)
@@ -317,7 +313,7 @@ class RootWidget(Widget):
                                     last_mouse_event_handler = mouse_widget
                                     mouse_widget.handle_mouse('mouse_move', event)
                         elif eventType == MOUSEBUTTONUP:
-                            add_modifiers(event)
+                            CoreUtilities.add_modifiers(event)
                             last_mouse_event = event
                             self.do_draw = True
                             if in_relative_mode:
@@ -345,7 +341,7 @@ class RootWidget(Widget):
                             elif relative_pause:
                                 relative_pause = False
                             else:
-                                set_modifier(key, True)
+                                CoreUtilities.set_modifier(key, True)
                                 self.do_draw = True
                                 self.send_key(modal_widget, 'key_down', event)
                                 if last_mouse_event_handler:
@@ -354,7 +350,7 @@ class RootWidget(Widget):
                                     last_mouse_event_handler.setup_cursor(event)
                         elif eventType == KEYUP:
                             key = event.key
-                            set_modifier(key, False)
+                            CoreUtilities.set_modifier(key, False)
                             self.do_draw = True
                             self.send_key(modal_widget, 'key_up', event)
                             if last_mouse_event_handler:
@@ -380,7 +376,7 @@ class RootWidget(Widget):
         clicked_widget = None
 
     def send_key(self, widget, name, event):
-        add_modifiers(event)
+        CoreUtilities.add_modifiers(event)
         widget.dispatch_key(name, event)
 
     def begin_frame(self):
@@ -405,7 +401,7 @@ class RootWidget(Widget):
         last = last_mouse_event
         event = Event(0, last.dict)
         event.dict['local'] = widget.global_to_local(event.pos)
-        add_modifiers(event)
+        CoreUtilities.add_modifiers(event)
         return event
 
     def music_end(self):

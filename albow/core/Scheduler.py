@@ -8,8 +8,8 @@ from pygame.locals import USEREVENT
 
 from pygame.event import Event
 
-from albow.core.CoreUtilities import add_modifiers
-from albow.core.CoreUtilities import  time_base
+from albow.core.CoreUtilities import CoreUtilities
+from albow.core.CoreUtilities import time_base
 
 from albow.core.ScheduledCall import ScheduledCall
 
@@ -80,7 +80,7 @@ class Scheduler:
             #
             # event = Event(USEREVENT, time = timestamp())
             event = Event(USEREVENT, dict=None)
-            add_modifiers(event)
+            CoreUtilities.add_modifiers(event)
             func(event)
 
         Scheduler.schedule_call(delay, thunk, repeat)
