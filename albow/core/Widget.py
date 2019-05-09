@@ -233,7 +233,6 @@ class Widget:
 
 
     def __init__(self, rect: Rect = None, **kwds):
-
         """
         Creates a new widget, initially without any parent. If a rect is given, it specifies the new widget's initial s
         ize and position relative to its parent.
