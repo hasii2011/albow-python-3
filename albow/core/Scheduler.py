@@ -1,3 +1,5 @@
+from typing import List
+
 import logging
 
 from time import time
@@ -18,7 +20,7 @@ class Scheduler:
 
     ourLogger = logging.getLogger(__name__)
 
-    ourScheduledCalls = []
+    ourScheduledCalls: List[ScheduledCall] = []
 
     """
     A static class to avoid using module functions
@@ -48,7 +50,7 @@ class Scheduler:
 
             repeat: Set to _True_ to repeat, else _False_
 
-        Returns:   Returns a token that can be passed to `Scheduler.cancel_ call()`.
+        Returns:   Returns a token that can be passed to `Scheduler.cancel_call()`.
 
         """
         t = Scheduler.timestamp() + delay
