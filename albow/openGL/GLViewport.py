@@ -39,12 +39,23 @@ class GLViewport(Widget):
         """
         super().__init__(rect, **kwds)
 
-    def gl_draw_self(self, root, offset):
-        rect = self.rect.move(offset)
+    # Looks obsolete -- hasii
+    # def gl_draw_self(self, root, offset):
+    #     rect = self.rect.move(offset)
 
     def gl_draw_self(self, gl_surface):
+        """
+
+        Args:
+            gl_surface:
+
+        Returns:
+
+        """
+        #
         # GL_CLIENT_ALL_ATTRIB_BITS is borked: defined as -1 but
         # glPushClientAttrib insists on an unsigned long.
+        #
         GL.glPushClientAttrib(0xffffffff)
         GL.glPushAttrib(GL.GL_ALL_ATTRIB_BITS)
         # GL.glViewport(rect.left, root.height - rect.bottom, rect.width, rect.height)
@@ -53,10 +64,22 @@ class GLViewport(Widget):
         GL.glPopClientAttrib()
 
     def gl_draw_viewport(self):
+        """
+        This method is called after the viewport has been set up. It is responsible for establishing the
+        projection and modelview matrices and performing the drawing. All OpenGL attributes are saved
+        and restored around calls to this method. The default implementation calls `setup_matrices()` and `gl_draw()`.
+
+        """
         self.setup_matrices()
         self.gl_draw()
 
     def setup_matrices(self):
+        """
+        This method is called from the default implementation of `gl_draw_viewport()`. It is responsible for setting
+        up the projection and modelview matrices. The default implementation calls `setup_projection()` and
+        `setup_modelview()`.
+
+        """
         rect = self.get_global_rect()
         win_height = get_display().get_height()
         GL.glViewport(rect.left, win_height - rect.bottom, rect.width, rect.height)
@@ -68,6 +91,18 @@ class GLViewport(Widget):
         self.setup_modelview()
 
     def augment_mouse_event(self, event):
+        """
+        This method is used to add the ray attribute to a mouse event before calling the corresponding handler.
+        Usually it is called automatically, but you may want to call it yourself if you receive a mouse event by
+        some means other than the usual channels. Note: This method calls the matrix setup methods, and changes
+        the projection and modelview matrices as a side effect.
+
+        Args:
+            event:  The event to augment
+
+        Returns:  a modified event
+
+        """
         Widget.augment_mouse_event(self, event)
         w, h = self.size
         viewport = (0, 0, w, h)
@@ -107,4 +142,3 @@ class GLViewport(Widget):
         without affecting any other `GLViewport`s.
         """
         pass
-
