@@ -13,7 +13,7 @@ class ScheduledCall:
     """
     def __init__(self, timeToExecute: float, func: Callable, interval: float):
         """
-        Use `albow.core.Scheduler.timestamp` as the `timeToExecute` value
+        Use `albow.core.Scheduler.Scheduler.timestamp` as the `timeToExecute` value
 
         Args:
             timeToExecute:  When we want this function executed
