@@ -133,6 +133,7 @@ class Scheduler:
 
         sched = Scheduler.ourScheduledCalls
         while sched and sched[0].time <= time_now:
+            Scheduler.ourLogger.debug("scheduled time is less that time_now")
             item = sched.pop(0)
             item.func()
             delay = item.interval

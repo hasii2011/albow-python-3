@@ -28,6 +28,7 @@ class TestScheduler(TestBase):
     def setUp(self):
         """"""
         TestScheduler.ourLogger = logging.getLogger(__name__)
+        # Scheduler.ourLogger.setLevel(logging.DEBUG)
 
     def tearDown(self):
         #
@@ -65,22 +66,26 @@ class TestScheduler(TestBase):
 
     def testMakeDueCalls(self):
 
-        TestScheduler.ourLogger.info("Test make due calls")
+        TestScheduler.ourLogger.info("Testing make due calls")
 
-        retToken = Scheduler.schedule_call(delay=5000, func=TestScheduler.callbackFunction, repeat=False)
+        retToken = Scheduler.schedule_call(delay=0, func=TestScheduler.callbackFunction, repeat=False)
+
+        TestScheduler.ourLogger.info("Task %s scheduled", retToken)
+
+        TestScheduler.ourLogger.info("Sleepy time ...")
+        time.sleep(10.0)
+
+        TestScheduler.ourLogger.info("Make the due calls")
 
         timeNow = Scheduler.timestamp()
-        untilTime = timeNow + 10000
-
-        time.sleep(6.0)
-
-        Scheduler.make_due_calls(time_now=timeNow, until_time=untilTime)
-
+        untilTime = timeNow + 5000
+        aTime = Scheduler.make_due_calls(time_now=timeNow, until_time=untilTime)
+        TestScheduler.ourLogger.info("aTime: %s", aTime)
 
     @staticmethod
     def callbackFunction():
 
-        TestScheduler.ourLogger.info("I have been called")
+        TestScheduler.ourLogger.info("I have been called: '%s'", TestScheduler.callbackFunction.__name__)
 
 
 if __name__ == '__main__':

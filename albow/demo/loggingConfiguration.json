@@ -22,13 +22,15 @@
             "level": "INFO",
             "handlers": [
                 "consoleHandler"
-            ]
+            ],
+            "propagate": "0"
         },
         "__main__": {
             "level": "INFO",
             "handlers": [
                 "consoleHandler"
-            ]
+            ],
+            "propagate": "0"
         },
 
         "albow.core.Widget": {

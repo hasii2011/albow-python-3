@@ -12,7 +12,6 @@
     "handlers": {
         "consoleHandler": {
             "class": "logging.StreamHandler",
-            "level": "INFO",
             "formatter": "demoSimple",
             "stream": "ext://sys.stdout"
         }
@@ -22,33 +21,37 @@
             "level": "INFO",
             "handlers": [
                 "consoleHandler"
-            ]
+            ],
+            "propagate": "0"
         },
         "__main__": {
             "level": "INFO",
             "handlers": [
                 "consoleHandler"
-            ]
+            ],
+            "propagate": "0"
         },
         "TestScheduler": {
             "level": "INFO",
             "handlers": [
                 "consoleHandler"
-            ]
+            ],
+            "propagate": "0"
         },
         "TestScheduledCall": {
             "level": "INFO",
             "handlers": [
                 "consoleHandler"
-            ]
+            ],
+            "propagate": "0"
         },
         "albow.core.Scheduler": {
             "level": "DEBUG",
             "handlers": [
                 "consoleHandler"
-            ]
+            ],
+            "propagate":  "0"
+
         }
-
-
     }
 }
