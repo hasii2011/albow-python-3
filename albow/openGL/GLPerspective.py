@@ -1,13 +1,36 @@
 
+from pygame import Rect
+
 from OpenGL import GLU
 
 from albow.openGL.GLViewport import GLViewport
 
 
 class GLPerspective(GLViewport):
+    """
+    `GLPerspective` provides an OpenGL drawing area with a perspective projection.
 
-    def __init__(self, rect=None, fovy=20, near=0.1, far=1000, **kwds):
+    Using a GLPerspective widget is the same as using a `GLViewport`, except that you do not need to provide
+    a `setup_projection()` method.
+    """
+    def __init__(self, rect: Rect=None, fovy: int=20, near: float=0.1, far: int=1000, **kwds):
+        """
+        Creates a GLPerspective instance with the given initial values for its projection parameters.
 
+        The projection parameters, as used by `gluPerspective()`. You can change these to dynamically modify
+        the projection. The aspect ratio is calculated automatically from the widget dimensions.
+
+        Args:
+            rect:
+
+            fovy:
+
+            near:
+
+            far:
+
+            **kwds:
+        """
         #
         # Python 3 update
         #

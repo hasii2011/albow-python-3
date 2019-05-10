@@ -13,6 +13,9 @@ class GLOrtho(GLViewport):
     Using a GLOrtho widget is the same as using a GLViewport, except that you do not need to
     provide a `setup_projection()` method.
 
+    ------
+
+    ------
 
     """
     def __init__(self, rect: Rect=None, xmin=-1, xmax=1, ymin=-1, ymax=1, near=-1, far=1, **kwds):
