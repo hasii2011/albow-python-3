@@ -15,6 +15,8 @@ from albow.core.CoreUtilities import time_base
 
 from albow.core.ScheduledCall import ScheduledCall
 
+FIRST_DUE_CALL_IDX = 0
+
 
 class Scheduler:
 
@@ -109,12 +111,16 @@ class Scheduler:
 
     @staticmethod
     def make_scheduled_calls():
-        #  Legacy
-        sched = Scheduler.ourScheduledCalls
+        """
+        Legacy - Still used by `RootWidget.run_mode`;  A simpler way to call what is due
+
+        """
+        callList = Scheduler.ourScheduledCalls
         t = Scheduler.timestamp()
-        while sched and sched[0][0] <= t:
-            sched[0][1]()
-            sched.pop(0)
+        while len(callList) !=0  and callList[0].time <= t:
+
+            scheduledCall: ScheduledCall = callList.pop(FIRST_DUE_CALL_IDX)
+            scheduledCall.func()
 
     @staticmethod
     def make_due_calls(time_now, until_time):
@@ -131,21 +137,28 @@ class Scheduler:
         """
         Scheduler.ourLogger.debug("make_due_calls - time_now: %s, until_time: %s", time_now, until_time)
 
-        sched = Scheduler.ourScheduledCalls
-        while sched and sched[0].time <= time_now:
-            Scheduler.ourLogger.debug("scheduled time is less that time_now")
-            item = sched.pop(0)
-            item.func()
-            delay = item.interval
+        callList = Scheduler.ourScheduledCalls
+        while len(callList) != 0 and callList[FIRST_DUE_CALL_IDX].time <= time_now:
+
+            Scheduler.ourLogger.debug("scheduled time is less or equal to time_now")
+            scheduledCall: ScheduledCall = callList.pop(0)
+
+            Scheduler.ourLogger.debug("Call function: %s", scheduledCall.func.__name__)
+            scheduledCall.func()
+            delay = scheduledCall.interval
+
             if delay:
-                next_time = item.time + delay
+                next_time = scheduledCall.time + delay
+
                 if next_time < time_now:
                     next_time = time_now + delay
                 Scheduler.ourLogger.debug("make_due_calls: rescheduling at: %s", next_time)
-                item.time = next_time
-                insort(sched, item)
-        if sched:
-            next_time = min(until_time, sched[0].time)
+                scheduledCall.time = next_time
+                insort(callList, scheduledCall)
+
+        if len(callList) != 0:
+            next_time = min(until_time, callList[FIRST_DUE_CALL_IDX].time)
         else:
             next_time = until_time
+
         return next_time - time_now
