@@ -1,4 +1,6 @@
 
+from functools import total_ordering
+
 from typing import Callable
 
 
@@ -26,19 +28,11 @@ class ScheduledCall:
         self.func = func
         self.interval = interval
 
+    def __ne__(self, other):
+        return not (self == other)
+
     def __lt__(self, other):
-        return self.__cmp__(other)
-
-    def __cmp__(self, other):
-        #
-        # Python 3 update;  cmp is gone
-        # https://docs.python.org/3.0/whatsnew/3.0.html#ordering-comparisons
-        #
-        a = self.time
-        b = other.time
-
-        # return cmp(self.time, other.time)
-        return (a > b) - (a < b)
+        return self.time < other.time
 
     def __eq__(self, theOtherOne):
         """
@@ -51,6 +45,15 @@ class ScheduledCall:
                 return True
 
         return False
+
+    def __le__(self, other):
+        return self.time <= other.time
+
+    def __gt__(self, other):
+        return self.time > other.time, other
+
+    def __ge__(self, other):
+        return self.time >= other.time, other
 
     def __str__(self):
         formattedObj = "time: {}, func: {}, interval: {}"

@@ -84,6 +84,50 @@ class TestScheduledCall(TestBase):
 
         TestScheduledCall.classLogger.info("String representation: %s", sc)
 
+    def testLessThanTrue(self):
+
+        whenToExecute = Scheduler.timestamp()
+
+        sc1: ScheduledCall = ScheduledCall(timeToExecute=whenToExecute,      func=TestScheduledCall.callback1, interval=40)
+        sc2: ScheduledCall = ScheduledCall(timeToExecute=whenToExecute + 1000, func=TestScheduledCall.callback2, interval=50)
+
+        ans: bool = (sc1 < sc2)
+
+        self.assertTrue(ans, "__cmp__ seems to be broken")
+
+    def testLessThanFalse(self):
+
+        whenToExecute = Scheduler.timestamp()
+
+        sc1: ScheduledCall = ScheduledCall(timeToExecute=whenToExecute + 1000,      func=TestScheduledCall.callback1, interval=40)
+        sc2: ScheduledCall = ScheduledCall(timeToExecute=whenToExecute, func=TestScheduledCall.callback2, interval=50)
+
+        ans: bool = (sc1 < sc2)
+
+        self.assertFalse(ans, "__cmp__ seems to be broken")
+
+    def testGreaterThanTrue(self):
+
+        whenToExecute = Scheduler.timestamp()
+
+        sc1: ScheduledCall = ScheduledCall(timeToExecute=whenToExecute + 1000,      func=TestScheduledCall.callback1, interval=40)
+        sc2: ScheduledCall = ScheduledCall(timeToExecute=whenToExecute, func=TestScheduledCall.callback2, interval=50)
+
+        ans: bool = (sc1 > sc2)
+
+        self.assertTrue(ans, "__cmp__ seems to be broken")
+
+    def testGreaterThanFalse(self):
+
+        whenToExecute = Scheduler.timestamp()
+
+        sc1: ScheduledCall = ScheduledCall(timeToExecute=whenToExecute + 1000,      func=TestScheduledCall.callback1, interval=40)
+        sc2: ScheduledCall = ScheduledCall(timeToExecute=whenToExecute, func=TestScheduledCall.callback2, interval=50)
+
+        ans: bool = (sc1 < sc2)
+
+        self.assertFalse(ans, "__cmp__ seems to be broken")
+
     @staticmethod
     def callback1():
 
