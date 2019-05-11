@@ -19,11 +19,11 @@ class Image(Widget):
     """
     image = overridable_property('image')
     """
-    The image to display.  The behaviour of this property can be customised by overriding the get_image() method.
+    The image to display.  The behaviour of this property can be customised by overriding the `get_image()` method.
     """
     highlighted = False
-    """"
-        Indicates whether or not to highlight theimage;  Default is False
+    """
+        Indicates whether or not to highlight the image;  Default is _False_
     """
 
     def __init__(self, theImageName: str=None, theRect: Rect=None, **kwds):
@@ -34,7 +34,9 @@ class Image(Widget):
 
         Args:
             theImageName:  The name of the image
+
             theRect:   The pygame rectangle to draw in
+
             **kwds:
         """
         super().__init__(theRect, **kwds)
@@ -70,4 +72,3 @@ class Image(Widget):
         r = image.get_rect()
         r.center = frame.center
         surf.blit(image, r)
-
