@@ -3,8 +3,9 @@ from pygame import Rect
 
 from albow.core.ResourceUtility import ResourceUtility
 
+from albow.utils import overridable_property
+
 from albow.core.Widget import Widget
-from albow.core.Widget import overridable_property
 
 from albow.themes.ThemeProperty import ThemeProperty
 

@@ -21,6 +21,8 @@ from albow.vectors import add
 from albow.vectors import subtract
 from albow.utils import frame_rect
 
+from albow.utils import overridable_property
+
 from albow.themes.ThemeProperty import ThemeProperty
 from albow.themes.FontProperty import FontProperty
 
@@ -31,22 +33,6 @@ debug_tab = True
 
 root_widget = None
 current_cursor = None
-
-
-def overridable_property(name, doc=None):
-    """
-    Creates a property which calls methods get_xxx and set_xxx of
-    the underlying object to get and set the property value, so that
-    the property's behaviour may be easily overridden by subclasses.
-    """
-
-    getter_name = sys.intern('get_' + name)
-    setter_name = sys.intern('set_' + name)
-    return property(
-        lambda self: getattr(self, getter_name)(),
-        lambda self, value: getattr(self, setter_name)(value),
-        None,
-        doc)
 
 
 def rect_property(name):

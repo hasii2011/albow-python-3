@@ -3,7 +3,8 @@ import logging
 
 from pygame import Surface
 
-from albow.core.Widget import overridable_property
+from albow.utils import overridable_property
+
 from albow.core.Widget import Widget
 from albow.themes.ThemeProperty import ThemeProperty
 

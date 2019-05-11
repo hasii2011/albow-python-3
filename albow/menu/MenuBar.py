@@ -3,8 +3,9 @@ from typing import List
 
 from pygame import Rect
 
+from albow.utils import overridable_property
+
 from albow.core.Widget import Widget
-from albow.core.Widget import overridable_property
 
 from albow.menu.Menu import Menu
 

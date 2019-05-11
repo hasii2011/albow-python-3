@@ -1,8 +1,33 @@
+
+import sys
+
 from pygame import Surface
 from pygame import Rect
 
 
 # from pygame.locals import SRCALPHA
+
+
+def overridable_property(name: str, doc:str =None):
+    """
+    Creates a property which calls methods _get_xxx_ and _set_xxx_ of
+    the underlying object to get and set the property value, so that
+    the property's behaviour may be easily overridden by subclasses.
+
+    Args:
+        name:  The property name
+        doc:   The documentation associated with it
+
+    Returns:  The property
+
+    """
+    getter_name = sys.intern('get_' + name)
+    setter_name = sys.intern('set_' + name)
+    return property(
+        lambda self: getattr(self, getter_name)(),
+        lambda self, value: getattr(self, setter_name)(value),
+        None,
+        doc)
 
 
 def frame_rect(surface: Surface, color, rect: Rect, thick: int = 1):
