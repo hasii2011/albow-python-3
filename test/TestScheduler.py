@@ -1,6 +1,9 @@
 
 import logging
 import time
+from time import localtime
+from time import strftime
+
 
 from logging import Logger
 
@@ -21,7 +24,9 @@ class TestScheduler(TestBase):
     """
 
     weHaveBeenCalledToken: bool = False
-
+    callTime1 = 0
+    callTime2 = 0
+    callTime3 = 0
     @classmethod
     def setUpClass(cls):
         """"""
@@ -110,11 +115,56 @@ class TestScheduler(TestBase):
         Scheduler.make_scheduled_calls()
         self.assertTrue(TestScheduler.weHaveBeenCalledToken, "The token should have been set, but was not")
 
+    def testSchedulingOrder(self):
+
+        #
+        # Purposely schedule in wrong order; Scheduler should execute in correct order
+        #
+        retToken1 = Scheduler.schedule_call(delay=1000, func=TestScheduler.callbackFunction1, repeat=False)
+        retToken2 = Scheduler.schedule_call(delay=9000, func=TestScheduler.callbackFunction3, repeat=False)
+        retToken3 = Scheduler.schedule_call(delay=5000, func=TestScheduler.callbackFunction2, repeat=False)
+
+        TestScheduler.ourLogger.info("Wait long enough so that all tasks will be called in one shot")
+        time.sleep(10.0)
+
+        Scheduler.make_scheduled_calls()
+        self.assertTrue( (TestScheduler.callTime1 < TestScheduler.callTime2) and
+                          TestScheduler.callTime2 < TestScheduler.callTime3,
+                         "Scheduler called tasks out of order")
+
     @staticmethod
     def callbackFunction():
 
         TestScheduler.ourLogger.info("I have been called: '%s'", TestScheduler.callbackFunction.__name__)
         TestScheduler.weHaveBeenCalledToken = True
+
+    @staticmethod
+    def callbackFunction1():
+
+        TestScheduler.callTime1 = Scheduler.timestamp()
+        prettyTime = strftime("%H:%M:%S", localtime(TestScheduler.callTime1))
+        TestScheduler.ourLogger.info("`%s' executed at: %s",
+                                     TestScheduler.callbackFunction1.__name__,
+                                     prettyTime)
+
+    @staticmethod
+    def callbackFunction2():
+
+        TestScheduler.callTime2 = Scheduler.timestamp()
+        prettyTime = strftime("%H:%M:%S", localtime(TestScheduler.callTime2))
+        TestScheduler.ourLogger.info("`%s' executed at: %s",
+                                     TestScheduler.callbackFunction2.__name__,
+                                     prettyTime)
+
+    @staticmethod
+    def callbackFunction3():
+
+        TestScheduler.callTime3 = Scheduler.timestamp()
+        prettyTime = strftime("%H:%M:%S", localtime(TestScheduler.callTime3))
+        TestScheduler.ourLogger.info("`%s' executed at: %s",
+                                     TestScheduler.callbackFunction3.__name__,
+                                     prettyTime)
+
 
 if __name__ == '__main__':
     unittest.main()
