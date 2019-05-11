@@ -16,7 +16,7 @@ The simplest way of using Ref is illustrated by the following example:
 ```python
 
 velocity_ref  = Ref(vehicle).velocity`
-velocity_ctrl = IntField(ref = velocity_ref)
+velocity_ctrl = IntField(ref=velocity_ref)
 
 ```
 
