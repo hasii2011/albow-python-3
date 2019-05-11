@@ -32,7 +32,8 @@ debug_tab = True
 root_widget = None
 current_cursor = None
 
-def overridable_property(name, doc = None):
+
+def overridable_property(name, doc=None):
     """
     Creates a property which calls methods get_xxx and set_xxx of
     the underlying object to get and set the property value, so that
@@ -52,19 +53,22 @@ def rect_property(name):
 
     def get(self):
         return getattr(self._rect, name)
+
     def set(self, value):
 
         r = self._rect
         old_size = r.size
         setattr(r, name, value)
         new_size = r.size
-        #if old_size <> new_size:       Python 3 update
+        #
+        # Python 3 update
+        # i f old_size <> new_size:
         if old_size != new_size:
             #
             # Method signature changed since tuples not allowed to be passed
             #
             # self._resized(old_size)
-            self._resized(old_size[0],old_size[1])
+            self._resized(old_size[0], old_size[1])
 
     return property(get, set)
 

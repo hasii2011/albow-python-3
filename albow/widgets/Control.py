@@ -1,6 +1,7 @@
 
 from albow.core.Widget import overridable_property
 
+
 class Control():
     """
     Control is a mixin class for use by widgets that display and/or edit a value of some kind. It provides a value
@@ -16,14 +17,14 @@ class Control():
     True if the button should be displayed in a highlighted state. This attribute is maintained by the 
     default mouse handlers.
     """
-    enabled     = overridable_property('enabled')
+    enabled = overridable_property('enabled')
     """
     A boolean indicating whether the control is enabled. Defaults to True. By default, this property is 
     read-write and maintains 
     its own state internal to the object. When an enable function is provided, this property becomes 
     read-only and gets its value via the supplied function.
     """
-    value       = overridable_property('value')
+    value = overridable_property('value')
     """
     The current value of the Control. If a ref has been supplied, accesses the value that it specifies. Otherwise, 
     accesses a value stored internally in a private attribute of the Control.
