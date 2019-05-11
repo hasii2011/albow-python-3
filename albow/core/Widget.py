@@ -463,8 +463,9 @@ class Widget:
         """
         Python 3 update.  local really needs to be a list
 
-        :param event:
-        :return:
+        Args:
+            event:   The event to augment
+
         """
         posMap = self.global_to_local(event.pos)
         # event.dict['local'] = self.global_to_local(event.pos)
