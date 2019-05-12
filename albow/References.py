@@ -13,45 +13,40 @@ All of these reference objects present a common interface, consisting of `get()`
 
 The simplest way of using Ref is illustrated by the following example:
 
-```python
+    ```python
 
-velocity_ref  = Ref(vehicle).velocity
-velocity_ctrl = IntField(ref=velocity_ref)
+    testVehicle: TestVehicle = TestVehicle()
 
-```
+    velocityRef = AttrRef(base=testVehicle, name="velocity")
+    self.logger.info("Created a velocity reference: %s", velocityRef)
 
-Here, the expression _Ref(vehicle)_ creates a reference source object from which reference objects can be
-derived. Accessing the velocity attribute of this object creates an attribute reference object that refers to
-the velocity attribute of the vehicle. This attribute reference object is then attached to an
-`albow.input.IntField`. The result is that the `albow.input.IntField` will always display the current value of the
-vehicle's velocity attribute, and if the user enters a new value into the field, vehicle's velocity attribute
-will be updated.
+    velocityControl: DummyControl = DummyControl(ref=velocityRef)
+    self.logger.info("Created velocity control %s", velocityControl)
+    #
+    # Change the data model
+    #
+    testVehicle.velocity = 100
 
-Reference objects can themselves be a source for further reference objects. Suppose you have a multi-player
-turn-taking game, and you want to display information about the player whose turn it is next. You might create
-a reference object like this:
+    self.assertTrue(velocityControl.get_value() == testVehicle.velocity, "Reference did not update control")
+    #
+    # Change the control
+    #
+    velocityControl.set_value(500)
+    self.assertTrue(velocityControl.get_value() == testVehicle.velocity, "Control did not update reference")
 
-```python
+    ```
 
-score_ref = Ref(world).current_game.current_player.score
+Here, the expression AttrRef(base=testVehicle, _name="velocity"_ creates a reference source object from which
+reference objects can be derived.
 
-```
+Accessing the velocity attribute of this object creates an attribute reference object that refers to
+the velocity attribute of the vehicle. This attribute reference object is then attached to a
+`DummyControl`. The result is that the `DummyControl` will always display the current value of the
+vehicle's velocity attribute.
 
-Here we assume that _world_ is a global object that doesn't change, but a game object is created each time a new
-game starts, and its current_player attribute switches around as the game is played. This statement creates a
-chain of reference objects culminating in an attribute reference for the attribute called score. Each time the
-`get()` or `set()` method of this reference object is called, the corresponding chain of attribute lookups is
-performed anew. So, if we attach our score_ref to a control, it will always display the score of the current
-player of the current game, whatever those objects happen to be.
+Additionally, if the user enters a new value into the field, the vehicle's velocity attributeis updated.
 
-As well as attribute access, indexing and calling can also be performed on a reference source:
 
-- `ref_source[index]`
-    produces an item reference object that accesses an item of a sequence or mapping.
-
-- `ref_source(args)`
-    produces a call reference object that performs a call when its get() method is called. This kind of reference
-    object is read-only. But, it can be used as a source of further reference objects that are read-write.
 
 """
 
