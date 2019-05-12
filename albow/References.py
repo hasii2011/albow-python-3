@@ -15,7 +15,7 @@ The simplest way of using Ref is illustrated by the following example:
 
 ```python
 
-velocity_ref  = Ref(vehicle).velocity`
+velocity_ref  = Ref(vehicle).velocity
 velocity_ctrl = IntField(ref=velocity_ref)
 
 ```
@@ -99,11 +99,17 @@ class AttrRef(Ref):
         return "AttrRef(%r, %r)" % (self.base, self.name)
 
     def get(self):
-        # print "%r.get()" % self ###
-        return getattr(self.base.get(), self.name)
+        print("%r.get()" % self)
+
+        # Python 3 update
+        # return getattr(self.base.get(), self.name)
+        val = getattr(self.base, self.name)
+        return val
 
     def set(self, value):
-        setattr(self.base.get(), self.name, value)
+        # Python 3 udpate
+        # setattr(self.base.get(), self.name, value)
+        setattr(self.base, self.name, value)
 
 
 class ItemRef(Ref):
@@ -117,7 +123,7 @@ class ItemRef(Ref):
         return "ItemRef(%r, %r)" % (self.base, self.index)
 
     def get(self):
-        # print "%r.get()" % self ###
+        print("%r.get()" % self)
         return self.base.get()[self.index]
 
     def set(self, value):
@@ -136,7 +142,7 @@ class CallRef(Ref):
         return "CallRef(%r)" % self.base
 
     def get(self):
-        # print "%r.get()" % self ###
+        print("%r.get()" % self)
         return self.base.get()(*self.args, **self.kwds)
 
 

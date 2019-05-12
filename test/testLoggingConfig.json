@@ -45,13 +45,28 @@
             ],
             "propagate": "0"
         },
+        "TestReferences": {
+            "level": "INFO",
+            "handlers": [
+                "consoleHandler"
+            ],
+            "propagate": "0"
+        },
+
         "albow.core.Scheduler": {
             "level": "DEBUG",
             "handlers": [
                 "consoleHandler"
             ],
             "propagate":  "0"
-
+        },
+        "DummyControl": {
+            "level": "INFO",
+            "handlers": [
+                "consoleHandler"
+            ],
+            "propagate":  "0"
         }
+
     }
 }
