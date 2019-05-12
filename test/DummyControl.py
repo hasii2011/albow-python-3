@@ -23,5 +23,5 @@ class DummyControl(Control):
             setattr(self, name, value)
 
     def __repr__(self):
-        formattedMe: str = f"value: '{self._value}' enabled: '{self._enabled}' highlighted: '{self._highlighted}'"
+        formattedMe: str = f"DummyControl(value: '{self._value}' enabled: '{self._enabled}' highlighted: '{self._highlighted})'"
         return formattedMe

@@ -3,14 +3,19 @@ import logging
 
 import unittest
 
-from TestBase import TestBase
+from albow.ItemRefInsertionException import ItemRefInsertionException
 
 from albow.References import AttrRef
+from albow.References import ItemRef
+
+from TestBase import TestBase
 
 from DummyControl import DummyControl
-from albow.input.IntField import IntField
 
 from TestVehicle import TestVehicle
+
+TEST_ITEM_INDEX = 3
+
 
 class TestReferences(TestBase):
     """
@@ -30,10 +35,10 @@ class TestReferences(TestBase):
         testVehicle: TestVehicle = TestVehicle()
 
         velocityRef = AttrRef(base=testVehicle, name="velocity")
-        self.logger.info("Created a velocity reference: %s", velocityRef)
+        self.logger.info("Created: %s", velocityRef)
 
         velocityControl: DummyControl = DummyControl(ref=velocityRef)
-        self.logger.info("Created velocity control %s", velocityControl)
+        self.logger.info("Created: %s", velocityControl)
         #
         # Change the data model
         #
@@ -48,6 +53,60 @@ class TestReferences(TestBase):
         #
         velocityControl.set_value(500)
         self.assertTrue(velocityControl.get_value() == testVehicle.velocity, "Control did not update reference")
+
+    def testBadBItemRefInsertion(self):
+
+        vehicleList = self.getVehicleList()
+
+        itemRef = ItemRef(base=vehicleList, index=TEST_ITEM_INDEX)
+        self.logger.info("Created %s", itemRef)
+
+        velocityControl: DummyControl = DummyControl(ref=itemRef)
+        self.logger.info("Created velocity control %s", velocityControl)
+        #
+        # Change the control
+        #
+        try:
+            velocityControl.set_value(500)
+            self.assertTrue(velocityControl.get_value() == vehicleList[TEST_ITEM_INDEX].velocity, "Control did not update reference")
+        except ItemRefInsertionException as e:
+            self.logger.error("%s", e.message)
+
+    def testBasicItemRefRetrieval(self):
+
+        vehicleList = self.getVehicleList()
+
+        itemRef = ItemRef(base=vehicleList, index=TEST_ITEM_INDEX)
+        self.logger.info("Created %s", itemRef)
+
+        velocityControl: DummyControl = DummyControl(ref=itemRef)
+        self.logger.info("Created velocity control %s", velocityControl)
+
+        anItem = itemRef.get()
+        self.assertEqual(first=vehicleList[TEST_ITEM_INDEX], second=anItem, msg="Did not retrieve what I put in.")
+
+    def testItemRefIndexing(self):
+
+        vehicleList = self.getVehicleList()
+
+        itemRef = ItemRef(base=vehicleList, index=TEST_ITEM_INDEX)
+        self.logger.info("Created: %s", itemRef)
+
+        testItem = itemRef[TEST_ITEM_INDEX]
+        self.logger.info("Retrieved: %s", testItem)
+        self.assertEqual(first=vehicleList[TEST_ITEM_INDEX], second=testItem, msg="Did not retrieve the correct item.")
+
+
+    def getVehicleList(self):
+
+        vehicleList = []
+        for i in range(0, 5):
+            testVehicle: TestVehicle = TestVehicle()
+            testVehicle.weight = i *100
+            testVehicle.velocity = (i * 2) * 10
+            vehicleList.append(testVehicle)
+
+        return vehicleList
 
 if __name__ == '__main__':
     unittest.main()
