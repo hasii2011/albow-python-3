@@ -56,6 +56,6 @@ class ScheduledCall:
         return self.time >= other.time, other
 
     def __str__(self):
-        formattedObj = "time: {}, func: {}, interval: {}"
 
-        return formattedObj.format(self.time, self.func, self.interval)
+        formattedMe:str = f"time: {self.time}, func: {self.func}, interval: {self.interval}"
+        return formattedMe
