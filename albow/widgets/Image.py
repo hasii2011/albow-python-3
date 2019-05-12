@@ -9,6 +9,7 @@ from albow.core.Widget import Widget
 
 from albow.themes.ThemeProperty import ThemeProperty
 
+
 class Image(Widget):
     """
     An Image is a widget that displays an image.

@@ -1,6 +1,7 @@
 
 from albow.input.Field import Field
 
+
 class IntField(Field):
 
     """
