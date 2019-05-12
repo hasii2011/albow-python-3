@@ -12,7 +12,7 @@ from TestBase import TestBase
 
 from DummyControl import DummyControl
 
-from TestVehicle import TestVehicle
+from DummyVehicle import DummyVehicle
 
 TEST_ITEM_INDEX = 3
 
@@ -32,7 +32,7 @@ class TestReferences(TestBase):
 
     def testBasicAttrRef(self):
 
-        testVehicle: TestVehicle = TestVehicle()
+        testVehicle: DummyVehicle = DummyVehicle()
 
         velocityRef = AttrRef(base=testVehicle, name="velocity")
         self.logger.info("Created: %s", velocityRef)
@@ -101,7 +101,7 @@ class TestReferences(TestBase):
 
         vehicleList = []
         for i in range(0, 5):
-            testVehicle: TestVehicle = TestVehicle()
+            testVehicle: DummyVehicle = DummyVehicle()
             testVehicle.weight = i *100
             testVehicle.velocity = (i * 2) * 10
             vehicleList.append(testVehicle)

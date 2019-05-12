@@ -3,7 +3,8 @@ import logging
 
 from albow.utils import overridable_property
 
-class TestVehicle:
+
+class DummyVehicle:
 
     velocity = overridable_property(name='velocity', doc="How fast we are going")
     weight = overridable_property(name='weight', doc="How fat we are")
@@ -45,7 +46,7 @@ class TestVehicle:
 
     def __eq__(self, theOtherOne):
 
-        if isinstance(theOtherOne, TestVehicle):
+        if isinstance(theOtherOne, DummyVehicle):
             if self._velocity == theOtherOne.velocity and \
                     self._weight == theOtherOne.weight and \
                     self._width == theOtherOne.width and \
