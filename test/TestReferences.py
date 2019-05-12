@@ -68,7 +68,8 @@ class TestReferences(TestBase):
         #
         try:
             velocityControl.set_value(500)
-            self.assertTrue(velocityControl.get_value() == vehicleList[TEST_ITEM_INDEX].velocity, "Control did not update reference")
+            self.assertTrue(velocityControl.get_value() == vehicleList[TEST_ITEM_INDEX].velocity,
+                            "Control did not update reference")
         except ItemRefInsertionException as e:
             self.logger.error("%s", e.message)
 
@@ -96,17 +97,18 @@ class TestReferences(TestBase):
         self.logger.info("Retrieved: %s", testItem)
         self.assertEqual(first=vehicleList[TEST_ITEM_INDEX], second=testItem, msg="Did not retrieve the correct item.")
 
-
-    def getVehicleList(self):
+    @staticmethod
+    def getVehicleList():
 
         vehicleList = []
         for i in range(0, 5):
             testVehicle: DummyVehicle = DummyVehicle()
-            testVehicle.weight = i *100
+            testVehicle.weight = i * 100
             testVehicle.velocity = (i * 2) * 10
             vehicleList.append(testVehicle)
 
         return vehicleList
+
 
 if __name__ == '__main__':
     unittest.main()
