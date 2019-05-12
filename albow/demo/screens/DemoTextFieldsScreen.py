@@ -22,7 +22,6 @@ class DemoTextFieldsScreen(BaseDemoScreen):
 
     def __init__(self, shell: Shell):
         """
-        TODO:  The alignment of the form is not quite right
 
         :param shell:
         """
