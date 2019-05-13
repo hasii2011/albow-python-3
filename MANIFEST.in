@@ -1,0 +1,2 @@
+include albow/demo/*.json
+graft albow/demo/Resources
