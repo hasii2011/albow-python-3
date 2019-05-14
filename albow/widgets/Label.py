@@ -6,6 +6,7 @@ from pygame import Surface
 from albow.utils import overridable_property
 
 from albow.core.Widget import Widget
+
 from albow.themes.ThemeProperty import ThemeProperty
 
 
@@ -20,7 +21,7 @@ class Label(Widget):
     """
     Properties
     """
-    text  = overridable_property('text')
+    text = overridable_property('text')
     """
     The text to be displayed. This can be changed dynamically, but the label won't automatically resize to 
     accommodate the new text.
@@ -31,18 +32,18 @@ class Label(Widget):
     right.
     """
 
-    highlight_color    = ThemeProperty('highlight_color')
+    highlight_color = ThemeProperty('highlight_color')
     """The color to use for highlighting the label"""
-    disabled_color     = ThemeProperty('disabled_color')
+    disabled_color = ThemeProperty('disabled_color')
     """The color to use when the label is disabled"""
     highlight_bg_color = ThemeProperty('highlight_bg_color')
     """The highlight background color"""
-    enabled_bg_color   = ThemeProperty('enabled_bg_color')
+    enabled_bg_color = ThemeProperty('enabled_bg_color')
     """The enabled background color"""
-    disabled_bg_color  = ThemeProperty('disabled_bg_color')
+    disabled_bg_color = ThemeProperty('disabled_bg_color')
     """The disabled background color"""
 
-    enabled     = True
+    enabled = True
     """Indicates if label should be enabled.  Defaults to True"""
     highlighted = False
     """
@@ -128,6 +129,7 @@ class Label(Widget):
                 e = - 2 * b
                 r.inflate_ip(e, e)
             surface.fill(bg, r)
+
         m = self.margin
         align = self.align
         width = surface.get_width()
@@ -147,4 +149,3 @@ class Label(Widget):
                 r.centerx = width // 2
             surface.blit(image, r)
             y += dy
-
