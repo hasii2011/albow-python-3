@@ -16,7 +16,7 @@ from albow.layout.Grid import Grid
 from albow.themes.Theme import Theme
 
 DEMO_TITLE_TEXT_SIZE = 24
-DEMO_BUTTON_TEXT_SIZE = 14
+DEMO_BUTTON_TEXT_SIZE = 12
 
 class LaunchDemosScreen(Screen):
     """

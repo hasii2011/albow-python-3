@@ -23,13 +23,14 @@ class BaseDemoScreen(Screen):
 
         screenAttrs = {'bg_color': Theme.WHITE}
 
-        super().__init__(shell=shell, **screenAttrs)
+        super().__init__(shell=shell, bg_color=Theme.WHITE)
 
         self.smallButtonFont = ResourceUtility.get_font(BaseDemoScreen.SMALL_BUTTON_TEXT_SIZE, Theme.BUILT_IN_FONT)
-        self.backButton      = Button("Back", action=shell.show_menu)
         self.labelFont       = ResourceUtility.get_font(BaseDemoScreen.SMALL_LABEL_TEXT_SIZE, Theme.BUILT_IN_FONT)
 
         self.labelAttrs = {
             "bg_color": Theme.WHITE,
             "fg_color": Theme.BLACK
         }
+
+        self.backButton      = Button("Back", action=shell.show_menu, font=self.smallButtonFont)

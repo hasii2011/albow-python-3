@@ -40,6 +40,10 @@ class Theme:
     """
     BLACK = (0, 0, 0)
     WHITE = (255, 255, 255)
+    DARK_GRAY = (64, 64, 64)
+    GRAY = (128, 128, 128)
+    LIGHT_GRAY = (212, 208, 200)
+
     BUILT_IN_FONT = "VeraBd.ttf"
 
     def __init__(self, name, base = None):
@@ -138,9 +142,11 @@ class Theme:
         # root.Button.disabled_color = (64, 64, 64) # fg
         themeRoot.Button.disabled_color = (23, 62, 67) # fg  17 3e 43
 
-        themeRoot.Button.highlight_bg_color = (255, 165, 78)
+        # themeRoot.Button.highlight_bg_color = (255, 165, 78)
+        themeRoot.Button.highlight_bg_color = Theme.LIGHT_GRAY
 
-        themeRoot.Button.enabled_bg_color = (65, 108, 178)
+        # themeRoot.Button.enabled_bg_color = (65, 108, 178)
+        themeRoot.Button.enabled_bg_color = Theme.GRAY
         themeRoot.Button.disabled_bg_color = (106, 148, 204)
 
         themeRoot.ImageButton = Theme('ImageButton')
