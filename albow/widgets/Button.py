@@ -1,6 +1,8 @@
 
 import logging
 
+from albow.themes.Theme import Theme
+
 from albow.widgets.ButtonBase import ButtonBase
 from albow.widgets.Label import Label
 
@@ -32,3 +34,5 @@ class Button(ButtonBase, Label):
         if enable:
             kwds['enable'] = enable
         Label.__init__(self, text, **kwds)
+        self.border_color = Theme.BLACK
+        self.border_width = 1
