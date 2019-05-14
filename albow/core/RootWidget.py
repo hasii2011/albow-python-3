@@ -33,9 +33,12 @@ DOUBLE_CLICK_TIME = 300 # milliseconds
 #
 # Ignore PyCharm warning about unexpected arguments
 # Fix this way:          event.dict['ray'] = (p0, p1)
-# dict([('sape', 4139), ('guido', 4127), ('jack', 4098)])
+#        dict([('sape', 4139), ('guido', 4127), ('jack', 4098)])
 #
-last_mouse_event: Event = Event(0, pos=(0, 0), local=(0, 0))
+last_mouse_event: Event = Event(0)
+last_mouse_event.dict['pos'] = (0, 0)
+last_mouse_event.dict['local'] = (0, 0)
+
 last_mouse_event_handler = None
 
 root_widget = None     # Root of the containment hierarchy
