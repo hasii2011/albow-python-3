@@ -99,6 +99,10 @@ class Theme:
         setattr(self, name, Theme(name))
 
     @staticmethod
+    def getThemeRoot():
+        return themeRoot
+
+    @staticmethod
     def initializeDefaultTheme():
         """
         You have to get all the theme attributes defined first before anything is imported with
@@ -155,20 +159,20 @@ class Theme:
         themeRoot.CheckWidget = Theme('CheckWidget')
         themeRoot.CheckWidget.smooth = False
 
-        themeRoot.framed = Theme('framed')
-        themeRoot.framed.border_width = 1
-        themeRoot.framed.margin = 3
+        themeRoot.FrameBase = Theme('FrameBase')
+        themeRoot.FrameBase.border_width = 1
+        themeRoot.FrameBase.margin = 3
 
-        themeRoot.Field = Theme('Field', base=themeRoot.framed)
+        themeRoot.Field = Theme('Field', base=themeRoot.FrameBase)
 
         themeRoot.Dialog = Theme('Dialog')
         themeRoot.Dialog.bg_color = (224, 224, 224)
         themeRoot.Dialog.border_width = 2
         themeRoot.Dialog.margin = 15
 
-        themeRoot.DirPathView = Theme('DirPathView', base=themeRoot.framed)
+        themeRoot.DirPathView = Theme('DirPathView', base=themeRoot.FrameBase)
 
-        themeRoot.FileListView = Theme('FileListView', base=themeRoot.framed)
+        themeRoot.FileListView = Theme('FileListView', base=themeRoot.FrameBase)
         themeRoot.FileListView.scroll_button_color = (64, 64, 64)
 
         themeRoot.FileDialog = Theme("FileDialog")
@@ -221,17 +225,17 @@ class Theme:
         themeRoot.ImageMultiChoice.sel_color = (192, 192, 192)
         themeRoot.ImageMultiChoice.highlight_style = 'fill'
 
-        themeRoot.menu = Theme('menu')
-        themeRoot.menu.bg_color = (255, 255, 255)
-        themeRoot.menu.fg_color = (0, 0, 0)
-        themeRoot.menu.disabled_color = (128, 128, 128)
-        themeRoot.menu.margin = 8
+        themeRoot.MenuBase = Theme('MenuBase')
+        themeRoot.MenuBase.bg_color = (255, 255, 255)
+        themeRoot.MenuBase.fg_color = (0, 0, 0)
+        themeRoot.MenuBase.disabled_color = (128, 128, 128)
+        themeRoot.MenuBase.margin = 8
 
-        themeRoot.MenuBar = Theme('MenuBar', base=themeRoot.menu)
+        themeRoot.MenuBar = Theme('MenuBar', base=themeRoot.MenuBase)
         themeRoot.MenuBar.border_width = 0
 
-        themeRoot.Menu = Theme('Menu', base=themeRoot.menu)
+        themeRoot.Menu = Theme('Menu', base=themeRoot.MenuBase)
         themeRoot.Menu.border_width = 1
 
-        themeRoot.MusicVolumeControl = Theme('MusicVolumeControl', base=themeRoot.framed)
+        themeRoot.MusicVolumeControl = Theme('MusicVolumeControl', base=themeRoot.FrameBase)
         themeRoot.MusicVolumeControl.fg_color = (0x40, 0x40, 0x40)
