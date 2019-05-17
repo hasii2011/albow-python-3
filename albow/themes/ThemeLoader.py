@@ -16,7 +16,7 @@ ROOT_THEME_NAME = "root"
 
 class ThemeLoader:
 
-    def __init__(self, themeFilename: str= DEFAULT_THEME_FILENAME):
+    def __init__(self, themeFilename: str = DEFAULT_THEME_FILENAME):
         """
 
         """
@@ -56,9 +56,6 @@ class ThemeLoader:
 
         Changes current working directory
 
-        Args:
-            themeFilename:
-
         Returns:  The current directory we wound up in
 
         Raises:  FileNotFoundError if we wind up in the root directory
@@ -96,6 +93,9 @@ class ThemeLoader:
                 elif attrStrValue.isnumeric():
                     attrInt = int(attrStrValue)
                     setattr(theme, attr, attrInt)
+                elif ThemeLoader.isFloat(attrStrValue):
+                    floatAttr = float(attrStrValue)
+                    setattr(theme, attr, floatAttr)
                 else:
                     setattr(theme, attr, attrStrValue)
 
@@ -147,3 +147,12 @@ class ThemeLoader:
             ans = True
 
         return ans
+
+    @staticmethod
+    def isFloat(strValue: str):
+        try:
+            float(strValue)
+        except ValueError:
+            return False
+        else:
+            return True
