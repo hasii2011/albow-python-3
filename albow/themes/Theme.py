@@ -46,7 +46,7 @@ class Theme:
 
     BUILT_IN_FONT = "VeraBd.ttf"
 
-    def __init__(self, name, base = None):
+    def __init__(self, name, base=None):
         """
 
         Args:
@@ -98,9 +98,19 @@ class Theme:
     def add_theme(self, name):
         setattr(self, name, Theme(name))
 
+    def __str__(self):
+        return self.name
+
     @staticmethod
     def getThemeRoot():
         return themeRoot
+
+    @staticmethod
+    def setThemeRoot(theThemeRoot: "Theme"):
+
+        global themeRoot
+
+        themeRoot = theThemeRoot
 
     @staticmethod
     def initializeDefaultTheme():
@@ -142,9 +152,9 @@ class Theme:
         themeRoot.Button.border_width = 2
         themeRoot.Button.font = (18, "VeraBd.ttf")
         themeRoot.Button.fg_color = Theme.WHITE
-        themeRoot.Button.highlight_color = (0, 0, 0) # fg
+        themeRoot.Button.highlight_color = (0, 0, 0)  # fg
         # root.Button.disabled_color = (64, 64, 64) # fg
-        themeRoot.Button.disabled_color = (23, 62, 67) # fg  17 3e 43
+        themeRoot.Button.disabled_color = (23, 62, 67)  # fg  17 3e 43
 
         # themeRoot.Button.highlight_bg_color = (255, 165, 78)
         themeRoot.Button.highlight_bg_color = Theme.LIGHT_GRAY
@@ -177,7 +187,6 @@ class Theme:
 
         themeRoot.FileDialog = Theme("FileDialog")
         themeRoot.FileDialog.up_button_text = "<--"
-
 
         themeRoot.PaletteView = Theme('PaletteView')
         themeRoot.PaletteView.sel_width = 2
@@ -213,7 +222,8 @@ class Theme:
 
         themeRoot.MultiChoice = Theme("MultiChoice")
         themeRoot.MultiChoice.sel_width = 1
-        themeRoot.MultiChoice.highlight_color = themeRoot.sel_color
+        # themeRoot.MultiChoice.highlight_color = themeRoot.sel_color
+        themeRoot.MultiChoice.highlight_color = (208, 210, 211)
         themeRoot.MultiChoice.margin = 8
         themeRoot.MultiChoice.cell_margin = 2
 
