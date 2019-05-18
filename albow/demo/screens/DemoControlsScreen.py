@@ -1,7 +1,6 @@
 
 from math import pi
 
-from albow.core.Screen import Screen
 from albow.legacyReferences import AttrRef
 
 from albow.themes.Theme import Theme
@@ -9,7 +8,7 @@ from albow.themes.Theme import Theme
 from albow.input.FloatField import FloatField
 
 from albow.widgets.ValueDisplay import ValueDisplay
-from albow.widgets.Button import Button
+
 from albow.widgets.Label import Label
 from albow.widgets.RadioButton import RadioButton
 
@@ -18,6 +17,7 @@ from albow.layout.Grid import Grid
 from albow.layout.Row import Row
 
 from albow.demo.screens.BaseDemoScreen import BaseDemoScreen
+
 
 class DemoControlsModel:
 
@@ -51,7 +51,7 @@ class DemoControlsScreen(BaseDemoScreen):
         """
         super().__init__(shell)
 
-        model= DemoControlsModel()
+        model = DemoControlsModel()
 
         colors = {'border_color': Theme.WHITE,
                   'fg_color':     Theme.BLACK,
