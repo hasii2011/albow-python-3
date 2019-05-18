@@ -11,6 +11,7 @@ from albow.widgets.ValueDisplay import ValueDisplay
 
 from albow.widgets.Label import Label
 from albow.widgets.RadioButton import RadioButton
+from albow.widgets.ImageButton import ImageButton
 
 from albow.layout.Column import Column
 from albow.layout.Grid import Grid
@@ -53,13 +54,13 @@ class DemoControlsScreen(BaseDemoScreen):
 
         model = DemoControlsModel()
 
-        colors = {'border_color': Theme.WHITE,
+        colors = {'border_color': Theme.BLACK,
                   'fg_color':     Theme.BLACK,
                   'bg_color':     Theme.WHITE
                   }
-        width_field  = FloatField  (ref=AttrRef(model, 'width'),  **colors)
-        height_field = FloatField  (ref=AttrRef(model, 'height'), **colors)
-        area_display = ValueDisplay(ref=AttrRef(model, 'area'), format="%.2f", **colors)
+        width_field  = FloatField  (ref=AttrRef(base=model, name='width'),  **colors)
+        height_field = FloatField  (ref=AttrRef(base=model, name='height'), **colors)
+        area_display = ValueDisplay(ref=AttrRef(base=model, name='area'), format="%.2f", **colors)
         shape        = AttrRef(model, 'shape')
         shape_choices = Row([
             RadioButton(setting='rectangle', ref=shape), Label("Rectangle", **colors),
@@ -67,12 +68,25 @@ class DemoControlsScreen(BaseDemoScreen):
             RadioButton(setting='ellipse',   ref=shape), Label("Ellipse",   **colors),
         ])
         grid = Grid([
-            [Label("Width",      **colors), width_field],
-            [Label("Height",     **colors), height_field],
-            [Label("Shape",      **colors), shape_choices],
-            [Label("Value Area", **colors), area_display],
+            [Label("Width"), width_field],
+            [Label("Height"), height_field],
+            [Label("Shape"), shape_choices],
+            [Label("Value Area"), area_display],
         ])
 
-        contents = Column([grid, self.backButton])
+        imgBtnBall: ImageButton = ImageButton(theImage="ball.gif")
+        imgBtnHighlightedBall: ImageButton = ImageButton(theImage="ball.gif", highlightedBgImage="ball_highlighted.png")
+        imgBtnDisabledBall: ImageButton = ImageButton(theImage="ball.gif", disabledBgImage="ball_disabled.png", enabled=False)
+        imgBtnEnabledBall: ImageButton = ImageButton(theImage="ball.gif", enabledBgImage="ball_enabled.png", enabled=True)
+
+        imgBtnTitle: Label = Label("Image Buttons")
+        imgBtnGrid: Grid = Grid([
+            [Label("Regular"), imgBtnBall],
+            [Label("Highlighted"),imgBtnHighlightedBall],
+            [Label("Disabled"), imgBtnDisabledBall],
+            [Label("Enabled"), imgBtnEnabledBall]
+        ])
+
+        contents = Column([grid, imgBtnTitle, imgBtnGrid, self.backButton])
         self.add_centered(contents)
         width_field.focus()

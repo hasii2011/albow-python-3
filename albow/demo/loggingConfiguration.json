@@ -46,6 +46,13 @@
             ],
             "propagate": "0"
         },
+         "albow.widgets.ImageButton": {
+            "level": "INFO",
+            "handlers": [
+                "consoleHandler"
+            ],
+            "propagate": "0"
+        },
         "albow.widgets.Label": {
             "level": "INFO",
             "handlers": [
