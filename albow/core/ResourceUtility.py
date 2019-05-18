@@ -31,6 +31,7 @@ import logging
 
 import pygame
 from pygame.locals import RLEACCEL
+from pygame import Surface
 
 from albow.core.DummySound import DummySound
 
@@ -104,7 +105,7 @@ class ResourceUtility:
         return os.path.exists(ResourceUtility._resource_path("", names, **kwds))
 
     @staticmethod
-    def get_image(*names, **kwds):
+    def get_image(*names, **kwds) -> Surface:
         """
         Loads the specified image from the images directory or returns it from the cache.
 
@@ -351,7 +352,7 @@ class ResourceUtility:
         return os.path.join(ResourceUtility.find_resource_dir(), prefix or default_prefix, *names)
 
     @staticmethod
-    def _get_image(path, border=0, optimize=optimize_images, noalpha=False, rle=run_length_encode):
+    def _get_image(path, border=0, optimize=optimize_images, noalpha=False, rle=run_length_encode) -> Surface:
         """
         Loads the specified image from the images directory or returns it from the cache.
 
