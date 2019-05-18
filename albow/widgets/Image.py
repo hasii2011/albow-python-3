@@ -27,14 +27,15 @@ class Image(Widget):
         Indicates whether or not to highlight the image;  Default is _False_
     """
 
-    def __init__(self, theImageName: str=None, theRect: Rect=None, **kwds):
+    def __init__(self, theImage = None, theRect: Rect = None, **kwds):
         """
         TODO  Do a unit test on this class
 
         Initializes the widget to display the given image. The initial size is determined by the image.
 
         Args:
-            theImageName:  The name of the image
+            theImage:  Either a string that is the image name and can be found via the resource lookup methods
+            or an actual image.  (TBD) - I don't like this and will change the API to only accept image names
 
             theRect:   The pygame rectangle to draw in
 
@@ -42,13 +43,15 @@ class Image(Widget):
         """
         super().__init__(theRect, **kwds)
 
-        if theImageName:
-            if isinstance(theImageName, str):
-                theImageName = ResourceUtility.get_image(theImageName)
-            w, h = theImageName.get_size()
+        if theImage:
+            if isinstance(theImage, str):
+                theImage = ResourceUtility.get_image(theImage)
+            w, h = theImage.get_size()
             d = 2 * self.margin
             self.size = w + d, h + d
-            self._image = theImageName
+            self._image = theImage
+        else:
+            self._image = None
 
     def get_image(self):
         """
