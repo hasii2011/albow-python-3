@@ -1,7 +1,7 @@
 
 from math import pi
 
-from albow.legacyReferences import AttrRef
+from albow.References import AttrRef
 
 from albow.themes.Theme import Theme
 

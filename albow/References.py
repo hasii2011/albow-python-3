@@ -136,7 +136,7 @@ class AttrRef(Ref):
         return "AttrRef(%r, %r)" % (self.base, self.name)
 
     def get(self):
-        print("%r.get()" % self)
+        # print("%r.get()" % self)
         # Python 3 update
         # return getattr(self.base.get(), self.name)
         val = getattr(self.base, self.name)
