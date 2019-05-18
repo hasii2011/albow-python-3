@@ -39,7 +39,7 @@ class DemoDialogScreen(BaseDemoScreen):
             Button(text="Look for File or Directory", action=self.test_lookfor, **buttAttrs),
         ], align='l')
         contents = Column([
-            Label("File Dialogs", font=ResourceUtility.get_font(18, "VeraBd.ttf"), **self.labelAttrs),
+            Label("File Dialogs", font=ResourceUtility.get_font(18, "VeraBd.ttf")),
             menu,
             self.backButton,
         ], align='c', spacing=30)

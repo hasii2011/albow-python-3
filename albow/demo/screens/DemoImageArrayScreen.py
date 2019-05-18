@@ -34,7 +34,7 @@ class DemoImageArrayScreen(BaseDemoScreen):
         }
 
         contents = Column([
-            Label("Image Array", font=self.labelFont, **self.labelAttrs),
+            Label("Image Array", font=self.labelFont),
             self.image,
             Button("Next Fruit", action=self.next_image, **buttAttrs),
             self.backButton,

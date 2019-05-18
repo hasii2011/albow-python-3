@@ -26,7 +26,7 @@ class DemoTableScreen(BaseDemoScreen):
         # Screen.__init__(self, shell)
         super().__init__(shell)
 
-        title    = Label("Norwegian Butter Exports", font=self.labelFont, **self.labelAttrs)
+        title    = Label("Norwegian Butter Exports", font=self.labelFont)
         #
         # Python 3/pygame 1.9 update
         #

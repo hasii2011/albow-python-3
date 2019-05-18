@@ -22,7 +22,7 @@ class DemoPaletteViewScreen(BaseDemoScreen):
         w, h = self.size        # Extract from tuple
 
         grid = DemoPaletteView()
-        lbl  = Label("Cl1ck a Squ4r3", **self.labelAttrs)
+        lbl  = Label("Cl1ck a Squ4r3")
 
         grid.border_width = 1
         grid.center = (w/2, h/2)

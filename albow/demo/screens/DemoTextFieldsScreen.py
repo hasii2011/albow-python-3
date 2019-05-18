@@ -31,14 +31,9 @@ class DemoTextFieldsScreen(BaseDemoScreen):
         # Screen.__init__(self, shell)
         super().__init__(shell)
 
-        labelAttrs = {
-            "bg_color": Theme.WHITE,
-            "fg_color": Theme.BLACK
-        }
-
-        nameLabel: Label          = Label("Name: ", **labelAttrs)
+        nameLabel: Label          = Label("Name: ")
         self.nameField: TextField = TextField(width=150)
-        raceLabel: Label          = Label("Race: ", **labelAttrs)
+        raceLabel: Label          = Label("Race: ")
         self.raceField: TextField = TextField(width=150)
 
         rows = [
@@ -47,7 +42,7 @@ class DemoTextFieldsScreen(BaseDemoScreen):
         ]
         fieldGrid: Grid = Grid(rows)
 
-        self.resultLabel = Label("", font=self.labelFont, **self.labelAttrs)
+        self.resultLabel = Label("", font=self.labelFont)
         self.resultLabel.width = 400
 
         okBtnAttrs = {
