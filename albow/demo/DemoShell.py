@@ -37,8 +37,7 @@ class DemoShell(Shell):
         #
         # Python 3 update
         #
-        attrs = {'bg_color': Theme.WHITE}
-        super().__init__(display, **attrs)
+        super().__init__(display)
 
         self.text_screen        = TextScreen(self, "demo_text.txt")
         self.fields_screen      = DemoTextFieldsScreen(self)

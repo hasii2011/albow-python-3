@@ -117,6 +117,3 @@ class LaunchDemosScreen(Screen):
                 butt.width = largestWidth
 
         return menuArray
-
-    def quit(self):
-        sys.exit(0)
