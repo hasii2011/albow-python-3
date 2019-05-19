@@ -41,8 +41,6 @@ class Shell(RootWidget):
         Args:
             new_screen:  The new screen to display
 
-        Returns:
-
         """
         old_screen = self.current_screen
         if old_screen is not new_screen:
