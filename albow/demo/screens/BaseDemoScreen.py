@@ -21,7 +21,7 @@ class BaseDemoScreen(Screen):
 
         self.logger = logging.getLogger(__name__)
 
-        super().__init__(shell=shell, bg_color=Theme.WHITE)
+        super().__init__(shell=shell)
 
         self.smallButtonFont = ResourceUtility.get_font(BaseDemoScreen.SMALL_BUTTON_TEXT_SIZE, Theme.BUILT_IN_FONT)
         self.labelFont       = ResourceUtility.get_font(BaseDemoScreen.SMALL_LABEL_TEXT_SIZE, Theme.BUILT_IN_FONT)

@@ -43,6 +43,15 @@ class Theme:
     DARK_GRAY = (64, 64, 64)
     GRAY = (128, 128, 128)
     LIGHT_GRAY = (212, 208, 200)
+    BLUE = (0, 0, 255)
+    GREEN = (0,255, 0)
+    RED = (255, 0, 0)
+
+    LAMAS_BLACK = (42, 41, 41)
+    LAMAS_GREY = (208, 210, 211)
+    LAMAS_LIGHT_BLUE = (24, 189, 207)
+    LAMAS_MEDIUM_BLUE = (106, 148, 204)
+    LAMAS_DARK_BLUE = (65, 108, 178)
 
     BUILT_IN_FONT = "VeraBd.ttf"
 
