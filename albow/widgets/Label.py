@@ -63,30 +63,18 @@ class Label(Widget):
         self.logger = logging.getLogger(__name__)
 
         super().__init__(**kwds)
-        font = self.font
-        lines = text.split("\n")
-        tw, th = 0, 0
-        for line in lines:
-            w, h = font.size(line)
-            tw = max(tw, w)
-            th += h
-        if width is not None:
-            tw = width
-        else:
-            tw = max(1, tw)
-        d = 2 * self.margin
-        adjustedWidth   = tw + d
-        adjustedHeight  = th + d
-        # self.size = (tw + d, th + d)
-        self.size = (adjustedWidth, adjustedHeight)   # Python 3 update
+        self.size = self.computeSize(text, width)
+
         self._text = text
         self.logger.debug("Control size %s", self.size)
 
     def get_text(self):
         return self._text
 
-    def set_text(self, x):
-        self._text = x
+    def set_text(self, theNewText):
+
+        self._text = theNewText
+        self.size = self.computeSize(theNewText)
 
     def get_align(self):
         return self._align
@@ -95,11 +83,12 @@ class Label(Widget):
         self._align = x
 
     def draw(self, surface: Surface):
-        # """
-        #
-        # :param surface:  The surface onto which to draw
-        # :return:
-        # """
+        """
+
+        Args:
+            surface:  The surface onto which to draw
+
+        """
         if not self.enabled:
             fg = self.disabled_color
             bg = self.disabled_bg_color
@@ -111,7 +100,7 @@ class Label(Widget):
             bg = self.enabled_bg_color
         self.draw_with(surface, fg, bg)
 
-    def draw_with(self, surface: Surface, fg: tuple, bg: tuple=None):
+    def draw_with(self, surface: Surface, fg: tuple, bg: tuple = None):
         """
 
         Args:
@@ -149,3 +138,34 @@ class Label(Widget):
                 r.centerx = width // 2
             surface.blit(image, r)
             y += dy
+
+    def computeSize(self, theText: str, theWidth: int = None) -> tuple:
+        """
+
+        Args:
+            theText: The text from which to compute the label size
+
+            theWidth: A *must* have minimum width
+
+        Returns: a tuple of the from (width, height)
+
+        """
+        font = self.font
+        lines = theText.split("\n")
+        tw, th = 0, 0
+        for line in lines:
+            w, h = font.size(line)
+            tw = max(tw, w)
+            th += h
+        if theWidth is not None:
+            tw = theWidth
+        else:
+            tw = max(1, tw)
+        d = 2 * self.margin
+        adjustedWidth = tw + d
+        adjustedHeight = th + d
+        # self.size = (tw + d, th + d)
+        # Python 3 update
+        size = (adjustedWidth, adjustedHeight)
+
+        return size

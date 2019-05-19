@@ -15,7 +15,7 @@ from albow.widgets.ListBox import ListBox
 from albow.demo.screens.BaseDemoScreen import BaseDemoScreen
 
 DEMO_LIST_DATA = [
-    "Humberto", "Fran", "Opie", "Gabriel"
+    "Humberto", "Fran", "Opie", "Gabriel (Gabby10Meows)"
 ]
 
 DEMO_LABEL_TEXT_SIZE = 18
@@ -40,13 +40,17 @@ class DemoListBoxScreen(BaseDemoScreen):
         demoListBoxLabel:   Label   = Label(text="Pick a good guy", font=labelFont, **labelAttrs)
         demoListBox:        ListBox = ListBox(theClient=self, theItems=DEMO_LIST_DATA, selectAction=self.selectAction)
         self.selectedLabel: Label   = Label(text="No selection", **labelAttrs)
-        columnAttrs = {
+        lbColumnAttrs = {
             "align": "c",
             'expand': 0
         }
+        listBoxColumn = Column([demoListBoxLabel, demoListBox], **lbColumnAttrs)
 
-        contents = Column([demoListBoxLabel,
-                           demoListBox,
+        columnAttrs = {
+            "align": "l",
+            'expand': 0
+        }
+        contents = Column([listBoxColumn,
                            self.selectedLabel,
                            self.backButton], **columnAttrs)
         self.add_centered(contents)
