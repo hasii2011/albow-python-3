@@ -32,7 +32,8 @@ class DemoShell(Shell):
     def __init__(self, display):
         """
 
-        :param display:
+        Args:
+            display:
         """
         #
         # Python 3 update
@@ -60,3 +61,6 @@ class DemoShell(Shell):
 
     def show_menu(self):
         self.show_screen(self.menu_screen)
+
+    def __repr__(self):
+        return self.__class__.__name__
