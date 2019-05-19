@@ -33,17 +33,10 @@ class LaunchDemosScreen(Screen):
         # Screen.__init__(self, shell)
         super().__init__(shell)
 
-        self.shell     = shell
-        f1             = ResourceUtility.get_font(DEMO_TITLE_TEXT_SIZE, Theme.BUILT_IN_FONT)
-        titleAttrs = {
-            'fg_color': Theme.BLACK,
-            'bg_color': Theme.WHITE,
-            'enabled_bg_color': Theme.WHITE,
-            'highlight_color': (208,210,211),
-            'highlighted': True,
-            'align': 'c'
-        }
-        title = Label("Albow Demonstration", font=f1, **titleAttrs)
+        self.shell = shell
+        f1         = ResourceUtility.get_font(DEMO_TITLE_TEXT_SIZE, Theme.BUILT_IN_FONT)
+
+        title = Label("Albow Demonstration", font=f1)
         emptyButtFont = ResourceUtility.get_font(DEMO_BUTTON_TEXT_SIZE, Theme.BUILT_IN_FONT)
         emptyButtAttrs = {
             'font': emptyButtFont
@@ -115,3 +108,6 @@ class LaunchDemosScreen(Screen):
                 butt.width = largestWidth
 
         return menuArray
+
+    def __repr__(self):
+        return self.__class__.__name__
