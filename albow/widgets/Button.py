@@ -58,3 +58,5 @@ class Button(ButtonBase, Label):
         draw.line(surface, Theme.GRAY, (2, h - 2), (w - 2, h - 2))
         draw.line(surface, Theme.GRAY, (w - 2, 2), (w - 2, h - 2))
 
+    def __repr__(self):
+        return self.__class__.__name__

@@ -54,3 +54,6 @@ class Column(RowOrColumn):
         }
 
         super().__init__(height, items, kwds)
+
+    def __repr__(self):
+        return self.__class__.__name__

@@ -52,3 +52,6 @@ class Grid(Widget):
         #
         super().__init__(r, **kwds)
         self.add(rows)
+
+    def __repr__(self):
+        return self.__class__.__name__
