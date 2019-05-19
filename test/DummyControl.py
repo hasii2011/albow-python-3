@@ -3,17 +3,27 @@ import logging
 
 from albow.widgets.Control import Control
 
+from albow.themes.ThemeProperty import ThemeProperty
+
 
 class DummyControl(Control):
+
+    dummyThemeAttribute = ThemeProperty('dummyThemeAttribute')
+
     """"
     A dummy control for unit testing
 
     """
-
     def __init__(self, **attrs):
 
         self.logger = logging.getLevelName(__name__)
         self.set(**attrs)
+
+    def getDummyThemeAttribute(self):
+        return self._dummyThemeAttribute
+
+    def setDummyThemeAttribute(self, theNewValue):
+        self._dummyThemeAttribute = theNewValue
 
     def set(self, **kwds):
 
@@ -23,5 +33,6 @@ class DummyControl(Control):
             setattr(self, name, value)
 
     def __repr__(self):
-        formattedMe: str = f"DummyControl(value: '{self._value}' enabled: '{self._enabled}' highlighted: '{self._highlighted})'"
+        formattedMe: str = \
+            f"DummyControl(value: '{self._value}' enabled: '{self._enabled}' highlighted: '{self._highlighted})'"
         return formattedMe

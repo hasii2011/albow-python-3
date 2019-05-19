@@ -48,7 +48,7 @@ class ThemeProperty:
             # except AttributeError, e:
             except AttributeError as e:
                 if debug_theme:
-                    self.logger.exception("Attribute error: %s", e)
+                    self.logger.exception(f"{e}.  Ok. Get value from Theme")
                 value = self.get_from_theme(obj.__class__, self.name)
                 obj.__dict__[cache_name] = value
                 return value
@@ -65,11 +65,15 @@ class ThemeProperty:
     def __set__(self, obj, value):
         """
 
-        :param obj:
-        :param value:
-        :return:
+        Args:
+            obj:
+
+            value:
+
+        Returns:
+
         """
-        self.logger.debug("Setting %s.%s = %s", obj, self.cache_name, value)
+        self.logger.debug(f"Setting {obj}.{self.cache_name} = {value}")
         obj.__dict__[self.cache_name] = value
 
     def get_from_theme(self, cls, name):

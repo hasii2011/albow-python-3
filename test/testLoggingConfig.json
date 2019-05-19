@@ -59,7 +59,21 @@
             ],
             "propagate": "0"
         },
+        "TestThemeProperty": {
+            "level": "INFO",
+            "handlers": [
+                "consoleHandler"
+            ],
+            "propagate": "0"
+        },
         "albow.core.Scheduler": {
+            "level": "DEBUG",
+            "handlers": [
+                "consoleHandler"
+            ],
+            "propagate":  "0"
+        },
+        "albow.Themes.ThemeProperty": {
             "level": "DEBUG",
             "handlers": [
                 "consoleHandler"
