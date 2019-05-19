@@ -2,6 +2,9 @@
 import sys
 import logging
 
+from datetime import datetime
+from datetime import timedelta
+
 from pygame import Rect
 from pygame import Surface
 
@@ -29,6 +32,8 @@ from albow.themes.FontProperty import FontProperty
 from albow.themes.Theme import themeRoot
 
 debug_rect = False
+lastDebugRectTime = datetime.now() + timedelta(seconds=4)
+
 debug_tab = True
 
 root_widget = None
@@ -302,6 +307,7 @@ class Widget:
         for i in self.resizing_values[value]:
             anchor += chars[i]
         self.anchor = anchor + value
+
     #
     # update for 3.7
     # https://stackoverflow.com/questions/33837918/type-hints-solve-circular-dependency
@@ -403,9 +409,9 @@ class Widget:
                 frame_rect(surface, bc, surf_rect, bw)
             for widget in self.subwidgets:
                 sub_rect = widget.rect
-                if debug_rect:
-                    print("Widget: Drawing subwidget %s of %s with rect %s" % (
-                        widget, self, sub_rect))
+
+                self.debugSubWidgetDraws(sub_rect, widget)
+
                 sub_rect = surf_rect.clip(sub_rect)
                 if sub_rect.width > 0 and sub_rect.height > 0:
                     try:
@@ -422,6 +428,20 @@ class Widget:
                     else:
                         widget.draw_all(sub)
             self.draw_over(surface)
+
+    def debugSubWidgetDraws(self, sub_rect, widget):
+
+        global lastDebugRectTime
+
+        if debug_rect:
+            currentTime = datetime.now()
+            if currentTime >= lastDebugRectTime:
+
+                # print(f"Drawing subwidget '{www}' of '{sss}' with '{sub_rect}'")
+                print(f"Drawing subwidget '{widget}' of '{self} with rect '{sub_rect}'")
+
+                lastDebugRectTime = currentTime + timedelta(seconds=4)
+
 
     def diagnose_subsurface_problem(self, surface, widget):
         mess = "Widget %s %s outside parent surface %s %s" % (
