@@ -37,8 +37,17 @@ class DemoListBoxScreen(BaseDemoScreen):
             "bg_color": Theme.WHITE,
             "fg_color": Theme.BLACK
         }
-        demoListBoxLabel:   Label   = Label(text="Pick a good guy", font=labelFont, **labelAttrs)
-        demoListBox:        ListBox = ListBox(theClient=self, theItems=DEMO_LIST_DATA, selectAction=self.selectAction)
+        demoListBoxLabel: Label = Label(text="Pick a good guy", font=labelFont, **labelAttrs)
+
+        lbAttrs = {
+            'bg_color': (208, 210, 211),
+            'sel_color': (106, 148, 204),
+            'highlight_style': 'fill'
+        }
+        demoListBox:        ListBox = ListBox(theClient=self,
+                                              theItems=DEMO_LIST_DATA,
+                                              selectAction=self.selectAction, **lbAttrs)
+
         self.selectedLabel: Label   = Label(text="No selection", **labelAttrs)
         lbColumnAttrs = {
             "align": "c",

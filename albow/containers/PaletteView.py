@@ -46,9 +46,12 @@ class PaletteView(GridView):
     """
     highlight_style = ThemeProperty('highlight_style')
     """
-    Determines the way in which a selected cell is highlighted. Values are 'frame' to draw a frame around 
-    the cell, 'fill' to fill its background with the sel_color, and 'reverse' to swap the 
-    foreground and background colours.
+    Determines the way in which a selected cell is highlighted. Values are:
+    
+    - _frame_ to draw a frame around the cell
+    - _fill_ to fill its background with the sel_color
+    - _reverse_ to swap the foreground and background colours
+    
     """
 
     def __init__(self, cell_size, nrows, ncols, scrolling=False, **kwds):
@@ -150,14 +153,14 @@ class PaletteView(GridView):
             p = event.local
             #
             # Python 3 method signature update for tuples
-            # break up to make easier to debub
+            # break up to make easier to debug
             #
             scrollDownRect: Rect = self.scroll_down_rect()
             scrollUpRect:   Rect = self.scroll_up_rect()
             canScrollDown:  bool = scrollDownRect.collidepoint(p[0], p[1])
             canScrollUp:    bool = scrollUpRect.collidepoint(p[0], p[1])
 
-            self.logger.debug("p: %s, downRect.centerx %s, downRect.centery %s", p, scrollDownRect.centerx,scrollDownRect.centery)
+            self.logger.debug(f"p: {p}, downRect.centerx {scrollDownRect.centerx}, downRect.centery {scrollDownRect.centery}")
 
             # if self.scroll_up_rect().collidepoint(p):
             if canScrollUp:
@@ -214,7 +217,7 @@ class PaletteView(GridView):
         width = self.width
         if self.scrolling:
             width -= self.scroll_button_size
-        cw =  self.cell_size[0]
+        cw = self.cell_size[0]
         if cw:
             return width // cw
         else:
