@@ -1,6 +1,4 @@
 
-import sys
-
 import logging
 
 from albow.core.ResourceUtility import ResourceUtility
