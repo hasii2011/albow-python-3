@@ -33,22 +33,11 @@ class DemoListBoxScreen(BaseDemoScreen):
 
         labelFont = ResourceUtility.get_font(DEMO_LABEL_TEXT_SIZE, Theme.BUILT_IN_FONT)
 
-        labelAttrs = {
-            "bg_color": Theme.WHITE,
-            "fg_color": Theme.BLACK
-        }
-        demoListBoxLabel: Label = Label(text="Pick a good guy", font=labelFont, **labelAttrs)
+        demoListBoxLabel: Label = Label(text="Pick a good guy", font=labelFont)
 
-        lbAttrs = {
-            'bg_color': (208, 210, 211),
-            'sel_color': (106, 148, 204),
-            'highlight_style': 'fill'
-        }
-        demoListBox:        ListBox = ListBox(theClient=self,
-                                              theItems=DEMO_LIST_DATA,
-                                              selectAction=self.selectAction, **lbAttrs)
+        demoListBox: ListBox = ListBox(theClient=self, theItems=DEMO_LIST_DATA, selectAction=self.selectAction)
 
-        self.selectedLabel: Label   = Label(text="No selection", **labelAttrs)
+        self.selectedLabel: Label = Label(text="No selection")
         lbColumnAttrs = {
             "align": "c",
             'expand': 0
@@ -69,4 +58,3 @@ class DemoListBoxScreen(BaseDemoScreen):
 
         self.logger.info("Selected item: %s", theSelectedItem)
         self.selectedLabel.set_text(theSelectedItem)
-

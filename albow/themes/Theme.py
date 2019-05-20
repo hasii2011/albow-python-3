@@ -52,6 +52,7 @@ class Theme:
     LAMAS_LIGHT_BLUE = (24, 189, 207)
     LAMAS_MEDIUM_BLUE = (106, 148, 204)
     LAMAS_DARK_BLUE = (65, 108, 178)
+    LAMAS_OFF_WHITE = (255, 255, 244)
 
     BUILT_IN_FONT = "VeraBd.ttf"
 

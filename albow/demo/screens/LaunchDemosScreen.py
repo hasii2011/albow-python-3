@@ -37,10 +37,7 @@ class LaunchDemosScreen(Screen):
         f1         = ResourceUtility.get_font(DEMO_TITLE_TEXT_SIZE, Theme.BUILT_IN_FONT)
 
         title = Label("Albow Demonstration", font=f1)
-        emptyButtFont = ResourceUtility.get_font(DEMO_BUTTON_TEXT_SIZE, Theme.BUILT_IN_FONT)
-        emptyButtAttrs = {
-            'font': emptyButtFont
-        }
+        emptyButton = Button("Empty", enabled=False)
 
         menuArray = [
             [
@@ -66,7 +63,7 @@ class LaunchDemosScreen(Screen):
             [
                 self.screen_button("Music",   shell.musicScreen),
                 self.screen_button("ListBox", shell.listBoxScreen),
-                Button("Empty", **emptyButtAttrs)
+                emptyButton
             ]
         ]
 
@@ -84,11 +81,11 @@ class LaunchDemosScreen(Screen):
 
     def screen_button(self, text: str, screen: Screen):
 
-        buttFont = ResourceUtility.get_font(DEMO_BUTTON_TEXT_SIZE, Theme.BUILT_IN_FONT)
-        buttAttrs = {
-            'font': buttFont
-        }
-        retButton = Button(text, action=lambda: self.shell.show_screen(screen), **buttAttrs)
+        # buttFont = ResourceUtility.get_font(DEMO_BUTTON_TEXT_SIZE, Theme.BUILT_IN_FONT)
+        # buttAttrs = {
+        #     'font': buttFont
+        # }
+        retButton = Button(text, action=lambda: self.shell.show_screen(screen))
         return retButton
 
     def equallySizeButtons(self, menuArray):

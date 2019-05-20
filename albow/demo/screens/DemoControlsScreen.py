@@ -54,18 +54,14 @@ class DemoControlsScreen(BaseDemoScreen):
 
         model = DemoControlsModel()
 
-        colors = {'border_color': Theme.BLACK,
-                  'fg_color':     Theme.BLACK,
-                  'bg_color':     Theme.WHITE
-                  }
-        width_field  = FloatField  (ref=AttrRef(base=model, name='width'),  **colors)
-        height_field = FloatField  (ref=AttrRef(base=model, name='height'), **colors)
-        area_display = ValueDisplay(ref=AttrRef(base=model, name='area'), format="%.2f", **colors)
+        width_field  = FloatField  (ref=AttrRef(base=model, name='width'))
+        height_field = FloatField  (ref=AttrRef(base=model, name='height'))
+        area_display = ValueDisplay(ref=AttrRef(base=model, name='area'), format="%.2f")
         shape        = AttrRef(model, 'shape')
         shape_choices = Row([
-            RadioButton(setting='rectangle', ref=shape), Label("Rectangle", **colors),
-            RadioButton(setting='triangle',  ref=shape), Label("Triangle",  **colors),
-            RadioButton(setting='ellipse',   ref=shape), Label("Ellipse",   **colors),
+            RadioButton(setting='rectangle', ref=shape), Label("Rectangle"),
+            RadioButton(setting='triangle',  ref=shape), Label("Triangle"),
+            RadioButton(setting='ellipse',   ref=shape), Label("Ellipse"),
         ])
         grid = Grid([
             [Label("Width"), width_field],
@@ -82,7 +78,7 @@ class DemoControlsScreen(BaseDemoScreen):
         imgBtnTitle: Label = Label("Image Buttons")
         imgBtnGrid: Grid = Grid([
             [Label("Regular"), imgBtnBall],
-            [Label("Highlighted"),imgBtnHighlightedBall],
+            [Label("Highlighted"), imgBtnHighlightedBall],
             [Label("Disabled"), imgBtnDisabledBall],
             [Label("Enabled"), imgBtnEnabledBall]
         ])
