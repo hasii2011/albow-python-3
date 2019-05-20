@@ -27,18 +27,8 @@ class DemoTableScreen(BaseDemoScreen):
         super().__init__(shell)
 
         title    = Label("Norwegian Butter Exports", font=self.labelFont)
-        #
-        # Python 3/pygame 1.9 update
-        #
-        attrs = {
-            'fg_color':            Theme.WHITE,
-            'border_color':        Theme.BLACK,
-            'sel_color':           (208,210,211),
-            'bg_color':            (24,189,207),
-            'header_bg_color':     Theme.BLACK
-        }
-        table: DemoTableView = DemoTableView(**attrs)
+        table: DemoTableView = DemoTableView()
 
-        contents = Column([title, table, self.backButton], spacing=30)
+        contents = Column([title, table, self.backButton], spacing=BaseDemoScreen.DEFAULT_CONTENT_SPACING)
 
         self.add_centered(contents)
