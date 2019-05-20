@@ -23,28 +23,29 @@ class DemoTabPanelScreen(BaseDemoScreen):
         # Python 3 update
         #
         super().__init__(shell)
-        pages = TabPanel()
-        pages.size = 300, 200
-        self.pages = pages
+        tabPanel = TabPanel()
+        tabPanel.size = 400, 200
+        self.pages = tabPanel
         #
         # Python 3 update
         # for i in xrange(1, 4):
         for i in range(1, 4):
             page = self.make_test_page(i)
-            pages.add_page("Page %s" % i, page)
+            tabPanel.add_page("Page %s" % i, page)
 
-        contents = Column([pages, self.backButton], spacing=BaseDemoScreen.DEFAULT_CONTENT_SPACING)
+        contents = Column([tabPanel, self.backButton], spacing=BaseDemoScreen.DEFAULT_CONTENT_SPACING)
         self.add_centered(contents)
 
-    def make_test_page(self, pageNumber: int):
+    def make_test_page(self, pageNumber: int) -> Widget:
         """
 
         :param pageNumber: Guess :-)
-        :return:
+
+        :return:  The widget page
         """
         page_size = self.pages.content_size()
-        page = Widget(size=page_size, bg_color=(208, 210, 211))
-        lbl  = Label("This is page %s" % pageNumber)
+        page = Widget(size=page_size, border_width = 1)
+        lbl = Label(f"This is page {pageNumber}")
         page.add_centered(lbl)
 
         return page
