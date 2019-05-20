@@ -1,8 +1,7 @@
 
-from albow.themes.Theme import themeRoot
+from albow.themes.Theme import Theme
 
 from albow.themes.ThemeProperty import ThemeProperty
-
 
 
 class FontProperty(ThemeProperty):
@@ -36,4 +35,7 @@ class FontProperty(ThemeProperty):
         super().__init__(name)
 
     def get_from_theme(self, cls, name):
+
+        themeRoot = Theme.getThemeRoot()
+
         return themeRoot.get_font(cls, name)

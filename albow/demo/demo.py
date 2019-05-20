@@ -43,7 +43,6 @@ def main():
     # Have to get all the theme attributes defined first before
     # anything is imported with ThemeProperty attributes
     #
-    #Theme.initializeDefaultTheme()
     themeLoader: ThemeLoader = ThemeLoader()
     themeLoader.findConfigFile()
     themeLoader.load()
