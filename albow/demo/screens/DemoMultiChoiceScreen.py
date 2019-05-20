@@ -43,14 +43,10 @@ class DemoMultiChoiceScreen(BaseDemoScreen):
 
         super().__init__(shell=shell)
 
-        labelAttrs = {
-            'bg_color': Theme.WHITE,
-            'fg_color': Theme.BLACK
-        }
-        textLabel        = Label("Make a choice: ", **labelAttrs)
+        textLabel        = Label("Make a choice: ")
         textMultiChoice  = self.makeTextMultiChoice()
 
-        imageLabel       = Label("Pick your ship: ", **labelAttrs)
+        imageLabel       = Label("Pick your ship: ")
         imageMultiChoice = self.makeImageMultiChoice()
 
         rowAttrs = {

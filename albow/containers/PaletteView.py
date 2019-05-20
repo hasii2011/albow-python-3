@@ -51,6 +51,7 @@ class PaletteView(GridView):
     - _frame_ to draw a frame around the cell
     - _fill_ to fill its background with the sel_color
     - _reverse_ to swap the foreground and background colours
+    - _arrows_
     
     """
 
