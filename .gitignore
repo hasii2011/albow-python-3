@@ -6,3 +6,4 @@ __pycache__/
 /build/
 /dist/
 /python3_albow.egg-info/
+*.png
