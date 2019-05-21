@@ -35,7 +35,4 @@ class FontProperty(ThemeProperty):
         super().__init__(name)
 
     def get_from_theme(self, cls, name):
-
-        themeRoot = Theme.getThemeRoot()
-
-        return themeRoot.get_font(cls, name)
+        return Theme.getThemeRoot().get_font(cls, name)

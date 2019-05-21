@@ -5,7 +5,6 @@ from albow.core.ResourceUtility import ResourceUtility
 
 from albow.themes.ThemeError import ThemeError
 
-themeRoot = None
 """
 A Theme instance constituting the root of the theme hierarchy. It holds other Theme objects corresponding 
 to particular classes, and default values for any theme attributes not specified by the class-specific 
@@ -56,6 +55,7 @@ class Theme:
 
     BUILT_IN_FONT = "VeraBd.ttf"
 
+    ourThemeRoot = None
 
     def __init__(self, name, base=None):
         """
@@ -114,11 +114,9 @@ class Theme:
 
     @staticmethod
     def getThemeRoot():
-        return themeRoot
+        return Theme.ourThemeRoot
 
     @staticmethod
     def setThemeRoot(theThemeRoot: "Theme"):
 
-        global themeRoot
-
-        themeRoot = theThemeRoot
+        Theme.ourThemeRoot = theThemeRoot

@@ -29,7 +29,7 @@ from albow.utils import overridable_property
 from albow.themes.ThemeProperty import ThemeProperty
 from albow.themes.FontProperty import FontProperty
 
-from albow.themes.Theme import themeRoot
+from albow.themes.Theme import Theme
 
 debug_rect = False
 lastDebugRectTime = datetime.now() + timedelta(seconds=4)
@@ -784,7 +784,7 @@ class Widget:
         try:
             return kwds[name]
         except KeyError:
-            return themeRoot.get(self.__class__, name)
+            return Theme.getThemeRoot().get(self.__class__, name)
 
     def predict_attr(self, kwds, name):
         try:
@@ -799,7 +799,7 @@ class Widget:
             return getattr(self, name)
 
     def predict_font(self, kwds, name='font'):
-        return kwds.get(name) or themeRoot.get_font(self.__class__, name)
+        return kwds.get(name) or Theme.getThemeRoot().get_font(self.__class__, name)
 
     def get_margin_rect(self) -> Rect:
         """
