@@ -5,8 +5,6 @@ import logging
 
 from albow.themes.Theme import Theme
 
-debug_theme = False
-
 
 class ThemeProperty:
     """
@@ -22,6 +20,8 @@ class ThemeProperty:
 
     ```
     """
+    debug_theme = False
+
     def __init__(self, name):
         """
         Constructs a theme property. The name given is used to derive the name under which the
@@ -47,7 +47,7 @@ class ThemeProperty:
             #
             # except AttributeError, e:
             except AttributeError as e:
-                if debug_theme:
+                if ThemeProperty.debug_theme:
                     self.logger.exception(f"{e}.  Ok. Get value from Theme")
                 value = self.get_from_theme(obj.__class__, self.name)
                 obj.__dict__[cache_name] = value
@@ -56,7 +56,7 @@ class ThemeProperty:
         # TODO Do not use bare exception
         #
         except:
-            if debug_theme:
+            if ThemeProperty.debug_theme:
                 import traceback
                 traceback.print_exc()
                 self.logger.debug("-------------------------------------------------------")
