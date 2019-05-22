@@ -21,7 +21,6 @@ from albow.themes.ThemeLoader import ThemeLoader
 #
 # Theme.initializeDefaultTheme()
 themeLoader: ThemeLoader = ThemeLoader()
-themeLoader.findConfigFile()
 themeLoader.load()
 themeRoot: Theme = themeLoader.themeRoot
 Theme.setThemeRoot(themeRoot)

@@ -1,5 +1,4 @@
 
-import os
 
 import logging
 
@@ -8,26 +7,33 @@ from configparser import ConfigParser
 
 from ast import literal_eval as make_tuple
 
+from pkg_resources import resource_filename
+
 from albow.themes.Theme import Theme
 
+DEFAULT_PKG = "albow.themes.resources"
 DEFAULT_THEME_FILENAME = "default-theme.ini"
 ROOT_THEME_NAME = "root"
 
 
 class ThemeLoader:
 
-    def __init__(self, themeFilename: str = DEFAULT_THEME_FILENAME):
+    def __init__(self, themePkg: str = DEFAULT_PKG,  themeFilename: str = DEFAULT_THEME_FILENAME):
         """
 
         """
         self.logger = logging.getLogger(__name__)
+
+        self.themePkg = themePkg
         self.themeFilename = themeFilename
+        self.themeFullFilename = self.findThemeFile()
         self.topLevelClassThemes = []
         self.themeRoot = None
 
     def load(self):
+
         config = configparser.ConfigParser()
-        config.read(self.themeFilename)
+        config.read(self.themeFullFilename)
 
         self.themeRoot = self.loadAClass(config[ROOT_THEME_NAME])
 
@@ -50,26 +56,11 @@ class ThemeLoader:
                     setattr(embeddedTheme, "base", baseTheme)
                     self.logger.debug(f"Theme {embeddedTheme} has new base {baseTheme}")
 
-    def findConfigFile(self) -> str:
-        """
-        Call this before `.load`
+    def findThemeFile(self):
 
-        Changes current working directory
+        fileName = resource_filename(self.themePkg, self.themeFilename)
 
-        Returns:  The current directory we wound up in
-
-        Raises:  FileNotFoundError if we wind up in the root directory
-        """
-        if os.path.isfile(self.themeFilename):
-            return os.getcwd()
-        else:
-            os.chdir("../")
-            currentDirectory = os.getcwd()
-            if "/" == currentDirectory:
-                raise FileNotFoundError(f"Can't find theme config file: {self.themeFilename}")
-            self.findConfigFile()
-
-        return os.getcwd()
+        return fileName
 
     def loadAClass(self, classDict: dict) -> Theme:
 

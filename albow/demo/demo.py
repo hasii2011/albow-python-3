@@ -44,7 +44,6 @@ def main():
     # anything is imported with ThemeProperty attributes
     #
     themeLoader: ThemeLoader = ThemeLoader()
-    themeLoader.findConfigFile()
     themeLoader.load()
     themeRoot: Theme = themeLoader.themeRoot
     Theme.setThemeRoot(themeRoot)
