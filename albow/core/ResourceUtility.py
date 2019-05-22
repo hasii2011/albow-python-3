@@ -32,32 +32,23 @@ import logging
 import pygame
 from pygame.locals import RLEACCEL
 from pygame import Surface
+from pygame import mixer
 
 from albow.core.DummySound import DummySound
 
-DEFAULT_SOUND_DIRECTORY   = "sounds"
+DEFAULT_SOUND_DIRECTORY  = "sounds"
+DEFAULT_IMAGES_DIRECTORY = "images"
+DEFAULT_FONTS_DIRECTORY  = "fonts"
+DEFAULT_TEXT_DIRECTORY   = "text"
 DEFAULT_CURSORS_DIRECTORY = "cursors"
-DEFAULT_IMAGES_DIRECTORY  = "images"
-DEFAULT_FONTS_DIRECTORY   = "fonts"
-DEFAULT_TEXT_DIRECTORY    = "text"
 
-optimize_images   = True
+DEFAULT_RESOURCE_DIRECTORY_NAMES = ["Resources", "resources"]
+
+optimize_images = True
 """
 If `True`, images loaded with `get_image()` will have `convert_alpha()` called on them by default. Defaults to `True`.
 """
 run_length_encode = False
-
-DEFAULT_RESOURCE_DIRECTORY_NAMES = ["Resources", "resources"]
-
-image_cache  = {}
-font_cache   = {}
-sound_cache  = {}
-text_cache   = {}
-cursor_cache = {}
-
-dummy_sound = DummySound()
-
-ourLogger = logging.getLogger(__name__)
 
 
 class ResourceUtility:
@@ -73,6 +64,15 @@ class ResourceUtility:
     .. Note::
         Make unit tests for sound and cursor APIs since they are not currently demo'ed
     """
+
+    dummy_sound = None
+    sound_cache = {}
+    image_cache = {}
+    cursor_cache = {}
+    font_cache = {}
+    text_cache = {}
+
+    ourLogger = logging.getLogger(__name__)
 
     @staticmethod
     def find_resource_dir():
@@ -119,7 +119,7 @@ class ResourceUtility:
         Returns:
 
         """
-        prefix = kwds.pop('prefix', "%s" % DEFAULT_IMAGES_DIRECTORY)
+        prefix = kwds.pop('prefix', DEFAULT_IMAGES_DIRECTORY)
         path = ResourceUtility._resource_path(prefix, names)
         return ResourceUtility._get_image(path, **kwds)
 
@@ -140,7 +140,7 @@ class ResourceUtility:
         """
         path = ResourceUtility._resource_path("%s" % DEFAULT_FONTS_DIRECTORY, names, **kwds)
         key = (path, size)
-        font = font_cache.get(key)
+        font = ResourceUtility.font_cache.get(key)
         if not font:
             try:
                 font = pygame.font.Font(path, size)
@@ -150,7 +150,7 @@ class ResourceUtility:
             # except IOError, e:
             except IOError as e:
                 raise e.__class__("%s: %s" % (e, path))
-            font_cache[key] = font
+            ResourceUtility.font_cache[key] = font
         return font
 
     @staticmethod
@@ -167,10 +167,10 @@ class ResourceUtility:
 
         """
         path = ResourceUtility._resource_path("%s" % DEFAULT_TEXT_DIRECTORY, names, **kwds)
-        text = text_cache.get(path)
+        text = ResourceUtility.text_cache.get(path)
         if text is None:
             text = open(path, "rU").read()
-            text_cache[path] = text
+            ResourceUtility.text_cache[path] = text
         return text
 
     @staticmethod
@@ -210,7 +210,7 @@ class ResourceUtility:
         return ResourceUtility.load_sound(path)
 
     @staticmethod
-    def load_sound(path) -> 'Sound':
+    def load_sound(path) -> "mixer.Sound":
         """
         Loads a sound from the file specified by path, or returns it from the cache. Like `get_sound()`,
         returns a dummy sound object if the sound cannot be loaded.
@@ -221,10 +221,10 @@ class ResourceUtility:
         Returns: A pygame sound object
 
         """
-        if sound_cache is None:
-            return dummy_sound
-        sound = sound_cache.get(path)
-        if not sound:
+        if ResourceUtility.sound_cache is None:
+            return ResourceUtility.dummy_sound
+        retSound = ResourceUtility.sound_cache.get(path)
+        if not retSound:
             try:
                 from pygame.mixer import Sound
             #
@@ -233,19 +233,19 @@ class ResourceUtility:
             # except ImportError, e:
             except ImportError as e:
                 ResourceUtility.no_sound(e)
-                return dummy_sound
+                return ResourceUtility.dummy_sound
             try:
-                sound = Sound(path)
+                retSound = Sound(path)
             #
             # Python 3 update
             #
             # except pygame.error, e:
             except pygame.error as e:
                 ResourceUtility.missing_sound(e, path)
-                return dummy_sound
-            sound_cache[path] = sound
+                return ResourceUtility.dummy_sound
+            ResourceUtility.sound_cache[path] = retSound
 
-        return sound
+        return retSound
 
     @staticmethod
     def no_sound(e):
@@ -255,12 +255,11 @@ class ResourceUtility:
         :param e: Exception to log
         :return:
         """
-        global sound_cache
 
-        ourLogger.error("albow.resource.get_sound: %s", e)
-        ourLogger.error("albow.resource.get_sound: Sound not available, continuing without it")
+        ResourceUtility.ourLogger.error(f"albow.resource.get_sound: {e}")
+        ResourceUtility.ourLogger.error("albow.resource.get_sound: Sound not available, continuing without it")
 
-        sound_cache = None
+        ResourceUtility.sound_cache = None
 
     @staticmethod
     def missing_sound(e, name):
@@ -271,7 +270,7 @@ class ResourceUtility:
         :param name: This name of the missing sound
         :return:
         """
-        ourLogger.error("albow.resource.get_sound: %s: %s", name, e)
+        ResourceUtility.ourLogger.error("albow.resource.get_sound: %s: %s", name, e)
 
     @staticmethod
     def get_cursor(*names, **kwds):
@@ -284,10 +283,10 @@ class ResourceUtility:
         """
 
         path = ResourceUtility._resource_path("%s" % DEFAULT_CURSORS_DIRECTORY, names, **kwds)
-        cursor = cursor_cache.get(path)
+        cursor = ResourceUtility.cursor_cache.get(path)
         if cursor is None:
             cursor = ResourceUtility.load_cursor(path)
-            cursor_cache[path] = cursor
+            ResourceUtility.cursor_cache[path] = cursor
         return cursor
 
     @staticmethod
@@ -359,8 +358,8 @@ class ResourceUtility:
         Args:
             path:
 
-            border: If border is specified, a border of that number of pixels is stripped from around the
-            image (making it 2 * border pixels smaller in each direction).
+            border: If border is specified, a border of that number of pixels is stripped from around
+                    the image (making it 2 * border pixels smaller in each direction).
 
             optimize: If optimize is true, convert_alpha() is called on the image.
 
@@ -370,7 +369,7 @@ class ResourceUtility:
 
         Returns:  The specified image from the images directory or returns it from the cache
         """
-        image = image_cache.get(path)
+        image = ResourceUtility.image_cache.get(path)
         if not image:
             image = pygame.image.load(path)
             if noalpha:
@@ -384,5 +383,5 @@ class ResourceUtility:
                 b = border
                 d = 2 * border
                 image = image.subsurface(b, b, w - d, h - d)
-            image_cache[path] = image
+            ResourceUtility.image_cache[path] = image
         return image
