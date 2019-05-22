@@ -30,12 +30,6 @@ MUSIC_END_EVENT = USEREVENT + 1
 
 DOUBLE_CLICK_TIME = 300 # milliseconds
 
-last_mouse_event: Event = Event(0)
-last_mouse_event.dict['pos'] = (0, 0)
-last_mouse_event.dict['local'] = (0, 0)
-
-next_frame_due = 0.0
-
 
 class RootWidget(Widget):
     """
@@ -74,10 +68,14 @@ class RootWidget(Widget):
     """
     Timer event pending delivery
     """
+    nextFrameDue = 0.0
+
     do_draw            = False
     _is_gl_container   = True
     frame_time         = 0.0
     _use_sleep         = True
+
+    last_mouse_event: Event = Event(0)
 
     def __init__(self, surface: Surface, **kwds):
         """
@@ -89,6 +87,8 @@ class RootWidget(Widget):
 
             **kwds:
         """
+        RootWidget.last_mouse_event.dict['pos'] = (0, 0)
+        RootWidget.last_mouse_event.dict['local'] = (0, 0)
 
         #
         # Python 3 update
@@ -136,10 +136,6 @@ class RootWidget(Widget):
         Args:
             modal_widget:  The modal widget
         """
-
-        global last_mouse_event
-        global next_frame_due
-
         is_modal = modal_widget is not None
         modal_widget = modal_widget or self
         relative_pause = False
@@ -174,9 +170,9 @@ class RootWidget(Widget):
                             if not use_sleep and defer_drawing:
                                 Scheduler.make_scheduled_calls()
                             CoreUtilities.add_modifiers(RootWidget.ourTimerEvent)
-                            if last_mouse_event:
-                                RootWidget.ourTimerEvent.dict['pos'] = last_mouse_event.pos
-                                RootWidget.ourTimerEvent.dict['local'] = last_mouse_event.local
+                            if RootWidget.last_mouse_event:
+                                RootWidget.ourTimerEvent.dict['pos'] = RootWidget.last_mouse_event.pos
+                                RootWidget.ourTimerEvent.dict['local'] = RootWidget.last_mouse_event.local
                             if RootWidget.last_mouse_event_handler:
                                 RootWidget.last_mouse_event_handler.setup_cursor(RootWidget.ourTimerEvent)
                             self.do_draw = self.timer_event(RootWidget.ourTimerEvent)
@@ -215,18 +211,18 @@ class RootWidget(Widget):
                         #  print "RootWidget: Handling timing" ###
                         time_now = Scheduler.timestamp()
                         #  print "RootWidget: Time is now", time_now ###
-                        if next_frame_due < time_now:
+                        if RootWidget.nextFrameDue < time_now:
                             #  print "RootWidget: Adjusting next frame due time to time now" ###
-                            next_frame_due = time_now
+                            RootWidget.nextFrameDue = time_now
                             #  print "RootWidget: Waiting for next frame due at", next_frame_due ###
                         while 1:
-                            sleep_time = Scheduler.make_due_calls(time_now, next_frame_due)
+                            sleep_time = Scheduler.make_due_calls(time_now, RootWidget.nextFrameDue)
                             if sleep_time <= 0.0:
                                 break
                             # print "RootWidget: Sleeping for", sleep_time ###
                             sleep(sleep_time / 1000.0)
                             time_now = Scheduler.timestamp()
-                        next_frame_due += self.frame_time
+                        RootWidget.nextFrameDue += self.frame_time
                         # print "RootWidget: Next frame now due at", next_frame_due ###
                         #
                         # Pygame 1.9 update
@@ -259,7 +255,7 @@ class RootWidget(Widget):
                             last_click_time = t
                             event.dict['num_clicks'] = num_clicks
                             CoreUtilities.add_modifiers(event)
-                            last_mouse_event = event
+                            RootWidget.last_mouse_event = event
                             if in_relative_mode:
                                 event.dict['local'] = (0, 0)
                                 if relative_pause:
@@ -280,7 +276,7 @@ class RootWidget(Widget):
                                 mouse_widget.handle_mouse('mouse_down', event)
                         elif eventType == MOUSEMOTION:
                             CoreUtilities.add_modifiers(event)
-                            last_mouse_event = event
+                            RootWidget.last_mouse_event = event
                             if in_relative_mode:
                                 event.dict['local'] = (0, 0)
                                 if not relative_pause:
@@ -303,7 +299,7 @@ class RootWidget(Widget):
                                     mouse_widget.handle_mouse('mouse_move', event)
                         elif eventType == MOUSEBUTTONUP:
                             CoreUtilities.add_modifiers(event)
-                            last_mouse_event = event
+                            RootWidget.last_mouse_event = event
                             self.do_draw = True
                             if in_relative_mode:
                                 event.dict['local'] = (0, 0)
@@ -333,8 +329,8 @@ class RootWidget(Widget):
                                 self.do_draw = True
                                 self.send_key(modal_widget, 'key_down', event)
                                 if RootWidget.last_mouse_event_handler:
-                                    event.dict['pos'] = last_mouse_event.pos
-                                    event.dict['local'] = last_mouse_event.local
+                                    event.dict['pos'] = RootWidget.last_mouse_event.pos
+                                    event.dict['local'] = RootWidget.last_mouse_event.local
                                     RootWidget.last_mouse_event_handler.setup_cursor(event)
                         elif eventType == KEYUP:
                             key = event.key
@@ -342,8 +338,8 @@ class RootWidget(Widget):
                             self.do_draw = True
                             self.send_key(modal_widget, 'key_up', event)
                             if RootWidget.last_mouse_event_handler:
-                                event.dict['pos'] = last_mouse_event.pos
-                                event.dict['local'] = last_mouse_event.local
+                                event.dict['pos'] = RootWidget.last_mouse_event.pos
+                                event.dict['local'] = RootWidget.last_mouse_event.local
                                 RootWidget.last_mouse_event_handler.setup_cursor(event)
                         elif eventType == MUSIC_END_EVENT:
                             self.music_end()
@@ -386,7 +382,7 @@ class RootWidget(Widget):
             sys.exit(0)
 
     def get_mouse_for(self, widget):
-        last = last_mouse_event
+        last = RootWidget.last_mouse_event
         event = Event(0, last.dict)
         event.dict['local'] = widget.global_to_local(event.pos)
         CoreUtilities.add_modifiers(event)
