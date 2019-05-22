@@ -30,17 +30,11 @@ MUSIC_END_EVENT = USEREVENT + 1
 
 DOUBLE_CLICK_TIME = 300 # milliseconds
 
-#
-# Ignore PyCharm warning about unexpected arguments
-# Fix this way:          event.dict['ray'] = (p0, p1)
-#        dict([('sape', 4139), ('guido', 4127), ('jack', 4098)])
-#
 last_mouse_event: Event = Event(0)
 last_mouse_event.dict['pos'] = (0, 0)
 last_mouse_event.dict['local'] = (0, 0)
 
-timer_event = None     # Timer event pending delivery
-next_frame_due = 0.0   #
+next_frame_due = 0.0
 
 
 class RootWidget(Widget):
@@ -76,6 +70,10 @@ class RootWidget(Widget):
     """
     last_mouse_event_handler = None
 
+    ourTimerEvent = None
+    """
+    Timer event pending delivery
+    """
     do_draw            = False
     _is_gl_container   = True
     frame_time         = 0.0
@@ -140,7 +138,6 @@ class RootWidget(Widget):
         """
 
         global last_mouse_event
-        global timer_event
         global next_frame_due
 
         is_modal = modal_widget is not None
@@ -173,17 +170,17 @@ class RootWidget(Widget):
                 defer_drawing = self.frame_time != 0.0 and modal_widget.defer_drawing()
                 try:
                     if not is_modal:
-                        if timer_event:
+                        if RootWidget.ourTimerEvent:
                             if not use_sleep and defer_drawing:
                                 Scheduler.make_scheduled_calls()
-                            CoreUtilities.add_modifiers(timer_event)
+                            CoreUtilities.add_modifiers(RootWidget.ourTimerEvent)
                             if last_mouse_event:
-                                timer_event.dict['pos'] = last_mouse_event.pos
-                                timer_event.dict['local'] = last_mouse_event.local
+                                RootWidget.ourTimerEvent.dict['pos'] = last_mouse_event.pos
+                                RootWidget.ourTimerEvent.dict['local'] = last_mouse_event.local
                             if RootWidget.last_mouse_event_handler:
-                                RootWidget.last_mouse_event_handler.setup_cursor(timer_event)
-                            self.do_draw = self.timer_event(timer_event)
-                            timer_event = None
+                                RootWidget.last_mouse_event_handler.setup_cursor(RootWidget.ourTimerEvent)
+                            self.do_draw = self.timer_event(RootWidget.ourTimerEvent)
+                            RootWidget.ourTimerEvent = None
                         else:
                             if defer_drawing:
                                 # print "RootWidget: Clearing do_draw because of defer_drawing" ###
@@ -235,7 +232,8 @@ class RootWidget(Widget):
                         # Pygame 1.9 update
                         #
                         # timer_event = Event(USEREVENT, time = time_now)
-                        timer_event = Event(USEREVENT, dict=None)
+                        RootWidget.ourTimerEvent = Event(USEREVENT, dict=None)
+
                         events = []
                     else:
                         events = [pygame.event.wait()]
@@ -351,7 +349,7 @@ class RootWidget(Widget):
                             self.music_end()
                         elif eventType == USEREVENT:
                             if defer_drawing and not use_sleep:
-                                timer_event = event
+                                RootWidget.ourTimerEvent = event
                 except CancelException:
                     pass
                 #
