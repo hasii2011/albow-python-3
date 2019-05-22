@@ -965,9 +965,12 @@ class Widget:
     def _resized(self, old_width, old_height):
         """
 
-        :param old_width:
-        :param old_height:
-        :return:
+        Args:
+            old_width:
+            old_height:
+
+        Returns:
+
         """
         new_width, new_height = self._rect.size
         dw = new_width - old_width
