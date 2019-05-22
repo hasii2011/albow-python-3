@@ -31,31 +31,7 @@ from albow.themes.FontProperty import FontProperty
 
 from albow.themes.Theme import Theme
 
-
-
-def rect_property(name):
-
-    def get(self):
-        return getattr(self._rect, name)
-
-    def set(self, value):
-
-        r = self._rect
-        old_size = r.size
-        setattr(r, name, value)
-        new_size = r.size
-        #
-        # Python 3 update
-        # i f old_size <> new_size:
-        if old_size != new_size:
-            #
-            # Method signature changed since tuples not allowed to be passed
-            #
-            # self._resized(old_size)
-            self._resized(old_size[0], old_size[1])
-
-    return property(get, set)
-
+from albow.core.RectUtility import RectUtility
 
 class Widget:
     """
@@ -90,24 +66,24 @@ class Widget:
     current_cursor = None
     root_widget = None
 
-    left = rect_property('left')
-    right = rect_property('right')
-    top = rect_property('top')
-    bottom = rect_property('bottom')
-    width = rect_property('width')
-    height = rect_property('height')
-    size = rect_property('size')
-    topleft = rect_property('topleft')
-    topright = rect_property('topright')
-    bottomleft = rect_property('bottomleft')
-    bottomright = rect_property('bottomright')
-    midleft = rect_property('midleft')
-    midright = rect_property('midright')
-    midtop = rect_property('midtop')
-    midbottom = rect_property('midbottom')
-    center = rect_property('center')
-    centerx = rect_property('centerx')
-    centery = rect_property('centery')
+    left = RectUtility.rect_property('left')
+    right = RectUtility.rect_property('right')
+    top = RectUtility.rect_property('top')
+    bottom = RectUtility.rect_property('bottom')
+    width = RectUtility.rect_property('width')
+    height = RectUtility.rect_property('height')
+    size = RectUtility.rect_property('size')
+    topleft = RectUtility.rect_property('topleft')
+    topright = RectUtility.rect_property('topright')
+    bottomleft = RectUtility.rect_property('bottomleft')
+    bottomright = RectUtility.rect_property('bottomright')
+    midleft = RectUtility.rect_property('midleft')
+    midright = RectUtility.rect_property('midright')
+    midtop = RectUtility.rect_property('midtop')
+    midbottom = RectUtility.rect_property('midbottom')
+    center = RectUtility.rect_property('center')
+    centerx = RectUtility.rect_property('centerx')
+    centery = RectUtility.rect_property('centery')
 
     font = FontProperty('font')
     """
