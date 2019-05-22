@@ -31,13 +31,6 @@ from albow.themes.FontProperty import FontProperty
 
 from albow.themes.Theme import Theme
 
-debug_rect = False
-lastDebugRectTime = datetime.now() + timedelta(seconds=4)
-
-debug_tab = True
-
-root_widget = None
-current_cursor = None
 
 
 def rect_property(name):
@@ -90,6 +83,12 @@ class Widget:
     This does not happen if the rect is modified directly.
 
     """
+
+    lastDebugRectTime = datetime.now() + timedelta(seconds=4)
+    debug_rect = False
+
+    current_cursor = None
+    root_widget = None
 
     left = rect_property('left')
     right = rect_property('right')
@@ -431,11 +430,9 @@ class Widget:
 
     def debugSubWidgetDraws(self, sub_rect, widget):
 
-        global lastDebugRectTime
-
-        if debug_rect:
+        if Widget.debug_rect:
             currentTime = datetime.now()
-            if currentTime >= lastDebugRectTime:
+            if currentTime >= Widget.lastDebugRectTime:
 
                 # print(f"Drawing subwidget '{www}' of '{sss}' with '{sub_rect}'")
                 print(f"Drawing subwidget '{widget}' of '{self} with rect '{sub_rect}'")
@@ -482,11 +479,11 @@ class Widget:
         event.dict['local'] = list(posMap)
 
     def setup_cursor(self, event):
-        global current_cursor
+
         cursor = self.get_cursor(event) or arrow_cursor
-        if cursor is not current_cursor:
+        if cursor is not Widget.current_cursor:
             set_cursor(*cursor)
-            current_cursor = cursor
+            Widget.current_cursor = cursor
 
     def dispatch_key(self, name, event):
         if self.visible:
@@ -664,7 +661,6 @@ class Widget:
         # TODO  Something about my re-packaging caused me to lose
         # visibility to the root widget;  Figure it out later
         #
-        global root_widget
         # print "Widget: presenting with rect", self.rect
         # root = self.get_root()
         root = Widget.root_widget
@@ -700,7 +696,7 @@ class Widget:
         Returns:  The root widget
 
         """
-        return root_widget
+        return Widget.root_widget
 
     def get_top_widget(self) -> "Widget":
         """

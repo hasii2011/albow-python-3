@@ -462,3 +462,7 @@ class RootWidget(Widget):
         """
         self.begin_frame()
         return True
+
+
+if '__main__' == __name__:
+    top_widget = None
