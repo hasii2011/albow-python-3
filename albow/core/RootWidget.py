@@ -41,29 +41,9 @@ last_mouse_event.dict['local'] = (0, 0)
 
 last_mouse_event_handler = None
 
-root_widget = None     # Root of the containment hierarchy
 
-top_widget = None      # Initial dispatch target
-clicked_widget = None  # Target of mouse_drag and mouse_up events
 timer_event = None     # Timer event pending delivery
 next_frame_due = 0.0   #
-
-
-def get_top_widget():
-    return top_widget
-
-
-def get_focus():
-    return top_widget.get_focus()
-
-
-def get_root():
-    """
-
-    Returns:  The root widget.
-
-    """
-    return root_widget
 
 
 class RootWidget(Widget):
@@ -71,12 +51,25 @@ class RootWidget(Widget):
     For the GUI to function, there must be exactly one instance of RootWidget. It implements the main event loop
     and serves as the ultimate container for all other visible widgets.
 
-    The root widget can be found using the get_root() function of the RootWidget module.
+    The root widget can be found using the `RootWidget.get_root()`
 
     """
     #
     #  surface   Pygame display surface
     #  is_gl     True if OpenGL surface
+
+    root_widget = None
+    """
+    Root of the containment hierarchy
+    """
+    top_widget = None
+    """
+    Initial dispatch target
+    """
+    clicked_widget = None
+    """
+    Target of mouse_drag and mouse_up events
+    """
 
     redraw_every_frame = False
     """
@@ -100,7 +93,7 @@ class RootWidget(Widget):
 
             **kwds:
         """
-        global root_widget
+
         #
         # Python 3 update
         #
@@ -109,7 +102,7 @@ class RootWidget(Widget):
 
         CoreUtilities.init_timebase()
         self.surface = surface
-        root_widget = self
+        RootWidget.root_widget = self
         Widget.root_widget = self
         #
         # Python 3 update
@@ -150,8 +143,7 @@ class RootWidget(Widget):
 
         global last_mouse_event
         global last_mouse_event_handler
-        global top_widget
-        global clicked_widget
+
         global timer_event
         global next_frame_due
 
@@ -160,20 +152,18 @@ class RootWidget(Widget):
         relative_pause = False
         relative_warmup = 0
 
+        was_modal = None
         try:
-            old_top_widget = top_widget
-            top_widget = modal_widget
+            RootWidget.old_top_widget = RootWidget.top_widget
+            RootWidget.top_widget = modal_widget
             was_modal = modal_widget.is_modal
 
             modal_widget.is_modal = True
             modal_widget.modal_result = None
             if not modal_widget.focus_switch:
+
                 modal_widget.tab_to_first()
-                #
-                #  mouse_widget = None
-                #  if clicked_widget:
-                #  clicked_widget = modal_widget
-                #
+
             num_clicks = 0
             last_click_time = 0
             self.do_draw = True
@@ -283,14 +273,14 @@ class RootWidget(Widget):
                                 else:
                                     #  modal_widget.dispatch_key('mouse_down', event)
                                     mouse_widget = modal_widget.get_focus()
-                                    clicked_widget = mouse_widget
+                                    RootWidget.clicked_widget = mouse_widget
                                     last_mouse_event_handler = mouse_widget
                                     mouse_widget.handle_event('mouse_down', event)
                             else:
                                 mouse_widget = self.find_widget(event.pos)
                                 if not mouse_widget.is_inside(modal_widget):
                                     mouse_widget = modal_widget
-                                clicked_widget = mouse_widget
+                                RootWidget.clicked_widget = mouse_widget
                                 last_mouse_event_handler = mouse_widget
                                 mouse_widget.notify_attention_loss()
                                 mouse_widget.handle_mouse('mouse_down', event)
@@ -304,14 +294,14 @@ class RootWidget(Widget):
                                         relative_warmup -= 1
                                     else:
                                         #  modal_widget.dispatch_key('mouse_delta', event)
-                                        mouse_widget = clicked_widget or modal_widget.get_focus()
+                                        mouse_widget = RootWidget.clicked_widget or modal_widget.get_focus()
                                         last_mouse_event_handler = mouse_widget
                                         mouse_widget.handle_event('mouse_delta', event)
                             else:
                                 mouse_widget = self.find_widget(event.pos)   # Do this in else branch?
-                                if clicked_widget:
+                                if RootWidget.clicked_widget:
                                     last_mouse_event_handler = mouse_widget  # Should this be clicked_widget?
-                                    clicked_widget.handle_mouse('mouse_drag', event)
+                                    RootWidget.clicked_widget.handle_mouse('mouse_drag', event)
                                 else:
                                     if not mouse_widget.is_inside(modal_widget):
                                         mouse_widget = modal_widget
@@ -325,18 +315,17 @@ class RootWidget(Widget):
                                 event.dict['local'] = (0, 0)
                                 if not relative_pause:
 
-                                    if clicked_widget:
-                                        mouse_widget = clicked_widget
-                                        clicked_widget = None
+                                    if RootWidget.clicked_widget:
+                                        mouse_widget = RootWidget.clicked_widget
+                                        RootWidget.clicked_widget = None
                                     else:
                                         mouse_widget = modal_widget.get_focus()
                                     last_mouse_event_handler = mouse_widget
                                     mouse_widget.handle_event('mouse_up', event)
                             else:
-                                #  mouse_widget = self.find_widget(event.pos) # Not necessary?
-                                if clicked_widget:
-                                    last_mouse_event_handler = clicked_widget
-                                    clicked_widget = None
+                                if RootWidget.clicked_widget:
+                                    last_mouse_event_handler = RootWidget.clicked_widget
+                                    RootWidget.clicked_widget = None
                                     last_mouse_event_handler.handle_mouse('mouse_up', event)
                         elif eventType == KEYDOWN:
                             key = event.key
@@ -377,8 +366,8 @@ class RootWidget(Widget):
                     self.report_error(e)
         finally:
             modal_widget.is_modal = was_modal
-            top_widget = old_top_widget
-        clicked_widget = None
+            RootWidget.top_widget = RootWidget.old_top_widget
+        RootWidget.clicked_widget = None
 
     def send_key(self, widget, name, event):
         CoreUtilities.add_modifiers(event)
@@ -388,8 +377,8 @@ class RootWidget(Widget):
         """Deprecated, use timer_event() instead."""
         pass
 
-    def get_root(self):
-        return self
+    # def get_root(self):
+    #     return self
 
     def has_focus(self):
         return True
@@ -411,6 +400,21 @@ class RootWidget(Widget):
 
     def music_end(self):
         MusicUtilities.music_end()
+
+    @staticmethod
+    def getRoot():
+        """
+        Returns:  The root widget of the containment hierarchy
+        """
+        return RootWidget.root_widget
+
+    @staticmethod
+    def getTopWidget():
+        return RootWidget.top_widget
+
+    @staticmethod
+    def getFocus():
+        return RootWidget.top_widget.get_focus()
 
     # ========================================================================
     #
@@ -462,7 +466,3 @@ class RootWidget(Widget):
         """
         self.begin_frame()
         return True
-
-
-if '__main__' == __name__:
-    top_widget = None

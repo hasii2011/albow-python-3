@@ -3,8 +3,7 @@ from pygame import Surface
 
 from pygame.event import Event
 
-from albow.core.RootWidget import get_root
-from albow.core.RootWidget import get_focus
+from albow.core.RootWidget import RootWidget
 
 from albow.dialog.Dialog import Dialog
 from albow.themes.ThemeProperty import ThemeProperty
@@ -101,14 +100,14 @@ class Menu(Dialog):
         :return:
         """
 
-        client = client or get_root()
+        client = client or RootWidget.get_root
         #
         # Python 3 update
         #
         aValue = list(client.local_to_global(pos))
         # self.topleft = client.local_to_global(pos)
         self.topleft = aValue
-        focus = get_focus()
+        focus = RootWidget.getFocus()
         font = self.font
         h = font.get_linesize()
         items = self._items
@@ -210,7 +209,7 @@ class Menu(Dialog):
         """
         for item in self._items:
             if item.keycode == theEvent.key and item.shift == theEvent.shift and item.alt == theEvent.alt:
-                focus = get_focus()
+                focus = RootWidget.getFocus()
                 if self.command_is_enabled(item, focus):
                     return self._items.index(item)
                 else:
@@ -237,4 +236,4 @@ class Menu(Dialog):
         """
         cmd = self.get_command(theCommandIndex)
         if cmd:
-            get_focus().handle_command(cmd)
+            RootWidget.getFocus().handle_command(cmd)

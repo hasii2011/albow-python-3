@@ -33,6 +33,7 @@ from albow.themes.Theme import Theme
 
 from albow.core.RectUtility import RectUtility
 
+
 class Widget:
     """
     The Widget class is the base class for all widgets. A widget occupies a rectangular area of the PyGame screen
