@@ -39,9 +39,6 @@ last_mouse_event: Event = Event(0)
 last_mouse_event.dict['pos'] = (0, 0)
 last_mouse_event.dict['local'] = (0, 0)
 
-last_mouse_event_handler = None
-
-
 timer_event = None     # Timer event pending delivery
 next_frame_due = 0.0   #
 
@@ -76,8 +73,9 @@ class RootWidget(Widget):
     If true, all widgets will be redrawn on every animation frame (i.e. after every call to begin_frame()). If false, 
     redrawing only occurs after user input events, such as mouse clicks and keystrokes, or if a widget calls 
     its invalidate() method. The default is false.
-
     """
+    last_mouse_event_handler = None
+
     do_draw            = False
     _is_gl_container   = True
     frame_time         = 0.0
@@ -142,8 +140,6 @@ class RootWidget(Widget):
         """
 
         global last_mouse_event
-        global last_mouse_event_handler
-
         global timer_event
         global next_frame_due
 
@@ -184,8 +180,8 @@ class RootWidget(Widget):
                             if last_mouse_event:
                                 timer_event.dict['pos'] = last_mouse_event.pos
                                 timer_event.dict['local'] = last_mouse_event.local
-                            if last_mouse_event_handler:
-                                last_mouse_event_handler.setup_cursor(timer_event)
+                            if RootWidget.last_mouse_event_handler:
+                                RootWidget.last_mouse_event_handler.setup_cursor(timer_event)
                             self.do_draw = self.timer_event(timer_event)
                             timer_event = None
                         else:
@@ -274,14 +270,14 @@ class RootWidget(Widget):
                                     #  modal_widget.dispatch_key('mouse_down', event)
                                     mouse_widget = modal_widget.get_focus()
                                     RootWidget.clicked_widget = mouse_widget
-                                    last_mouse_event_handler = mouse_widget
+                                    RootWidget.last_mouse_event_handler = mouse_widget
                                     mouse_widget.handle_event('mouse_down', event)
                             else:
                                 mouse_widget = self.find_widget(event.pos)
                                 if not mouse_widget.is_inside(modal_widget):
                                     mouse_widget = modal_widget
                                 RootWidget.clicked_widget = mouse_widget
-                                last_mouse_event_handler = mouse_widget
+                                RootWidget.last_mouse_event_handler = mouse_widget
                                 mouse_widget.notify_attention_loss()
                                 mouse_widget.handle_mouse('mouse_down', event)
                         elif eventType == MOUSEMOTION:
@@ -295,17 +291,17 @@ class RootWidget(Widget):
                                     else:
                                         #  modal_widget.dispatch_key('mouse_delta', event)
                                         mouse_widget = RootWidget.clicked_widget or modal_widget.get_focus()
-                                        last_mouse_event_handler = mouse_widget
+                                        RootWidget.last_mouse_event_handler = mouse_widget
                                         mouse_widget.handle_event('mouse_delta', event)
                             else:
                                 mouse_widget = self.find_widget(event.pos)   # Do this in else branch?
                                 if RootWidget.clicked_widget:
-                                    last_mouse_event_handler = mouse_widget  # Should this be clicked_widget?
+                                    RootWidget.last_mouse_event_handler = mouse_widget  # Should this be clicked_widget?
                                     RootWidget.clicked_widget.handle_mouse('mouse_drag', event)
                                 else:
                                     if not mouse_widget.is_inside(modal_widget):
                                         mouse_widget = modal_widget
-                                    last_mouse_event_handler = mouse_widget
+                                    RootWidget.last_mouse_event_handler = mouse_widget
                                     mouse_widget.handle_mouse('mouse_move', event)
                         elif eventType == MOUSEBUTTONUP:
                             CoreUtilities.add_modifiers(event)
@@ -320,13 +316,13 @@ class RootWidget(Widget):
                                         RootWidget.clicked_widget = None
                                     else:
                                         mouse_widget = modal_widget.get_focus()
-                                    last_mouse_event_handler = mouse_widget
+                                    RootWidget.last_mouse_event_handler = mouse_widget
                                     mouse_widget.handle_event('mouse_up', event)
                             else:
                                 if RootWidget.clicked_widget:
-                                    last_mouse_event_handler = RootWidget.clicked_widget
+                                    RootWidget.last_mouse_event_handler = RootWidget.clicked_widget
                                     RootWidget.clicked_widget = None
-                                    last_mouse_event_handler.handle_mouse('mouse_up', event)
+                                    RootWidget.last_mouse_event_handler.handle_mouse('mouse_up', event)
                         elif eventType == KEYDOWN:
                             key = event.key
                             if key == K_ESCAPE and in_relative_mode and \
@@ -338,19 +334,19 @@ class RootWidget(Widget):
                                 CoreUtilities.set_modifier(key, True)
                                 self.do_draw = True
                                 self.send_key(modal_widget, 'key_down', event)
-                                if last_mouse_event_handler:
+                                if RootWidget.last_mouse_event_handler:
                                     event.dict['pos'] = last_mouse_event.pos
                                     event.dict['local'] = last_mouse_event.local
-                                    last_mouse_event_handler.setup_cursor(event)
+                                    RootWidget.last_mouse_event_handler.setup_cursor(event)
                         elif eventType == KEYUP:
                             key = event.key
                             CoreUtilities.set_modifier(key, False)
                             self.do_draw = True
                             self.send_key(modal_widget, 'key_up', event)
-                            if last_mouse_event_handler:
+                            if RootWidget.last_mouse_event_handler:
                                 event.dict['pos'] = last_mouse_event.pos
                                 event.dict['local'] = last_mouse_event.local
-                                last_mouse_event_handler.setup_cursor(event)
+                                RootWidget.last_mouse_event_handler.setup_cursor(event)
                         elif eventType == MUSIC_END_EVENT:
                             self.music_end()
                         elif eventType == USEREVENT:
