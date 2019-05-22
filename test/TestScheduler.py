@@ -35,7 +35,6 @@ class TestScheduler(TestBase):
     def setUp(self):
         """"""
         TestScheduler.ourLogger = logging.getLogger(__name__)
-        # Scheduler.ourLogger.setLevel(logging.DEBUG)
 
     def tearDown(self):
         #
