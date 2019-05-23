@@ -43,7 +43,7 @@ class Theme:
     GRAY = (128, 128, 128)
     LIGHT_GRAY = (212, 208, 200)
     BLUE = (0, 0, 255)
-    GREEN = (0,255, 0)
+    GREEN = (0, 255, 0)
     RED = (255, 0, 0)
 
     LAMAS_BLACK = (42, 41, 41)
@@ -99,11 +99,11 @@ class Theme:
 
     def get_font(self, cls, name):
 
-        self.logger.debug("Theme.get_font(%s, %s)", cls, name)
+        self.logger.debug(f"Theme.get_font({cls}, {name})")
         spec = self.get(cls, name)
         if spec:
 
-            self.logger.debug("font spec = %s", spec)
+            self.logger.debug(f"font spec = {spec}")
             return ResourceUtility.get_font(*spec)
 
     def add_theme(self, name):
