@@ -11,12 +11,12 @@ from pkg_resources import resource_filename
 
 from albow.themes.Theme import Theme
 
-DEFAULT_PKG = "albow.themes.resources"
-DEFAULT_THEME_FILENAME = "default-theme.ini"
-ROOT_THEME_NAME = "root"
-
 
 class ThemeLoader:
+
+    DEFAULT_PKG = "albow.themes.resources"
+    DEFAULT_THEME_FILENAME = "default-theme.ini"
+    ROOT_THEME_NAME = "root"
 
     def __init__(self, themePkg: str = DEFAULT_PKG,  themeFilename: str = DEFAULT_THEME_FILENAME):
         """
@@ -35,7 +35,7 @@ class ThemeLoader:
         config = configparser.ConfigParser()
         config.read(self.themeFullFilename)
 
-        self.themeRoot = self.loadAClass(config[ROOT_THEME_NAME])
+        self.themeRoot = self.loadAClass(config[ThemeLoader.ROOT_THEME_NAME])
 
         self.logger.debug(f"Initial themeRoot: {self.themeRoot}")
 
@@ -108,7 +108,7 @@ class ThemeLoader:
 
         for idx in range(len(sections)):
             sectionName = sections[idx]
-            if sectionName == ROOT_THEME_NAME:
+            if sectionName == ThemeLoader.ROOT_THEME_NAME:
                 continue
             else:
                 self.logger.debug("sectionName: '%s'", sectionName)
