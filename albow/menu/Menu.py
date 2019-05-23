@@ -100,7 +100,7 @@ class Menu(Dialog):
         :return:
         """
 
-        client = client or RootWidget.get_root
+        client = client or RootWidget.getRoot()
         #
         # Python 3 update
         #

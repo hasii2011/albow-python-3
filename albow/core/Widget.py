@@ -224,6 +224,7 @@ class Widget:
         self.subwidgets = []
         self.focus_switch = None
         self.is_modal = False
+        self.modal_result = None
 
         self.set(**kwds)
 
@@ -302,7 +303,7 @@ class Widget:
             #
             # Python 3 hack because 'Label' is sometimes reported as not a 'Widget'
             #
-            if isinstance(arg, Widget) or not hasattr(arg, '__iter__' ):
+            if isinstance(arg, Widget) or not hasattr(arg, '__iter__'):
                 arg.set_parent(self)
             else:
                 self.logger.debug("arg is container: %s", arg.__str__)
@@ -414,8 +415,7 @@ class Widget:
                 # print(f"Drawing subwidget '{www}' of '{sss}' with '{sub_rect}'")
                 print(f"Drawing subwidget '{widget}' of '{self} with rect '{sub_rect}'")
 
-                lastDebugRectTime = currentTime + timedelta(seconds=4)
-
+                Widget.lastDebugRectTime = currentTime + timedelta(seconds=4)
 
     def diagnose_subsurface_problem(self, surface, widget):
         mess = "Widget %s %s outside parent surface %s %s" % (
@@ -668,7 +668,7 @@ class Widget:
         """
         Returns the root widget (whether this widget is contained within it or not).
 
-            Deprecated, use root.get_root()
+            Deprecated, use RootWidget.getRoot()
 
         Returns:  The root widget
 
@@ -946,8 +946,8 @@ class Widget:
 
         answer: bool = False
         try:
-            p      = self.global_to_local(event.pos)
-            pList  = list(p)
+            p = self.global_to_local(event.pos)
+            pList = list(p)
             answer = r.collidepoint(pList[0], pList[1])
         except AttributeError as ae:
             self.logger.error("Attribute error %s", ae.__repr__())
