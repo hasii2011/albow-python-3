@@ -37,16 +37,17 @@ class TestThemeProperty(TestBase):
 
     def testBareException(self):
 
-        logging = TestThemeProperty.classLogger
+        logger = TestThemeProperty.classLogger
         dummyControl: DummyControl = DummyControl()
         dummyControl.setDummyThemeAttribute(42.0)
 
         themeVal = dummyControl.getDummyThemeAttribute()
-        logging.info(f"themeVal: {themeVal}")
+        logger.info(f"themeVal: {themeVal}")
 
         themeVal = dummyControl._dummyThemeAttribute = 52
 
         self.assertEqual(themeVal, 52, "Change to underlying value is broken")
+
 
 if __name__ == '__main__':
     unittest.main(exit=False)

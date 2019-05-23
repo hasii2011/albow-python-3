@@ -120,7 +120,7 @@ class TestThemeConfiguration(TestBase):
             for x in range(NUMBER_OF_THEMES_TO_CHECK):
                 name = random.choice(CURRENTLY_KNOWN_THEMES)
                 logger.info(f"Checking {name}")
-                self.assertTrue(hasattr(themeLoader.themeRoot, name), "Missing a them")
+                self.assertTrue(hasattr(themeLoader.themeRoot, name), "Missing a theme")
 
         except FileNotFoundError:
             self.assertTrue(False, "We should be able to find default file")
