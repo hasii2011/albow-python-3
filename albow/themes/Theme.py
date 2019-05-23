@@ -1,5 +1,9 @@
 
+from pkg_resources import resource_filename
+
 import logging
+
+from pygame.font import Font
 
 from albow.core.ResourceUtility import ResourceUtility
 
@@ -55,7 +59,14 @@ class Theme:
 
     BUILT_IN_FONT = "VeraBd.ttf"
 
+    DEFAULT_PKG = "albow.themes.resources"
+
     ourThemeRoot = None
+
+    fontCache = {}
+    """
+    Keep the theme fonts in their own cache separate from API consumer fonts
+    """
 
     def __init__(self, name, base=None):
         """
@@ -104,10 +115,32 @@ class Theme:
         if spec:
 
             self.logger.debug(f"font spec = {spec}")
-            return ResourceUtility.get_font(*spec)
+            # return ResourceUtility.get_font(*spec)
+            fontPath = self._findFontFile(spec)
+            font = self._loadFont(fontPath=fontPath, fontSize=spec[0])
+            return font
 
     def add_theme(self, name):
         setattr(self, name, Theme(name))
+
+    def _findFontFile(self, spec: tuple):
+
+        fontName = spec[1]
+        fileName = resource_filename(Theme.DEFAULT_PKG, fontName)
+        return fileName
+
+    def _loadFont(self, fontPath: str, fontSize: int) -> Font:
+
+        key = (fontPath, fontSize)
+        font = Theme.fontCache.get(key)
+        if font is None:
+            try:
+                font = Font(fontPath, fontSize)
+            except IOError as e:
+                raise e.__class__(f"{e}: {fontPath}")
+
+        Theme.fontCache[key] = font
+        return font
 
     def __str__(self):
         return self.name
