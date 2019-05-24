@@ -1,2 +1,3 @@
 include albow/demo/*.json
 graft albow/demo/Resources
+graft albow/themes/resources
