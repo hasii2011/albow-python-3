@@ -228,8 +228,8 @@ class RootWidget(Widget):
                         # Pygame 1.9 update
                         #
                         # timer_event = Event(USEREVENT, time = time_now)
-                        dict = {'time': time_now}
-                        RootWidget.ourTimerEvent = Event(USEREVENT, dict=dict)
+                        RootWidget.ourTimerEvent = Event(USEREVENT)
+                        RootWidget.ourTimerEvent.dict['time'] = time_now
 
                         events = []
                     else:
