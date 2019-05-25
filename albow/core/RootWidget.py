@@ -28,7 +28,7 @@ from albow.media.MusicUtilities import MusicUtilities
 
 MUSIC_END_EVENT = USEREVENT + 1
 
-DOUBLE_CLICK_TIME = 300 # milliseconds
+DOUBLE_CLICK_TIME = 300  # milliseconds
 
 
 class RootWidget(Widget):
@@ -440,8 +440,8 @@ class RootWidget(Widget):
 
     def timer_event(self, event):
         """
-        Called when a timer event occurs. See set_timer(). If it returns true, a display update is performed. T
-        he default implementation returns true.
+        Called when a timer event occurs. See set_timer(). If it returns true, a display update is performed. The
+        default implementation returns true.
 
         Note:
             If multiple timer events occur during a single pass through the event loop, only the most recent
