@@ -1011,7 +1011,7 @@ class Widget:
         Called when a key press event occurs and this widget has the keyboard focus, or a subwidget has the
         focus but did not handle the event.
 
-        NOTE: If you override this method and don't want to handle a key_down event, be sure to call the inherited\
+        NOTE: If you override this method and don't want to handle a key_down event, be sure to call the inherited
         key_down() method to pass the event to the parent widget.
 
         Args:
