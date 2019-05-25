@@ -124,8 +124,8 @@ class RootWidget(Widget):
 
     def run(self):
         """
-        Runs the main event loop. Control is retained until a QUIT event is received, whereupon the quit() method i
-        s called.
+        Runs the main event loop. Control is retained until a QUIT event is received, whereupon the quit() method
+        is called.
 
         """
         self.run_modal(None)
