@@ -1,17 +1,10 @@
 
-from functools import total_ordering
-
 from typing import Callable
 
 
 class ScheduledCall:
     """
-    Fixed the
-
-    > TypeError: '<' not supported between instances of 'ScheduledCall' and 'ScheduledCall'
-
-    in `Scheduler.schedule_call`,  by implementing the method '\\_\\_lt\\_\\_()'
-
+    Object to get tasks periodically scheduled
     """
     def __init__(self, timeToExecute: float, func: Callable, interval: float):
         """
@@ -57,5 +50,5 @@ class ScheduledCall:
 
     def __str__(self):
 
-        formattedMe:str = f"time: {self.time}, func: {self.func}, interval: {self.interval}"
+        formattedMe: str = f"time: {self.time}, func: {self.func}, interval: {self.interval}"
         return formattedMe
