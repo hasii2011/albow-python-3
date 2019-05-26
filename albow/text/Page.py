@@ -4,9 +4,10 @@ class Page:
     def __init__(self, text_screen, heading, lines):
         """
 
-        :param text_screen:
-        :param heading:
-        :param lines:
+        Args:
+            text_screen:
+            heading:
+            lines:
         """
         self.text_screen = text_screen
         self.heading = heading
@@ -21,10 +22,13 @@ class Page:
     def draw(self, surface, color, pos):
         """
 
-        :param surface:
-        :param color:
-        :param pos:
-        :return:
+        Args:
+            surface:
+            color:
+            pos:
+
+        Returns:
+
         """
         heading_font = self.text_screen.heading_font
         text_font = self.text_screen.font
