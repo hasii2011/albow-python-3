@@ -1,6 +1,8 @@
 
+from typing import List
 
 import sys
+
 from time import sleep
 
 from pygame.locals import *
@@ -16,19 +18,19 @@ from pygame.event import get_grab
 from pygame.event import set_grab
 
 from albow.core.Widget import Widget
-
 from albow.core.Scheduler import Scheduler
-
 from albow.core.CoreUtilities import CoreUtilities
-
 from albow.core.CancelException import CancelException
 from albow.core.ApplicationException import ApplicationException
 
+from albow.core.UserEventCall import UserEventCall
+
 from albow.media.MusicUtilities import MusicUtilities
 
-MUSIC_END_EVENT = USEREVENT + 1
-
-DOUBLE_CLICK_TIME = 300  # milliseconds
+DOUBLE_CLICK_TIME = 300
+"""
+Time is in milliseconds
+"""
 
 
 class RootWidget(Widget):
@@ -39,9 +41,10 @@ class RootWidget(Widget):
     The root widget can be found using the `RootWidget.get_root()`
 
     """
-    #
-    #  surface   Pygame display surface
-    #  is_gl     True if OpenGL surface
+    MUSIC_END_EVENT = USEREVENT + 1
+    """
+    API consumer user events **MUST** start there events after this one
+    """
 
     root_widget = None
     """
@@ -70,12 +73,14 @@ class RootWidget(Widget):
     """
     nextFrameDue = 0.0
 
-    do_draw            = False
-    _is_gl_container   = True
-    frame_time         = 0.0
-    _use_sleep         = True
+    do_draw          = False
+    _is_gl_container = True
+    frame_time       = 0.0
+    _use_sleep       = True
 
-    last_mouse_event: Event = Event(0)
+    last_mouse_event: Event = Event(0, {'pos': (0, 0), 'local': (0, 0)})
+
+    userEventCallList: List = []
 
     def __init__(self, surface: Surface, **kwds):
         """
@@ -83,17 +88,10 @@ class RootWidget(Widget):
         but could be a subsurface of it.
 
         Args:
-            surface:  A pygame surface
+            surface:  A Pygame surface
 
             **kwds:
         """
-        RootWidget.last_mouse_event.dict['pos'] = (0, 0)
-        RootWidget.last_mouse_event.dict['local'] = (0, 0)
-
-        #
-        # Python 3 update
-        #
-        # Widget.__init__(self, surface.get_rect())
         super().__init__(surface.get_rect(), **kwds)
 
         CoreUtilities.init_timebase()
@@ -342,11 +340,20 @@ class RootWidget(Widget):
                                 event.dict['pos'] = RootWidget.last_mouse_event.pos
                                 event.dict['local'] = RootWidget.last_mouse_event.local
                                 RootWidget.last_mouse_event_handler.setup_cursor(event)
-                        elif eventType == MUSIC_END_EVENT:
+                        elif eventType == RootWidget.MUSIC_END_EVENT:
                             self.music_end()
                         elif eventType == USEREVENT:
                             if defer_drawing and not use_sleep:
                                 RootWidget.ourTimerEvent = event
+                        else:
+                            #
+                            # Maybe someone has register some user events handler
+                            #
+                            for cb in RootWidget.userEventCallList:
+                                if cb.userEvent == eventType:
+                                    print(f"eventType: {eventType}")
+                                    cb.func(event)
+
                 except CancelException:
                     pass
                 #
@@ -367,9 +374,6 @@ class RootWidget(Widget):
     def begin_frame(self):
         """Deprecated, use timer_event() instead."""
         pass
-
-    # def get_root(self):
-    #     return self
 
     def has_focus(self):
         return True
@@ -406,6 +410,12 @@ class RootWidget(Widget):
     @staticmethod
     def getFocus():
         return RootWidget.top_widget.get_focus()
+
+    @staticmethod
+    def addUserEvent(newCallback: UserEventCall):
+
+        RootWidget.userEventCallList.append(newCallback)
+        print("addUserEvent")
 
     # ========================================================================
     #

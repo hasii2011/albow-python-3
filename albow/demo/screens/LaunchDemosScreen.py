@@ -16,6 +16,7 @@ from albow.themes.Theme import Theme
 DEMO_TITLE_TEXT_SIZE = 24
 DEMO_BUTTON_TEXT_SIZE = 12
 
+
 class LaunchDemosScreen(Screen):
     """
     Buttons
@@ -34,16 +35,16 @@ class LaunchDemosScreen(Screen):
         super().__init__(shell)
 
         self.shell = shell
-        f1         = ResourceUtility.get_font(DEMO_TITLE_TEXT_SIZE, Theme.BUILT_IN_FONT)
+        f1 = ResourceUtility.get_font(DEMO_TITLE_TEXT_SIZE, Theme.BUILT_IN_FONT)
 
         title = Label("Albow Demonstration", font=f1)
-        emptyButton = Button("Empty", enabled=False)
+        #  emptyButton = Button("Empty", enabled=False)
 
         menuArray = [
             [
-                self.screen_button("Text Screen",    shell.text_screen),
-                self.screen_button("Text Fields",    shell.fields_screen),
-                self.screen_button("Controls",       shell.controls_screen),
+                self.screen_button("Text Screen", shell.text_screen),
+                self.screen_button("Text Fields", shell.fields_screen),
+                self.screen_button("Controls",    shell.controls_screen),
             ],
             [
                 self.screen_button("Animation",    shell.anim_screen),
@@ -63,7 +64,7 @@ class LaunchDemosScreen(Screen):
             [
                 self.screen_button("Music",   shell.musicScreen),
                 self.screen_button("ListBox", shell.listBoxScreen),
-                emptyButton
+                self.screen_button("User Events", shell.userEventsScreen)
             ]
         ]
 

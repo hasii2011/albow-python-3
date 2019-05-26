@@ -18,10 +18,11 @@ from albow.demo.screens.DemoDialogScreen import DemoDialogScreen
 from albow.demo.screens.DemoMenuBarScreen import DemoMenuBarScreen
 from albow.demo.screens.DemoMusicScreen import DemoMusicScreen
 from albow.demo.screens.DemoListBoxScreen import DemoListBoxScreen
+from albow.demo.screens.DemoUserEventsScreen import DemoUserEventsScreen
 
 from albow.demo.screens.LaunchDemosScreen import LaunchDemosScreen
 
-DEMO_FRAME_TIME  = 50  # ms
+DEMO_FRAME_TIME = 50  # ms
 
 
 class DemoShell(Shell):
@@ -54,6 +55,7 @@ class DemoShell(Shell):
         self.menuBarScreen      = DemoMenuBarScreen(self)
         self.musicScreen        = DemoMusicScreen(self)
         self.listBoxScreen      = DemoListBoxScreen(self)
+        self.userEventsScreen   = DemoUserEventsScreen(self)
 
         self.menu_screen = LaunchDemosScreen(self)  # Do this last
         self.set_timer(DEMO_FRAME_TIME)

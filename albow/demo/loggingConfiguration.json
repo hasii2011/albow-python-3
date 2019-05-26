@@ -88,6 +88,14 @@
             ],
             "propagate": "0"
         },
+        "albow.demo.screens.DemoUserEventsScreen": {
+            "level": "INFO",
+            "handlers": [
+                "consoleHandler"
+            ],
+            "propagate": "0"
+        },
+
         "albow.media.EnableMusicControl": {
             "level": "INFO",
             "handlers": [
