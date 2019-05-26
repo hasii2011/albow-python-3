@@ -23,8 +23,7 @@ class Label(Widget):
     """
     text = overridable_property('text')
     """
-    The text to be displayed. This can be changed dynamically, but the label won't automatically resize to 
-    accommodate the new text.
+    The text to be displayed. This can be changed dynamically
     """
     align = overridable_property('align')
     """
