@@ -47,9 +47,9 @@ class TextEditor(Widget):
         A function of no arguments to be called when `Escape` is pressed. If not specified, Escape key events are 
         passed to the parent widget.
     """
-    _text    = ""
+    _text = ""
 
-    def __init__(self, width, upper: bool=None, **kwds):
+    def __init__(self, width, upper: bool = None, **kwds):
         """
         The height is determined by the height of a line of text in the font in effect at construction time.
 
@@ -178,7 +178,7 @@ class TextEditor(Widget):
 
     def allow_char(self, c):
         """
-        This method meant to be overriden
+        This method meant to be overridden
 
         Called to determine whether typing the character c into the text editor should be allowed. The default
         implementation returns true for all characters.

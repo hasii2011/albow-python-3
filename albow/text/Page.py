@@ -36,4 +36,3 @@ class Page:
             buf = text_font.render(line, True, color)
             surface.blit(buf, (x, y))
             y += buf.get_rect().height
-
