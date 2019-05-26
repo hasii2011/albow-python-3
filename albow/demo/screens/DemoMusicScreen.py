@@ -75,7 +75,7 @@ class DemoMusicScreen(BaseDemoScreen):
             alert("Demo music not loaded. Loading my favorite track")
 
             favPath = MusicUtilities.get_music("Zoe_Poledouris_-_I_Have_Not_Been_To_Paradise_David_Bowie_Cover.mp3")
-            paths   = {favPath}
+            paths = {favPath}
             favPlayList = PlayList(items=paths, random=True, repeat=True)
             favPlayList.repeat = False
             favPlayList.random = False
