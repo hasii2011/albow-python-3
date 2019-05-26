@@ -116,7 +116,7 @@ class Scheduler:
         """
         callList = Scheduler.ourScheduledCalls
         t = Scheduler.timestamp()
-        while len(callList) !=0  and callList[0].time <= t:
+        while len(callList) != 0 and callList[0].time <= t:
 
             scheduledCall: ScheduledCall = callList.pop(FIRST_DUE_CALL_IDX)
             scheduledCall.func()
