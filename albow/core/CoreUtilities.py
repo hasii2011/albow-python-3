@@ -49,10 +49,11 @@ MOD_KEYS = {
     K_LMETA:  'meta',   K_RMETA:  'meta',
 }
 
-time_base = 0
-
 
 class CoreUtilities:
+
+    time_base = 0
+
     """
     A static class for some leftover module functions
     """
@@ -70,6 +71,6 @@ class CoreUtilities:
 
     @staticmethod
     def init_timebase():
-        global time_base
-        time_base = time() * 1000.0 - get_ticks()
-        print("time_base: " + str(time_base))
+
+        CoreUtilities.time_base = time() * 1000.0 - get_ticks()
+        print(f"time_base: {str(CoreUtilities.time_base)}")

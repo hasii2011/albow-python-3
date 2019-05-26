@@ -11,8 +11,6 @@ from pygame.locals import USEREVENT
 from pygame.event import Event
 
 from albow.core.CoreUtilities import CoreUtilities
-from albow.core.CoreUtilities import time_base
-
 from albow.core.ScheduledCall import ScheduledCall
 
 FIRST_DUE_CALL_IDX = 0
@@ -91,7 +89,8 @@ class Scheduler:
 
     @staticmethod
     def timestamp():
-        return time() * 1000.0 - time_base
+
+        return time() * 1000.0 - CoreUtilities.time_base
 
     @staticmethod
     def cancel_call(token):
