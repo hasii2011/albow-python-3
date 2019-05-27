@@ -57,7 +57,8 @@ class Theme:
     LAMAS_DARK_BLUE = (65, 108, 178)
     LAMAS_OFF_WHITE = (255, 255, 244)
 
-    BUILT_IN_FONT = "VeraBd.ttf"
+    BUILT_IN_FONT = "Vera.ttf"
+    BUILT_IN_BOLD_FONT = "VeraBd.ttf"
 
     DEFAULT_PKG = "albow.themes.resources"
 
