@@ -347,11 +347,11 @@ class RootWidget(Widget):
                                 RootWidget.ourTimerEvent = event
                         else:
                             #
-                            # Maybe someone has register some user events handler
+                            # Maybe someone has registered some user events handler
                             #
                             for cb in RootWidget.userEventCallList:
                                 if cb.userEvent == eventType:
-                                    print(f"eventType: {eventType}")
+                                    self.logger.debug(f"API User eventType: {eventType}")
                                     cb.func(event)
 
                 except CancelException:
