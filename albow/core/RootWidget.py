@@ -415,7 +415,6 @@ class RootWidget(Widget):
     def addUserEvent(newCallback: UserEventCall):
 
         RootWidget.userEventCallList.append(newCallback)
-        print("addUserEvent")
 
     # ========================================================================
     #
