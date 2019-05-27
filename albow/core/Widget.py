@@ -745,7 +745,7 @@ class Widget:
         Marks the widget as needing to be redrawn. You will need to call this from the begin_frame() method of your
         Shell or Screen if you have the redraw_every_frame attribute of the root widget set to False.
 
-        NOTE: Currently, calling this method on any widget will cause all widgets to be redrawn on the next return\
+        NOTE: Currently, calling this method on any widget will cause all widgets to be redrawn on the next return
         to the event loop. Future versions may be more selective.
 
         """
@@ -794,7 +794,7 @@ class Widget:
         piece of sample text.
 
         Args:
-            width:  The number of pixes or some sample text
+            width:  The number of pixels or some sample text
 
             nLines: The number of lines in the text;  Defaults to 1
 
