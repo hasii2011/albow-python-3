@@ -6,14 +6,15 @@
             "format": "%(asctime)s - %(name)s - %(levelname)s - %(message)s"
         },
         "demoSimple": {
-            "format": "%(levelname)s: %(module)s: %(message)s"
+            "format": "%(asctime)s - %(levelname)s: %(module)s: %(message)s"
         }
     },
     "handlers": {
         "consoleHandler": {
             "class": "logging.StreamHandler",
             "formatter": "demoSimple",
-            "stream": "ext://sys.stdout"
+            "stream": "ext://sys.stdout",
+            "level": "INFO"
         }
     },
     "loggers": {
@@ -60,6 +61,7 @@
             ],
             "propagate": "0"
         },
+
         "albow.themes.ThemeProperty": {
             "level": "INFO",
             "handlers": [

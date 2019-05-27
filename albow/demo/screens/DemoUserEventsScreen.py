@@ -5,12 +5,19 @@ from logging import Logger
 
 import pygame
 from pygame.event import Event
+from pygame.font import Font
 
 from albow.core.RootWidget import RootWidget
 from albow.core.Shell import Shell
 from albow.core.UserEventCall import UserEventCall
+from albow.core.ResourceUtility import ResourceUtility
+
+from albow.themes.Theme import Theme
 
 from albow.layout.Column import Column
+
+from albow.widgets.TextBox import TextBox
+from albow.widgets.Label import Label
 
 from albow.demo.screens.BaseDemoScreen import BaseDemoScreen
 
@@ -21,6 +28,8 @@ class DemoUserEventsScreen(BaseDemoScreen):
     KLINGON_TORPEDO_EVENT = CLOCK_EVENT + 1
 
     classLogger: Logger = None
+    classTextBox: TextBox = None
+    classLineCounter: int = 0
 
     def __init__(self, shell: Shell):
 
@@ -29,11 +38,15 @@ class DemoUserEventsScreen(BaseDemoScreen):
         self.logger = logging.getLogger(__name__)
         DemoUserEventsScreen.classLogger = self.logger
 
+        DemoUserEventsScreen.classTextBox = TextBox()
+
+        f1: Font = ResourceUtility.get_font(16, Theme.BUILT_IN_BOLD_FONT)
+        textBoxTitle: Label = Label(text="User Events", font=f1)
+
         contentAttrs = {
             "align": "c"
         }
-
-        contents: Column = Column([self.backButton], **contentAttrs)
+        contents: Column = Column([textBoxTitle, DemoUserEventsScreen.classTextBox, self.backButton], **contentAttrs)
 
         clockEventCall: UserEventCall = UserEventCall(func=DemoUserEventsScreen.userEventCallback, userEvent=DemoUserEventsScreen.CLOCK_EVENT)
         ktkEventCall: UserEventCall = UserEventCall(func=DemoUserEventsScreen.userEventCallback, userEvent=DemoUserEventsScreen.KLINGON_TORPEDO_EVENT)
@@ -47,8 +60,8 @@ class DemoUserEventsScreen(BaseDemoScreen):
         Called from the Shell after switching to this screen from another screen.
         """
         self.logger.info("Start timers")
-        pygame.time.set_timer(DemoUserEventsScreen.CLOCK_EVENT, 10 * 1000)
-        pygame.time.set_timer(DemoUserEventsScreen.KLINGON_TORPEDO_EVENT, 15 * 1000)
+        pygame.time.set_timer(DemoUserEventsScreen.CLOCK_EVENT, 5 * 1000)
+        pygame.time.set_timer(DemoUserEventsScreen.KLINGON_TORPEDO_EVENT, 7 * 1000)
 
     def leave_screen(self):
         """
@@ -68,4 +81,14 @@ class DemoUserEventsScreen(BaseDemoScreen):
 
         timeMSecs: float = theEvent.dict['time']
         timeSecs: float = timeMSecs // 1000
-        DemoUserEventsScreen.classLogger.info(f"theEvent.type: '{theEvent.type}, time(seconds) since start: {timeSecs}")
+
+        lineCounter = DemoUserEventsScreen.classLineCounter
+
+        cbText: str = f"{str(lineCounter)}: type: '{theEvent.type}' - time: {timeSecs}"
+        DemoUserEventsScreen.classLogger.debug(cbText)
+
+        oldText = DemoUserEventsScreen.classTextBox.get_text()
+        cbText = f"{oldText}\n{cbText}"
+
+        DemoUserEventsScreen.classLineCounter += 1
+        DemoUserEventsScreen.classTextBox.set_text(cbText)
