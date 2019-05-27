@@ -82,7 +82,7 @@ class TextBox(Widget):
 
         self.lines = lines
         self._text = theText
-        self.logger.info(f"size: {self.size}")
+        self.logger.debug(f"size: {self.size}")
 
     def get_text(self):
         return self._text
@@ -119,7 +119,7 @@ class TextBox(Widget):
             if lastIdx >= len(self.lines):
                 lastIdx = len(self.lines) - 1
 
-        self.logger.info(f"firstIdx: {firstIdx} lastIdx: {lastIdx}")
+        self.logger.debug(f"firstIdx: {firstIdx} lastIdx: {lastIdx}")
         for idx in range(firstIdx, lastIdx):
 
             buf = self.font.render(self.lines[idx], True, color)
@@ -157,10 +157,10 @@ class TextBox(Widget):
 
         width, height = self.font.size(TextBox.CANONICAL_WIDEST_TALLEST_CHARACTER)
 
-        self.logger.info(f"width: {width}, height: {height}")
+        self.logger.debug(f"width: {width}, height: {height}")
 
         size = (width * theNumberOfColumns, (height * theNumberOfRows) - self.margin)
-        self.logger.info(f"size {size}")
+        self.logger.debug(f"size {size}")
 
         return size
 

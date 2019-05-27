@@ -59,7 +59,7 @@ class DemoUserEventsScreen(BaseDemoScreen):
         """
         Called from the Shell after switching to this screen from another screen.
         """
-        self.logger.info("Start timers")
+        self.logger.debug("Start timers")
         pygame.time.set_timer(DemoUserEventsScreen.CLOCK_EVENT, 5 * 1000)
         pygame.time.set_timer(DemoUserEventsScreen.KLINGON_TORPEDO_EVENT, 7 * 1000)
 
@@ -72,7 +72,7 @@ class DemoUserEventsScreen(BaseDemoScreen):
         #
         #   To disable the timer for an event, set the milliseconds argument to 0.
         #
-        self.logger.info("Stop timers")
+        self.logger.debug("Stop timers")
         pygame.time.set_timer(DemoUserEventsScreen.CLOCK_EVENT, 0)
         pygame.time.set_timer(DemoUserEventsScreen.KLINGON_TORPEDO_EVENT, 0)
 
