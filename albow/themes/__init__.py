@@ -11,3 +11,4 @@
     See the documentation pages on each of these for more details.
 
     """
+__pdoc__ = { 'resources': False}
