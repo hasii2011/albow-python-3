@@ -298,14 +298,14 @@ class Widget:
         """
         if arg:
 
-            self.logger.debug("arg: '%s' is Widget %s", arg.__str__(), isinstance(arg, Widget))
+            self.logger.debug(f"arg: '{arg.__str__()}' is Widget {isinstance(arg, Widget)}" )
             #
             # Python 3 hack because 'Label' is sometimes reported as not a 'Widget'
             #
             if isinstance(arg, Widget) or not hasattr(arg, '__iter__'):
                 arg.set_parent(self)
             else:
-                self.logger.debug("arg is container: %s", arg.__str__)
+                self.logger.debug(f"arg is container: {arg.__str__}")
                 for item in arg:
                     self.add(item)
 
