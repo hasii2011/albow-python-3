@@ -202,7 +202,6 @@ class Widget:
     """
     debug_resize = False
 
-
     def __init__(self, rect: Rect = None, **kwds):
         """
         Creates a new widget, initially without any parent. If a rect is given, it specifies the new widget's initial s
@@ -977,12 +976,12 @@ class Widget:
         dh = new_height - old_height
         if dw or dh:
             self.resized(dw, dh)
-
     #
     #
     #   Abstract methods follow
     #
     #
+
     def draw(self, surface: Surface):
         """
         Called whenever the widget's contents need to be drawn. The surface is a subsurface the same size as the
