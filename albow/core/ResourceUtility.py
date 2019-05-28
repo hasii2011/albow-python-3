@@ -60,7 +60,7 @@ class ResourceUtility:
         Make unit tests for sound and cursor APIs since they are not currently demo'ed
     """
 
-    dummy_sound = None
+    dummy_sound = DummySound()
     sound_cache = {}
     image_cache = {}
     cursor_cache = {}
