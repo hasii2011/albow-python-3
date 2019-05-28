@@ -5,7 +5,7 @@ from pygame import Rect
 
 from albow.utils import overridable_property
 
-from albow.core.Widget import Widget
+from core.ui.Widget import Widget
 
 from albow.menu.Menu import Menu
 

@@ -2,8 +2,8 @@
 import logging
 
 from albow.core.ResourceUtility import ResourceUtility
-from albow.core.Screen import Screen
-from albow.core.Shell import Shell
+from core.ui.Screen import Screen
+from core.ui.Shell import Shell
 
 from albow.widgets.Button import Button
 from albow.widgets.Label import Label

@@ -3,7 +3,7 @@ from pygame import Rect
 from pygame import Surface
 from pygame import draw
 
-from albow.core.Widget import Widget
+from core.ui.Widget import Widget
 
 from albow.themes.ThemeProperty import ThemeProperty
 

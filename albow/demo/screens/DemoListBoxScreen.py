@@ -3,7 +3,7 @@ import logging
 
 from albow.core.ResourceUtility import ResourceUtility
 
-from albow.core.Shell import Shell
+from core.ui.Shell import Shell
 
 from albow.layout.Column import Column
 

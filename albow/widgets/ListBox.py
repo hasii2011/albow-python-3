@@ -5,7 +5,7 @@ from pygame import Surface
 from pygame import Rect
 from pygame.event import Event
 
-from albow.core.Widget import Widget
+from core.ui.Widget import Widget
 
 from albow.containers.PaletteView import PaletteView
 

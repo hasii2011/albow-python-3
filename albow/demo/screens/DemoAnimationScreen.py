@@ -1,7 +1,7 @@
 
 import random
 
-from albow.core.Shell import Shell
+from core.ui.Shell import Shell
 
 from albow.demo.screens.BaseDemoScreen import BaseDemoScreen
 

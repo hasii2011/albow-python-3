@@ -1,9 +1,6 @@
 
-from albow.core.Shell import Shell
+from core.ui.Shell import Shell
 from albow.text.TextScreen import TextScreen
-
-
-from albow.themes.Theme import Theme
 
 from albow.demo.screens.DemoMultiChoiceScreen import DemoMultiChoiceScreen
 from albow.demo.screens.DemoTableScreen import DemoTableScreen

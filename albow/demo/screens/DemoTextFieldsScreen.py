@@ -1,7 +1,5 @@
 
-from albow.core.Shell import Shell
-
-from albow.themes.Theme import Theme
+from core.ui.Shell import Shell
 
 from albow.widgets.Button import Button
 from albow.widgets.Label import Label

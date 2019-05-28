@@ -6,7 +6,7 @@ from pygame import draw
 
 from albow.utils import overridable_property
 
-from albow.core.Widget import Widget
+from core.ui.Widget import Widget
 
 
 class TextEditor(Widget):

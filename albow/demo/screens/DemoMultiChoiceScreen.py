@@ -4,10 +4,9 @@ import pygame
 
 import logging
 
-from albow.core.Shell import Shell
+from core.ui.Shell import Shell
 from albow.core.ResourceUtility import ResourceUtility
 
-from albow.themes.Theme import Theme
 from albow.widgets.Label import Label
 
 from albow.choices.TextMultiChoice import TextMultiChoice

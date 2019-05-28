@@ -1,11 +1,7 @@
 
 import logging
 
-from albow.themes.Theme import Theme
-
-from albow.core.Shell import Shell
-
-from albow.widgets.Button import Button
+from core.ui.Shell import Shell
 
 from albow.layout.Column import Column
 from albow.layout.Frame import Frame

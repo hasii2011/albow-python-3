@@ -1,5 +1,5 @@
 
-from albow.core.Shell import Shell
+from core.ui.Shell import Shell
 
 from albow.core.ResourceUtility import ResourceUtility
 

@@ -1,7 +1,7 @@
 
 from pygame import Rect
 
-from albow.core.Widget import Widget
+from core.ui.Widget import Widget
 
 
 DEFAULT_GRID_COLUMN_SPACING = 10

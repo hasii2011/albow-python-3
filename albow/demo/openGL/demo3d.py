@@ -16,7 +16,7 @@ from pygame.locals import DOUBLEBUF
 from albow.themes.Theme import Theme
 from albow.themes.ThemeLoader import ThemeLoader
 
-from albow.core.RootWidget import RootWidget
+from albow.core.ui.RootWidget import RootWidget
 
 from albow.layout.Row import Row
 
