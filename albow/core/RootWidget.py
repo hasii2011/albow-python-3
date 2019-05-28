@@ -27,13 +27,14 @@ from albow.core.UserEventCall import UserEventCall
 
 from albow.media.MusicUtilities import MusicUtilities
 
-DOUBLE_CLICK_TIME = 300
-"""
-Time is in milliseconds
-"""
-
 
 class RootWidget(Widget):
+
+    DOUBLE_CLICK_TIME = 300
+    """
+    Time is in milliseconds
+    """
+
     """
     For the GUI to function, there must be exactly one instance of RootWidget. It implements the main event loop
     and serves as the ultimate container for all other visible widgets.
@@ -247,7 +248,7 @@ class RootWidget(Widget):
                         elif eventType == MOUSEBUTTONDOWN:
                             # print "RootWidget: MOUSEBUTTONDOWN: setting do_draw" ###
                             self.do_draw = True
-                            if t - last_click_time <= DOUBLE_CLICK_TIME:
+                            if t - last_click_time <= RootWidget.DOUBLE_CLICK_TIME:
                                 num_clicks += 1
                             else:
                                 num_clicks = 1
