@@ -20,8 +20,8 @@ from pygame.event import set_grab
 from albow.core.Widget import Widget
 from albow.core.Scheduler import Scheduler
 from albow.core.CoreUtilities import CoreUtilities
-from albow.core.CancelException import CancelException
-from albow.core.ApplicationException import ApplicationException
+from core.exceptions.CancelException import CancelException
+from core.exceptions.ApplicationException import ApplicationException
 
 from albow.core.UserEventCall import UserEventCall
 
