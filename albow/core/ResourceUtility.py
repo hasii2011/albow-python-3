@@ -3,9 +3,6 @@ The resource module exports some utility functions for finding, loading and cach
 resources.  By default, resource files are looked for in a directory named _Resources_ alongside the
 .py file of the program's main module.
 
-.. TODO::
-    But that can be changed by assigning to the `resource_dir` module variable.
-
 Resource names are specified in a platform-independent manner using a series of pathname components. Specific
 resource types are looked for by default in subdirectories of the resources directory as follows:
 
@@ -22,8 +19,6 @@ resource types are looked for by default in subdirectories of the resources dire
 The subdirectory can in some cases be overridden using the `prefix` parameter to the relevant resource-loading
 function.  Each type of resource has a cache. The first time a resource with a given name is requested, it is
 loaded and placed in the cache.  Subsequent requests for the same name will return the cached object.
-
-
 """
 import os
 import sys
@@ -65,7 +60,7 @@ class ResourceUtility:
         Make unit tests for sound and cursor APIs since they are not currently demo'ed
     """
 
-    dummy_sound = None
+    dummy_sound = DummySound()
     sound_cache = {}
     image_cache = {}
     cursor_cache = {}

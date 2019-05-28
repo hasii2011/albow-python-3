@@ -1,6 +1,7 @@
 
 from pygame import mixer
 
+
 class DummySound(mixer.Sound):
     """
         A dummy sound class for what?
