@@ -15,15 +15,6 @@ from pygame.locals import DOUBLEBUF
 
 from albow.themes.Theme import Theme
 from albow.themes.ThemeLoader import ThemeLoader
-#
-# Have to get all the theme attributes defined first before
-# anything is imported with ThemeProperty attributes
-#
-# Theme.initializeDefaultTheme()
-themeLoader: ThemeLoader = ThemeLoader()
-themeLoader.load()
-themeRoot: Theme = themeLoader.themeRoot
-Theme.setThemeRoot(themeRoot)
 
 from albow.core.RootWidget import RootWidget
 
@@ -79,6 +70,15 @@ flags = 0
 def main():
 
     sys.path.insert(1, d(d(os.path.abspath(sys.argv[0]))))
+
+    #
+    # Have to get all the theme attributes defined first before
+    # anything is imported with ThemeProperty attributes
+    #
+    themeLoader: ThemeLoader = ThemeLoader()
+    themeLoader.load()
+    themeRoot: Theme = themeLoader.themeRoot
+    Theme.setThemeRoot(themeRoot)
 
     pygame.init()
 
