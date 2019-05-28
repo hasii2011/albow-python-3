@@ -227,9 +227,7 @@ class RootWidget(Widget):
                         # Pygame 1.9 update
                         #
                         # timer_event = Event(USEREVENT, time = time_now)
-                        RootWidget.ourTimerEvent = Event(USEREVENT)
-                        RootWidget.ourTimerEvent.dict['time'] = time_now
-
+                        RootWidget.ourTimerEvent = Event(USEREVENT, {'time': time_now})
                         events = []
                     else:
                         events = [pygame.event.wait()]
