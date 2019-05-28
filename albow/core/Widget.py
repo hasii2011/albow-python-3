@@ -411,7 +411,6 @@ class Widget:
             currentTime = datetime.now()
             if currentTime >= Widget.lastDebugRectTime:
 
-                # print(f"Drawing subwidget '{www}' of '{sss}' with '{sub_rect}'")
                 print(f"Drawing subwidget '{widget}' of '{self} with rect '{sub_rect}'")
 
                 Widget.lastDebugRectTime = currentTime + timedelta(seconds=4)

@@ -77,10 +77,12 @@ class TextBox(Widget):
         self.numberOfColumns = theNumberOfColumns
         self.numberOfRows = theNumberOfRows
         self.firstRow = 0
+        """"The index into `lines` as the first line to display"""
 
         self.size = self.computeBoxSize(theNumberOfColumns, theNumberOfRows)
 
         self.lines = lines
+        """ Saves the broken up lines"""
         self._text = theText
         self.logger.debug(f"size: {self.size}")
 
