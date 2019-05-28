@@ -12,11 +12,6 @@ class GLSurface:
         self.display = display
         self.rect = rect
 
-    def gl_set_viewport(self):
-        r = self.rect
-        w = r.width
-        h = r.height
-
     def gl_enter(self):
         r = self.rect
         w = r.width
@@ -61,10 +56,8 @@ class GLSurface:
     def get_rect(self):
         return Rect(self.rect)
 
-    def blit(self, src, dst=(0, 0), area=None, flags=0):
-        #
-        # TODO: flags
-        # print "GLSurface.blit:", src, "at", dst, "area =", area ###
+    def blit(self, src, dst=(0, 0), area=None):
+
         if isinstance(dst, Rect):
             dst = dst.topleft
         x, y = dst
@@ -75,13 +68,13 @@ class GLSurface:
             y += area.top
         w, h = src.get_size()
         data = image.tostring(src, 'RGBA', 1)
-        #  print "GLSurface: Drawing %sx%s pixels at %s,%s" % (w, h, x, y + h) ###
+
         gl = GL
         gl.glRasterPos2i(x, y + h)
         gl.glDrawPixels(w, h, gl.GL_RGBA, gl.GL_UNSIGNED_BYTE, data)
 
-    def fill(self, color, rect=None, flags=0):
-        # TODO: flags
+    def fill(self, color, rect=None):
+
         if rect:
             x, y, w, h = rect
         else:
