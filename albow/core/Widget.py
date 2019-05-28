@@ -638,7 +638,7 @@ class Widget:
         #
         # print "Widget: presenting with rect", self.rect
         # root = self.get_root()
-        root = Widget.root_widget
+        root = self.get_root()
         if centered:
             self.center = root.center
         root.add(self)
