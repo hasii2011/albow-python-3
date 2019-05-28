@@ -632,12 +632,7 @@ class Widget:
         Returns:  The value returned from the modal widget
 
         """
-        #
-        # TODO  Something about my re-packaging caused me to lose
-        # visibility to the root widget;  Figure it out later
-        #
-        # print "Widget: presenting with rect", self.rect
-        # root = self.get_root()
+
         root = self.get_root()
         if centered:
             self.center = root.center

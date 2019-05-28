@@ -3,6 +3,7 @@ from typing import List
 import logging
 
 from time import time
+from time import time
 
 from bisect import insort
 
@@ -76,12 +77,12 @@ class Scheduler:
             repeat: Set to _True_ to repeat, else _False_
         """
         def thunk():
-            # TODO:  Fix to include the time attribute
             #
             # Pygame 1.9 update
             #
             # event = Event(USEREVENT, time = timestamp())
-            event = Event(USEREVENT, dict=None)
+            ts = Scheduler.timestamp()
+            event = Event(USEREVENT, {'time': ts})
             CoreUtilities.add_modifiers(event)
             func(event)
 

@@ -7,11 +7,16 @@ from time import strftime
 
 from logging import Logger
 
+from pygame import USEREVENT
+
+from pygame.event import Event
+
 import unittest
 
 from TestBase import TestBase
 
 from albow.core.Scheduler import Scheduler
+from albow.core.CoreUtilities import CoreUtilities
 
 
 class TestScheduler(TestBase):
@@ -123,6 +128,7 @@ class TestScheduler(TestBase):
         retToken2 = Scheduler.schedule_call(delay=9000, func=TestScheduler.callbackFunction3, repeat=False)
         retToken3 = Scheduler.schedule_call(delay=5000, func=TestScheduler.callbackFunction2, repeat=False)
 
+        TestScheduler.ourLogger.debug(f"{retToken1}, {retToken2}, {retToken3}")
         TestScheduler.ourLogger.info("Wait long enough so that all tasks will be called in one shot")
         time.sleep(10.0)
 
@@ -130,6 +136,15 @@ class TestScheduler(TestBase):
         self.assertTrue( (TestScheduler.callTime1 < TestScheduler.callTime2) and
                           TestScheduler.callTime2 < TestScheduler.callTime3,
                          "Scheduler called tasks out of order")
+
+    def testScheduleEvent(self):
+
+        CoreUtilities.init_timebase()
+        Scheduler.schedule_event(3000, TestScheduler.cbScheduledEvent)
+        TestScheduler.ourLogger.info("Wait for scheduled event")
+        time.sleep(6)
+        Scheduler.make_scheduled_calls()
+        TestScheduler.ourLogger.info("Did it happen?")
 
     @staticmethod
     def callbackFunction():
@@ -164,6 +179,12 @@ class TestScheduler(TestBase):
                                      TestScheduler.callbackFunction3.__name__,
                                      prettyTime)
 
+    @classmethod
+    def cbScheduledEvent(cls, theEvent: Event):
+
+        cls.ourLogger.info(f"Event type: {theEvent.type} -  ts: {theEvent.dict['time']}")
+
+        cls.assertTrue(theEvent.type == USEREVENT, "Wrong kind of event")
 
 if __name__ == '__main__':
     unittest.main()
