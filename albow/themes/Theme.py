@@ -5,8 +5,6 @@ import logging
 
 from pygame.font import Font
 
-from albow.core.ResourceUtility import ResourceUtility
-
 from albow.themes.ThemeError import ThemeError
 
 """
@@ -116,7 +114,7 @@ class Theme:
         if spec:
 
             self.logger.debug(f"font spec = {spec}")
-            # return ResourceUtility.get_font(*spec)
+
             fontPath = self._findFontFile(spec)
             font = self._loadFont(fontPath=fontPath, fontSize=spec[0])
             return font
@@ -146,11 +144,11 @@ class Theme:
     def __str__(self):
         return self.name
 
-    @staticmethod
-    def getThemeRoot():
+    @classmethod
+    def getThemeRoot(cls):
         return Theme.ourThemeRoot
 
-    @staticmethod
-    def setThemeRoot(theThemeRoot: "Theme"):
+    @classmethod
+    def setThemeRoot(cls, theThemeRoot: "Theme"):
 
         Theme.ourThemeRoot = theThemeRoot
