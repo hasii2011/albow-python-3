@@ -26,12 +26,13 @@ from albow.utils import frame_rect
 
 from albow.utils import overridable_property
 
+from albow.themes.Theme import Theme
 from albow.themes.ThemeProperty import ThemeProperty
 from albow.themes.FontProperty import FontProperty
 
-from albow.themes.Theme import Theme
-
 from albow.core.RectUtility import RectUtility
+
+import albow.core.ui.Predictor
 
 
 class Widget:
@@ -215,13 +216,15 @@ class Widget:
         """
         self.logger = logging.getLogger(__name__)
 
+        self.predictor = albow.core.ui.Predictor.Predictor(self)
+        """Helps the widget look up an attribute"""
+
         if rect and not isinstance(rect, Rect):
             raise TypeError("Widget rect not a pygame.Rect")
 
         self._rect = Rect(rect or (0, 0, 100, 100))
         self.parent = None
         self.subwidgets = []
-        self.focus_switch = None
         self.is_modal = False
         self.modal_result = None
 
@@ -257,10 +260,7 @@ class Widget:
         Args:
             mode:  The new anchor mode to add
 
-        Returns:
-
-        """
-        """
+        Returns:ß
         """
         self.anchor = "".join(set(self.anchor) | set(mode))
 
