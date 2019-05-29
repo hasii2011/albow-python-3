@@ -209,7 +209,7 @@ class Widget:
         ize and position relative to its parent.
 
         Args:
-            rect:   A PyGame rectangle defining the portion of the parent widget's coordinate system occupied by the\
+            rect:   A PyGame rectangle defining the portion of the parent widget's coordinate system occupied by the
              widget. Modifying this rectangle changes the widget's size and position.
 
             **kwds: Additional attributes specified as key-value pairs
@@ -217,7 +217,7 @@ class Widget:
         self.logger = logging.getLogger(__name__)
 
         self.predictor = albow.core.ui.Predictor.Predictor(self)
-        """Helps the widget look up an attribute"""
+        """Helps the widget look up attributes"""
 
         if rect and not isinstance(rect, Rect):
             raise TypeError("Widget rect not a pygame.Rect")
@@ -298,7 +298,7 @@ class Widget:
         """
         if arg:
 
-            self.logger.debug(f"arg: '{arg.__str__()}' is Widget {isinstance(arg, Widget)}" )
+            self.logger.debug(f"arg: '{arg.__str__()}' is Widget {isinstance(arg, Widget)}")
             #
             # Python 3 hack because 'Label' is sometimes reported as not a 'Widget'
             #
@@ -541,7 +541,6 @@ class Widget:
             *args: The arguments to use
 
         Returns:  The value of the 'called' method
-
         """
         method = getattr(self, name, None)
         if method:
@@ -573,7 +572,6 @@ class Widget:
             p:  The global coordinates
 
         Returns:  The widget's local coordinates
-
         """
         return subtract(p, self.local_to_global_offset())
 
@@ -585,7 +583,6 @@ class Widget:
             p: Widget local coordinates
 
         Returns:
-
         """
         return add(p, self.local_to_global_offset())
 
@@ -1050,8 +1047,8 @@ class Widget:
 
         Returns: A cursor in the form of a tuple of arguments to the PyGame set_cursor() function
 
-
         """
+        self.logger.debug(f"event {event}")
         return arrow_cursor
 
     def attention_lost(self):

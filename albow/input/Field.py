@@ -96,7 +96,7 @@ class Field(Control, TextEditor):
         if predictedWidth == 0 and theWidth is None:
             predictedWidth = Field.DEFAULT_WIDTH
 
-        self.logger.info(f"predictedWidth: {predictedWidth}")
+        self.logger.debug(f"predictedWidth: {predictedWidth}")
 
         return predictedWidth
 
