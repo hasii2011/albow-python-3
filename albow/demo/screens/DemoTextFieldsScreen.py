@@ -43,6 +43,10 @@ class DemoTextFieldsScreen(BaseDemoScreen):
         self.resultLabel = Label("", font=self.labelFont)
         self.resultLabel.width = 400
 
+        minMaxAttrs = {'min': 50, 'max': 240}
+        minMaxField: TextField = TextField(**minMaxAttrs)
+        minMaxField.set_text("I should be 240 wide")
+
         okBtnAttrs = {
             'font': self.smallButtonFont
         }
@@ -53,7 +57,7 @@ class DemoTextFieldsScreen(BaseDemoScreen):
             "align": "c"
         }
 
-        contents: Column = Column([fieldGrid, self.resultLabel, okBtn, self.backButton], **contentAttrs)
+        contents: Column = Column([fieldGrid, self.resultLabel, okBtn, minMaxField, self.backButton], **contentAttrs)
 
         self.add_centered(contents)
 

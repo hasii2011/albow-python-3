@@ -49,7 +49,7 @@ class TextEditor(Widget):
     """
     _text = ""
 
-    def __init__(self, width, upper: bool = None, **kwds):
+    def __init__(self, width: int, upper: bool = None, **kwds):
         """
         The height is determined by the height of a line of text in the font in effect at construction time.
 

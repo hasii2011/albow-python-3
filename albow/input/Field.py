@@ -1,4 +1,6 @@
 
+import logging
+
 from albow.widgets.Control import Control
 
 from albow.input.TextEditor import TextEditor
@@ -21,6 +23,8 @@ class Field(Control, TextEditor):
     the value is updated and the control returns to the non-editing state. Updating of the value can also be
     forced by calling the `commit()` method.
     """
+
+    DEFAULT_WIDTH = 100
 
     empty = NotImplemented
     """
@@ -60,27 +64,41 @@ class Field(Control, TextEditor):
 
             **kwds:
         """
-        minimum = self.predict_attr(kwds, 'min')
-        maximum = self.predict_attr(kwds, 'max')
+        self.logger = logging.getLogger(__name__)
+
         if 'format' in kwds:
             self.format = kwds.pop('format')
         if 'empty' in kwds:
             self.empty = kwds.pop('empty')
         self.editing = False
-        if width is None:
-            w1 = w2 = ""
+
+        predictedWidth = self._predictWidth(kwds, width)
+        TextEditor.__init__(self, width=predictedWidth, **kwds)
+
+    def _predictWidth(self, kwds, theWidth):
+
+        minimum = self.predict_attr(kwds, 'min')
+        maximum = self.predict_attr(kwds, 'max')
+
+        predictedWidth = theWidth
+        if theWidth is None:
+            w1 = 0
+            w2 = 0
             if minimum is not None:
-                w1 = self.format_value(minimum)
+                w1 = minimum
             if maximum is not None:
-                w2 = self.format_value(maximum)
-            if w2:
-                if len(w1) > len(w2):
-                    width = w1
-                else:
-                    width = w2
-        if width is None:
-            width = 100
-        TextEditor.__init__(self, width, **kwds)
+                w2 = maximum
+            if w1 > w2:
+                predictedWidth = w1
+            else:
+                predictedWidth = w2
+
+        if predictedWidth == 0 and theWidth is None:
+            predictedWidth = Field.DEFAULT_WIDTH
+
+        self.logger.info(f"predictedWidth: {predictedWidth}")
+
+        return predictedWidth
 
     def format_value(self, theValueToFormat):
         """

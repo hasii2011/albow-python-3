@@ -62,6 +62,13 @@
             ],
             "propagate": "0"
         },
+        "albow.input.Field": {
+            "level": "INFO",
+            "handlers": [
+                "consoleHandler"
+            ],
+            "propagate": "0"
+        },
 
         "albow.themes.ThemeProperty": {
             "level": "INFO",
