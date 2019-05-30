@@ -364,6 +364,7 @@ class RootWidget(Widget):
         finally:
             modal_widget.is_modal = was_modal
             RootWidget.top_widget = RootWidget.old_top_widget
+
         RootWidget.clicked_widget = None
 
     def send_key(self, widget, name, event):

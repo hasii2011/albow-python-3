@@ -5,6 +5,9 @@ from pygame import Rect
 
 from albow.core.RectUtility import RectUtility
 
+from albow.vectors import subtract
+from albow.vectors import add
+
 
 class AlbowRect:
 
@@ -132,3 +135,40 @@ class AlbowRect:
                 self.logger.info(f"AlbowRect.parent_resized: moving to (%{left},{top})")
             self._rect.topleft = (left, top)
 
+    def global_to_local(self, p):
+        """
+        Converts the given coordinate pair from PyGame screen coordinates to the widget's local coordinate system.
+
+        Args:
+            p:  The global coordinates
+
+        Returns:  The widget's local coordinates
+        """
+        return subtract(p, self.local_to_global_offset())
+
+    def local_to_global(self, p):
+        """
+        Converts the given coordinate pair from the widget's local coordinate system to PyGame screen coordinates.
+
+        Args:
+            p: Widget local coordinates
+
+        Returns: global coordinates
+        """
+        return add(p, self.local_to_global_offset())
+
+    def local_to_global_offset(self):
+
+        d = self.topleft
+        parent = self.parent
+        if parent:
+            d = add(d, parent.local_to_global_offset())
+        return d
+
+    def get_global_rect(self):
+
+        p = self.local_to_global_offset()
+        pTuple = tuple(p)
+        s = self.rect.size
+
+        return Rect(pTuple, s)
