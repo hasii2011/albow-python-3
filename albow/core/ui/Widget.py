@@ -34,8 +34,10 @@ from albow.core.RectUtility import RectUtility
 
 import albow.core.ui.Predictor
 
+from albow.core.ui.AlbowRect import AlbowRect
 
-class Widget:
+
+class Widget(AlbowRect):
     """
     The Widget class is the base class for all widgets. A widget occupies a rectangular area of the PyGame screen
     to which all drawing in it is clipped, and it may receive mouse and keyboard events. A widget may also
@@ -67,25 +69,6 @@ class Widget:
 
     current_cursor = None
     root_widget = None
-
-    left = RectUtility.rect_property('left')
-    right = RectUtility.rect_property('right')
-    top = RectUtility.rect_property('top')
-    bottom = RectUtility.rect_property('bottom')
-    width = RectUtility.rect_property('width')
-    height = RectUtility.rect_property('height')
-    size = RectUtility.rect_property('size')
-    topleft = RectUtility.rect_property('topleft')
-    topright = RectUtility.rect_property('topright')
-    bottomleft = RectUtility.rect_property('bottomleft')
-    bottomright = RectUtility.rect_property('bottomright')
-    midleft = RectUtility.rect_property('midleft')
-    midright = RectUtility.rect_property('midright')
-    midtop = RectUtility.rect_property('midtop')
-    midbottom = RectUtility.rect_property('midbottom')
-    center = RectUtility.rect_property('center')
-    centerx = RectUtility.rect_property('centerx')
-    centery = RectUtility.rect_property('centery')
 
     font = FontProperty('font')
     """
@@ -170,13 +153,6 @@ class Widget:
     """
     enter_response = None
     cancel_response = None
-    anchor = 'lt'
-    """
-    A string specifying how this widget is to change in size and position when its parent widget changes size. The 
-    letters 'l', 'r', 't' and 'b' are used to anchor the widget to the left, right, top or bottom sides of its 
-    parent. Anchoring it to both left and right, or both top and bottom, causes the widget to stretch or shrink when 
-    its parent changes in width or height.
-    """
     _menubar = None
     _visible = True
     _is_gl_container = False
@@ -194,14 +170,10 @@ class Widget:
     Read-only. The widget having this widget as a subwidget, or None if the widget is not contained in another 
     widget. A widget must ultimately be contained in the root widget in order to be drawn and to receive events.
     """
-    subwidgets = []
-    """
-    """
     focus_switch: "Widget" = None
     """
     subwidget to receive key events
     """
-    debug_resize = False
 
     def __init__(self, rect: Rect = None, **kwds):
         """
@@ -214,17 +186,13 @@ class Widget:
 
             **kwds: Additional attributes specified as key-value pairs
         """
+        super().__init__(rect)
+
         self.logger = logging.getLogger(__name__)
 
         self.predictor = albow.core.ui.Predictor.Predictor(self)
         """Helps the widget look up attributes"""
 
-        if rect and not isinstance(rect, Rect):
-            raise TypeError("Widget rect not a pygame.Rect")
-
-        self._rect = Rect(rect or (0, 0, 100, 100))
-        self.parent = None
-        self.subwidgets = []
         self.is_modal = False
         self.modal_result = None
 
@@ -237,22 +205,6 @@ class Widget:
                 raise TypeError("Unexpected keyword argument '%s'" % name)
             setattr(self, name, value)
 
-    def get_rect(self):
-        return self._rect
-
-    def set_rect(self, x):
-        old_size = self._rect.size
-        self._rect = Rect(x)
-        #
-        # Python 3 update no more tuples
-        # self._resized(old_size)
-        self._resized(old_size[0], old_size[1])
-
-    rect = property(get_rect, set_rect)
-    """
-    bounds in parent's coordinates
-    """
-
     def add_anchor(self, mode: str):
         """
         Adds the options specified by mode to the anchor property.
@@ -260,7 +212,7 @@ class Widget:
         Args:
             mode:  The new anchor mode to add
 
-        Returns:ß
+        Returns:
         """
         self.anchor = "".join(set(self.anchor) | set(mode))
 
@@ -947,30 +899,8 @@ class Widget:
         # return r.collidepoint(p)
         # return r.collidepoint(pList[0], pList[1])
         return answer
-
-    #
-    # Python 3 update
-    # def _resized(self, (old_width, old_height)): # remove tuple parameters
-    #
-    def _resized(self, old_width, old_height):
-        """
-
-        Args:
-            old_width:
-            old_height:
-
-        Returns:
-
-        """
-        new_width, new_height = self._rect.size
-        dw = new_width - old_width
-        dh = new_height - old_height
-        if dw or dh:
-            self.resized(dw, dh)
-    #
     #
     #   Abstract methods follow
-    #
     #
 
     def draw(self, surface: Surface):
@@ -1060,68 +990,6 @@ class Widget:
 
         """
         pass
-
-    def resized(self, dw, dh):
-        """
-        Called when the widget changes size as a result of assigning to its width, height or size attributes,
-        with (dw, dh) being the amount of the change. The default is to call parent_resized on each of its subwidgets.
-
-        Args:
-            dw:  width
-            dh:  height
-
-        Returns:
-
-        """
-        if self.debug_resize:
-            self.logger.info("Widget.resized: %s by: (%s, %s) to %s", self, dw, dh, self.size)
-        for widget in self.subwidgets:
-            widget.parent_resized(dw, dh)
-
-    def parent_resized(self, dw, dh):
-        """
-        Called when the widget's parent changes size as a result of assigning to its width, height or size
-        attributes, with (dw, dh) being the amount of the change. The default is to resize and/or reposition
-        the widget according to its anchor attribute.
-
-        Args:
-            dw:  Width
-            dh:  Height
-
-        """
-        debug_resize = self.debug_resize or self.parent.debug_resize
-
-        if debug_resize:
-            self.logger.info("Widget_parent_resized %s, by (%s, %s)", self, dw, dh)
-
-        left, top, width, height = self._rect
-        move = False
-        resize = False
-        anchor = self.anchor
-
-        if dw and 'r' in anchor:
-            if 'l' in anchor:
-                resize = True
-                width += dw
-            else:
-                move = True
-                left += dw
-        if dh and 'b' in anchor:
-            if 't' in anchor:
-                resize = True
-                height += dh
-            else:
-                move = True
-                top += dh
-
-        if resize:
-            if debug_resize:
-                self.logger.info("Widget.parent_resized: changing rect to (%s, %s, %s, %s)", left, top, width, height)
-            self.rect = (left, top, width, height)
-        elif move:
-            if debug_resize:
-                self.logger.info("Widget.parent_resized: moving to (%s,%s)", left, top)
-            self._rect.topleft = (left, top)
 
     def get_visible(self):
         """
