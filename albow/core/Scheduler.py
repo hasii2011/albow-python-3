@@ -91,7 +91,7 @@ class Scheduler:
     @staticmethod
     def timestamp():
 
-        return time() * 1000.0 - CoreUtilities.time_base
+        return time() * 1000.0 - CoreUtilities.timeBase
 
     @staticmethod
     def cancel_call(token):

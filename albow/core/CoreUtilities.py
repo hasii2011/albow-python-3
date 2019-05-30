@@ -52,7 +52,7 @@ MOD_KEYS = {
 
 class CoreUtilities:
 
-    time_base = 0
+    timeBase = 0
 
     """
     A static class for some leftover module functions
@@ -72,5 +72,5 @@ class CoreUtilities:
     @staticmethod
     def init_timebase():
 
-        CoreUtilities.time_base = time() * 1000.0 - get_ticks()
-        print(f"time_base: {str(CoreUtilities.time_base)}")
+        CoreUtilities.timeBase = time() * 1000.0 - get_ticks()
+        print(f"timeBase: {str(CoreUtilities.timeBase)}")
