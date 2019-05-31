@@ -149,7 +149,6 @@ class RootWidget(Widget):
             modal_widget.is_modal = True
             modal_widget.modal_result = None
             if not modal_widget.focus_switch:
-
                 modal_widget.tab_to_first()
 
             num_clicks = 0
