@@ -115,4 +115,3 @@ class FileDialog(Dialog):
 
     def cancel(self):
         self.dismiss(False)
-
