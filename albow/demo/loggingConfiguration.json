@@ -34,7 +34,7 @@
             "propagate": "0"
         },
 
-        "albow.core.Widget": {
+        "albow.core.ui.Widget": {
             "level": "INFO",
             "handlers": [
                 "consoleHandler"
@@ -114,13 +114,6 @@
             "propagate": "0"
         },
         "albow.widgets.ListBox": {
-            "level": "INFO",
-            "handlers": [
-                "consoleHandler"
-            ],
-            "propagate": "0"
-        },
-        "albow.core.root": {
             "level": "INFO",
             "handlers": [
                 "consoleHandler"
