@@ -1,5 +1,5 @@
 
-from core.ui.Shell import Shell
+from albow.core.ui.Shell import Shell
 from albow.text.TextScreen import TextScreen
 
 from albow.demo.screens.DemoMultiChoiceScreen import DemoMultiChoiceScreen
