@@ -1,9 +1,11 @@
 """
     The Albow OpenGL Demonstration program
 """
-import os
 import sys
-from os.path import dirname as d
+
+import json
+
+import logging.config
 
 import pygame
 
@@ -24,6 +26,7 @@ from albow.demo.openGL.OrthoDemo import OrthoDemo
 from albow.demo.openGL.PerspectiveDemo import PerspectiveDemo
 from albow.demo.openGL.DemoButton import DemoButton
 
+JSON_LOGGING_CONFIG_FILENAME = "../loggingConfiguration.json"
 
 def ortho_controls(ortho: OrthoDemo) -> Row:
 
@@ -68,6 +71,13 @@ flags = 0
 
 
 def main():
+
+    with open(JSON_LOGGING_CONFIG_FILENAME, 'r') as loggingConfigurationFile:
+        configurationDictionary = json.load(loggingConfigurationFile)
+
+    logging.config.dictConfig(configurationDictionary)
+    logging.logProcesses = False
+    logging.logThreads = False
 
     #
     # Have to get all the theme attributes defined first before

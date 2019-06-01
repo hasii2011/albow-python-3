@@ -1,11 +1,7 @@
 """
     The Albow Demonstration Program
 """
-import os
-import sys
 import json
-
-from os.path import dirname
 
 import pygame
 import logging.config
