@@ -17,11 +17,11 @@ from pygame.event import Event
 from pygame.event import get_grab
 from pygame.event import set_grab
 
-from core.ui.Widget import Widget
+from albow.core.ui.Widget import Widget
 from albow.core.Scheduler import Scheduler
 from albow.core.CoreUtilities import CoreUtilities
-from core.exceptions.CancelException import CancelException
-from core.exceptions.ApplicationException import ApplicationException
+from albow.core.exceptions.CancelException import CancelException
+from albow.core.exceptions.ApplicationException import ApplicationException
 
 from albow.core.UserEventCall import UserEventCall
 
@@ -95,6 +95,7 @@ class RootWidget(Widget):
         """
         super().__init__(surface.get_rect(), **kwds)
 
+        print(f"__name__: '{__name__}'")
         CoreUtilities.init_timebase()
         self.surface = surface
         RootWidget.root_widget = self

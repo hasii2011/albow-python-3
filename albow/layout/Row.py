@@ -1,7 +1,7 @@
 
 from typing import List
 
-from core.ui.Widget import Widget
+from albow.core.ui.Widget import Widget
 
 from albow.layout.RowOrColumn import RowOrColumn
 

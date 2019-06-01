@@ -1,5 +1,5 @@
 
-from core.ui.Shell import Shell
+from albow.core.ui.Shell import Shell
 
 from albow.widgets.Button import Button
 from albow.widgets.Label import Label

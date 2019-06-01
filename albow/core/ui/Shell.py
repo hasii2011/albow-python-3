@@ -3,7 +3,7 @@ from pygame.event import Event
 
 from pygame import Surface
 
-from core.ui.RootWidget import RootWidget
+from albow.core.ui.RootWidget import RootWidget
 
 
 class Shell(RootWidget):

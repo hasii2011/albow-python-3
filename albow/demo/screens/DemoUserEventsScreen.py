@@ -7,8 +7,8 @@ import pygame
 from pygame.event import Event
 from pygame.font import Font
 
-from core.ui.RootWidget import RootWidget
-from core.ui.Shell import Shell
+from albow.core.ui.RootWidget import RootWidget
+from albow.core.ui.Shell import Shell
 from albow.core.UserEventCall import UserEventCall
 from albow.core.ResourceUtility import ResourceUtility
 

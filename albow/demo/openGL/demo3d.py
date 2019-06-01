@@ -69,8 +69,6 @@ flags = 0
 
 def main():
 
-    sys.path.insert(1, d(d(os.path.abspath(sys.argv[0]))))
-
     #
     # Have to get all the theme attributes defined first before
     # anything is imported with ThemeProperty attributes

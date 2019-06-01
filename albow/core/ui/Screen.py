@@ -1,8 +1,8 @@
 
 from pygame.event import Event
 
-from core.ui.Shell import Shell
-from core.ui.Widget import Widget
+from albow.core.ui.Shell import Shell
+from albow.core.ui.Widget import Widget
 
 
 class Screen(Widget):

@@ -3,7 +3,7 @@ from pygame import Surface
 
 from pygame.event import Event
 
-from core.ui.RootWidget import RootWidget
+from albow.core.ui.RootWidget import RootWidget
 
 from albow.dialog.Dialog import Dialog
 from albow.themes.ThemeProperty import ThemeProperty

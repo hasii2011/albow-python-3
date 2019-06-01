@@ -1,7 +1,7 @@
 
 from pygame import Surface
 
-from core.ui.Widget import Widget
+from albow.core.ui.Widget import Widget
 
 class DirectoryPathView(Widget):
 

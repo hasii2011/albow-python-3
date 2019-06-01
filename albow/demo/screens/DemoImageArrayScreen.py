@@ -1,5 +1,5 @@
 
-from core.ui.Shell import Shell
+from albow.core.ui.Shell import Shell
 
 from albow.containers.ImageArray import get_image_array
 

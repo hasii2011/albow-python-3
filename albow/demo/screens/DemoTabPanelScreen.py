@@ -1,7 +1,7 @@
 
 from albow.containers.TabPanel import TabPanel
-from core.ui.Widget import Widget
-from core.ui.Shell import Shell
+from albow.core.ui.Widget import Widget
+from albow.core.ui.Shell import Shell
 
 from albow.widgets.Label import Label
 

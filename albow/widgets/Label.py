@@ -5,7 +5,7 @@ from pygame import Surface
 
 from albow.utils import overridable_property
 
-from core.ui.Widget import Widget
+from albow.core.ui.Widget import Widget
 
 from albow.themes.ThemeProperty import ThemeProperty
 

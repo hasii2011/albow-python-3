@@ -1,5 +1,5 @@
 
-from core.exceptions.ApplicationException import ApplicationException
+from albow.core.exceptions.ApplicationException import ApplicationException
 
 
 class CancelException(ApplicationException):

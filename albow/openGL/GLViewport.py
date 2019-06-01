@@ -6,7 +6,7 @@ from pygame.display import get_surface as get_display
 from OpenGL import GL
 from OpenGL import GLU
 
-from core.ui.Widget import Widget
+from albow.core.ui.Widget import Widget
 
 
 class GLViewport(Widget):

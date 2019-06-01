@@ -1,7 +1,7 @@
 
 import logging
 
-from core.ui.Shell import Shell
+from albow.core.ui.Shell import Shell
 
 from albow.layout.Column import Column
 

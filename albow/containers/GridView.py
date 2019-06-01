@@ -4,7 +4,7 @@ from pygame import Surface
 
 from pygame.event import Event
 
-from core.ui.Widget import Widget
+from albow.core.ui.Widget import Widget
 
 
 class GridView(Widget):

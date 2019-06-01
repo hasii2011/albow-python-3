@@ -1,6 +1,6 @@
 
 from pygame.locals import *
-from core.ui.Screen import Screen
+from albow.core.ui.Screen import Screen
 
 from albow.themes.FontProperty import FontProperty
 

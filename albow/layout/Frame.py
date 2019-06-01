@@ -1,5 +1,5 @@
 
-from core.ui.Widget import Widget
+from albow.core.ui.Widget import Widget
 
 
 class Frame(Widget):

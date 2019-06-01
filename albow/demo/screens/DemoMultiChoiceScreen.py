@@ -4,7 +4,7 @@ import pygame
 
 import logging
 
-from core.ui.Shell import Shell
+from albow.core.ui.Shell import Shell
 from albow.core.ResourceUtility import ResourceUtility
 
 from albow.widgets.Label import Label
