@@ -8,7 +8,6 @@ from time import sleep
 import logging
 from logging import Logger
 
-from pygame.locals import *
 
 import pygame
 from pygame.mouse import set_visible as set_mouse_visible
@@ -19,6 +18,9 @@ from pygame import Surface
 from pygame.event import Event
 from pygame.event import get_grab
 from pygame.event import set_grab
+
+from pygame.locals import USEREVENT
+from pygame.locals import OPENGL
 
 from albow.core.ui.Widget import Widget
 
@@ -105,10 +107,7 @@ class RootWidget(Widget):
         self.surface = surface
         RootWidget.root_widget = self
         Widget.root_widget = self
-        #
-        # Python 3 update
-        #
-        # self.is_gl = surface.get_flags() & OPENGL <> 0
+
         self.is_gl = surface.get_flags() & OPENGL != 0
         # RootWidget.classLogger.info(f"self.is_gl: {self.is_gl}")
         if self.is_gl:
@@ -158,8 +157,6 @@ class RootWidget(Widget):
             if not modal_widget.focus_switch:
                 modal_widget.tab_to_first()
 
-            num_clicks = 0
-            last_click_time = 0
             self.do_draw = True
             use_sleep = self._use_sleep
             from albow.core.ui.AlbowEventLoop import AlbowEventLoop
@@ -168,11 +165,7 @@ class RootWidget(Widget):
             eventLoop: AlbowEventLoop = AlbowEventLoop(modalWidget=modal_widget, containingWidget=self)
 
             while modal_widget.modal_result is None:
-                # print "RootWidget: frame_time =", self.frame_time ###
-                #
-                # Python 3 update
-                #
-                # defer_drawing = self.frame_time <> 0.0 and modal_widget.defer_drawing()
+
                 defer_drawing = self.frame_time != 0.0 and modal_widget.defer_drawing()
                 try:
                     if not is_modal:
@@ -189,15 +182,10 @@ class RootWidget(Widget):
                             RootWidget.ourTimerEvent = None
                         else:
                             if defer_drawing:
-                                # print "RootWidget: Clearing do_draw because of defer_drawing" ###
                                 self.do_draw = False
-
                     # RootWidget.classLogger.info(f"self.do_draw: {self.do_draw}")
                     if self.do_draw:
                         if self.is_gl:
-                            # self.gl_clear()
-                            # self.gl_draw_all(self, (0, 0))
-                            # GL.glFlush()
                             gl_surface = self.gl_surface
                             gl_surface.gl_clear(self.bg_color)
                             self.gl_draw_all(gl_surface)
@@ -207,70 +195,46 @@ class RootWidget(Widget):
                         self.do_draw = False
                         # tb1 = timestamp() ###
                         pygame.display.flip()
-                    # tb2 = timestamp() ###
-                    # print "RootWidget: Flip block  %5d" % (tb2 - tb1) ###
+
                     in_relative_mode = bool(modal_widget.relative_mode())
                     grab = in_relative_mode and not relative_pause
-                    # if grab <> get_grab():
                     if grab != get_grab():
                         set_grab(grab)
                         set_mouse_visible(not grab)
                         relative_warmup = 3     # Ignore spurious deltas on entering relative mode
-                        # tb1 = timestamp() ###
-                        # print "RootWidget: use_sleep =", use_sleep, "defer_drawing =", defer_drawing ###
                     if use_sleep and defer_drawing:
-                        #  print "RootWidget: Handling timing" ###
+
                         time_now = Scheduler.timestamp()
-                        #  print "RootWidget: Time is now", time_now ###
+
                         if RootWidget.nextFrameDue < time_now:
-                            #  print "RootWidget: Adjusting next frame due time to time now" ###
                             RootWidget.nextFrameDue = time_now
-                            #  print "RootWidget: Waiting for next frame due at", next_frame_due ###
-                        while 1:
+
+                        while True:
                             sleep_time = Scheduler.make_due_calls(time_now, RootWidget.nextFrameDue)
                             if sleep_time <= 0.0:
                                 break
-                            # print "RootWidget: Sleeping for", sleep_time ###
+
                             sleep(sleep_time / 1000.0)
                             time_now = Scheduler.timestamp()
                         RootWidget.nextFrameDue += self.frame_time
-                        # print "RootWidget: Next frame now due at", next_frame_due ###
-                        #
-                        # Pygame 1.9 update
-                        #
-                        # timer_event = Event(USEREVENT, time = time_now)
                         RootWidget.ourTimerEvent = Event(USEREVENT, {'time': time_now})
                         events = []
                     else:
                         events = [pygame.event.wait()]
-                    # tb2 = timestamp() ###
-                    # tb = tb2 - tb1 ###
-                    # if tb: ###
-                    # print "RootWidget: Event block %5d" % tb ###
                     events.extend(pygame.event.get())
 
-                    loopParams: EventLoopParams = EventLoopParams(in_relative_mode=in_relative_mode,
-                                                                  use_sleep=use_sleep,
-                                                                  defer_drawing=defer_drawing,
-                                                                  relative_pause=relative_pause,
-                                                                  do_draw=self.do_draw,
-                                                                  relative_warmup=relative_warmup)
-                    newParams: EventLoopParams = eventLoop.processEvents(eventList=events, eventLoopParams=loopParams)
-                    # RootWidget.classLogger.info(f"newParams: {newParams}")
+                    loopParams: EventLoopParams = EventLoopParams(use_sleep=use_sleep, relative_pause=relative_pause, do_draw=self.do_draw, relative_warmup=relative_warmup)
 
-                    in_relative_mode = newParams.in_relative_mode
+                    newParams: EventLoopParams = eventLoop.processEvents(eventList=events, relativeMode=in_relative_mode, deferDrawing=defer_drawing, eventLoopParams=loopParams)
+
                     use_sleep = newParams.use_sleep
-                    defer_drawing = newParams.do_draw
                     relative_pause = newParams.relative_pause
                     self.do_draw = newParams.do_draw
                     relative_warmup = newParams.relative_warmup
 
                 except CancelException:
                     pass
-                #
-                # Python 3 update
-                #
-                # except ApplicationError, e:
+
                 except ApplicationException as e:
                     self.report_error(e)
         finally:

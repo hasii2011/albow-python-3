@@ -36,17 +36,16 @@ class AlbowEventLoop:
         self.modal_widget = modalWidget
         self.containingWidget = containingWidget
 
-    def processEvents(self, eventList: List[Event], eventLoopParams: EventLoopParams) -> EventLoopParams:
-
+    def processEvents(self, eventList: List[Event], relativeMode: bool, deferDrawing: bool, eventLoopParams: EventLoopParams) -> EventLoopParams:
 
         self.logger.info(f"Events to process: {len(eventList)}")
 
         last_click_time = 0
         num_clicks = 0
 
-        in_relative_mode = eventLoopParams.in_relative_mode
+        # relativeMode = eventLoopParams.in_relative_mode
         use_sleep = eventLoopParams.use_sleep
-        defer_drawing = eventLoopParams.defer_drawing
+        # deferDrawing = eventLoopParams.defer_drawing
         relative_pause = eventLoopParams.relative_pause
         do_draw = eventLoopParams.do_draw
         relative_warmup = eventLoopParams.relative_warmup
@@ -60,7 +59,6 @@ class AlbowEventLoop:
                 self.quit()
             elif eventType == MOUSEBUTTONDOWN:
                 # print "RootWidget: MOUSEBUTTONDOWN: setting do_draw" ###
-                # self.do_draw = True
                 do_draw = True
                 if t - last_click_time <= RootWidget.DOUBLE_CLICK_TIME:
                     num_clicks += 1
@@ -70,7 +68,7 @@ class AlbowEventLoop:
                 event.dict['num_clicks'] = num_clicks
                 CoreUtilities.add_modifiers(event)
                 RootWidget.last_mouse_event = event
-                if in_relative_mode:
+                if relativeMode:
                     event.dict['local'] = (0, 0)
                     if relative_pause:
                         relative_pause = False
@@ -91,7 +89,7 @@ class AlbowEventLoop:
             elif eventType == MOUSEMOTION:
                 CoreUtilities.add_modifiers(event)
                 RootWidget.last_mouse_event = event
-                if in_relative_mode:
+                if relativeMode:
                     event.dict['local'] = (0, 0)
                     if not relative_pause:
                         if relative_warmup:
@@ -114,9 +112,8 @@ class AlbowEventLoop:
             elif eventType == MOUSEBUTTONUP:
                 CoreUtilities.add_modifiers(event)
                 RootWidget.last_mouse_event = event
-                # self.do_draw = True
                 do_draw = True
-                if in_relative_mode:
+                if relativeMode:
                     event.dict['local'] = (0, 0)
                     if not relative_pause:
 
@@ -134,13 +131,13 @@ class AlbowEventLoop:
                         RootWidget.last_mouse_event_handler.handle_mouse('mouse_up', event)
             elif eventType == KEYDOWN:
                 key = event.key
-                if key == K_ESCAPE and in_relative_mode and event.mod & KMOD_CTRL and event.mod & KMOD_SHIFT:
+                if key == K_ESCAPE and relativeMode and event.mod & KMOD_CTRL and event.mod & KMOD_SHIFT:
                     relative_pause = True
                 elif relative_pause:
                     relative_pause = False
                 else:
                     CoreUtilities.set_modifier(key, True)
-                    # self.do_draw = True
+
                     do_draw = True
                     self.send_key(self.modal_widget, 'key_down', event)
                     if RootWidget.last_mouse_event_handler:
@@ -150,7 +147,7 @@ class AlbowEventLoop:
             elif eventType == KEYUP:
                 key = event.key
                 CoreUtilities.set_modifier(key, False)
-                # self.do_draw = True
+
                 do_draw = True
                 self.send_key(self.modal_widget, 'key_up', event)
                 if RootWidget.last_mouse_event_handler:
@@ -160,7 +157,7 @@ class AlbowEventLoop:
             elif eventType == RootWidget.MUSIC_END_EVENT:
                 self.music_end()
             elif eventType == USEREVENT:
-                if defer_drawing and not use_sleep:
+                if deferDrawing and not use_sleep:
                     RootWidget.ourTimerEvent = event
             else:
                 #
@@ -172,9 +169,10 @@ class AlbowEventLoop:
                         self.logger.debug(f"API User eventType: {eventType}")
                         cb.func(event)
 
-        retEventLoopParams: EventLoopParams = EventLoopParams(in_relative_mode=in_relative_mode,
-                                                              use_sleep=use_sleep,
-                                                              defer_drawing=defer_drawing,
+        #
+        # Set values that were read-only here to None
+        #
+        retEventLoopParams: EventLoopParams = EventLoopParams(use_sleep=use_sleep,
                                                               relative_pause=relative_pause,
                                                               do_draw=do_draw,
                                                               relative_warmup=relative_warmup)
