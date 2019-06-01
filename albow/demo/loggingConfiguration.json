@@ -33,8 +33,14 @@
             ],
             "propagate": "0"
         },
-
         "albow.core.ui.Widget": {
+            "level": "INFO",
+            "handlers": [
+                "consoleHandler"
+            ],
+            "propagate": "0"
+        },
+        "albow.core.ui.RootWidget": {
             "level": "INFO",
             "handlers": [
                 "consoleHandler"

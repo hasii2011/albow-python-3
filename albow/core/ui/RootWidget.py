@@ -5,6 +5,9 @@ import sys
 
 from time import sleep
 
+import logging
+from logging import Logger
+
 from pygame.locals import *
 
 import pygame
@@ -18,6 +21,7 @@ from pygame.event import get_grab
 from pygame.event import set_grab
 
 from albow.core.ui.Widget import Widget
+
 from albow.core.Scheduler import Scheduler
 from albow.core.CoreUtilities import CoreUtilities
 from albow.core.exceptions.CancelException import CancelException
@@ -81,6 +85,7 @@ class RootWidget(Widget):
 
     last_mouse_event: Event = Event(0, {'pos': (0, 0), 'local': (0, 0)})
 
+    classLogger: Logger
     userEventCallList: List = []
 
     def __init__(self, surface: Surface, **kwds):
@@ -95,7 +100,7 @@ class RootWidget(Widget):
         """
         super().__init__(surface.get_rect(), **kwds)
 
-        print(f"__name__: '{__name__}'")
+        RootWidget.classLogger = logging.getLogger(__name__)
         CoreUtilities.init_timebase()
         self.surface = surface
         RootWidget.root_widget = self
@@ -105,6 +110,7 @@ class RootWidget(Widget):
         #
         # self.is_gl = surface.get_flags() & OPENGL <> 0
         self.is_gl = surface.get_flags() & OPENGL != 0
+        # RootWidget.classLogger.info(f"self.is_gl: {self.is_gl}")
         if self.is_gl:
 
             from albow.openGL.GLSurface import GLSurface
@@ -156,6 +162,11 @@ class RootWidget(Widget):
             last_click_time = 0
             self.do_draw = True
             use_sleep = self._use_sleep
+            from albow.core.ui.AlbowEventLoop import AlbowEventLoop
+            from albow.core.ui.EventLoopParams import EventLoopParams
+
+            eventLoop: AlbowEventLoop = AlbowEventLoop(modalWidget=modal_widget, containingWidget=self)
+
             while modal_widget.modal_result is None:
                 # print "RootWidget: frame_time =", self.frame_time ###
                 #
@@ -180,7 +191,8 @@ class RootWidget(Widget):
                             if defer_drawing:
                                 # print "RootWidget: Clearing do_draw because of defer_drawing" ###
                                 self.do_draw = False
-                    # print "RootWidget: do_draw =", self.do_draw ###
+
+                    # RootWidget.classLogger.info(f"self.do_draw: {self.do_draw}")
                     if self.do_draw:
                         if self.is_gl:
                             # self.gl_clear()
@@ -236,122 +248,22 @@ class RootWidget(Widget):
                     # if tb: ###
                     # print "RootWidget: Event block %5d" % tb ###
                     events.extend(pygame.event.get())
-                    for event in events:
-                        t = Scheduler.timestamp()
-                        event.dict['time'] = t
-                        event.dict['local'] = getattr(event, 'pos', (0, 0))
-                        eventType = event.type
-                        if eventType == QUIT:
-                            self.quit()
-                        elif eventType == MOUSEBUTTONDOWN:
-                            # print "RootWidget: MOUSEBUTTONDOWN: setting do_draw" ###
-                            self.do_draw = True
-                            if t - last_click_time <= RootWidget.DOUBLE_CLICK_TIME:
-                                num_clicks += 1
-                            else:
-                                num_clicks = 1
-                            last_click_time = t
-                            event.dict['num_clicks'] = num_clicks
-                            CoreUtilities.add_modifiers(event)
-                            RootWidget.last_mouse_event = event
-                            if in_relative_mode:
-                                event.dict['local'] = (0, 0)
-                                if relative_pause:
-                                    relative_pause = False
-                                else:
-                                    #  modal_widget.dispatch_key('mouse_down', event)
-                                    mouse_widget = modal_widget.get_focus()
-                                    RootWidget.clicked_widget = mouse_widget
-                                    RootWidget.last_mouse_event_handler = mouse_widget
-                                    mouse_widget.handle_event('mouse_down', event)
-                            else:
-                                mouse_widget = self.find_widget(event.pos)
-                                if not mouse_widget.is_inside(modal_widget):
-                                    mouse_widget = modal_widget
-                                RootWidget.clicked_widget = mouse_widget
-                                RootWidget.last_mouse_event_handler = mouse_widget
-                                mouse_widget.notify_attention_loss()
-                                mouse_widget.handle_mouse('mouse_down', event)
-                        elif eventType == MOUSEMOTION:
-                            CoreUtilities.add_modifiers(event)
-                            RootWidget.last_mouse_event = event
-                            if in_relative_mode:
-                                event.dict['local'] = (0, 0)
-                                if not relative_pause:
-                                    if relative_warmup:
-                                        relative_warmup -= 1
-                                    else:
-                                        #  modal_widget.dispatch_key('mouse_delta', event)
-                                        mouse_widget = RootWidget.clicked_widget or modal_widget.get_focus()
-                                        RootWidget.last_mouse_event_handler = mouse_widget
-                                        mouse_widget.handle_event('mouse_delta', event)
-                            else:
-                                mouse_widget = self.find_widget(event.pos)   # Do this in else branch?
-                                if RootWidget.clicked_widget:
-                                    RootWidget.last_mouse_event_handler = mouse_widget  # Should this be clicked_widget?
-                                    RootWidget.clicked_widget.handle_mouse('mouse_drag', event)
-                                else:
-                                    if not mouse_widget.is_inside(modal_widget):
-                                        mouse_widget = modal_widget
-                                    RootWidget.last_mouse_event_handler = mouse_widget
-                                    mouse_widget.handle_mouse('mouse_move', event)
-                        elif eventType == MOUSEBUTTONUP:
-                            CoreUtilities.add_modifiers(event)
-                            RootWidget.last_mouse_event = event
-                            self.do_draw = True
-                            if in_relative_mode:
-                                event.dict['local'] = (0, 0)
-                                if not relative_pause:
 
-                                    if RootWidget.clicked_widget:
-                                        mouse_widget = RootWidget.clicked_widget
-                                        RootWidget.clicked_widget = None
-                                    else:
-                                        mouse_widget = modal_widget.get_focus()
-                                    RootWidget.last_mouse_event_handler = mouse_widget
-                                    mouse_widget.handle_event('mouse_up', event)
-                            else:
-                                if RootWidget.clicked_widget:
-                                    RootWidget.last_mouse_event_handler = RootWidget.clicked_widget
-                                    RootWidget.clicked_widget = None
-                                    RootWidget.last_mouse_event_handler.handle_mouse('mouse_up', event)
-                        elif eventType == KEYDOWN:
-                            key = event.key
-                            if key == K_ESCAPE and in_relative_mode and \
-                                    event.mod & KMOD_CTRL and event.mod & KMOD_SHIFT:
-                                relative_pause = True
-                            elif relative_pause:
-                                relative_pause = False
-                            else:
-                                CoreUtilities.set_modifier(key, True)
-                                self.do_draw = True
-                                self.send_key(modal_widget, 'key_down', event)
-                                if RootWidget.last_mouse_event_handler:
-                                    event.dict['pos'] = RootWidget.last_mouse_event.pos
-                                    event.dict['local'] = RootWidget.last_mouse_event.local
-                                    RootWidget.last_mouse_event_handler.setup_cursor(event)
-                        elif eventType == KEYUP:
-                            key = event.key
-                            CoreUtilities.set_modifier(key, False)
-                            self.do_draw = True
-                            self.send_key(modal_widget, 'key_up', event)
-                            if RootWidget.last_mouse_event_handler:
-                                event.dict['pos'] = RootWidget.last_mouse_event.pos
-                                event.dict['local'] = RootWidget.last_mouse_event.local
-                                RootWidget.last_mouse_event_handler.setup_cursor(event)
-                        elif eventType == RootWidget.MUSIC_END_EVENT:
-                            self.music_end()
-                        elif eventType == USEREVENT:
-                            if defer_drawing and not use_sleep:
-                                RootWidget.ourTimerEvent = event
-                        else:
-                            #
-                            # Maybe someone has registered some user events handler
-                            #
-                            for cb in RootWidget.userEventCallList:
-                                if cb.userEvent == eventType:
-                                    self.logger.debug(f"API User eventType: {eventType}")
-                                    cb.func(event)
+                    loopParams: EventLoopParams = EventLoopParams(in_relative_mode=in_relative_mode,
+                                                                  use_sleep=use_sleep,
+                                                                  defer_drawing=defer_drawing,
+                                                                  relative_pause=relative_pause,
+                                                                  do_draw=self.do_draw,
+                                                                  relative_warmup=relative_warmup)
+                    newParams: EventLoopParams = eventLoop.processEvents(eventList=events, eventLoopParams=loopParams)
+                    # RootWidget.classLogger.info(f"newParams: {newParams}")
+
+                    in_relative_mode = newParams.in_relative_mode
+                    use_sleep = newParams.use_sleep
+                    defer_drawing = newParams.do_draw
+                    relative_pause = newParams.relative_pause
+                    self.do_draw = newParams.do_draw
+                    relative_warmup = newParams.relative_warmup
 
                 except CancelException:
                     pass
@@ -411,11 +323,16 @@ class RootWidget(Widget):
     def getFocus():
         return RootWidget.top_widget.get_focus()
 
-    @staticmethod
-    def addUserEvent(newCallback: UserEventCall):
+    @classmethod
+    def addUserEvent(cls, newCallback: UserEventCall):
 
-        RootWidget.userEventCallList.append(newCallback)
+        cls.userEventCallList.append(newCallback)
+        cls.classLogger.debug(f"add - userEventListSize: {len(cls.userEventCallList)}")
 
+    @classmethod
+    def getUserEventList(cls):
+        cls.classLogger.debug(f"get - userEventListSize: {len(cls.userEventCallList)}")
+        return cls.userEventCallList
     # ========================================================================
     #
     #  Abstract methods follow
