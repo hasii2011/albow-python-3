@@ -17,49 +17,56 @@ class DemoTextFieldsScreen(BaseDemoScreen):
     """
     Text Field
     """
+    nameField: TextField
+    raceField: TextField
+    resultLabel: Label
 
     def __init__(self, shell: Shell):
         """
 
         :param shell:
         """
-        #
-        # Python 3 update
-        #
-        # Screen.__init__(self, shell)
         super().__init__(shell)
 
-        nameLabel: Label          = Label("Name: ")
-        self.nameField: TextField = TextField(width=150)
-        raceLabel: Label          = Label("Race: ")
-        self.raceField: TextField = TextField(width=150)
+        contents = DemoTextFieldsScreen.makeContents(self.backButton)
+        self.add_centered(contents)
+
+    @classmethod
+    def ok(cls):
+        cls.resultLabel.text = "You are a %s called %s." % (cls.raceField.text, cls.nameField.text)
+
+    @classmethod
+    def makeContents(cls, backButton: Button = None) -> Column:
+
+        nameLabel: Label = Label("Name: ")
+        raceLabel: Label = Label("Race: ")
+
+        cls.nameField: TextField = TextField(width=150)
+        cls.raceField: TextField = TextField(width=150)
 
         rows = [
-            [nameLabel, self.nameField],
-            [raceLabel, self.raceField]
+            [nameLabel, cls.nameField],
+            [raceLabel, cls.raceField]
         ]
         fieldGrid: Grid = Grid(rows)
 
-        self.resultLabel = Label("", font=self.labelFont)
-        self.resultLabel.width = 400
+        # cls.resultLabel = Label("", font=self.labelFont)
+        cls.resultLabel = Label("")
+        cls.resultLabel.width = 400
 
         minMaxAttrs = {'min': 50, 'max': 240}
         minMaxField: TextField = TextField(**minMaxAttrs)
         minMaxField.set_text("I should be 240 wide")
 
-        okBtnAttrs = {
-            'font': self.smallButtonFont
-        }
-
-        okBtn = Button("OK", action=self.ok, **okBtnAttrs)
+        okBtn = Button("OK", action=cls.ok)
 
         contentAttrs = {
             "align": "c"
         }
 
-        contents: Column = Column([fieldGrid, self.resultLabel, okBtn, minMaxField, self.backButton], **contentAttrs)
+        if backButton is None:
+            contents: Column = Column([fieldGrid, cls.resultLabel, okBtn, minMaxField], **contentAttrs)
+        else:
+            contents: Column = Column([fieldGrid, cls.resultLabel, okBtn, minMaxField, backButton], **contentAttrs)
 
-        self.add_centered(contents)
-
-    def ok(self):
-        self.resultLabel.text = "You are a %s called %s." % (self.raceField.text, self.nameField.text)
+        return contents

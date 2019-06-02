@@ -3,13 +3,12 @@ from math import pi
 
 from albow.References import AttrRef
 
-from albow.themes.Theme import Theme
-
 from albow.input.FloatField import FloatField
 
 from albow.widgets.ValueDisplay import ValueDisplay
 
 from albow.widgets.Label import Label
+from albow.widgets.Button import Button
 from albow.widgets.RadioButton import RadioButton
 from albow.widgets.ImageButton import ImageButton
 
@@ -52,6 +51,13 @@ class DemoControlsScreen(BaseDemoScreen):
         """
         super().__init__(shell)
 
+        contents = DemoControlsScreen.makeContents(self.backButton)
+
+        self.add_centered(contents)
+
+    @classmethod
+    def makeContents(cls, backButton: Button = None) -> Column:
+
         model = DemoControlsModel()
 
         width_field  = FloatField  (ref=AttrRef(base=model, name='width'))
@@ -83,6 +89,10 @@ class DemoControlsScreen(BaseDemoScreen):
             [Label("Enabled"), imgBtnEnabledBall]
         ])
 
-        contents = Column([grid, imgBtnTitle, imgBtnGrid, self.backButton])
-        self.add_centered(contents)
         width_field.focus()
+
+        if backButton is None:
+            contents = Column([grid, imgBtnTitle, imgBtnGrid])
+        else:
+            contents = Column([grid, imgBtnTitle, imgBtnGrid, backButton])
+        return contents
