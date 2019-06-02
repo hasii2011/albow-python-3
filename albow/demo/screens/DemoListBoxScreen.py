@@ -14,14 +14,14 @@ from albow.widgets.ListBox import ListBox
 
 from albow.demo.screens.BaseDemoScreen import BaseDemoScreen
 
-DEMO_LIST_DATA = [
-    "Humberto", "Fran", "Opie", "Gabriel (Gabby10Meows)"
-]
-
-DEMO_LABEL_TEXT_SIZE = 18
-
 
 class DemoListBoxScreen(BaseDemoScreen):
+
+    DEMO_LIST_DATA = [
+        "Humberto", "Fran", "Opie", "Gabriel (Gabby10Meows)"
+    ]
+
+    DEMO_LABEL_TEXT_SIZE = 18
 
     selectedLabel: Label = None
 
@@ -31,11 +31,11 @@ class DemoListBoxScreen(BaseDemoScreen):
 
         super().__init__(shell=shell)
 
-        labelFont = ResourceUtility.get_font(DEMO_LABEL_TEXT_SIZE, Theme.BUILT_IN_FONT)
+        labelFont = ResourceUtility.get_font(DemoListBoxScreen.DEMO_LABEL_TEXT_SIZE, Theme.BUILT_IN_FONT)
 
         demoListBoxLabel: Label = Label(text="Pick a good guy", font=labelFont)
 
-        demoListBox: ListBox = ListBox(theClient=self, theItems=DEMO_LIST_DATA, selectAction=self.selectAction)
+        demoListBox: ListBox = ListBox(theClient=self, theItems=DemoListBoxScreen.DEMO_LIST_DATA, selectAction=self.selectAction)
 
         self.selectedLabel: Label = Label(text="No selection")
         lbColumnAttrs = {
