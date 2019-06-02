@@ -13,8 +13,8 @@ JSON_LOGGING_CONFIG_FILENAME = "loggingConfiguration.json"
 
 # SCREEN_SIZE   = (640, 480)
 # DISPLAY_FLAGS = pygame.RESIZABLE
-DEMO_WINDOW_TITLE       = "Albow Demonstration"
-SCREEN_SIZE             = (480, 640)
+DEMO_WINDOW_TITLE       = "Albow Demonstration 2.0"
+SCREEN_SIZE             = (640, 480)
 DISPLAY_FLAGS           = 0
 
 def main():
@@ -40,7 +40,7 @@ def main():
     themeRoot: Theme = themeLoader.themeRoot
     Theme.setThemeRoot(themeRoot)
 
-    from albow.demo.DemoShell import DemoShell
+    from albow.demo.AlbowDemoShell import AlbowDemoShell
 
     pygame.init()
     pygame.display.set_caption("%s" % DEMO_WINDOW_TITLE)
@@ -54,7 +54,10 @@ def main():
     #   },
     logger  = logging.getLogger(__name__)
     display = pygame.display.set_mode(SCREEN_SIZE, DISPLAY_FLAGS)
-    shell   = DemoShell(display)
+    shellArgs = {
+        'margin':  5
+    }
+    shell   = AlbowDemoShell(display, **shellArgs)
 
     logger.info("Starting %s", __name__)
 

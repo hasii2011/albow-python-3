@@ -1,12 +1,12 @@
 
 from pygame import Surface
 
-from albow.core.Shell import Shell
+from albow.core.ui.Shell import Shell
 
-from org.hasii.pytrek.albow.StarTrekScreen import StarTrekScreen
+from albow.demo.AlbowDemoScreen import AlbowDemoScreen
 
 
-class StarTrekShell(Shell):
+class AlbowDemoShell(Shell):
 
     FRAME_TIME = 30
     """
@@ -17,7 +17,7 @@ class StarTrekShell(Shell):
 
         super().__init__(theSurface, **kwds)
 
-        self.set_timer(StarTrekShell.FRAME_TIME)
+        self.set_timer(AlbowDemoShell.FRAME_TIME)
 
-        self.screen: StarTrekScreen = StarTrekScreen(shell=self, theSurface=theSurface)
+        self.screen: AlbowDemoScreen = AlbowDemoScreen(shell=self, theSurface=theSurface)
         self.show_screen(self.screen)
