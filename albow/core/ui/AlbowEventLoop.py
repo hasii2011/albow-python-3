@@ -40,13 +40,13 @@ class AlbowEventLoop:
 
         self.logger.debug(f"Events to process: {len(eventList)}")
 
-        last_click_time = 0
-        num_clicks = 0
 
         use_sleep = eventLoopParams.use_sleep
         relative_pause = eventLoopParams.relative_pause
         do_draw = eventLoopParams.do_draw
         relative_warmup = eventLoopParams.relative_warmup
+        last_click_time = eventLoopParams.last_click_time
+        num_clicks = eventLoopParams.num_clicks
 
         for event in eventList:
             t = Scheduler.timestamp()
@@ -66,6 +66,8 @@ class AlbowEventLoop:
                 event.dict['num_clicks'] = num_clicks
                 CoreUtilities.add_modifiers(event)
                 RootWidget.last_mouse_event = event
+                self.logger.info(f"num_clicks: '{num_clicks}' -- t: '{t}' -- last_click_time: '{last_click_time}'")
+
                 if relativeMode:
                     event.dict['local'] = (0, 0)
                     if relative_pause:
@@ -168,13 +170,12 @@ class AlbowEventLoop:
                         self.logger.debug(f"API User eventType: {eventType}")
                         cb.func(event)
 
-        #
-        # Set values that were read-only here to None
-        #
         retEventLoopParams: EventLoopParams = EventLoopParams(use_sleep=use_sleep,
                                                               relative_pause=relative_pause,
                                                               do_draw=do_draw,
-                                                              relative_warmup=relative_warmup)
+                                                              relative_warmup=relative_warmup,
+                                                              last_click_time=last_click_time,
+                                                              num_clicks=num_clicks)
 
         return retEventLoopParams
 

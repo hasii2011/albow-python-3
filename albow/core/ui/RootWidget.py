@@ -165,6 +165,8 @@ class RootWidget(Widget):
 
             eventLoop: AlbowEventLoop = AlbowEventLoop(modalWidget=modal_widget, containingWidget=self)
 
+            last_click_time = 0
+            num_clicks = 0
             while modal_widget.modal_result is None:
 
                 defer_drawing = self.frame_time != 0.0 and modal_widget.defer_drawing()
@@ -224,14 +226,19 @@ class RootWidget(Widget):
                         events = [pygame.event.wait()]
                     events.extend(pygame.event.get())
 
-                    loopParams: EventLoopParams = EventLoopParams(use_sleep=use_sleep, relative_pause=relative_pause, do_draw=self.do_draw, relative_warmup=relative_warmup)
+                    loopParams: EventLoopParams = EventLoopParams(use_sleep=use_sleep, relative_pause=relative_pause, do_draw=self.do_draw,
+                                                                  relative_warmup=relative_warmup, last_click_time=last_click_time,
+                                                                  num_clicks=num_clicks)
 
-                    newParams: EventLoopParams = eventLoop.processEvents(eventList=events, relativeMode=in_relative_mode, deferDrawing=defer_drawing, eventLoopParams=loopParams)
+                    newParams: EventLoopParams = eventLoop.processEvents(eventList=events, relativeMode=in_relative_mode, deferDrawing=defer_drawing,
+                                                                         eventLoopParams=loopParams)
 
                     use_sleep = newParams.use_sleep
                     relative_pause = newParams.relative_pause
                     self.do_draw = newParams.do_draw
                     relative_warmup = newParams.relative_warmup
+                    last_click_time = newParams.last_click_time
+                    num_clicks = newParams.num_clicks
 
                 except CancelException:
                     pass
