@@ -1,5 +1,7 @@
 
 from pygame import draw
+from pygame import Surface
+from pygame import Rect
 
 from albow.utils import blit_in_rect
 
@@ -49,30 +51,32 @@ class TextMultiChoice(MultiChoice):
 
         self.labels = labels
 
-    def draw_item(self, surf, n, rect):
+    def draw_item(self, theSurface: Surface, n: int, theRect: Rect):
+
         buf = self.font.render(self.labels[n], True, self.fg_color)
-        blit_in_rect(surf, buf, rect, self.align, self.margin)
+        blit_in_rect(theSurface, buf, theRect, self.align, self.margin)
 
-    def draw_prehighlight(self, surf, theItemNumber, theRect):
+    def draw_prehighlight(self, theSurface: Surface, theItemNumber: int, theRect: Rect):
         if self.highlight_style == 'arrows':
-            self.draw_arrows(surf, theItemNumber, theRect)
+            self.draw_arrows(theSurface, theRect)
         else:
-            MultiChoice.draw_prehighlight(self, surf, theItemNumber, theRect)
+            MultiChoice.draw_prehighlight(self, theSurface, theItemNumber, theRect)
 
-    def draw_arrows(self, surf, i, rect):
+    def draw_arrows(self, theSurface: Surface, theRect: Rect):
         """
 
-        :param surf:
-        :param i:       TODO remove unused input parameter
-        :param rect:
-        :return:
+        Args:
+            theSurface: pygame surface to drawn
+
+            theRect: The pygame rectangle to draw in
+
         """
         m = self.margin
         color = self.sel_color or self.fg_color
-        x, y = rect.midtop
+        x, y = theRect.midtop
         pts = [(x - m, y - m), (x + m, y - m), (x, y)]
-        draw.polygon(surf, color, pts)
-        x, y = rect.midbottom
+        draw.polygon(theSurface, color, pts)
+        x, y = theRect.midbottom
         y -= 1
         pts = [(x - m, y + m), (x + m, y + m), (x, y)]
-        draw.polygon(surf, color, pts)
+        draw.polygon(theSurface, color, pts)
