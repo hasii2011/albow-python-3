@@ -12,6 +12,7 @@ from albow.core.ui.Screen import Screen
 from albow.containers.TabPanel import TabPanel
 
 from albow.layout.Row import Row
+from albow.layout.Column import Column
 from albow.layout.Frame import Frame
 
 from albow.demo.screens.DemoControlsScreen import DemoControlsScreen
@@ -19,6 +20,8 @@ from albow.demo.screens.DemoTextFieldsScreen import DemoTextFieldsScreen
 from albow.demo.screens.DemoDialogScreen import DemoDialogScreen
 from albow.demo.screens.DemoMultiChoiceScreen import DemoMultiChoiceScreen
 from albow.demo.screens.DemoImageArrayScreen import DemoImageArrayScreen
+from albow.demo.screens.DemoListBoxScreen import DemoListBoxScreen
+
 
 
 class AlbowDemoScreen(Screen):
@@ -58,6 +61,9 @@ class AlbowDemoScreen(Screen):
             frame: Frame = Frame(client=tabContents, margin=10)
             tabPanel.add_page(tabLabel, frame)
 
-        contents = Row([tabPanel], margin=5)
+        specialContents: Column = DemoListBoxScreen.makeContents(client=self)
+        specialFrame: Frame = Frame(client=specialContents, margin=10)
 
-        self.add(contents)
+        tabPanel.add_page("List Box", specialFrame)
+
+        self.add(tabPanel)

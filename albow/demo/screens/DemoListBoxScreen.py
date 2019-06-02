@@ -1,15 +1,18 @@
 
 import logging
+from logging import Logger
 
 from albow.core.ResourceUtility import ResourceUtility
 
 from albow.core.ui.Shell import Shell
+from albow.core.ui.Widget import Widget
 
 from albow.layout.Column import Column
 
 from albow.themes.Theme import Theme
 
 from albow.widgets.Label import Label
+from albow.widgets.Button import Button
 from albow.widgets.ListBox import ListBox
 
 from albow.demo.screens.BaseDemoScreen import BaseDemoScreen
@@ -24,20 +27,26 @@ class DemoListBoxScreen(BaseDemoScreen):
     DEMO_LABEL_TEXT_SIZE = 18
 
     selectedLabel: Label = None
+    logger: Logger = logging.getLogger(__name__)
 
     def __init__(self, shell: Shell):
 
-        self.logger = logging.getLogger(__name__)
-
         super().__init__(shell=shell)
+
+        contents = DemoListBoxScreen.makeContents(client=self, backButton=self.backButton)
+        self.add_centered(contents)
+        self.backButton.focus()
+
+    @classmethod
+    def makeContents(cls, client: Widget, backButton: Button=None) -> Column:
 
         labelFont = ResourceUtility.get_font(DemoListBoxScreen.DEMO_LABEL_TEXT_SIZE, Theme.BUILT_IN_FONT)
 
         demoListBoxLabel: Label = Label(text="Pick a good guy", font=labelFont)
 
-        demoListBox: ListBox = ListBox(theClient=self, theItems=DemoListBoxScreen.DEMO_LIST_DATA, selectAction=self.selectAction)
+        demoListBox: ListBox = ListBox(theClient=client, theItems=DemoListBoxScreen.DEMO_LIST_DATA, selectAction=cls.selectAction)
 
-        self.selectedLabel: Label = Label(text="No selection")
+        cls.selectedLabel: Label = Label(text="No selection")
         lbColumnAttrs = {
             "align": "c",
             'expand': 0
@@ -48,13 +57,16 @@ class DemoListBoxScreen(BaseDemoScreen):
             "align": "l",
             'expand': 0
         }
-        contents = Column([listBoxColumn,
-                           self.selectedLabel,
-                           self.backButton], **columnAttrs)
-        self.add_centered(contents)
-        self.backButton.focus()
+        if backButton is None:
+            contents = Column([listBoxColumn, cls.selectedLabel], **columnAttrs)
+        else:
+            contents = Column([listBoxColumn,
+                               cls.selectedLabel,
+                               backButton], **columnAttrs)
+        return contents
 
-    def selectAction(self, theSelectedItem: str):
+    @classmethod
+    def selectAction(cls, theSelectedItem: str):
 
-        self.logger.info("Selected item: %s", theSelectedItem)
-        self.selectedLabel.set_text(theSelectedItem)
+        cls.logger.info("Selected item: %s", theSelectedItem)
+        cls.selectedLabel.set_text(theSelectedItem)
