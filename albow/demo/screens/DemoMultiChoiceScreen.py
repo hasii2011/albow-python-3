@@ -3,11 +3,13 @@ import os
 import pygame
 
 import logging
+from logging import Logger
 
 from albow.core.ui.Shell import Shell
 from albow.core.ResourceUtility import ResourceUtility
 
 from albow.widgets.Label import Label
+from albow.widgets.Button import Button
 
 from albow.choices.TextMultiChoice import TextMultiChoice
 from albow.choices.ImageMultiChoice import ImageMultiChoice
@@ -36,17 +38,24 @@ DEMO_IMAGE_VALUES = [
 
 class DemoMultiChoiceScreen(BaseDemoScreen):
 
-    def __init__(self, shell: Shell):
+    classLogger: Logger = logging.getLogger(__name__)
 
-        self.logger = logging.getLogger(__name__)
+    def __init__(self, shell: Shell):
 
         super().__init__(shell=shell)
 
-        textLabel        = Label("Make a choice: ")
-        textMultiChoice  = self.makeTextMultiChoice()
+        contents = DemoMultiChoiceScreen.makeContents(backButton=self.backButton)
+        self.add_centered(contents)
+        self.backButton.focus()
+
+    @classmethod
+    def makeContents(cls, backButton: Button = None) -> Column:
+
+        textLabel       = Label("Make a choice: ")
+        textMultiChoice = cls.makeTextMultiChoice()
 
         imageLabel       = Label("Pick your ship: ")
-        imageMultiChoice = self.makeImageMultiChoice()
+        imageMultiChoice = cls.makeImageMultiChoice()
 
         rowAttrs = {
             'spacing': 2
@@ -64,12 +73,16 @@ class DemoMultiChoiceScreen(BaseDemoScreen):
             "margin": 5,
             'border_width': 1
         }
-        contents = Column([innerColumn, self.backButton], spacing=10, **columnAttrs)
+        if backButton is None:
+            # contents = Column([innerColumn, self.backButton], spacing=10, **columnAttrs)
+            contents = innerColumn
+        else:
+            contents = Column([innerColumn, backButton], spacing=10, **columnAttrs)
 
-        self.add_centered(contents)
-        self.backButton.focus()
+        return contents
 
-    def makeTextMultiChoice(self):
+    @classmethod
+    def makeTextMultiChoice(cls):
 
         textValues      = ["Value 1", "Value 2", "Value 3"]
         labelValues     = ["Choice 1", "Choice 2", "Choice 3"]
@@ -77,20 +90,21 @@ class DemoMultiChoiceScreen(BaseDemoScreen):
 
         return textMultiChoice
 
-    def makeImageMultiChoice(self):
+    @classmethod
+    def makeImageMultiChoice(cls):
 
-        self.logger.debug("Resource directory: %s", ResourceUtility.find_resource_dir())
+        cls.classLogger.debug(f"Resource directory: {ResourceUtility.find_resource_dir()}")
 
         pathToImages = ResourceUtility.find_resource_dir() + "/" + IMAGE_RESOURCES_SUBDIR
 
-        self.logger.debug("Path to images: %s", pathToImages)
+        cls.classLogger.debug(f"Path to images: {pathToImages}")
 
         choiceImages = []
         for imageFileName in DEMO_IMAGES:
 
             imagePath = os.path.join(pathToImages, imageFileName)
 
-            self.logger.debug("Image Path: %s", imagePath)
+            cls.classLogger.debug(f"Image Path: {imagePath}")
             choiceImage = pygame.image.load(imagePath)
             choiceImages.append(choiceImage)
 

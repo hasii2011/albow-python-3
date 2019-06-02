@@ -66,7 +66,7 @@ class AlbowEventLoop:
                 event.dict['num_clicks'] = num_clicks
                 CoreUtilities.add_modifiers(event)
                 RootWidget.last_mouse_event = event
-                self.logger.info(f"num_clicks: '{num_clicks}' -- t: '{t}' -- last_click_time: '{last_click_time}'")
+                self.logger.debug(f"num_clicks: '{num_clicks}' -- t: '{t}' -- last_click_time: '{last_click_time}'")
 
                 if relativeMode:
                     event.dict['local'] = (0, 0)
