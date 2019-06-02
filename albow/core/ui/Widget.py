@@ -236,10 +236,6 @@ class Widget(AlbowRect):
             anchor += chars[i]
         self.anchor = anchor + value
 
-    #
-    # update for 3.7
-    # https://stackoverflow.com/questions/33837918/type-hints-solve-circular-dependency
-    #
     def add(self, arg: 'Widget'):     # Python 3 forward reference;
         """
         Adds the given widget or sequence of widgets as a subwidget of this widget.
@@ -309,7 +305,7 @@ class Widget(AlbowRect):
             self.focus_switch = None
 
     def draw_all(self, surface):
-        # print "Widget.draw_all:", self, "on", surface ###
+
         if self.visible:
             surf_rect = surface.get_rect()
             bg_image = self.bg_image
@@ -342,10 +338,6 @@ class Widget(AlbowRect):
                 if sub_rect.width > 0 and sub_rect.height > 0:
                     try:
                         sub = surface.subsurface(sub_rect)
-                    #
-                    # Python 3 update
-                    #
-                    # except ValueError, e:
                     except ValueError as e:
                         if str(e) == "subsurface rectangle outside surface area":
                             self.diagnose_subsurface_problem(surface, widget)
@@ -376,10 +368,7 @@ class Widget(AlbowRect):
         for widget in self.subwidgets[::-1]:
             if widget.visible:
                 r = widget.rect
-                #
-                # Python 3 update
-                #
-                # if r.collidepoint(pos):
+
                 if isinstance(pos, map):
                     pos = list(pos)
                 if r.collidepoint(pos[0], pos[1]):
@@ -399,7 +388,6 @@ class Widget(AlbowRect):
 
         """
         posMap = self.global_to_local(event.pos)
-        # event.dict['local'] = self.global_to_local(event.pos)
         event.dict['local'] = list(posMap)
 
     def setup_cursor(self, event):
@@ -438,7 +426,6 @@ class Widget(AlbowRect):
         the widget that would have the keyboard focus if this widget were on the focus path.
 
         Returns:  A widget with the focus
-
         """
         widget = self
         while 1:
@@ -588,7 +575,6 @@ class Widget(AlbowRect):
         """
         Gives this widget the keyboard focus. The widget must be visible (i.e. contained within the root
         widget) for this to have any affect.
-
         """
         parent = self.next_handler()
         if parent:
@@ -607,7 +593,6 @@ class Widget(AlbowRect):
 
         Returns:    True if the widget is on the focus path, i.e. this widget or one of its subwidgets currently\
         has the keyboard focus.
-
         """
         return self.is_modal or (self.parent and self.parent.focused_on(self))
 
@@ -630,10 +615,6 @@ class Widget(AlbowRect):
             rmax = rects.pop()
             for r in rects:
                 rmax = rmax.union(r)
-            #
-            # Updated python 3 -- hasii
-            #
-            # self._rect.size = add(rmax.topleft, rmax.bottomright)
             self._rect.size = list(add(rmax.topleft, rmax.bottomright))
 
     def invalidate(self):
@@ -693,8 +674,6 @@ class Widget(AlbowRect):
             width:  The number of pixels or some sample text
 
             nLines: The number of lines in the text;  Defaults to 1
-
-
         """
         if width is not None:
             font = self.font
@@ -782,7 +761,6 @@ class Widget(AlbowRect):
 
     def gl_draw_all(self, gl_surface):
 
-        # print "Widget.gl_draw_all:", self, "on", gl_surface ###
         if self.visible:
             if self.is_gl_container:
                 self.gl_draw_self(gl_surface)
@@ -798,7 +776,6 @@ class Widget(AlbowRect):
 
     def gl_draw_self(self, gl_surface):
 
-        # print "Widget.gl_draw_self:", self ###
         gl_surface.gl_enter()
         # TODO: draw background and border here
         self.draw(gl_surface)

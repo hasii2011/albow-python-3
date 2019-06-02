@@ -151,14 +151,15 @@ class RootWidget(Widget):
             RootWidget.old_top_widget = RootWidget.top_widget
             RootWidget.top_widget = modal_widget
             was_modal = modal_widget.is_modal
-
             modal_widget.is_modal = True
+
             modal_widget.modal_result = None
             if not modal_widget.focus_switch:
                 modal_widget.tab_to_first()
 
             self.do_draw = True
             use_sleep = self._use_sleep
+
             from albow.core.ui.AlbowEventLoop import AlbowEventLoop
             from albow.core.ui.EventLoopParams import EventLoopParams
 
@@ -201,7 +202,7 @@ class RootWidget(Widget):
                     if grab != get_grab():
                         set_grab(grab)
                         set_mouse_visible(not grab)
-                        relative_warmup = 3     # Ignore spurious deltas on entering relative mode
+                        relative_warmup = 3            # Ignore spurious deltas on entering relative mode
                     if use_sleep and defer_drawing:
 
                         time_now = Scheduler.timestamp()
@@ -297,6 +298,7 @@ class RootWidget(Widget):
     def getUserEventList(cls):
         cls.classLogger.debug(f"get - userEventListSize: {len(cls.userEventCallList)}")
         return cls.userEventCallList
+
     # ========================================================================
     #
     #  Abstract methods follow
