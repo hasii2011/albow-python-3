@@ -38,14 +38,12 @@ class AlbowEventLoop:
 
     def processEvents(self, eventList: List[Event], relativeMode: bool, deferDrawing: bool, eventLoopParams: EventLoopParams) -> EventLoopParams:
 
-        self.logger.info(f"Events to process: {len(eventList)}")
+        self.logger.debug(f"Events to process: {len(eventList)}")
 
         last_click_time = 0
         num_clicks = 0
 
-        # relativeMode = eventLoopParams.in_relative_mode
         use_sleep = eventLoopParams.use_sleep
-        # deferDrawing = eventLoopParams.defer_drawing
         relative_pause = eventLoopParams.relative_pause
         do_draw = eventLoopParams.do_draw
         relative_warmup = eventLoopParams.relative_warmup
@@ -89,6 +87,7 @@ class AlbowEventLoop:
             elif eventType == MOUSEMOTION:
                 CoreUtilities.add_modifiers(event)
                 RootWidget.last_mouse_event = event
+
                 if relativeMode:
                     event.dict['local'] = (0, 0)
                     if not relative_pause:

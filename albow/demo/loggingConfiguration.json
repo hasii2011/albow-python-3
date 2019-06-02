@@ -47,6 +47,14 @@
             ],
             "propagate": "0"
         },
+        "albow.core.ui.AlbowEventLoop": {
+            "level": "INFO",
+            "handlers": [
+                "consoleHandler"
+            ],
+            "propagate": "0"
+        },
+
         "albow.widgets.Button": {
             "level": "INFO",
             "handlers": [

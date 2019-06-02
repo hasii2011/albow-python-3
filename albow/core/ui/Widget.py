@@ -280,8 +280,6 @@ class Widget(AlbowRect):
 
         Args:
             widget:  The widget to act on
-
-
         """
         if widget in self.subwidgets:
             widget.set_parent(None)
@@ -389,14 +387,13 @@ class Widget(AlbowRect):
         return self
 
     def handle_mouse(self, name, event):
+
         self.augment_mouse_event(event)
         self.call_handler(name, event)
         self.setup_cursor(event)
 
     def augment_mouse_event(self, event):
         """
-        Python 3 update.  local really needs to be a list
-
         Args:
             event:   The event to augment
 
@@ -838,7 +835,8 @@ class Widget(AlbowRect):
         """
         return False
 
-    def __contains__(self, event):
+    def __contains__(self, event: Event):
+
         r = Rect(self._rect)
         r.left = 0
         r.top = 0
@@ -849,12 +847,8 @@ class Widget(AlbowRect):
             pList = list(p)
             answer = r.collidepoint(pList[0], pList[1])
         except AttributeError as ae:
-            self.logger.error("Attribute error %s", ae.__repr__())
-        #
-        # Python 3 method signature change
-        #
-        # return r.collidepoint(p)
-        # return r.collidepoint(pList[0], pList[1])
+            self.logger.error(f"{ae.__repr__()}")
+
         return answer
     #
     #   Abstract methods follow

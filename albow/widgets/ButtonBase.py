@@ -24,8 +24,9 @@ class ButtonBase(Control):
             self._highlighted = True
 
     def mouse_drag(self, theEvent: event):
-        state = event in self
-        # if state <> self._highlighted:
+
+        state = theEvent in self
+
         if state != self._highlighted:
             self._highlighted = state
             self.invalidate()
