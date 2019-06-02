@@ -16,6 +16,7 @@ from albow.layout.Frame import Frame
 
 from albow.demo.screens.DemoControlsScreen import DemoControlsScreen
 from albow.demo.screens.DemoTextFieldsScreen import DemoTextFieldsScreen
+from albow.demo.screens.DemoDialogScreen import DemoDialogScreen
 
 
 class AlbowDemoScreen(Screen):
@@ -29,7 +30,8 @@ class AlbowDemoScreen(Screen):
     ]
     demoTabs = [
         ('Controls', DemoControlsScreen.makeContents),
-        ('Text Fields', DemoTextFieldsScreen.makeContents)
+        ('Text Fields', DemoTextFieldsScreen.makeContents),
+        ('Dialogs', DemoDialogScreen.makeContents)
     ]
 
     def __init__(self, shell: Shell, theSurface: Surface):
