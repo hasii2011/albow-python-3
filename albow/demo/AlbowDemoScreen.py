@@ -18,6 +18,7 @@ from albow.demo.screens.DemoControlsScreen import DemoControlsScreen
 from albow.demo.screens.DemoTextFieldsScreen import DemoTextFieldsScreen
 from albow.demo.screens.DemoDialogScreen import DemoDialogScreen
 from albow.demo.screens.DemoMultiChoiceScreen import DemoMultiChoiceScreen
+from albow.demo.screens.DemoImageArrayScreen import DemoImageArrayScreen
 
 
 class AlbowDemoScreen(Screen):
@@ -33,7 +34,8 @@ class AlbowDemoScreen(Screen):
         ('Controls', DemoControlsScreen.makeContents),
         ('Text Fields', DemoTextFieldsScreen.makeContents),
         ('Dialogs', DemoDialogScreen.makeContents),
-        ("MultiChoice", DemoMultiChoiceScreen.makeContents)
+        ("MultiChoice", DemoMultiChoiceScreen.makeContents),
+        ("Image Array", DemoImageArrayScreen.makeContents)
     ]
 
     def __init__(self, shell: Shell, theSurface: Surface):

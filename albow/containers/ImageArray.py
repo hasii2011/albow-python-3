@@ -17,6 +17,7 @@ class ImageArray:
     ncols = 0
     nrows = 0
     size  = (0,0)
+    image_array_cache = {}
 
     def __init__(self, image, shape):
         """
@@ -54,7 +55,7 @@ class ImageArray:
     def __nonzero__(self):
         return True
 
-    def __getitem__(self, theIndex):
+    def __getitem__(self, theIndex) -> Surface:
         """
         Returns a subsurface for the image at index theIndex of a one-dimensional image array.
 
@@ -85,28 +86,25 @@ class ImageArray:
         """
         return Rect((0, 0), self.size)
 
+    @classmethod
+    def get_image_array(cls, name, shape, **kwds) -> 'ImageArray':
+        """
+        Creates and returns an ImageArray from an image resource with the given name. The ImageArray is cached, and
+        subsequent calls with the same name will return the cached object. Additional keyword arguments are
+        passed on to ``albow.core.ResourceUtility``.get_image().
 
-image_array_cache = {}
+        Args:
+            name:   The image name
 
+            shape:  The shape
 
-def get_image_array(name, shape, **kwds) -> Surface:
-    """
-    Creates and returns an ImageArray from an image resource with the given name. The ImageArray is cached, and
-    subsequent calls with the same name will return the cached object. Additional keyword arguments are
-    passed on to ``albow.core.ResourceUtility``.get_image().
+            **kwds:
 
-    Args:
-        name:   The image name
+        Returns:
 
-        shape:  The shape
-
-        **kwds:
-
-    Returns:
-
-    """
-    result = image_array_cache.get(name)
-    if result is None:
-        result = ImageArray(ResourceUtility.get_image(name, **kwds), shape)
-        image_array_cache[name] = result
-    return result
+        """
+        result = cls.image_array_cache.get(name)
+        if result is None:
+            result = ImageArray(ResourceUtility.get_image(name, **kwds), shape)
+            cls.image_array_cache[name] = result
+        return result

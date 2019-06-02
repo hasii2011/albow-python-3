@@ -61,9 +61,6 @@ class TabPanel(Widget):
 
             **kwds:
         """
-        #
-        # Python 3 update
-        #
         super().__init__(**kwds)
         self.pages = []
         self.current_page = None
