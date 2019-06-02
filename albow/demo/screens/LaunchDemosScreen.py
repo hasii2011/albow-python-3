@@ -1,4 +1,6 @@
 
+from typing import cast
+
 import logging
 
 from albow.core.ResourceUtility import ResourceUtility
@@ -34,7 +36,8 @@ class LaunchDemosScreen(Screen):
         # Screen.__init__(self, shell)
         super().__init__(shell)
 
-        self.shell = shell
+        from albow.demo.DemoShell import DemoShell
+        self.shell = cast(DemoShell, shell)
         f1 = ResourceUtility.get_font(DEMO_TITLE_TEXT_SIZE, Theme.BUILT_IN_FONT)
 
         title = Label("Albow Demonstration", font=f1)
@@ -42,29 +45,29 @@ class LaunchDemosScreen(Screen):
 
         menuArray = [
             [
-                self.screen_button("Text Screen", shell.text_screen),
-                self.screen_button("Text Fields", shell.fields_screen),
-                self.screen_button("Controls",    shell.controls_screen),
+                self.screen_button("Text Screen", self.shell.text_screen),
+                self.screen_button("Text Fields", self.shell.fields_screen),
+                self.screen_button("Controls",    self.shell.controls_screen),
             ],
             [
-                self.screen_button("Animation",    shell.anim_screen),
-                self.screen_button("Grid View",    shell.grid_screen),
-                self.screen_button("Palette View", shell.palette_screen),
+                self.screen_button("Animation",    self.shell.anim_screen),
+                self.screen_button("Grid View",    self.shell.grid_screen),
+                self.screen_button("Palette View", self.shell.palette_screen),
             ],
             [
-                self.screen_button("Image Array",   shell.image_array_screen),
-                self.screen_button("Modal Dialogs", shell.dialog_screen),
-                self.screen_button("Tab Panel",     shell.tab_panel_screen),
+                self.screen_button("Image Array",   self.shell.image_array_screen),
+                self.screen_button("Modal Dialogs", self.shell.dialog_screen),
+                self.screen_button("Tab Panel",     self.shell.tab_panel_screen),
             ],
             [
-                self.screen_button("Table View",  shell.table_screen),
-                self.screen_button("MultiChoice", shell.multiChoiceScreen),
-                self.screen_button("MenuBar",     shell.menuBarScreen)
+                self.screen_button("Table View",  self.shell.table_screen),
+                self.screen_button("MultiChoice", self.shell.multiChoiceScreen),
+                self.screen_button("MenuBar",     self.shell.menuBarScreen)
             ],
             [
-                self.screen_button("Music",   shell.musicScreen),
-                self.screen_button("ListBox", shell.listBoxScreen),
-                self.screen_button("User Events", shell.userEventsScreen)
+                self.screen_button("Music",   self.shell.musicScreen),
+                self.screen_button("ListBox", self.shell.listBoxScreen),
+                self.screen_button("User Events", self.shell.userEventsScreen)
             ]
         ]
 
