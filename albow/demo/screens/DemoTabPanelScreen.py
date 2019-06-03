@@ -1,4 +1,6 @@
 
+from pygame.event import Event
+
 from albow.containers.TabPanel import TabPanel
 from albow.core.ui.Widget import Widget
 from albow.core.ui.Shell import Shell
@@ -20,7 +22,7 @@ class DemoTabPanelScreen(BaseDemoScreen):
         :param shell:
         """
         super().__init__(shell)
-        tabPanel = TabPanel()
+        tabPanel = TabPanel(enterTabAction=self.enterTabAction, exitTabAction=self.exitTabAction)
         tabPanel.size = 400, 200
         self.pages = tabPanel
 
@@ -44,3 +46,9 @@ class DemoTabPanelScreen(BaseDemoScreen):
         page.add_centered(lbl)
 
         return page
+
+    def enterTabAction(self, theEvent: Event):
+        self.logger.info(f"enterTabAction - index: {theEvent.index}")
+
+    def exitTabAction(self, theEvent: Event):
+        self.logger.info(f"extiTabAction - index: {theEvent.index}")
