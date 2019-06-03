@@ -1,6 +1,15 @@
 
+from typing import Callable
+
+import logging
+
 from pygame import Rect
+from pygame.locals import USEREVENT
+
+from pygame.event import Event
+
 from albow.core.ui.Widget import Widget
+
 from albow.themes.ThemeProperty import ThemeProperty
 from albow.themes.FontProperty import FontProperty
 
@@ -52,7 +61,7 @@ class TabPanel(Widget):
     0.0 to 1.0.
     """
 
-    def __init__(self, pages=None, **kwds):
+    def __init__(self, pages = None, enterTabAction: Callable=None, exitTabAction: Callable=None, **kwds):
         """
 
         Args:
@@ -62,6 +71,18 @@ class TabPanel(Widget):
             **kwds:
         """
         super().__init__(**kwds)
+
+        self.logger = logging.getLogger(__name__)
+        self.enterTabAction = enterTabAction
+        """
+        The method to call when a tab is switched to.  The method is called with an augmented event that has the tab index
+        that is getting the focus.  The tab index is 0 based  
+        """
+        self.exitTabAction = exitTabAction
+        """
+        The method to call when a tab is switched from.  The method is called with an augmented event that has the tab index
+        of the tab losing the focus.  The tab index is 0 based  
+        """
         self.pages = []
         self.current_page = None
         if pages:
@@ -134,15 +155,21 @@ class TabPanel(Widget):
         if thePage is self.current_page:
             self.show_page(None)
 
-    def show_page(self, page):
+    def show_page(self, newPage: Widget, theEvent: Event=None):
+
         if self.current_page:
+
+            self._doExitTabAction(theEvent)
             self.remove(self.current_page)
-        self.current_page = page
-        if page:
+
+        self.current_page = newPage
+        if newPage:
             th = self.tab_height
-            page.rect = Rect(0, th, self.width, self.height - th)
-            self.add(page)
-            page.focus()
+            newPage.rect = Rect(0, th, self.width, self.height - th)
+
+            self._doEnterTabAction(theEvent=theEvent, newPage=newPage)
+            self.add(newPage)
+            newPage.focus()
 
     def draw(self, surf):
         self.draw_tab_area_bg(surf)
@@ -204,12 +231,12 @@ class TabPanel(Widget):
             or page.bg_color \
             or self.default_tab_bg_color
 
-    def mouse_down(self, e):
-        x, y = e.local
+    def mouse_down(self, theEvent: Event):
+        x, y = theEvent.local
         if y < self.tab_height:
             i = self.tab_number_containing_x(x)
             if i is not None:
-                self.show_page(self.pages[i])
+                self.show_page(self.pages[i], theEvent)
 
     def tab_number_containing_x(self, x):
         n = len(self.pages)
@@ -218,3 +245,29 @@ class TabPanel(Widget):
         i = (x - m) * n // width
         if 0 <= i < n:
             return i
+
+    def _doExitTabAction(self, theEvent: Event):
+
+        leavingIndex: int = self.pages.index(self.current_page)
+        self.logger.debug(f"leavingIndex: {leavingIndex}")
+        if self.exitTabAction is not None:
+            augmentedEvent: Event = self._augmentEvent(theEvent=theEvent, theIndex=leavingIndex)
+            self.exitTabAction(augmentedEvent)
+
+    def _doEnterTabAction(self, theEvent: Event, newPage):
+
+        if newPage is not None:
+            enterIndex: int = self.pages.index(newPage)
+            self.logger.debug(f"enterIndex: {enterIndex}")
+            if self.exitTabAction is not None:
+                augmentedEvent: Event = self._augmentEvent(theEvent=theEvent, theIndex=enterIndex)
+                self.enterTabAction(augmentedEvent)
+
+    def _augmentEvent(self, theEvent: Event, theIndex: int) -> Event:
+
+        if theEvent is None:
+            theEvent = Event(USEREVENT, {'index': theIndex})
+        else:
+            theEvent.dict['index'] = theIndex
+
+        return theEvent
