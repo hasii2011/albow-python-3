@@ -153,7 +153,7 @@ class TextBox(Widget):
         if self.firstRow >= len(self.lines) - 1:
             self.firstRow = len(self.lines) - 1
 
-        self.logger.info(f"firstRow: {self.firstRow} -- len(self.lines) {len(self.lines)}")
+        self.logger.debug(f"firstRow: {self.firstRow} -- len(self.lines) {len(self.lines)}")
 
     def computeBoxSize(self, theNumberOfColumns: int, theNumberOfRows: int) -> tuple:
 

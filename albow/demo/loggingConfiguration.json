@@ -98,6 +98,34 @@
             ],
             "propagate": "0"
         },
+        "albow.media.EnableMusicControl": {
+            "level": "INFO",
+            "handlers": [
+                "consoleHandler"
+            ],
+            "propagate": "0"
+        },
+        "albow.widgets.ListBox": {
+            "level": "INFO",
+            "handlers": [
+                "consoleHandler"
+            ],
+            "propagate": "0"
+        },
+        "albow.containers.TabPanel": {
+            "level": "INFO",
+            "handlers": [
+                "consoleHandler"
+            ],
+            "propagate": "0"
+        },
+        "albow.demo.AlbowDemoScreen": {
+            "level": "INFO",
+            "handlers": [
+                "consoleHandler"
+            ],
+            "propagate": "0"
+        },
         "albow.demo.screens.DemoMenuBarScreen": {
             "level": "INFO",
             "handlers": [
@@ -113,21 +141,6 @@
             "propagate": "0"
         },
         "albow.demo.screens.DemoUserEventsScreen": {
-            "level": "INFO",
-            "handlers": [
-                "consoleHandler"
-            ],
-            "propagate": "0"
-        },
-
-        "albow.media.EnableMusicControl": {
-            "level": "INFO",
-            "handlers": [
-                "consoleHandler"
-            ],
-            "propagate": "0"
-        },
-        "albow.widgets.ListBox": {
             "level": "INFO",
             "handlers": [
                 "consoleHandler"
