@@ -36,10 +36,6 @@ from albow.media.MusicUtilities import MusicUtilities
 
 class RootWidget(Widget):
 
-    DOUBLE_CLICK_TIME = 300
-    """
-    Time is in milliseconds
-    """
 
     """
     For the GUI to function, there must be exactly one instance of RootWidget. It implements the main event loop
@@ -48,11 +44,6 @@ class RootWidget(Widget):
     The root widget can be found using the `RootWidget.get_root()`
 
     """
-    MUSIC_END_EVENT = USEREVENT + 1
-    """
-    API consumer user events **MUST** start there events after this one
-    """
-
     root_widget = None
     """
     Root of the containment hierarchy
@@ -66,12 +57,12 @@ class RootWidget(Widget):
     Target of mouse_drag and mouse_up events
     """
 
-    redraw_every_frame = False
-    """
-    If true, all widgets will be redrawn on every animation frame (i.e. after every call to begin_frame()). If false, 
-    redrawing only occurs after user input events, such as mouse clicks and keystrokes, or if a widget calls 
-    its invalidate() method. The default is false.
-    """
+    # redraw_every_frame = False
+    # """
+    # If true, all widgets will be redrawn on every animation frame (i.e. after every call to begin_frame()). If false,
+    # redrawing only occurs after user input events, such as mouse clicks and keystrokes, or if a widget calls
+    # its invalidate() method. The default is false.
+    # """
     last_mouse_event_handler = None
 
     ourTimerEvent = None

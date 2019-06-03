@@ -30,6 +30,16 @@ from albow.media.MusicUtilities import MusicUtilities
 
 class AlbowEventLoop:
 
+    MUSIC_END_EVENT = USEREVENT + 1
+    """
+    API consumer user events **MUST** start there events after this one
+    """
+
+    DOUBLE_CLICK_TIME = 300
+    """
+    Time is in milliseconds
+    """
+
     def __init__(self, containingWidget: Widget, modalWidget: Widget):
 
         self.logger = logging.getLogger(__name__)
@@ -58,7 +68,7 @@ class AlbowEventLoop:
             elif eventType == MOUSEBUTTONDOWN:
                 # print "RootWidget: MOUSEBUTTONDOWN: setting do_draw" ###
                 do_draw = True
-                if t - last_click_time <= RootWidget.DOUBLE_CLICK_TIME:
+                if t - last_click_time <= AlbowEventLoop.DOUBLE_CLICK_TIME:
                     num_clicks += 1
                 else:
                     num_clicks = 1
@@ -155,7 +165,7 @@ class AlbowEventLoop:
                     event.dict['pos'] = RootWidget.last_mouse_event.pos
                     event.dict['local'] = RootWidget.last_mouse_event.local
                     RootWidget.last_mouse_event_handler.setup_cursor(event)
-            elif eventType == RootWidget.MUSIC_END_EVENT:
+            elif eventType == AlbowEventLoop.MUSIC_END_EVENT:
                 self.music_end()
             elif eventType == USEREVENT:
                 if deferDrawing and not use_sleep:
