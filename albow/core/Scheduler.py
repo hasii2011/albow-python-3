@@ -3,7 +3,6 @@ from typing import List
 import logging
 
 from time import time
-from time import time
 
 from bisect import insort
 
