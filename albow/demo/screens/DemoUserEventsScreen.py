@@ -8,6 +8,8 @@ from pygame.event import Event
 from pygame.font import Font
 
 from albow.core.ui.RootWidget import RootWidget
+from albow.core.ui.AlbowEventLoop import AlbowEventLoop
+
 from albow.core.ui.Shell import Shell
 
 from albow.core.UserEventCall import UserEventCall
@@ -26,7 +28,7 @@ from albow.demo.screens.BaseDemoScreen import BaseDemoScreen
 
 class DemoUserEventsScreen(BaseDemoScreen):
 
-    CLOCK_EVENT = RootWidget.MUSIC_END_EVENT + 1
+    CLOCK_EVENT = AlbowEventLoop.MUSIC_END_EVENT + 1
     KLINGON_TORPEDO_EVENT = CLOCK_EVENT + 1
 
     classLogger: Logger = logging.getLogger(__name__)
