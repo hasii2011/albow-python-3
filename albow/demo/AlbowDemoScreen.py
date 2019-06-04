@@ -26,6 +26,8 @@ from albow.demo.screens.DemoImageArrayScreen import DemoImageArrayScreen
 from albow.demo.screens.DemoListBoxScreen import DemoListBoxScreen
 from albow.demo.screens.DemoUserEventsScreen import DemoUserEventsScreen
 
+from albow.demo.ScheduledEventTabPage import ScheduledEventTabPage
+
 
 class AlbowDemoScreen(Screen):
 
@@ -34,12 +36,13 @@ class AlbowDemoScreen(Screen):
         ('Text Fields', DemoTextFieldsScreen.makeContents),
         ('Dialogs', DemoDialogScreen.makeContents),
         ("MultiChoice", DemoMultiChoiceScreen.makeContents),
-        ("Image Array", DemoImageArrayScreen.makeContents),
-        ("Events", DemoUserEventsScreen.makeContents)
+        ("Image Array", DemoImageArrayScreen.makeContents)
+        # ("Events", DemoUserEventsScreen.makeContents)
     ]
-    EVENT_TAB_IDX = 5
+    EVENT_TAB_IDX = 6
 
     classLogger: Logger = None
+    classScheduledEventsTabPage: ScheduledEventTabPage = None
 
     def __init__(self, shell: Shell, theSurface: Surface):
 
@@ -61,20 +64,33 @@ class AlbowDemoScreen(Screen):
             tabContents: Widget = tabFunc()
             frame: Frame = Frame(client=tabContents, margin=10)
             tabPanel.add_page(tabLabel, frame)
+
+        self._makeSpecialTabs(tabPanel)
+        #
+        # Special Setup
+        #
+        DemoUserEventsScreen.setupUserEvents()
+        self.add(tabPanel)
+
+    def _makeSpecialTabs(self, tabPanel: TabPanel):
         #
         #  'Special' tab
         #
         specialContents: Column = DemoListBoxScreen.makeContents(client=self)
         specialFrame: Frame = Frame(client=specialContents, margin=10)
-
         tabPanel.add_page("List Box", specialFrame)
 
-        #
-        # Special Setup
-        #
-        DemoUserEventsScreen.setupUserEvents()
+        userEvents: Column = DemoUserEventsScreen.makeContents()
+        scheduledEventsTabPage: ScheduledEventTabPage = ScheduledEventTabPage(height=userEvents.height, width=userEvents.width)
+        contentAttrs = {
+            'align': "c",
+            'margin': 10
+        }
 
-        self.add(tabPanel)
+        eventTab: Column = Column([userEvents, scheduledEventsTabPage], **contentAttrs)
+        tabPanel.add_page("Events", eventTab)
+
+        AlbowDemoScreen.classScheduledEventsTabPage = scheduledEventsTabPage
 
     @classmethod
     def enterTabAction(cls, theEvent: Event):
@@ -82,6 +98,8 @@ class AlbowDemoScreen(Screen):
         cls.classLogger.debug(f"Enter event index: {theEvent.index}")
         if theEvent.index == AlbowDemoScreen.EVENT_TAB_IDX:
             DemoUserEventsScreen.initializeUserEvents()
+        if cls.classScheduledEventsTabPage is not None:
+            cls.classScheduledEventsTabPage.createScheduledEvents()
 
 
     @classmethod
@@ -90,3 +108,5 @@ class AlbowDemoScreen(Screen):
         cls.classLogger.debug(f"Enter event index: {theEvent.index}")
         if theEvent.index == AlbowDemoScreen.EVENT_TAB_IDX:
             DemoUserEventsScreen.resetUserEvents()
+        if cls.classScheduledEventsTabPage is not None:
+            cls.classScheduledEventsTabPage.cancelScheduledEvents()

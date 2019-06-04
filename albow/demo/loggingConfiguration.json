@@ -26,121 +26,14 @@
             ],
             "propagate": "0"
         },
+        "albow": {
+            "level": "INFO",
+            "handlers": [
+                "consoleHandler"
+            ],
+            "propagate": "0"
+        },
         "__main__": {
-            "level": "INFO",
-            "handlers": [
-                "consoleHandler"
-            ],
-            "propagate": "0"
-        },
-        "albow.core.ui.Widget": {
-            "level": "INFO",
-            "handlers": [
-                "consoleHandler"
-            ],
-            "propagate": "0"
-        },
-        "albow.core.ui.RootWidget": {
-            "level": "INFO",
-            "handlers": [
-                "consoleHandler"
-            ],
-            "propagate": "0"
-        },
-        "albow.core.ui.AlbowEventLoop": {
-            "level": "INFO",
-            "handlers": [
-                "consoleHandler"
-            ],
-            "propagate": "0"
-        },
-
-        "albow.widgets.Button": {
-            "level": "INFO",
-            "handlers": [
-                "consoleHandler"
-            ],
-            "propagate": "0"
-        },
-         "albow.widgets.ImageButton": {
-            "level": "INFO",
-            "handlers": [
-                "consoleHandler"
-            ],
-            "propagate": "0"
-        },
-        "albow.widgets.Label": {
-            "level": "INFO",
-            "handlers": [
-                "consoleHandler"
-            ],
-            "propagate": "0"
-        },
-        "albow.input.Field": {
-            "level": "INFO",
-            "handlers": [
-                "consoleHandler"
-            ],
-            "propagate": "0"
-        },
-
-        "albow.themes.ThemeProperty": {
-            "level": "INFO",
-            "handlers": [
-                "consoleHandler"
-            ],
-            "propagate": "0"
-        },
-        "albow.themes.Theme": {
-            "level": "INFO",
-            "handlers": [
-                "consoleHandler"
-            ],
-            "propagate": "0"
-        },
-        "albow.media.EnableMusicControl": {
-            "level": "INFO",
-            "handlers": [
-                "consoleHandler"
-            ],
-            "propagate": "0"
-        },
-        "albow.widgets.ListBox": {
-            "level": "INFO",
-            "handlers": [
-                "consoleHandler"
-            ],
-            "propagate": "0"
-        },
-        "albow.containers.TabPanel": {
-            "level": "INFO",
-            "handlers": [
-                "consoleHandler"
-            ],
-            "propagate": "0"
-        },
-        "albow.demo.AlbowDemoScreen": {
-            "level": "INFO",
-            "handlers": [
-                "consoleHandler"
-            ],
-            "propagate": "0"
-        },
-        "albow.demo.screens.DemoMenuBarScreen": {
-            "level": "INFO",
-            "handlers": [
-                "consoleHandler"
-            ],
-            "propagate": "0"
-        },
-        "albow.demo.screens.DemoMenuScreen": {
-            "level": "INFO",
-            "handlers": [
-                "consoleHandler"
-            ],
-            "propagate": "0"
-        },
-        "albow.demo.screens.DemoUserEventsScreen": {
             "level": "INFO",
             "handlers": [
                 "consoleHandler"
