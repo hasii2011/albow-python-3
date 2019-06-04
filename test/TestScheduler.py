@@ -13,7 +13,7 @@ from pygame.event import Event
 
 import unittest
 
-from TestBase import TestBase
+from test.TestBase import TestBase
 
 from albow.core.Scheduler import Scheduler
 from albow.core.CoreUtilities import CoreUtilities
@@ -133,9 +133,9 @@ class TestScheduler(TestBase):
         time.sleep(10.0)
 
         Scheduler.make_scheduled_calls()
-        self.assertTrue( (TestScheduler.callTime1 < TestScheduler.callTime2) and
-                          TestScheduler.callTime2 < TestScheduler.callTime3,
-                         "Scheduler called tasks out of order")
+        self.assertTrue((TestScheduler.callTime1 < TestScheduler.callTime2) and
+                        TestScheduler.callTime2 < TestScheduler.callTime3,
+                        "Scheduler called tasks out of order")
 
     def testScheduleEvent(self):
 
@@ -184,7 +184,8 @@ class TestScheduler(TestBase):
 
         cls.ourLogger.info(f"Event type: {theEvent.type} -  ts: {theEvent.dict['time']}")
 
-        cls.assertTrue(theEvent.type == USEREVENT, "Wrong kind of event")
+        cls.assertEqual(theEvent.type, USEREVENT, "Wrong kind of event")
+
 
 if __name__ == '__main__':
     unittest.main()

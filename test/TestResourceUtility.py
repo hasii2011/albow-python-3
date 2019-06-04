@@ -1,15 +1,12 @@
 
 import os
 
-import sys
-
 import logging
-
 from logging import Logger
 
 import unittest
 
-from TestBase import TestBase
+from test.TestBase import TestBase
 
 from albow.core.ResourceUtility import ResourceUtility
 
@@ -67,6 +64,7 @@ class TestResourceUtility(TestBase):
     def testGetImageFail(self):
 
         ResourceUtility.get_image("")
+
 
 if __name__ == '__main__':
     unittest.main()

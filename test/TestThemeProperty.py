@@ -4,9 +4,9 @@ from logging import Logger
 
 import unittest
 
-from TestBase import TestBase
+from test.TestBase import TestBase
 
-from DummyControl import DummyControl
+from test.DummyControl import DummyControl
 
 
 class TestThemeProperty(TestBase):

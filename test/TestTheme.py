@@ -7,7 +7,7 @@ from logging import Logger
 
 import pygame
 
-from TestBase import TestBase
+from test.TestBase import TestBase
 
 from albow.themes.Theme import Theme
 
@@ -67,4 +67,3 @@ class TestTheme(TestBase):
         font2 = testTheme._loadFont(fontPath=fontPath, fontSize=fontSpec[0])
 
         self.assertEqual(first=font1, second=font2, msg="Should be the one from the cache")
-

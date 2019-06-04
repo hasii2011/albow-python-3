@@ -3,16 +3,17 @@ import logging
 
 import unittest
 
+from test.TestBase import TestBase
+
+from test.DummyControl import DummyControl
+
+from test.DummyVehicle import DummyVehicle
+
 from albow.ItemRefInsertionException import ItemRefInsertionException
 
 from albow.References import AttrRef
 from albow.References import ItemRef
 
-from TestBase import TestBase
-
-from DummyControl import DummyControl
-
-from DummyVehicle import DummyVehicle
 
 TEST_ITEM_INDEX = 3
 

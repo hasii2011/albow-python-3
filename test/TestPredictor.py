@@ -11,9 +11,9 @@ from albow.themes.ThemeLoader import ThemeLoader
 
 from albow.core.ui.Predictor import Predictor
 
-from TestBase import TestBase
+from test.TestBase import TestBase
 
-from DummyWidget import DummyWidget
+from test.DummyWidget import DummyWidget
 
 
 class TestPredictor(TestBase):

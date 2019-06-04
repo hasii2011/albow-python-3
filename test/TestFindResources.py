@@ -3,7 +3,7 @@ import logging
 
 import unittest
 
-from TestBase import TestBase
+from test.TestBase import TestBase
 
 from pkg_resources import resource_filename
 from pkg_resources import resource_exists

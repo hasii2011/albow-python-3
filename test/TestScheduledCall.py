@@ -4,7 +4,7 @@ from logging import Logger
 
 import unittest
 
-from TestBase import TestBase
+from test.TestBase import TestBase
 
 from albow.core.ScheduledCall import ScheduledCall
 from albow.core.Scheduler import Scheduler

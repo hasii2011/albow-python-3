@@ -18,6 +18,7 @@ class DummyControl(Control):
 
         self.logger = logging.getLevelName(__name__)
         self.set(**attrs)
+        self._dummyThemeAttribute = None
 
     def getDummyThemeAttribute(self):
         return self._dummyThemeAttribute
