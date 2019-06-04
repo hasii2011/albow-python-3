@@ -14,7 +14,7 @@ JSON_LOGGING_CONFIG_FILENAME = "loggingConfiguration.json"
 # SCREEN_SIZE   = (640, 480)
 # DISPLAY_FLAGS = pygame.RESIZABLE
 DEMO_WINDOW_TITLE       = "Albow Demonstration 2.0"
-SCREEN_SIZE             = (640, 480)
+SCREEN_SIZE             = (720, 480)
 DISPLAY_FLAGS           = 0
 
 def main():

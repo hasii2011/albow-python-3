@@ -25,6 +25,7 @@ from albow.demo.screens.DemoMultiChoiceScreen import DemoMultiChoiceScreen
 from albow.demo.screens.DemoImageArrayScreen import DemoImageArrayScreen
 from albow.demo.screens.DemoListBoxScreen import DemoListBoxScreen
 from albow.demo.screens.DemoUserEventsScreen import DemoUserEventsScreen
+from albow.demo.screens.DemoAnimationWidget import DemoAnimationWidget
 
 from albow.demo.ScheduledEventTabPage import ScheduledEventTabPage
 
@@ -37,7 +38,6 @@ class AlbowDemoScreen(Screen):
         ('Dialogs', DemoDialogScreen.makeContents),
         ("MultiChoice", DemoMultiChoiceScreen.makeContents),
         ("Image Array", DemoImageArrayScreen.makeContents)
-        # ("Events", DemoUserEventsScreen.makeContents)
     ]
     EVENT_TAB_IDX = 6
 
@@ -54,6 +54,7 @@ class AlbowDemoScreen(Screen):
 
         width = shell.width - (shell.margin * 2)
         height = shell.height - (shell.margin * 2)
+
         tabPanel = TabPanel(width=width, height=height, enterTabAction=AlbowDemoScreen.enterTabAction, exitTabAction=AlbowDemoScreen.exitTabAction)
 
         self.tabPanel = tabPanel
@@ -91,6 +92,9 @@ class AlbowDemoScreen(Screen):
         tabPanel.add_page("Events", eventTab)
 
         AlbowDemoScreen.classScheduledEventsTabPage = scheduledEventsTabPage
+
+        animationWidget: DemoAnimationWidget = DemoAnimationWidget(self.shell)
+        tabPanel.add_page("Animation", animationWidget)
 
     @classmethod
     def enterTabAction(cls, theEvent: Event):
