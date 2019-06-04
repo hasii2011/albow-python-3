@@ -36,5 +36,4 @@ class DemoTableView(TableView):
         return self.selected_table_row == i
 
     def click_row(self, i, e):
-        # global selected_table_row
         self.selected_table_row = i

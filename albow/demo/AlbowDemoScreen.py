@@ -29,6 +29,7 @@ from albow.demo.screens.DemoAnimationWidget import DemoAnimationWidget
 
 from albow.demo.ScheduledEventTabPage import ScheduledEventTabPage
 
+from albow.demo.views.DemoTableView import DemoTableView
 
 class AlbowDemoScreen(Screen):
 
@@ -96,21 +97,29 @@ class AlbowDemoScreen(Screen):
         animationWidget: DemoAnimationWidget = DemoAnimationWidget(self.shell)
         tabPanel.add_page("Animation", animationWidget)
 
+        tableTabAttrs = {
+            'align' : "c",
+            'margin': 20
+        }
+        table: DemoTableView = DemoTableView()
+        tableTab: Column = Column([table], **tableTabAttrs)
+        tabPanel.add_page("Table", tableTab)
+
     @classmethod
     def enterTabAction(cls, theEvent: Event):
 
         cls.classLogger.debug(f"Enter event index: {theEvent.index}")
         if theEvent.index == AlbowDemoScreen.EVENT_TAB_IDX:
             DemoUserEventsScreen.initializeUserEvents()
-        if cls.classScheduledEventsTabPage is not None:
-            cls.classScheduledEventsTabPage.createScheduledEvents()
+            if cls.classScheduledEventsTabPage is not None:
+                cls.classScheduledEventsTabPage.createScheduledEvents()
 
 
     @classmethod
     def exitTabAction(cls, theEvent: Event):
 
-        cls.classLogger.debug(f"Enter event index: {theEvent.index}")
+        cls.classLogger.info(f"Enter event index: {theEvent.index}")
         if theEvent.index == AlbowDemoScreen.EVENT_TAB_IDX:
             DemoUserEventsScreen.resetUserEvents()
-        if cls.classScheduledEventsTabPage is not None:
-            cls.classScheduledEventsTabPage.cancelScheduledEvents()
+            if cls.classScheduledEventsTabPage is not None:
+                cls.classScheduledEventsTabPage.cancelScheduledEvents()

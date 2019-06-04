@@ -3,8 +3,6 @@ from albow.widgets.Label import Label
 
 from albow.layout.Column import Column
 
-from albow.themes.Theme import Theme
-
 from albow.demo.views.DemoTableView import DemoTableView
 
 from albow.demo.screens.BaseDemoScreen import BaseDemoScreen
@@ -20,13 +18,9 @@ class DemoTableScreen(BaseDemoScreen):
 
         :param shell:
         """
-        #
-        # Python 3 update
-        #
-        # Screen.__init__(self, shell)
         super().__init__(shell)
 
-        title    = Label("Norwegian Butter Exports", font=self.labelFont)
+        title = Label("Norwegian Butter Exports", font=self.labelFont)
         table: DemoTableView = DemoTableView()
 
         contents = Column([title, table, self.backButton], spacing=BaseDemoScreen.DEFAULT_CONTENT_SPACING)
