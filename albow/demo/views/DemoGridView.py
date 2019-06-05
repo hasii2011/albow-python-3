@@ -1,5 +1,4 @@
 
-
 from pygame.color import Color
 
 from albow.themes.Theme import Theme
@@ -25,14 +24,9 @@ class DemoGridView(GridView):
 
     def __init__(self):
         """
-
         """
-        attrs = {'bg_color': Theme.WHITE}
-        #
-        # Python 3 update
-        #
-        # GridView.__init__(self, (30, 30), 2, 3)
-        super().__init__((DEMO_CELL_WIDTH, DEMO_CELL_HEIGHT), DEMO_NROWS, DEMO_NCOLS, **attrs)
+        super().__init__((DEMO_CELL_WIDTH, DEMO_CELL_HEIGHT), DEMO_NROWS, DEMO_NCOLS)
+        self.output = None
 
     def num_rows(self):
         return DEMO_NUMBER_OF_ROWS

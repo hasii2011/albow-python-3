@@ -14,14 +14,10 @@ class DemoGridViewScreen(BaseDemoScreen):
 
     def __init__(self, shell: Shell):
 
-        #
-        # Python 3 update
-        #
         super().__init__(shell)
 
         grid        = DemoGridView()
         lbl         = Label("Cl1ck a Squ4r3")
         grid.output = lbl
-        contents    = Column([grid, lbl, self.backButton],
-                             align='c', spacing=30)
+        contents    = Column([grid, lbl, self.backButton], align='c', spacing=30)
         self.add_centered(contents)

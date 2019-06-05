@@ -2,11 +2,9 @@
 from typing import Callable
 
 import logging
-
 from logging import Logger
 
 from pygame import Surface
-
 from pygame.event import Event
 
 from albow.core.ui.Shell import Shell
@@ -16,7 +14,10 @@ from albow.core.ui.Screen import Screen
 from albow.containers.TabPanel import TabPanel
 
 from albow.layout.Column import Column
+from albow.layout.Row import Row
 from albow.layout.Frame import Frame
+
+from albow.widgets.Label import Label
 
 from albow.demo.screens.DemoControlsScreen import DemoControlsScreen
 from albow.demo.screens.DemoTextFieldsScreen import DemoTextFieldsScreen
@@ -30,6 +31,8 @@ from albow.demo.screens.DemoAnimationWidget import DemoAnimationWidget
 from albow.demo.ScheduledEventTabPage import ScheduledEventTabPage
 
 from albow.demo.views.DemoTableView import DemoTableView
+from albow.demo.views.DemoGridView import DemoGridView
+from albow.demo.views.DemoPaletteView import DemoPaletteView
 
 class AlbowDemoScreen(Screen):
 
@@ -75,35 +78,53 @@ class AlbowDemoScreen(Screen):
         self.add(tabPanel)
 
     def _makeSpecialTabs(self, tabPanel: TabPanel):
-        #
-        #  'Special' tab
-        #
+
+        self._makeListBoxTab(tabPanel)
+        self._makeEventsTab(tabPanel)
+        self._makeAnimationTab(tabPanel)
+        self._makeGridLikeTab(tabPanel)
+
+    def _makeListBoxTab(self, tabPanel):
+
         specialContents: Column = DemoListBoxScreen.makeContents(client=self)
         specialFrame: Frame = Frame(client=specialContents, margin=10)
         tabPanel.add_page("List Box", specialFrame)
 
+    def _makeEventsTab(self, tabPanel):
+
         userEvents: Column = DemoUserEventsScreen.makeContents()
         scheduledEventsTabPage: ScheduledEventTabPage = ScheduledEventTabPage(height=userEvents.height, width=userEvents.width)
         contentAttrs = {
-            'align': "c",
+            'align' : "c",
             'margin': 10
         }
-
         eventTab: Column = Column([userEvents, scheduledEventsTabPage], **contentAttrs)
         tabPanel.add_page("Events", eventTab)
-
         AlbowDemoScreen.classScheduledEventsTabPage = scheduledEventsTabPage
+
+    def _makeAnimationTab(self, tabPanel):
 
         animationWidget: DemoAnimationWidget = DemoAnimationWidget(self.shell)
         tabPanel.add_page("Animation", animationWidget)
 
-        tableTabAttrs = {
+    def _makeGridLikeTab(self, tabPanel):
+
+        gridTabAttrs = {
             'align' : "c",
             'margin': 20
         }
+
+        grid: DemoGridView = DemoGridView()
+        lbl         = Label("Cl1ck a Squ4r3")
+        grid.output = lbl
+        # gridColAttrs = {'margin': 10}
+        gridColumn: Column = Column([grid, lbl])
+
         table: DemoTableView = DemoTableView()
-        tableTab: Column = Column([table], **tableTabAttrs)
-        tabPanel.add_page("Table", tableTab)
+        palette: DemoPaletteView = DemoPaletteView()
+
+        gridTab: Row = Row([table, palette, gridColumn], **gridTabAttrs)
+        tabPanel.add_page("Grids", gridTab)
 
     @classmethod
     def enterTabAction(cls, theEvent: Event):
@@ -113,7 +134,6 @@ class AlbowDemoScreen(Screen):
             DemoUserEventsScreen.initializeUserEvents()
             if cls.classScheduledEventsTabPage is not None:
                 cls.classScheduledEventsTabPage.createScheduledEvents()
-
 
     @classmethod
     def exitTabAction(cls, theEvent: Event):
