@@ -47,7 +47,7 @@ class MenuBar(Widget):
     A list of `albow.menu.Menu` instances
     """
 
-    def __init__(self, menus: List[Menu]=None, width=0, **kwds):
+    def __init__(self, menus: List[Menu] = None, width=0, **kwds):
         """
         Creates a menu bar. The height defaults to the font height.
 

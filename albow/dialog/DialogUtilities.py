@@ -104,7 +104,7 @@ def ask(theMessage: str, theResponses=None, default=0, cancel=-1, wrap_width=60,
     return box.present()
 
 
-def input_text(thePrompt: str, theInputWidth: int, theDefaultInput: str=None, **kwds):
+def input_text(thePrompt: str, theInputWidth: int, theDefaultInput: str = None, **kwds):
 
     """
     Presents a modal dialog containing the given prompt and a text field. The theInputWidth is the width of

@@ -3,6 +3,7 @@ from pygame import Surface
 
 from albow.core.ui.Widget import Widget
 
+
 class DirectoryPathView(Widget):
 
     def __init__(self, width, client, **kwds):
@@ -22,4 +23,3 @@ class DirectoryPathView(Widget):
         else:
             x = mw - tw
         surface.blit(image, (frame.left + x, frame.top))
-

@@ -11,12 +11,12 @@ class Frame(Widget):
     """
     The width of the border
     """
-    margin:       int = 2
+    margin: int = 2
     """
     The spacing between border and widget
     """
 
-    def __init__(self, client: Widget, border_spacing: int=None, **kwds):
+    def __init__(self, client: Widget, border_spacing: int = None, **kwds):
         """
 
         Args:

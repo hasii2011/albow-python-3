@@ -4,6 +4,7 @@ import os
 from albow.dialog.DialogUtilities import ask
 from albow.dialog.FileDialog import FileDialog
 
+
 class FileSaveDialog(FileDialog):
 
     saving         = True
@@ -54,4 +55,3 @@ class FileSaveDialog(FileDialog):
         #
         # return self.filename_box.text <> ""
         return self.filename_box.text != ""
-

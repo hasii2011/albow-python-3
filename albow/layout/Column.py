@@ -21,7 +21,7 @@ class Column(RowOrColumn):
 
         - align:
             The widgets in items are added as subwidgets and arranged vertically with spacing pixels between.
-            Horizontal alignment is controlled by align, which is one of 'l', 'c' or 'r' for left, centre or right.
+            Horizontal alignment is controlled by align, which is one of 'l', 'c' or 'r' for left, center or right.
 
         - spacing:  The spacing between the widgets in pixels
 
