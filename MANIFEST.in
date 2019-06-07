@@ -1,3 +1,4 @@
 include albow/demo/*.json
+exclude albow/version.py
 graft albow/demo/Resources
 graft albow/themes/resources

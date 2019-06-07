@@ -10,12 +10,12 @@ README = (HERE / "README.md").read_text()
 
 setup(
     name="python3-albow",
-    version="2.6.1",
+    version="2.7.0",
     description="A Little Bit of Widgetry for PyGame",
     long_description=README,
     long_description_content_type="text/markdown",
     url="https://hasii2011.github.io",
     packages=find_packages(),
     include_package_data=True,
-    install_requires=["pygame", "pdoc3"]
+    install_requires=["pygame"]
 )
