@@ -1,6 +1,6 @@
 {
     "version": 1,
-    "disable_existing_loggers": false,
+    "disable_existing_loggers": "False",
     "formatters": {
         "simple": {
             "format": "%(asctime)s - %(name)s - %(levelname)s - %(message)s"
@@ -22,78 +22,22 @@
             "handlers": [
                 "consoleHandler"
             ],
-            "propagate": "0"
+            "propagate": "False"
         },
-        "__main__": {
+        "test": {
             "level": "INFO",
             "handlers": [
                 "consoleHandler"
             ],
-            "propagate": "0"
+            "propagate": "False"
         },
-        "TestScheduler": {
+        "albow": {
             "level": "INFO",
             "handlers": [
                 "consoleHandler"
             ],
-            "propagate": "0"
+            "propagate": "False"
         },
-        "TestScheduledCall": {
-            "level": "INFO",
-            "handlers": [
-                "consoleHandler"
-            ],
-            "propagate": "0"
-        },
-        "TestReferences": {
-            "level": "INFO",
-            "handlers": [
-                "consoleHandler"
-            ],
-            "propagate": "0"
-        },
-        "TestThemeConfiguration": {
-            "level": "INFO",
-            "handlers": [
-                "consoleHandler"
-            ],
-            "propagate": "0"
-        },
-        "TestThemeProperty": {
-            "level": "INFO",
-            "handlers": [
-                "consoleHandler"
-            ],
-            "propagate": "0"
-        },
-        "albow.core.Scheduler": {
-            "level": "DEBUG",
-            "handlers": [
-                "consoleHandler"
-            ],
-            "propagate":  "0"
-        },
-        "albow.Themes.ThemeProperty": {
-            "level": "DEBUG",
-            "handlers": [
-                "consoleHandler"
-            ],
-            "propagate":  "0"
-        },
-        "albow.themes.ThemeLoader": {
-            "level": "INFO",
-            "handlers": [
-                "consoleHandler"
-            ],
-            "propagate":  "0"
-        },
-        "DummyControl": {
-            "level": "INFO",
-            "handlers": [
-                "consoleHandler"
-            ],
-            "propagate":  "0"
-        }
 
     }
 }
