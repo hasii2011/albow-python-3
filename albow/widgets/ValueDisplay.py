@@ -7,6 +7,7 @@ from albow.widgets.Control import Control
 
 from albow.utils import blit_in_rect
 
+
 class ValueDisplay(Control, Widget):
 
     """

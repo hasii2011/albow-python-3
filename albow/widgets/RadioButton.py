@@ -5,8 +5,8 @@ from albow.widgets.RadioControl import RadioControl
 
 class RadioButton(RadioControl, CheckWidget):
     """
-    RadioButton controls are intended to be used in a group to provide a multiple-choice selection. To achieve t
-    his, all the radio buttons in the group should be linked via their ref attributes to the same value, and each
+    RadioButton controls are intended to be used in a group to provide a multiple-choice selection. To achieve
+    this, all the radio buttons in the group should be linked via their ref attributes to the same value, and each
     one given a unique setting. The one whose setting matches the current value displays its check mark, and
     clicking on a radio button sets the value to that button's setting.
 
