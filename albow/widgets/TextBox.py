@@ -86,6 +86,8 @@ class TextBox(Widget):
         self._text = theText
         self.logger.debug(f"size: {self.size}")
 
+        self.debugJustInserted = False
+
     def get_text(self):
         return self._text
 
@@ -93,6 +95,9 @@ class TextBox(Widget):
 
         lines = theNewText.strip().split(TextBox.LINE_SEPARATOR)
         self.lines = lines
+        self.debugJustInserted = True
+
+        self.logger.info(f"# of lines: {len(self.lines)}")
         self._text = theNewText
 
     def draw(self, theSurface: Surface):
@@ -115,13 +120,16 @@ class TextBox(Widget):
         color = self.fg_color
         firstIdx = self.firstRow
         if len(self.lines) < self.numberOfRows:
-            lastIdx = len(self.lines) - 1
+            lastIdx = len(self.lines)
         else:
-            lastIdx = firstIdx + self.numberOfRows - 1
+            lastIdx = firstIdx + self.numberOfRows
             if lastIdx >= len(self.lines):
-                lastIdx = len(self.lines) - 1
+                lastIdx = len(self.lines)
 
-        self.logger.debug(f"firstIdx: {firstIdx} lastIdx: {lastIdx}")
+        if self.debugJustInserted is True:
+            self.debugJustInserted = False
+            self.logger.info(f"firstIdx: {firstIdx} lastIdx: {lastIdx}")
+
         for idx in range(firstIdx, lastIdx):
 
             buf = self.font.render(self.lines[idx], True, color)
