@@ -73,18 +73,22 @@ class TextBox(Widget):
         lines: List = []
         if theText is not None:
             lines = theText.strip().split(TextBox.LINE_SEPARATOR)
-
-        self.numberOfColumns = theNumberOfColumns
-        self.numberOfRows = theNumberOfRows
-        self.firstRow = 0
-        """"The index into `lines` as the first line to display"""
-
-        self.size = self.computeBoxSize(theNumberOfColumns, theNumberOfRows)
-
         self.lines = lines
         """ Saves the broken up lines"""
-        self._text = theText
+        self.numberOfColumns = theNumberOfColumns
+        """The number of columns in the widget"""
+        self.numberOfRows    = theNumberOfRows
+        """The number of rows in the widget"""
+        self.firstIdx = 0
+        """"The index into `lines` as the first line to display"""
+        self.lastIdx  = 0
+        """The index into `lines` as the last line to display"""
+        self.size = self.computeBoxSize(theNumberOfColumns, theNumberOfRows)
         self.logger.debug(f"size: {self.size}")
+
+        self.firstRow = 0
+        """What scroll bars think the first row index is"""
+        self._text = theText
 
         self.debugJustInserted = False
 
@@ -99,6 +103,7 @@ class TextBox(Widget):
 
         self.logger.info(f"# of lines: {len(self.lines)}")
         self._text = theNewText
+        self._recomputeTextToDisplayIndices()
 
     def draw(self, theSurface: Surface):
         """
@@ -117,22 +122,14 @@ class TextBox(Widget):
         x = self.margin
         y = self.margin
 
-        color = self.fg_color
-        firstIdx = self.firstRow
-        if len(self.lines) < self.numberOfRows:
-            lastIdx = len(self.lines)
-        else:
-            lastIdx = firstIdx + self.numberOfRows
-            if lastIdx >= len(self.lines):
-                lastIdx = len(self.lines)
+        if self.logger.level == logging.DEBUG:
+            if self.debugJustInserted is True:
+                self.debugJustInserted = False
+                self.logger.debug(f"firstIdx: {self.firstIdx} lastIdx: {self.lastIdx}")
 
-        if self.debugJustInserted is True:
-            self.debugJustInserted = False
-            self.logger.info(f"firstIdx: {firstIdx} lastIdx: {lastIdx}")
+        for idx in range(self.firstIdx, self.lastIdx):
 
-        for idx in range(firstIdx, lastIdx):
-
-            buf = self.font.render(self.lines[idx], True, color)
+            buf = self.font.render(self.lines[idx], True, self.fg_color)
             theSurface.blit(buf, (x, y))
             y += buf.get_rect().height
 
@@ -145,7 +142,7 @@ class TextBox(Widget):
         localPosition = theEvent.local
 
         scrollDownRect: Rect = self.scroll_down_rect()
-        scrollUpRect: Rect = self.scroll_up_rect()
+        scrollUpRect:   Rect = self.scroll_up_rect()
 
         scrolledDown: bool = scrollDownRect.collidepoint(localPosition[0], localPosition[1])
         scrolledUp: bool = scrollUpRect.collidepoint(localPosition[0], localPosition[1])
@@ -161,6 +158,8 @@ class TextBox(Widget):
         if self.firstRow >= len(self.lines) - 1:
             self.firstRow = len(self.lines) - 1
 
+        self._recomputeTextToDisplayIndices()
+
         self.logger.debug(f"firstRow: {self.firstRow} -- len(self.lines) {len(self.lines)}")
 
     def computeBoxSize(self, theNumberOfColumns: int, theNumberOfRows: int) -> tuple:
@@ -169,7 +168,7 @@ class TextBox(Widget):
 
         self.logger.debug(f"width: {width}, height: {height}")
 
-        size = (width * theNumberOfColumns, (height * theNumberOfRows) - self.margin)
+        size = (width * theNumberOfColumns, (height * theNumberOfRows) + self.margin)
         self.logger.debug(f"size {size}")
 
         return size
@@ -206,3 +205,13 @@ class TextBox(Widget):
         r.inflate_ip(-4, -4)
 
         return r
+
+    def _recomputeTextToDisplayIndices(self):
+
+        self.firstIdx = self.firstRow
+        if len(self.lines) < self.numberOfRows:
+            self.lastIdx = len(self.lines)
+        else:
+            self.lastIdx = self.firstIdx + self.numberOfRows
+            if self.lastIdx >= len(self.lines):
+                self.lastIdx = len(self.lines)

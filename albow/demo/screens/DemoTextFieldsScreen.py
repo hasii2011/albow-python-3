@@ -6,8 +6,12 @@ from albow.widgets.Label import Label
 
 from albow.input.TextField import TextField
 
+from albow.widgets.TextBox import TextBox
+from albow.widgets.CheckBox import CheckBox
 
 from albow.layout.Column import Column
+from albow.layout.Row import Row
+
 from albow.layout.Grid import Grid
 
 from albow.demo.screens.BaseDemoScreen import BaseDemoScreen
@@ -17,14 +21,17 @@ class DemoTextFieldsScreen(BaseDemoScreen):
     """
     Text Field
     """
-    nameField: TextField
-    raceField: TextField
+    nameField:   TextField
+    raceField:   TextField
     resultLabel: Label
+    textBox:     TextBox
+    lineCtr:     int = 0
 
     def __init__(self, shell: Shell):
         """
 
-        :param shell:
+        Args:
+            shell:  Our parent shell
         """
         super().__init__(shell)
 
@@ -34,6 +41,34 @@ class DemoTextFieldsScreen(BaseDemoScreen):
     @classmethod
     def ok(cls):
         cls.resultLabel.text = "You are a %s called %s." % (cls.raceField.text, cls.nameField.text)
+
+    @classmethod
+    def insertText(cls):
+
+        cls.lineCtr += 1
+        line:     str = f"Line {cls.lineCtr}{TextBox.LINE_SEPARATOR}"
+        oldLines: str = cls.textBox.get_text();
+
+        oldLines += line
+        cls.textBox.set_text(oldLines)
+
+    @classmethod
+    def makeTextBoxTesterContainer(cls) -> Row:
+
+        cls.textBox = TextBox(theNumberOfColumns=32, theNumberOfRows=5)
+
+        checkBoxRow: Row = Row([CheckBox(), Label('Last Line Visible')])
+
+        insTextButton: Button = Button('Insert', action=cls.insertText)
+
+        contentAttrs = {
+            "align": "l"
+        }
+        textBoxControlHolder: Column = Column([checkBoxRow, insTextButton], **contentAttrs)
+
+        container: Row = Row([cls.textBox, textBoxControlHolder])
+
+        return container
 
     @classmethod
     def makeContents(cls, backButton: Button = None) -> Column:
@@ -50,7 +85,6 @@ class DemoTextFieldsScreen(BaseDemoScreen):
         ]
         fieldGrid: Grid = Grid(rows)
 
-        # cls.resultLabel = Label("", font=self.labelFont)
         cls.resultLabel = Label("")
         cls.resultLabel.width = 400
 
@@ -60,13 +94,16 @@ class DemoTextFieldsScreen(BaseDemoScreen):
 
         okBtn = Button("OK", action=cls.ok)
 
+        tbTestContainer = cls.makeTextBoxTesterContainer()
         contentAttrs = {
             "align": "c"
         }
 
         if backButton is None:
-            contents: Column = Column([fieldGrid, cls.resultLabel, okBtn, minMaxField], **contentAttrs)
+            contents: Column = Column([fieldGrid, cls.resultLabel, okBtn, minMaxField, tbTestContainer], **contentAttrs)
         else:
-            contents: Column = Column([fieldGrid, cls.resultLabel, okBtn, minMaxField, backButton], **contentAttrs)
+            contents: Column = Column([fieldGrid, cls.resultLabel, okBtn, minMaxField, tbTestContainer, backButton],
+                                      **contentAttrs)
 
         return contents
+
