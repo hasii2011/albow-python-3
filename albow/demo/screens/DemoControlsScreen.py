@@ -78,8 +78,8 @@ class DemoControlsScreen(BaseDemoScreen):
 
         imgBtnBall: ImageButton = ImageButton(theImage="ball.gif")
         imgBtnHighlightedBall: ImageButton = ImageButton(theImage="ball.gif", highlightedBgImage="ball_highlighted.png")
-        imgBtnDisabledBall: ImageButton = ImageButton(theImage="ball.gif", disabledBgImage="ball_disabled.png", enabled=False)
-        imgBtnEnabledBall: ImageButton = ImageButton(theImage="ball.gif", enabledBgImage="ball_enabled.png", enabled=True)
+        imgBtnDisabledBall:    ImageButton = ImageButton(theImage="ball.gif", disabledBgImage="ball_disabled.png", enabled=False)
+        imgBtnEnabledBall:     ImageButton = ImageButton(theImage="ball.gif", enabledBgImage="ball_enabled.png", enabled=True)
 
         imgBtnTitle: Label = Label("Image Buttons")
         imgBtnGrid: Grid = Grid([
