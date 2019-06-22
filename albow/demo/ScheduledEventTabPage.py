@@ -65,8 +65,8 @@ class ScheduledEventTabPage(Widget):
         cbText = f"I have been called at: {ts}"
         self.logger.info(cbText)
 
-        oldText = self.textBox.get_text()
+        oldText = self.textBox.getText()
 
         cbText = f"{oldText}\n{cbText}"
 
-        self.textBox.set_text(cbText)
+        self.textBox.setText(cbText)

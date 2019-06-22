@@ -97,7 +97,7 @@ class DemoUserEventsScreen(BaseDemoScreen):
         pygame.time.set_timer(DemoUserEventsScreen.CLOCK_EVENT, 5 * 1000)
         pygame.time.set_timer(DemoUserEventsScreen.KLINGON_TORPEDO_EVENT, 7 * 1000)
         cls.classLineCounter = 0
-        cls.classTextBox.set_text("")
+        cls.classTextBox.setText("")
 
     @classmethod
     def resetUserEvents(cls):
@@ -115,8 +115,8 @@ class DemoUserEventsScreen(BaseDemoScreen):
         cbText: str = f"{str(lineCounter)}: type: '{theEvent.type}' - time: {timeSecs}"
         DemoUserEventsScreen.classLogger.debug(cbText)
 
-        oldText = DemoUserEventsScreen.classTextBox.get_text()
+        oldText = DemoUserEventsScreen.classTextBox.getText()
         cbText = f"{oldText}\n{cbText}"
 
         DemoUserEventsScreen.classLineCounter += 1
-        DemoUserEventsScreen.classTextBox.set_text(cbText)
+        DemoUserEventsScreen.classTextBox.setText(cbText)

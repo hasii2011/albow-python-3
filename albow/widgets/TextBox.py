@@ -8,8 +8,6 @@ from pygame import Rect
 from pygame import draw
 from pygame.event import Event
 
-from albow.utils import overridable_property
-
 from albow.core.ui.Widget import Widget
 
 from albow.themes.ThemeProperty import ThemeProperty
@@ -27,11 +25,8 @@ class TextBox(Widget):
     The character to use to break up lines in the text widget
     """
     CANONICAL_WIDEST_TALLEST_CHARACTER = "W"
+    NO_TEXT = ''
 
-    text = overridable_property('text')
-    """
-    The text to be displayed. This can be changed dynamically
-    """
     disabled_color = ThemeProperty('disabled_color')
     """
     The color to use when the text box is disabled
@@ -86,24 +81,62 @@ class TextBox(Widget):
         self.size = self.computeBoxSize(theNumberOfColumns, theNumberOfRows)
         self.logger.debug(f"size: {self.size}")
 
+        self.lastInsertedVisible = True
+        """If `True` whenever the developer inserts a new line then the widget scrolls, if necessary to keep it visible"""
         self.firstRow = 0
         """What scroll bars think the first row index is"""
         self._text = theText
+        self._lastInsertedVisible = True
 
         self.debugJustInserted = False
 
-    def get_text(self):
+    def getText(self):
         return self._text
 
-    def set_text(self, theNewText: str):
+    def setText(self, theNewText: str):
 
         lines = theNewText.strip().split(TextBox.LINE_SEPARATOR)
         self.lines = lines
         self.debugJustInserted = True
 
-        self.logger.info(f"# of lines: {len(self.lines)}")
+        self.logger.debug(f"# of lines: {len(self.lines)}")
         self._text = theNewText
         self._recomputeTextToDisplayIndices()
+
+    text = property(getText, setText)
+    """
+    The text to be displayed. This can be changed dynamically
+    """
+
+    def getLastInsertedVisible(self):
+        return self._lastInsertedVisible
+
+    def setLastInsertedVisible(self, theNewValue: bool):
+        self._lastInsertedVisible = theNewValue
+
+    lastInsertedVisible = property(getLastInsertedVisible, setLastInsertedVisible)
+
+    def addText(self, newText: str):
+        """
+        Different than setText.  This appends the new text to the contents of the widget
+
+        Args:
+            newText:  The new text to append to the text widget
+
+        """
+        print("")
+        oldLines: str = self.getText()
+
+        oldLines += f"{newText}{TextBox.LINE_SEPARATOR}"
+        self.setText(oldLines)
+
+    def clearText(self):
+        """
+        Empties the text widget
+        """
+        self.firstIdx = 0
+        self.lastIdx  = 0
+        self.setText(TextBox.NO_TEXT)
 
     def draw(self, theSurface: Surface):
         """
@@ -148,17 +181,18 @@ class TextBox(Widget):
         scrolledUp: bool = scrollUpRect.collidepoint(localPosition[0], localPosition[1])
 
         if scrolledDown:
-            self.firstRow += 1
+            self.firstIdx += 1
         elif scrolledUp:
-            if self.firstRow != 0:
-                self.firstRow -= 1
+            if self.firstIdx != 0:
+                self.firstIdx -= 1
 
         if self.firstRow < 0:
-            self.firstRow = 0
-        if self.firstRow >= len(self.lines) - 1:
-            self.firstRow = len(self.lines) - 1
+            self.firstIdx = 0
+        if self.firstIdx >= len(self.lines) - 1:
+            self.firstIdx = len(self.lines) - 1
 
-        self._recomputeTextToDisplayIndices()
+        # self.firstRow = self.firstIdx
+        # self._recomputeTextToDisplayIndices()
 
         self.logger.debug(f"firstRow: {self.firstRow} -- len(self.lines) {len(self.lines)}")
 
@@ -208,10 +242,16 @@ class TextBox(Widget):
 
     def _recomputeTextToDisplayIndices(self):
 
-        self.firstIdx = self.firstRow
+        # self.firstIdx = self.firstRow
         if len(self.lines) < self.numberOfRows:
             self.lastIdx = len(self.lines)
         else:
-            self.lastIdx = self.firstIdx + self.numberOfRows
-            if self.lastIdx >= len(self.lines):
-                self.lastIdx = len(self.lines)
+            if self.lastInsertedVisible is True:
+                self.lastIdx  = len(self.lines)
+                self.firstIdx = self.lastIdx - self.numberOfRows
+                self.firstRow = self.firstIdx
+            else:
+                self.lastIdx = self.firstIdx + self.numberOfRows
+                if self.lastIdx >= len(self.lines):
+                    self.lastIdx = len(self.lines)
+        self.logger.debug(f"firstIdx: {self.firstIdx}  lastIdx: {self.lastIdx}")

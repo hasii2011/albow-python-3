@@ -47,24 +47,32 @@ class DemoTextFieldsScreen(BaseDemoScreen):
 
         cls.lineCtr += 1
         line:     str = f"Line {cls.lineCtr}{TextBox.LINE_SEPARATOR}"
-        oldLines: str = cls.textBox.get_text();
+        oldLines: str = cls.textBox.getText();
 
         oldLines += line
-        cls.textBox.set_text(oldLines)
+        cls.textBox.setText(oldLines)
+
+    @classmethod
+    def deleteText(cls):
+
+        cls.textBox.clearText()
+        cls.lineCtr = 0
 
     @classmethod
     def makeTextBoxTesterContainer(cls) -> Row:
 
-        cls.textBox = TextBox(theNumberOfColumns=32, theNumberOfRows=5)
+        cls.textBox = TextBox(theNumberOfColumns=32, theNumberOfRows=6)
 
         checkBoxRow: Row = Row([CheckBox(), Label('Last Line Visible')])
 
         insTextButton: Button = Button('Insert', action=cls.insertText)
+        delTextButton: Button = Button('Clear ',  action=cls.deleteText)
 
         contentAttrs = {
             "align": "l"
         }
-        textBoxControlHolder: Column = Column([checkBoxRow, insTextButton], **contentAttrs)
+        buttHolder:           Column = Column([insTextButton, delTextButton],**contentAttrs)
+        textBoxControlHolder: Column = Column([checkBoxRow,   buttHolder], **contentAttrs)
 
         container: Row = Row([cls.textBox, textBoxControlHolder])
 
