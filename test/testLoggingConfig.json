@@ -37,7 +37,6 @@
                 "consoleHandler"
             ],
             "propagate": "False"
-        },
-
+        }
     }
 }

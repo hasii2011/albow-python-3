@@ -136,15 +136,12 @@ class AttrRef(Ref):
         return "AttrRef(%r, %r)" % (self.base, self.name)
 
     def get(self):
-        # print("%r.get()" % self)
-        # Python 3 update
-        # return getattr(self.base.get(), self.name)
+
         val = getattr(self.base, self.name)
         return val
 
     def set(self, value):
-        # Python 3 update
-        # setattr(self.base.get(), self.name, value)
+
         setattr(self.base, self.name, value)
 
 
