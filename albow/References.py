@@ -109,7 +109,6 @@ class Ref:
 
     def __getitem__(self, index):
         return self.base[index]
-        # return ItemRef(self, index)
 
     def __call__(self, *args, **kwds):
         return CallRef(self, args, kwds)
@@ -118,10 +117,9 @@ class Ref:
         return RefCaller(self)
 
     def __repr__(self):
-        return "Ref(%r)" % self.base
+        return f"Ref({self.base})"
 
     def get(self):
-        print("%r.get()" % self)
         return self.base
 
 
@@ -133,15 +131,13 @@ class AttrRef(Ref):
         self.name = name
 
     def __repr__(self):
-        return "AttrRef(%r, %r)" % (self.base, self.name)
+        return f"AttrRef({self.base}, {self.name})"
 
     def get(self):
-
         val = getattr(self.base, self.name)
         return val
 
     def set(self, value):
-
         setattr(self.base, self.name, value)
 
 
@@ -156,13 +152,11 @@ class ItemRef(Ref):
         return f"ItemRef({self.index}, {self.base})"
 
     def get(self):
-        print("%r.get()" % self)
         return self.base[self.index]
 
     def set(self, value):
         if isinstance(value, self.__class__):
             self.base[self.index] = value
-            print(f"ItemRef.index{self.index}, value{self.base}")
         else:
             ex: ItemRefInsertionException = ItemRefInsertionException(
                 theIndex=self.index,
@@ -181,10 +175,9 @@ class CallRef(Ref):
         self.kwds = kwds
 
     def __repr__(self):
-        return "CallRef(%r)" % self.base
+        return f"CallRef({self.base})"
 
     def get(self):
-        print("%r.get()" % self)
         return self.base.get()(*self.args, **self.kwds)
 
 
@@ -197,4 +190,4 @@ class RefCaller:
         return self.base.get()(*args, **kwds)
 
     def __repr__(self):
-        return "+%s" % repr(self.base)
+        return f"+{self.base}"

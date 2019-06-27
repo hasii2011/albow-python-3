@@ -124,7 +124,6 @@ class TextBox(Widget):
             newText:  The new text to append to the text widget
 
         """
-        print("")
         oldLines: str = self.getText()
 
         oldLines += f"{newText}{TextBox.LINE_SEPARATOR}"
