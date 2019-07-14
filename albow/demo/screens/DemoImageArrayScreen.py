@@ -29,19 +29,18 @@ class DemoImageArrayScreen(BaseDemoScreen):
         self.add_centered(contents)
 
     @classmethod
-    def makeContents(cls, backButton: Button=None) -> Column:
+    def makeContents(cls, backButton: Button = None) -> Column:
 
         cls.images = ImageArray.get_image_array("fruit.png", shape=3, border=2)
         cls.image = Image(cls.images[0])
         cls.index = 0
 
-
         if backButton is None:
-            contents: Column = Column([cls.image, Button("Next Fruit", action=cls.next_image),], spacing=10)
+            contents: Column = Column([cls.image, Button("Next Fruit", action=cls.next_image)], spacing=10)
         else:
             contentAttrs = {
-                "align"       : "c",
-                "margin"      : 10,
+                "align":        "c",
+                "margin":       10,
                 'border_width': 1
             }
 

@@ -41,21 +41,24 @@ class Theme:
     """
     BLACK = (0, 0, 0)
     WHITE = (255, 255, 255)
-    DARK_GRAY = (64, 64, 64)
-    GRAY = (128, 128, 128)
+    GRAY  = (128, 128, 128)
+    DARK_GRAY  = (64, 64, 64)
     LIGHT_GRAY = (212, 208, 200)
-    BLUE = (0, 0, 255)
-    GREEN = (0, 255, 0)
-    RED = (255, 0, 0)
+
+    BLUE   = (0, 0, 255)
+    GREEN  = (0, 255, 0)
+    RED    = (255, 0, 0)
+    YELLOW = (255, 255, 0)
 
     LAMAS_BLACK = (42, 41, 41)
-    LAMAS_GREY = (208, 210, 211)
-    LAMAS_LIGHT_BLUE = (24, 189, 207)
-    LAMAS_MEDIUM_BLUE = (106, 148, 204)
-    LAMAS_DARK_BLUE = (65, 108, 178)
-    LAMAS_OFF_WHITE = (255, 255, 244)
+    LAMAS_GREY  = (208, 210, 211)
 
-    BUILT_IN_FONT = "Vera.ttf"
+    LAMAS_LIGHT_BLUE  = (24, 189, 207)
+    LAMAS_MEDIUM_BLUE = (106, 148, 204)
+    LAMAS_DARK_BLUE   = (65, 108, 178)
+    LAMAS_OFF_WHITE   = (255, 255, 244)
+
+    BUILT_IN_FONT      = "Vera.ttf"
     BUILT_IN_BOLD_FONT = "VeraBd.ttf"
 
     DEFAULT_PKG = "albow.themes.resources"

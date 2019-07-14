@@ -17,6 +17,7 @@ DEMO_WINDOW_TITLE       = "Albow Demonstration"
 SCREEN_SIZE             = (480, 640)
 DISPLAY_FLAGS           = 0
 
+
 def main():
     #
     # This has to be done as early as possible to affect the logging
@@ -59,6 +60,7 @@ def main():
     logger.info("Starting %s", __name__)
 
     shell.run()
+
 
 if __name__ == '__main__':
     main()
