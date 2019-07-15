@@ -353,7 +353,7 @@ class Widget(AlbowRect):
             currentTime = datetime.now()
             if currentTime >= Widget.lastDebugRectTime:
 
-                print(f"Drawing subwidget '{widget}' of '{self} with rect '{sub_rect}'")
+                self.logger.info(f"Drawing subwidget '{widget}' of '{self} with rect '{sub_rect}'")
 
                 Widget.lastDebugRectTime = currentTime + timedelta(seconds=4)
 
