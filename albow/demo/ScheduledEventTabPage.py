@@ -51,7 +51,7 @@ class ScheduledEventTabPage(Widget):
 
         self.token6: ScheduledCall = Scheduler.schedule_call(delay=ScheduledEventTabPage.DELAY_3_SECS,
                                                              func=self.scheduledMethod,
-                                                            repeat=ScheduledEventTabPage.REPEAT)
+                                                             repeat=ScheduledEventTabPage.REPEAT)
 
     def cancelScheduledEvents(self):
 

@@ -47,7 +47,7 @@ class DemoTextFieldsScreen(BaseDemoScreen):
 
         cls.lineCtr += 1
         line:     str = f"Line {cls.lineCtr}{TextBox.LINE_SEPARATOR}"
-        oldLines: str = cls.textBox.getText();
+        oldLines: str = cls.textBox.getText()
 
         oldLines += line
         cls.textBox.setText(oldLines)
@@ -71,7 +71,7 @@ class DemoTextFieldsScreen(BaseDemoScreen):
         contentAttrs = {
             "align": "l"
         }
-        buttHolder:           Column = Column([insTextButton, delTextButton],**contentAttrs)
+        buttHolder:           Column = Column([insTextButton, delTextButton], **contentAttrs)
         textBoxControlHolder: Column = Column([checkBoxRow,   buttHolder], **contentAttrs)
 
         container: Row = Row([cls.textBox, textBoxControlHolder])
@@ -110,8 +110,6 @@ class DemoTextFieldsScreen(BaseDemoScreen):
         if backButton is None:
             contents: Column = Column([fieldGrid, cls.resultLabel, okBtn, minMaxField, tbTestContainer], **contentAttrs)
         else:
-            contents: Column = Column([fieldGrid, cls.resultLabel, okBtn, minMaxField, tbTestContainer, backButton],
-                                      **contentAttrs)
+            contents: Column = Column([fieldGrid, cls.resultLabel, okBtn, minMaxField, tbTestContainer, backButton], **contentAttrs)
 
         return contents
-

@@ -1,5 +1,6 @@
 
 from typing import List
+from typing import cast
 
 import sys
 
@@ -35,7 +36,6 @@ from albow.media.MusicUtilities import MusicUtilities
 
 
 class RootWidget(Widget):
-
 
     """
     For the GUI to function, there must be exactly one instance of RootWidget. It implements the main event loop
@@ -124,7 +124,7 @@ class RootWidget(Widget):
         is called.
 
         """
-        self.run_modal(None)
+        self.run_modal(cast(Widget, None))
 
     def run_modal(self, modal_widget: Widget):
         """

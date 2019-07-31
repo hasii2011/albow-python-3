@@ -1,4 +1,6 @@
 
+from pygame.event import Event
+
 from albow.table.TableView import TableView
 from albow.table.TableColumn import TableColumn
 
@@ -32,7 +34,7 @@ class DemoTableView(TableView):
     def row_data(self, i):
         return self.demo_table_data[i]
 
-    def row_is_selected(self, i):
+    def row_is_selected(self, i, theEvent: Event = None) -> bool:
         return self.selected_table_row == i
 
     def click_row(self, i, e):

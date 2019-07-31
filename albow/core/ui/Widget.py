@@ -1,4 +1,6 @@
 
+from typing import cast
+
 import sys
 import logging
 
@@ -302,7 +304,7 @@ class Widget(AlbowRect):
     def _remove(self, widget):
         self.subwidgets.remove(widget)
         if self.focus_switch is widget:
-            self.focus_switch = None
+            self.focus_switch = cast(Widget, None)
 
     def draw_all(self, surface):
 

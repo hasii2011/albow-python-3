@@ -8,7 +8,7 @@ from pygame import Rect
 # from pygame.locals import SRCALPHA
 
 
-def overridable_property(name: str, doc:str =None):
+def overridable_property(name: str, doc: str =None):
     """
     Creates a property which calls methods _get_xxx_ and _set_xxx_ of
     the underlying object to get and set the property value, so that

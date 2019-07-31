@@ -4,6 +4,7 @@ import logging
 from albow.themes.Theme import Theme
 from albow.core.ui.Widget import Widget
 
+
 class Predictor:
 
     def __init__(self, theWidget: Widget):
@@ -31,4 +32,3 @@ class Predictor:
 
     def predict_font(self, kwds, name='font'):
         return kwds.get(name) or Theme.getThemeRoot().get_font(self.widget.__class__, name)
-

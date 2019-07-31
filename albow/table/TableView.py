@@ -77,8 +77,8 @@ class TableView(Column):
         columns = self.predict_attr(kwds, 'columns')
 
         if row_height is None:
-            font = self.predict_font(kwds)
-            row_height = font.get_linesize()
+            predictedFont = self.predict_font(kwds)
+            row_height    = predictedFont.get_linesize()
 
         if header_height is None:
             header_height = row_height
@@ -106,8 +106,8 @@ class TableView(Column):
         super().__init__(contents, align='l', spacing=s, **kwds)
         if header:
             header.font = self.header_font or self.font
-            header.fg_color = fg_color = self.header_fg_color or self.fg_color
-            header.bg_color = bg_color = self.header_bg_color or self.bg_color
+            header.fg_color = self.header_fg_color or self.fg_color
+            header.bg_color = self.header_bg_color or self.bg_color
         rows.font = self.font
         rows.fg_color = self.fg_color
         rows.bg_color = self.bg_color
@@ -155,7 +155,7 @@ class TableView(Column):
 
             cell_rect: The rect is the rectangle corresponding to the header area,
 
-            theTableColumn:  The table column header to render
+            tableColumn:  The table column header to render
         """
         text = tableColumn.format(data)
         self.draw_text_cell(surf, text, cell_rect, tableColumn.alignment, self.font)
@@ -190,7 +190,7 @@ class TableView(Column):
         """
         pass
 
-    def row_is_selected(self, theRowNumber: int, theEvent: Event) -> bool:
+    def row_is_selected(self, theRowNumber: int, theEvent: Event = None) -> bool:
         """
         Should return true if *theRowNumber* is considered selected. The default implementation
         always returns *False*.  *StarStar*, 'quotequote'

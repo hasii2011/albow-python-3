@@ -50,7 +50,6 @@ class AlbowEventLoop:
 
         self.logger.debug(f"Events to process: {len(eventList)}")
 
-
         use_sleep = eventLoopParams.use_sleep
         relative_pause = eventLoopParams.relative_pause
         do_draw = eventLoopParams.do_draw
