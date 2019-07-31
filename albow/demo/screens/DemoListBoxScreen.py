@@ -38,13 +38,13 @@ class DemoListBoxScreen(BaseDemoScreen):
         self.backButton.focus()
 
     @classmethod
-    def makeContents(cls, client: Widget, backButton: Button=None) -> Column:
+    def makeContents(cls, client: Widget, backButton: Button = None) -> Column:
 
         labelFont = ResourceUtility.get_font(DemoListBoxScreen.DEMO_LABEL_TEXT_SIZE, Theme.BUILT_IN_FONT)
 
         demoListBoxLabel: Label = Label(text="Pick a good guy", font=labelFont)
 
-        demoListBox: ListBox = ListBox(theClient=client, theItems=DemoListBoxScreen.DEMO_LIST_DATA, selectAction=cls.selectAction)
+        demoListBox: ListBox = ListBox(nrows=3, theClient=client, theItems=DemoListBoxScreen.DEMO_LIST_DATA, selectAction=cls.selectAction)
 
         cls.selectedLabel: Label = Label(text="No selection")
         lbColumnAttrs = {

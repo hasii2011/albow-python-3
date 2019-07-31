@@ -24,7 +24,8 @@ class ListBox(PaletteView):
     items             = []
     selectAction      = None
 
-    def __init__(self, theClient: Widget, theItems: list, selectAction=None, **kwargs):
+    def __init__(self, theClient: Widget, theItems: list,
+                 nrows: int = LISTBOX_DEFAULT_ROWS, ncols: int = LISTBOX_COLUMNS, selectAction=None, **kwargs):
 
         assert isinstance(theItems, list), "Wrong type for input list"
 
@@ -36,10 +37,11 @@ class ListBox(PaletteView):
 
         cellSize = (listBoxWidth - d, h)
 
-        super().__init__(cell_size=cellSize, nrows=LISTBOX_DEFAULT_ROWS, ncols=LISTBOX_COLUMNS, scrolling=LISTBOX_SCROLLS, **kwargs)
+        super().__init__(cell_size=cellSize, nrows=nrows, ncols=ncols, scrolling=LISTBOX_SCROLLS, **kwargs)
 
         self.border_width = 1
         self.margin       = 5
+        self.highlight_style = 'reverse'
 
         self.client = theClient
         self.items  = theItems
@@ -56,6 +58,7 @@ class ListBox(PaletteView):
     def draw_item(self, theSurface: Surface, theItemNumber: int, theRect: Rect):
 
         # self.logger.info("draw_item %s ", theRect.size)
+
         color = self.fg_color
         buf = self.font.render(self.items[theItemNumber], True, color)
 
@@ -66,7 +69,7 @@ class ListBox(PaletteView):
         self.logger.debug("click_item: %s", theItemNumber)
 
         self.selection = theItemNumber
-        if self.selectAction != None:
+        if self.selectAction is not None:
             self.selectAction(self.items[self.selection])
 
     def item_is_selected(self, theItemNumber: int) -> bool:
