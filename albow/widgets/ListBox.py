@@ -1,4 +1,6 @@
 
+from typing import Tuple
+
 import logging
 
 from pygame import Surface
@@ -28,13 +30,18 @@ class ListBox(PaletteView):
                  nrows: int = LISTBOX_DEFAULT_ROWS, ncols: int = LISTBOX_COLUMNS, selectAction=None, **kwargs):
 
         assert isinstance(theItems, list), "Wrong type for input list"
+        self.client = theClient
+        self.items  = theItems
+        self.selectAction = selectAction
 
         font = self.predict_font(kwargs)
         h    = font.get_linesize()
         d    = 2 * self.predict(kwargs, 'margin')
 
-        listBoxWidth: int = int(theClient.width / 2)
+        longestTextLine: str = self._getLongestTextLine()
+        lineDimension: Tuple[int, int] = font.size(longestTextLine)
 
+        listBoxWidth: int = lineDimension[0]
         cellSize = (listBoxWidth - d, h)
 
         self.border_width = 1               #
@@ -76,3 +83,11 @@ class ListBox(PaletteView):
 
         ans: bool = theItemNumber == self.selection
         return ans
+
+    def _getLongestTextLine(self) -> str:
+
+        retStr: str = ""
+        for currLine in self.items:
+            if len(currLine) > len(retStr):
+                retStr = currLine
+        return retStr
