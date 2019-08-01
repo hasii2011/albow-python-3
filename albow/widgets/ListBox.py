@@ -36,12 +36,11 @@ class ListBox(PaletteView):
         listBoxWidth: int = int(theClient.width / 2)
 
         cellSize = (listBoxWidth - d, h)
-
-        super().__init__(cell_size=cellSize, nrows=nrows, ncols=ncols, scrolling=LISTBOX_SCROLLS, **kwargs)
-
         self.border_width = 1
         self.margin       = 5
         self.highlight_style = 'reverse'
+
+        super().__init__(cell_size=cellSize, nrows=nrows, ncols=ncols, scrolling=LISTBOX_SCROLLS, **kwargs)
 
         self.client = theClient
         self.items  = theItems
