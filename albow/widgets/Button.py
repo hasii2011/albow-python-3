@@ -41,7 +41,7 @@ class Button(ButtonBase, Label):
         self.border_color = Theme.BLACK
         # self.border_width = 1
 
-    def draw_with(self, surface: Surface, fg: tuple, bg: tuple=None):
+    def draw_with(self, surface: Surface, fg: tuple, bg: tuple = None):
 
         self.border_width = 0
         super().draw_with(surface, fg, bg)
