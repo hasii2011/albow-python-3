@@ -19,7 +19,7 @@ class ButtonBase(Control):
     a method in the subclass.
     """
 
-    def mouse_down(self, event):
+    def mouse_down(self, theEvent: event):
         if self.enabled:
             self._highlighted = True
 
@@ -31,11 +31,11 @@ class ButtonBase(Control):
             self._highlighted = state
             self.invalidate()
 
-    def mouse_up(self, event):
+    def mouse_up(self, theEvent: event):
         if event in self:
             self._highlighted = False
             if self.enabled:
-                self.call_handler('action')
+                self.call_handler('action')     # TODO Fix this by using another 'mixin' shared with the Widget class
 
     def get_highlighted(self):
         return self._highlighted
