@@ -21,7 +21,7 @@ class Grid(Widget):
         self.logger: Logger = getLogger(__name__)
 
         self.margin = m = kwds.pop('margin', self.margin)
-        self.border_width = 2
+
         col_widths  = [0] * len(rows[0])
         row_heights = [0] * len(rows)
         for j, row in enumerate(rows):
