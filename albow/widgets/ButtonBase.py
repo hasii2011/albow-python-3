@@ -32,7 +32,7 @@ class ButtonBase(Control):
             self.invalidate()
 
     def mouse_up(self, theEvent: event):
-        if event in self:
+        if theEvent in self:
             self._highlighted = False
             if self.enabled:
                 self.call_handler('action')     # TODO Fix this by using another 'mixin' shared with the Widget class
