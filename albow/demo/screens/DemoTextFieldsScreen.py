@@ -43,7 +43,7 @@ class DemoTextFieldsScreen(BaseDemoScreen):
         cls.resultLabel.text = "You are a %s called %s." % (cls.raceField.text, cls.nameField.text)
 
     @classmethod
-    def insertText(cls):
+    def appendText(cls):
 
         cls.lineCtr += 1
         line:     str = f"Line {cls.lineCtr}{TextBox.LINE_SEPARATOR}"
@@ -53,25 +53,37 @@ class DemoTextFieldsScreen(BaseDemoScreen):
         cls.textBox.setText(oldLines)
 
     @classmethod
-    def deleteText(cls):
+    def insertText(cls):
+        cls.lineCtr += 1
+        line: str = f'Line {cls.lineCtr}'
+        cls.textBox.insertText(theNewLine=line)
+
+    @classmethod
+    def clearText(cls):
 
         cls.textBox.clearText()
         cls.lineCtr = 0
 
     @classmethod
+    def deleteText(cls):
+        cls.textBox.deleteText(2)
+
+    @classmethod
     def makeTextBoxTesterContainer(cls) -> Row:
 
-        cls.textBox = TextBox(theNumberOfColumns=32, theNumberOfRows=6)
+        cls.textBox = TextBox(theNumberOfColumns=20, theNumberOfRows=10)
 
         checkBoxRow: Row = Row([CheckBox(), Label('Last Line Visible')])
 
-        insTextButton: Button = Button('Insert', action=cls.insertText)
-        delTextButton: Button = Button('Clear ',  action=cls.deleteText)
+        appendTextButton: Button = Button('Append', action=cls.appendText)
+        insertTextButton: Button = Button('Insert', action=cls.insertText)
+        deleteTextButton: Button = Button('Delete', action=cls.deleteText)
+        clearTextButton:  Button = Button('Clear ', action=cls.clearText)
 
         contentAttrs = {
             "align": "l"
         }
-        buttHolder:           Column = Column([insTextButton, delTextButton], **contentAttrs)
+        buttHolder:           Column = Column([appendTextButton, insertTextButton, deleteTextButton, clearTextButton], **contentAttrs)
         textBoxControlHolder: Column = Column([checkBoxRow,   buttHolder], **contentAttrs)
 
         container: Row = Row([cls.textBox, textBoxControlHolder])

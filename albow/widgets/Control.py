@@ -2,7 +2,7 @@
 from albow.utils import overridable_property
 
 
-class Control():
+class Control:
     """
     Control is a mixin class for use by widgets that display and/or edit a value of some kind. It provides a value
     property that can be linked, via a reference object, to a specific attribute or item of another object.

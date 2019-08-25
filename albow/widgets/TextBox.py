@@ -94,7 +94,13 @@ class TextBox(Widget):
         return self._text
 
     def setText(self, theNewText: str):
+        """
+        Replace the contents with this new text
 
+        Args:
+            theNewText:  The text that replaces what was in the widget
+
+        """
         lines = theNewText.strip().split(TextBox.LINE_SEPARATOR)
         self.lines = lines
         self.debugJustInserted = True
@@ -128,6 +134,37 @@ class TextBox(Widget):
 
         oldLines += f"{newText}{TextBox.LINE_SEPARATOR}"
         self.setText(oldLines)
+
+    def insertText(self, theNewLine):
+        """
+
+        Args:
+            theNewLine:
+        """
+        oldLines: str = self.getText()
+        oldLines = f"{theNewLine}{TextBox.LINE_SEPARATOR}" + oldLines
+        self.setText(oldLines)
+
+    def deleteText(self, theLineNumber: int = 0):
+        """
+        Lines are defined as strings of text separated by `TextBox.LINE_SEPARATOR`
+        Can't delete any lines if widget is empty (operation is ignored)
+        Can't delete a line that does not exist (operation is ignored)
+
+        Args:
+            theLineNumber:  The line number to delete;  Defaults to the first line (numbered 0)
+        """
+        if len(self.getText()) > 0:
+            oldLines: str       = self.getText()
+            splits:   List[str] = oldLines.splitlines(True)
+            self.logger.info(f'splits: {splits}')
+
+            if len(splits) > theLineNumber:
+                del splits[theLineNumber]
+                newLines: str = ''.join(splits)
+                self.logger.info(f'newLines: {newLines}')
+
+                self.setText(newLines)
 
     def clearText(self):
         """
