@@ -179,8 +179,8 @@ class Widget(AlbowRect):
 
     def __init__(self, rect: Rect = None, **kwds):
         """
-        Creates a new widget, initially without any parent. If a rect is given, it specifies the new widget's initial s
-        ize and position relative to its parent.
+        Creates a new widget, initially without any parent. If a rect is given, it specifies the new widget's initial
+        size and position relative to its parent.
 
         Args:
             rect:   A PyGame rectangle defining the portion of the parent widget's coordinate system occupied by the

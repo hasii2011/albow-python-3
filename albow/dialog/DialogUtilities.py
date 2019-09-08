@@ -78,18 +78,22 @@ def ask(theMessage: str, theResponses=None, default=0, cancel=-1, wrap_width=60,
     #
     if theResponses is None:
         theResponses = DEFAULT_ASK_RESPONSES
+
     box = Dialog(**kwds)
-    d = box.margin
-    lb = wrapped_label(theMessage, wrap_width)
+    d   = box.margin
+    lb  = wrapped_label(theMessage, wrap_width)
+
     lb.topleft = (d, d)
     buts = []
     for caption in theResponses:
         but = Button(caption, action=lambda x=caption: box.dismiss(x))
         buts.append(but)
+
     brow = Row(buts, spacing=d, equalize='w')
     lb.width = max(lb.width, brow.width)
     col = Column([lb, brow], spacing=d, align='r')
     col.topleft = (d, d)
+
     if default is not None:
         box.enter_response = theResponses[default]
     else:
@@ -98,6 +102,7 @@ def ask(theMessage: str, theResponses=None, default=0, cancel=-1, wrap_width=60,
         box.cancel_response = theResponses[cancel]
     else:
         box.cancel_response = None
+
     box.add(col)
     box.shrink_wrap()
 

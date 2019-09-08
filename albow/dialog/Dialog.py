@@ -57,9 +57,7 @@ class Dialog(Modal, Widget):
             contents.topleft = (m, m)
             self.add(contents)
             self.shrink_wrap()
-        #
-        # TODO  Appears to be some code for future use to provide other than True/False responses
-        #
+
         if responses and default is not None:
             self.enter_response = responses[default]
         if responses and cancel is not None:

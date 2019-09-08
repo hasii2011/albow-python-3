@@ -30,8 +30,8 @@ class Grid(Widget):
                     col_widths[i]  = max(col_widths[i], widget.width)
                     row_heights[j] = max(row_heights[j], widget.height)
 
-        self.logger.info(f"column_spacing: {column_spacing}")
-        self.logger.info(f"... col_widths:   {col_widths} ... row_heights: {row_heights}")
+        self.logger.debug(f"column_spacing: {column_spacing}")
+        self.logger.debug(f"... col_widths:   {col_widths} ... row_heights: {row_heights}")
 
         row_top:  int = 0
         col_left: int = 0
@@ -44,7 +44,7 @@ class Grid(Widget):
                 w = col_widths[i]
                 if widget:
                     x = m + col_left
-                    self.logger.info(f"x: {x} m: {m} + col_left: {col_left}")
+                    self.logger.debug(f"x: {x} m: {m} + col_left: {col_left}")
                     widget.midleft = (x, y)
                 col_left += w + column_spacing
             row_top += h + row_spacing
@@ -54,10 +54,10 @@ class Grid(Widget):
         width  = max(1, col_left - column_spacing)
         height = max(1, row_top - row_spacing)
         m2 = 2 * m
-        self.logger.info(f"width: {width} height: {height} m2: {m2}")
+        self.logger.debug(f"width: {width} height: {height} m2: {m2}")
         r = Rect(0, 0, width + m2 + column_spacing, height + m2)
 
-        self.logger.info(f"r = {r}")
+        self.logger.debug(f"r = {r}")
 
         super().__init__(r, **kwds)
         self.add(rows)
