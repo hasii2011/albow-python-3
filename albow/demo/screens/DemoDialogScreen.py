@@ -8,6 +8,8 @@ from albow.layout.Column import Column
 from albow.widgets.Label import Label
 from albow.widgets.Button import Button
 
+from albow.dialog.TitledDialog import TitledDialog
+
 from albow.dialog.DialogUtilities import alert
 from albow.dialog.DialogUtilities import ask
 
@@ -38,6 +40,7 @@ class DemoDialogScreen(BaseDemoScreen):
             Button(text="Ask Old Filename",    action=cls.test_old),
             Button(text="Ask New Filename",    action=cls.test_new),
             Button(text="Look File/Directory", action=cls.test_lookfor),
+            Button(text="Titled Dialog",       action=cls.testTitledDialog),
         ], align='l', expand=3, equalize='w')
 
         if backButton is None:
@@ -56,13 +59,13 @@ class DemoDialogScreen(BaseDemoScreen):
     @classmethod
     def test_ask(cls):
         response = ask("Do you like mustard and avocado ice cream?", ["Yes", "No", "Undecided"])
-        alert("You chose %r." % response)
+        alert(f"You chose {response}.")
 
     @classmethod
     def test_old(cls):
         path = request_old_filename()
         if path:
-            alert(f"You chose %{path}.")
+            alert(f"You chose {path}.")
         else:
             alert("Cancelled.")
 
@@ -81,3 +84,11 @@ class DemoDialogScreen(BaseDemoScreen):
             alert(f"You chose {path}.")
         else:
             alert("Cancelled.")
+
+    @classmethod
+    def testTitledDialog(cls):
+
+        ttlDlg: TitledDialog = TitledDialog(title='Chip8 Python', message='Version 0.5, by Humberto A. Sanchez II')
+        response = ttlDlg.present()
+        alert(f'You responded: {response}')
+

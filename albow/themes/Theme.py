@@ -44,19 +44,29 @@ class Theme:
     GRAY  = (128, 128, 128)
     DARK_GRAY  = (64, 64, 64)
     LIGHT_GRAY = (212, 208, 200)
+    CLOUDS     = (236, 240, 241)
 
-    BLUE   = (0, 0, 255)
     GREEN  = (0, 255, 0)
     RED    = (255, 0, 0)
-    YELLOW = (255, 255, 0)
 
-    LAMAS_BLACK = (42, 41, 41)
-    LAMAS_GREY  = (208, 210, 211)
+    YELLOW        = (255, 255, 0)
+    SOUR_LEMON    = (255, 234, 167)
+    BRIGHT_YARROW = (253, 203, 110)
+    SUNFLOWER     = (241, 196, 15)
+
+    LAMAS_BLACK     = (42, 41, 41)
+    LAMAS_GREY      = (208, 210, 211)
+    SOOTHING_BREEZE = (178, 190, 195)
+    CITY_LIGHTS     = (223, 230, 233)
 
     LAMAS_LIGHT_BLUE  = (24, 189, 207)
     LAMAS_MEDIUM_BLUE = (106, 148, 204)
     LAMAS_DARK_BLUE   = (65, 108, 178)
     LAMAS_OFF_WHITE   = (255, 255, 244)
+    BELIZE_HOLE       = (41, 128, 185)
+
+    BLUE          = (0, 0, 255)
+    ELECTRON_BLUE = (9, 132, 227)
 
     BUILT_IN_FONT      = "Vera.ttf"
     BUILT_IN_BOLD_FONT = "VeraBd.ttf"
