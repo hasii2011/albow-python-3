@@ -28,10 +28,8 @@ def alert(theMessage: str, theTitle: str = 'Alert!', theWrapWidth=60, **kwds):
 
         **kwds: Additional keyword parameters passed to the `albow.dialog.Dialog` constructor.
     """
-    ttlDlg = TitledDialog(title=theTitle, message=theMessage, wrapWidth=theWrapWidth)
+    ttlDlg = TitledDialog(title=theTitle, message=theMessage, wrapWidth=theWrapWidth, **kwds)
     ttlDlg.present()
-
-    # ask(theMessage, ["OK"], wrap_width=theWrapWidth, **kwds)
 
 
 def ask(theMessage: str, theResponses=None, default=0, cancel=-1, wrap_width=60, **kwds):
