@@ -1,9 +1,11 @@
-import textwrap
+
+from albow.widgets.WidgetUtilities import wrapped_label
 
 from albow.widgets.Button import Button
 from albow.widgets.Label import Label
 
 from albow.dialog.Dialog import Dialog
+from albow.dialog.TitledDialog import TitledDialog
 
 from albow.layout.Row import Row
 from albow.layout.Column import Column
@@ -12,29 +14,7 @@ from albow.input.TextField import TextField
 DEFAULT_ASK_RESPONSES = ["OK", "Cancel"]
 
 
-def wrapped_label(text, wrap_width, **kwds) -> Label:
-    """
-    Constructs a `albow.widgets.Label` widget from the given text after using the ``textwrap`` module to wrap it to
-    the specified width in
-    characters.
-    Additional keyword parameters are passed to the Label constructor.
-
-    Args:
-        text:       The text to wrap in a label
-
-        wrap_width: The wrap width
-
-        **kwds:     Pass these to the Label constructor
-
-    Returns:    A Label widget
-
-    """
-    paras = text.split("\n\n")
-    text = "\n".join([textwrap.fill(para, wrap_width) for para in paras])
-    return Label(text, **kwds)
-
-
-def alert(theMessage: str, theWrapWidth=60, **kwds):
+def alert(theMessage: str, theTitle: str = 'Alert!', theWrapWidth=60, **kwds):
     """
     Displays a message in a modal dialog, wrapped to the specified width in characters. The dialog can be dismissed by
     pressing Return, Enter or Escape.
@@ -42,11 +22,16 @@ def alert(theMessage: str, theWrapWidth=60, **kwds):
     Args:
         theMessage:  The alert message to display
 
+        theTitle:  The title to display in the dialog title bar
+
         theWrapWidth:  The wrap width in characters
 
         **kwds: Additional keyword parameters passed to the `albow.dialog.Dialog` constructor.
     """
-    ask(theMessage, ["OK"], wrap_width=theWrapWidth, **kwds)
+    ttlDlg = TitledDialog(title=theTitle, message=theMessage, wrapWidth=theWrapWidth)
+    ttlDlg.present()
+
+    # ask(theMessage, ["OK"], wrap_width=theWrapWidth, **kwds)
 
 
 def ask(theMessage: str, theResponses=None, default=0, cancel=-1, wrap_width=60, **kwds):

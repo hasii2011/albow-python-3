@@ -5,7 +5,7 @@ from logging import getLogger
 from albow.themes.Theme import Theme
 from albow.themes.ThemeProperty import ThemeProperty
 
-from albow.dialog.DialogUtilities import wrapped_label
+from albow.widgets.WidgetUtilities import wrapped_label
 from albow.dialog.Dialog import Dialog
 from albow.dialog.DialogTitleBar import DialogTitleBar
 
@@ -25,12 +25,13 @@ class TitledDialog(Dialog):
     The number of pixels at which we wrap the input text message
     """
 
-    def __init__(self, title: str = 'Default Title', message: str = '', client=None, **kwds):
+    def __init__(self, title: str = 'Default Title', message: str = '', client=None, wrapWidth: int = 100, **kwds):
 
         super().__init__(client=client, width=TitledDialog.TD_SIZE, **kwds)
 
         self.logger: Logger = getLogger(__name__)
         self.title:  str    = title
+        self.wrap_width     = wrapWidth
 
         dlgTitleBar: DialogTitleBar = DialogTitleBar(theTitle=title, width=TitledDialog.TD_SIZE)
         lblMsg:      Label          = wrapped_label(message, self.wrap_width, margin=3)
