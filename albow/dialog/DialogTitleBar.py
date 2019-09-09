@@ -20,26 +20,24 @@ class DialogTitleBar(Widget):
         self.title: str = theTitle
 
         super().__init__(**kwds)
-        self.height = self.height / 5
+
+        self.height: int    = self.height // 5
+        self.border_width   = 1
         self.logger: Logger = getLogger(__name__)
 
     def draw(self, theSurface: Surface):
         """
-        We won't honor the margin for the title bar
-
         Args:
             theSurface: The surface onto which to draw
         """
-
         w: int = self._rect.width   # syntactic sugar
         h: int = self._rect.height  # syntactic sugar
-        borderWidth: int = self.border_width
 
-        self.logger.info(f'w: {w} h: {h} margin: {self.margin} borderWidth: {borderWidth}')
+        self.logger.debug(f'w: {w} h: {h} margin: {self.margin}')
 
         tBar: Rect = Rect((0, 0), (w, h))
+        self.logger.debug(f'tBar: {tBar}  theSurface: {theSurface}')
         theSurface.fill(Theme.LAMAS_OFF_WHITE, tBar)
-        theSurface.fill(Theme.LAMAS_OFF_WHITE, tBar.inflate(-borderWidth * 2, -borderWidth * 2))
 
     def draw_over(self, theSurface: Surface):
         """

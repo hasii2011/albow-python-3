@@ -88,7 +88,15 @@ class DemoDialogScreen(BaseDemoScreen):
     @classmethod
     def testTitledDialog(cls):
 
+        longMsg: str = (
+            f'[.. to disarm the people; that it was the best and most effectual way to enslave them.'
+            f'  but that they should not do it openly, but weaken them, and let them sink gradually, '
+            f' by totally disusing and neglecting the militia.  -- George Mason]'
+        )
+
+        ttlDlg = TitledDialog(title='Long wrapped message', message=longMsg)
+        ttlDlg.present()
+
         ttlDlg: TitledDialog = TitledDialog(title='Chip8 Python', message='Version 0.5, by Humberto A. Sanchez II')
         response = ttlDlg.present()
         alert(f'You responded: {response}')
-
