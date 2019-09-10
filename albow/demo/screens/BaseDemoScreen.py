@@ -27,4 +27,4 @@ class BaseDemoScreen(Screen):
         self.labelFont       = ResourceUtility.get_font(BaseDemoScreen.SMALL_LABEL_TEXT_SIZE, Theme.BUILT_IN_FONT)
 
         self.backButton      = Button("Back", action=shell.show_menu, font=self.smallButtonFont)
-        self.logger.info(f"{self.backButton}")
+        self.logger.debug(f"{self.backButton}")
