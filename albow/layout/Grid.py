@@ -4,8 +4,6 @@ from logging import getLogger
 
 from pygame import Rect
 
-from albow.themes.Theme import Theme
-
 from albow.core.ui.Widget import Widget
 
 
@@ -27,8 +25,7 @@ class Grid(Widget):
         if self.margin == 0:
             self.margin = DEFAULT_GRID_MARGIN
             m           = DEFAULT_GRID_MARGIN
-        self.border_width = 3
-        self.border_color = Theme.GREEN
+
         self.logger.info(f'margin: {self.margin}')
         col_widths  = [0] * len(rows[0])
         row_heights = [0] * len(rows)
