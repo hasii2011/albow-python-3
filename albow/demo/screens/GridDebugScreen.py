@@ -49,29 +49,29 @@ class GridDebugScreen(Screen):
                 self.screen_button("R0C1"),
                 self.screen_button("R0C2"),
             ],
-            [
-                self.screen_button("R1C0"),
-                self.screen_button("R1C1"),
-                self.screen_button("R1C2"),
-            ],
-            [
-                self.screen_button("R2C0"),
-                self.screen_button("R2C1"),
-                self.screen_button("R2C2"),
-            ],
-            [
-                self.screen_button("R3C0"),
-                self.screen_button("R3C1"),
-                self.screen_button("R3C2")
-            ],
-            [
-                self.screen_button("R4C0"),
-                self.screen_button("R4C1"),
-                self.screen_button("R4C2")
-            ]
+            # [
+            #     self.screen_button("R1C0"),
+            #     self.screen_button("R1Column1"),
+            #     self.screen_button("R1C2"),
+            # ],
+            # [
+            #     self.screen_button("R2C0"),
+            #     self.screen_button("R2Column1"),
+            #     self.screen_button("R2C2"),
+            # ],
+            # [
+            #     self.screen_button("R3C0"),
+            #     self.screen_button("R3Column1"),
+            #     self.screen_button("R3C2")
+            # ],
+            # [
+            #     self.screen_button("R4C0"),
+            #     self.screen_button("R4Column1"),
+            #     self.screen_button("R4C2")
+            # ]
         ]
 
-        menuGrid = Grid(rows=menuArray, column_spacing=5, row_spacing=2, margin=5)
+        menuGrid = Grid(rows=menuArray, column_spacing=10, row_spacing=2, margin=5)
         quitButton = Button("Quit", shell.quit)
 
         self.equallySizeButtons(menuArray)
@@ -80,7 +80,7 @@ class GridDebugScreen(Screen):
             title,
             menuGrid,
             quitButton
-        ], align='c', spacing=10)
+        ], align='c', spacing=10, border_width=1, border_color=Theme.BLUE, margin=10)
         self.add_centered(contents)
 
     def screen_button(self, text: str):

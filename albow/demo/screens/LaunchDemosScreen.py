@@ -71,7 +71,7 @@ class LaunchDemosScreen(Screen):
             ]
         ]
 
-        menuGrid = Grid(rows=menuArray, column_spacing=5, row_spacing=2)
+        menuGrid = Grid(rows=menuArray, column_spacing=5, row_spacing=2, margin=5)
         quitButton = Button("Quit", shell.quit)
 
         self.equallySizeButtons(menuArray)
