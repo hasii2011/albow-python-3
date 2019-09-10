@@ -46,24 +46,8 @@ class Widget(AlbowRect):
     contain subwidgets.
 
     .. Note::
-        Due to a limitation of PyGame subsurfaces, a widget's rectangle must be entirely contained within that of
+        Due to a limitation of PyGame sub-surfaces, a widget's rectangle must be entirely contained within that of
         its parent widget. An exception will occur if this is violated.
-
-
-    - Reading the following attributes retrieves the corresponding values from the widget's rect.
-    - Assigning to them changes the size and position of the widget.
-    - Additionally, if the size of the widget is changed via these
-      attributes, the size and position of its subwidgets is updated according to each subwidget's anchor attribute.
-
-        <pre>
-        left, right, top, bottom, width, height, size,
-        topleft, topright, bottomleft, bottomright,
-        midleft, midright, midtop, midbottom,
-        center, centerx, centery
-        </pre>
-
-    This does not happen if the rect is modified directly.
-
     """
 
     lastDebugRectTime = datetime.now() + timedelta(seconds=4)
@@ -333,10 +317,10 @@ class Widget(AlbowRect):
                 frame_rect(surface, bc, surf_rect, bw)
             for widget in self.subwidgets:
                 sub_rect = widget.rect
+                sub_rect = surf_rect.clip(sub_rect)
 
                 self.debugSubWidgetDraws(sub_rect, widget)
 
-                sub_rect = surf_rect.clip(sub_rect)
                 if sub_rect.width > 0 and sub_rect.height > 0:
                     try:
                         sub = surface.subsurface(sub_rect)
@@ -351,13 +335,13 @@ class Widget(AlbowRect):
 
     def debugSubWidgetDraws(self, sub_rect, widget):
 
-        if Widget.debug_rect:
+        if Widget.debug_rect is True:
             currentTime = datetime.now()
             if currentTime >= Widget.lastDebugRectTime:
 
-                self.logger.info(f"Drawing subwidget '{widget}' of '{self} with rect '{sub_rect}'")
+                self.logger.info(f"Drawing subwidget '{widget}{sub_rect}' of '{self}'")
 
-                Widget.lastDebugRectTime = currentTime + timedelta(seconds=4)
+                Widget.lastDebugRectTime = currentTime + timedelta(seconds=3)
 
     def diagnose_subsurface_problem(self, surface, widget):
         mess = "Widget %s %s outside parent surface %s %s" % (

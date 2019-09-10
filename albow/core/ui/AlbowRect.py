@@ -10,25 +10,41 @@ from albow.vectors import add
 
 
 class AlbowRect:
+    """
+    - Reading the following attributes retrieves the corresponding values from the widget's rect.
+    - Assigning to them changes the size and position of the widget.
+    - Additionally, if the size of the widget is changed via these
+      attributes, the size and position of its subwidgets is updated according to each subwidget's anchor attribute.
 
-    left = RectUtility.rect_property('left')
-    right = RectUtility.rect_property('right')
-    top = RectUtility.rect_property('top')
-    bottom = RectUtility.rect_property('bottom')
-    width = RectUtility.rect_property('width')
-    height = RectUtility.rect_property('height')
-    size = RectUtility.rect_property('size')
-    topleft = RectUtility.rect_property('topleft')
-    topright = RectUtility.rect_property('topright')
-    bottomleft = RectUtility.rect_property('bottomleft')
+        <pre>
+        left, right, top, bottom, width, height, size,
+        topleft, topright, bottomleft, bottomright,
+        midleft, midright, midtop, midbottom,
+        center, centerx, centery
+        </pre>
+
+    This does not happen if the rect is modified directly.
+
+    """
+    left    = RectUtility.rect_property('left')
+    right   = RectUtility.rect_property('right')
+    top     = RectUtility.rect_property('top')
+    bottom  = RectUtility.rect_property('bottom')
+    width   = RectUtility.rect_property('width')
+    height  = RectUtility.rect_property('height')
+    size    = RectUtility.rect_property('size')
+
+    topleft     = RectUtility.rect_property('topleft')
+    topright    = RectUtility.rect_property('topright')
+    bottomleft  = RectUtility.rect_property('bottomleft')
     bottomright = RectUtility.rect_property('bottomright')
-    midleft = RectUtility.rect_property('midleft')
-    midright = RectUtility.rect_property('midright')
-    midtop = RectUtility.rect_property('midtop')
-    midbottom = RectUtility.rect_property('midbottom')
-    center = RectUtility.rect_property('center')
-    centerx = RectUtility.rect_property('centerx')
-    centery = RectUtility.rect_property('centery')
+    midleft     = RectUtility.rect_property('midleft')
+    midright    = RectUtility.rect_property('midright')
+    midtop      = RectUtility.rect_property('midtop')
+    midbottom   = RectUtility.rect_property('midbottom')
+    center      = RectUtility.rect_property('center')
+    centerx     = RectUtility.rect_property('centerx')
+    centery     = RectUtility.rect_property('centery')
 
     debug_resize = False
 
