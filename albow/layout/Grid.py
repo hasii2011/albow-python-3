@@ -26,7 +26,7 @@ class Grid(Widget):
             self.margin = DEFAULT_GRID_MARGIN
             m           = DEFAULT_GRID_MARGIN
 
-        self.logger.info(f'margin: {self.margin}')
+        self.logger.debug(f'margin: {self.margin}')
         col_widths  = [0] * len(rows[0])
         row_heights = [0] * len(rows)
         for j, row in enumerate(rows):
@@ -35,8 +35,8 @@ class Grid(Widget):
                     col_widths[i]  = max(col_widths[i], widget.width)
                     row_heights[j] = max(row_heights[j], widget.height)
 
-        self.logger.info(f"column_spacing: {column_spacing}")
-        self.logger.info(f"... col_widths: {col_widths} ... row_heights: {row_heights}")
+        self.logger.debug(f"column_spacing: {column_spacing}")
+        self.logger.debug(f"... col_widths: {col_widths} ... row_heights: {row_heights}")
 
         row_top:  int = 0
         col_left: int = 0
@@ -50,13 +50,13 @@ class Grid(Widget):
                 if widget:
                     if i == 0:
                         x = m + col_left
-                        self.logger.info(f"x: {x} m: {m} + col_left: {col_left}")
+                        self.logger.debug(f"x: {x} m: {m} + col_left: {col_left}")
                     else:
                         x = column_spacing + col_left
-                        self.logger.info(f"x: {x} column_spacing: {column_spacing} + col_left: {col_left}")
+                        self.logger.debug(f"x: {x} column_spacing: {column_spacing} + col_left: {col_left}")
 
                     widget.midleft = (x, y)
-                    self.logger.info(f'widget.midleft: {widget.midleft}')
+                    self.logger.debug(f'widget.midleft: {widget.midleft}')
                 col_left += w + column_spacing
             row_top += h + row_spacing
         #
@@ -65,11 +65,11 @@ class Grid(Widget):
         width  = max(1, col_left - column_spacing)
         height = max(1, row_top - row_spacing)
         m2 = 2 * m
-        self.logger.info(f"width: '{width}'  m2: '{m2}' column_spacing: '{column_spacing}' height: '{height}' #cols: {len(col_widths)}")
+        self.logger.debug(f"width: '{width}'  m2: '{m2}' column_spacing: '{column_spacing}' height: '{height}' #cols: {len(col_widths)}")
         realWidth: int = width + m2 + (column_spacing * (len(col_widths) - 1))
         r = Rect(0, 0, realWidth, height + m2)
 
-        self.logger.info(f"r = {r}")
+        self.logger.debug(f"r = {r}")
 
         super().__init__(r, **kwds)
         self.add(rows)
