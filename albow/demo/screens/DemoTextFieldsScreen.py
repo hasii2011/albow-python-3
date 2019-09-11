@@ -110,7 +110,8 @@ class DemoTextFieldsScreen(BaseDemoScreen):
 
         minMaxAttrs = {'min': 50, 'max': 240}
         minMaxField: TextField = TextField(**minMaxAttrs)
-        minMaxField.set_text("I should be 240 wide")
+        minMaxField.type = int
+        minMaxField.set_text("222")
 
         okBtn = Button("OK", action=cls.ok)
 
