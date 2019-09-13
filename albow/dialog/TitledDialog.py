@@ -48,10 +48,15 @@ class TitledDialog(Dialog):
         if thirdButtTxt is not None:
             butThree = Button(thirdButtTxt, action=lambda x=thirdButtTxt: self.dismiss(x))
 
+        buttRowAttrs = {
+            'spacing': margin,
+            'equalize': 'w',
+            'margin': 4
+        }
         if butThree is None:
-            buttRow:   Row    = Row([butOk, butCancel], spacing=margin, equalize='w', margin=4)
+            buttRow: Row = Row([butOk, butCancel], **buttRowAttrs)
         else:
-            buttRow: Row = Row([butOk, butCancel, butThree], spacing=margin, equalize='w', margin=4)
+            buttRow: Row = Row([butOk, butCancel, butThree], **buttRowAttrs)
 
         botColumn: Column = Column([lblMsg, buttRow], spacing=margin, align='r', margin=4)
 
