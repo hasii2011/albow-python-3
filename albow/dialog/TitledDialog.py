@@ -1,5 +1,7 @@
 
 from typing import cast
+from typing import Dict
+from typing import Any
 
 from logging import Logger
 from logging import getLogger
@@ -17,6 +19,8 @@ from albow.widgets.Label import Label
 from albow.layout.Column import Column
 from albow.layout.Row import Row
 
+AttrDict = Dict[str, Any]
+
 
 class TitledDialog(Dialog):
 
@@ -30,7 +34,19 @@ class TitledDialog(Dialog):
     def __init__(self, title: str = 'Default Title', message: str = '',
                  okTxt: str = 'Ok', cancelTxt: str = 'Cancel', thirdButtTxt: str = None,
                  client=None, wrapWidth: int = 100, **kwds):
+        """
+        The dialog reports which button was pressed with the text of the button
 
+        Args:
+            title:          The title of the titled dialog
+            message:        The message to display
+            okTxt:          The text to display in the first button, The default is 'Ok'
+            cancelTxt:      The text to display in the second button, The default is 'Cancel
+            thirdButtTxt:   The text to display in the third button, The default is None which means the button will NOT be displayed
+            client:         Where to center the window.  The default is the entire window
+            wrapWidth:      When to start wrapping the message text
+            **kwds:         Additional attributes to pass to the basic dialog
+        """
         super().__init__(client=client, width=TitledDialog.TD_SIZE, **kwds)
 
         self.logger: Logger = getLogger(__name__)
@@ -48,7 +64,7 @@ class TitledDialog(Dialog):
         if thirdButtTxt is not None:
             butThree = Button(thirdButtTxt, action=lambda x=thirdButtTxt: self.dismiss(x))
 
-        buttRowAttrs = {
+        buttRowAttrs: AttrDict = {
             'spacing': margin,
             'margin': 4,
             'equalize': 'w',
@@ -60,14 +76,14 @@ class TitledDialog(Dialog):
         else:
             buttRow: Row = Row([butOk, butCancel, butThree], **buttRowAttrs)
 
-        bottColAttrs = {
+        bottColAttrs: AttrDict = {
             'spacing': margin,
             'margin': 4,
             'align': 'r'
         }
         botColumn: Column = Column([lblMsg, buttRow], **bottColAttrs)
 
-        mainColAttrs = {
+        mainColAttrs: AttrDict = {
             'align': 'l',
             'expand': 1,
             'margin': 8,
