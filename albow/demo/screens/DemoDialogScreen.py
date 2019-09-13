@@ -94,9 +94,15 @@ class DemoDialogScreen(BaseDemoScreen):
             f' by totally disusing and neglecting the militia.  -- George Mason]'
         )
 
-        ttlDlg = TitledDialog(title='Long wrapped message', message=longMsg)
-        ttlDlg.present()
-
-        ttlDlg: TitledDialog = TitledDialog(title='Chip8 Python', message='Version 0.5, by Humberto A. Sanchez II')
+        ttlDlg: TitledDialog = TitledDialog(title='Long wrapped message', message=longMsg)
         response = ttlDlg.present()
         alert(f'You responded: {response}')
+
+        ttlDlg = TitledDialog(title='Chip8 Python', message='Version 0.5, by Humberto A. Sanchez II')
+        response = ttlDlg.present()
+        alert(f'You responded: {response}')
+
+        ttlDlg = TitledDialog(title='Three Button', thirdButtTxt='Just Quit', message='Three buttons with custom text')
+        response = ttlDlg.present()
+        alert(f'You responded: {response}')
+

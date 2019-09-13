@@ -1,4 +1,6 @@
 
+from typing import cast
+
 from logging import Logger
 from logging import getLogger
 
@@ -25,7 +27,9 @@ class TitledDialog(Dialog):
     The number of pixels at which we wrap the input text message
     """
 
-    def __init__(self, title: str = 'Default Title', message: str = '', client=None, wrapWidth: int = 100, **kwds):
+    def __init__(self, title: str = 'Default Title', message: str = '',
+                 okTxt: str = 'Ok', cancelTxt: str = 'Cancel', thirdButtTxt: str = None,
+                 client=None, wrapWidth: int = 100, **kwds):
 
         super().__init__(client=client, width=TitledDialog.TD_SIZE, **kwds)
 
@@ -38,10 +42,17 @@ class TitledDialog(Dialog):
         margin:      int            = self.margin
         self.logger.info(f'margin: {margin}')
 
-        butOk:     Button = Button('Ok',     action=lambda x='Ok': self.dismiss(x))
-        butCancel: Button = Button('Cancel', action=lambda x='Cancel': self.dismiss(x))
+        butOk:     Button = Button(okTxt,     action=lambda x=okTxt:     self.dismiss(x))
+        butCancel: Button = Button(cancelTxt, action=lambda x=cancelTxt: self.dismiss(x))
+        butThree:  Button = cast(Button, None)
+        if thirdButtTxt is not None:
+            butThree = Button(thirdButtTxt, action=lambda x=thirdButtTxt: self.dismiss(x))
 
-        buttRow:   Row    = Row([butOk, butCancel], spacing=margin, equalize='w', margin=4)
+        if butThree is None:
+            buttRow:   Row    = Row([butOk, butCancel], spacing=margin, equalize='w', margin=4)
+        else:
+            buttRow: Row = Row([butOk, butCancel, butThree], spacing=margin, equalize='w', margin=4)
+
         botColumn: Column = Column([lblMsg, buttRow], spacing=margin, align='r', margin=4)
 
         mainColumn: Column = Column([dlgTitleBar, botColumn], align='l', expand=1, margin=8, border_width=2, border_color=Theme.CITY_LIGHTS, equalize='w')

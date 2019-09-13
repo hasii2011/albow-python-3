@@ -14,7 +14,7 @@ from albow.input.TextField import TextField
 DEFAULT_ASK_RESPONSES = ["OK", "Cancel"]
 
 
-def alert(theMessage: str, theTitle: str = 'Alert!', theWrapWidth=60, **kwds):
+def alert(theMessage: str, theTitle: str = 'Alert!', theWrapWidth=100, **kwds):
     """
     Displays a message in a modal dialog, wrapped to the specified width in characters. The dialog can be dismissed by
     pressing Return, Enter or Escape.
