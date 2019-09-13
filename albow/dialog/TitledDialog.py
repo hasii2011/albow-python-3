@@ -38,7 +38,7 @@ class TitledDialog(Dialog):
         self.wrap_width     = wrapWidth
 
         dlgTitleBar: DialogTitleBar = DialogTitleBar(theTitle=title, width=TitledDialog.TD_SIZE)
-        lblMsg:      Label          = wrapped_label(message, self.wrap_width, margin=3)
+        lblMsg:      Label          = wrapped_label(message, self.wrap_width, margin=3, border_width=1, border_color=Theme.ELECTRON_BLUE)
         margin:      int            = self.margin
         self.logger.info(f'margin: {margin}')
 
@@ -50,17 +50,32 @@ class TitledDialog(Dialog):
 
         buttRowAttrs = {
             'spacing': margin,
+            'margin': 4,
             'equalize': 'w',
-            'margin': 4
+            'border_width': 1,
+            'border_color': Theme.ELECTRON_BLUE
         }
         if butThree is None:
             buttRow: Row = Row([butOk, butCancel], **buttRowAttrs)
         else:
             buttRow: Row = Row([butOk, butCancel, butThree], **buttRowAttrs)
 
-        botColumn: Column = Column([lblMsg, buttRow], spacing=margin, align='r', margin=4)
+        bottColAttrs = {
+            'spacing': margin,
+            'margin': 4,
+            'align': 'r'
+        }
+        botColumn: Column = Column([lblMsg, buttRow], **bottColAttrs)
 
-        mainColumn: Column = Column([dlgTitleBar, botColumn], align='l', expand=1, margin=8, border_width=2, border_color=Theme.CITY_LIGHTS, equalize='w')
+        mainColAttrs = {
+            'align': 'l',
+            'expand': 1,
+            'margin': 8,
+            'border_width':  2,
+            'border_color': Theme.CITY_LIGHTS,
+            'equalize': 'w'
+        }
+        mainColumn: Column = Column([dlgTitleBar, botColumn], **mainColAttrs)
         mainColumn.topleft = (margin, margin)
 
         self.add(mainColumn)
