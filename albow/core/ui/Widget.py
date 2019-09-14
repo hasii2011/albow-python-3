@@ -185,10 +185,9 @@ class Widget(AlbowRect):
         self.set(**kwds)
 
     def set(self, **kwds):
-        # for name, value in kwds.iteritems():  -- update for python 3 -- hasii
         for name, value in kwds.items():
             if not hasattr(self, name):
-                raise TypeError("Unexpected keyword argument '%s'" % name)
+                raise TypeError(f"Unexpected keyword argument {name}")
             setattr(self, name, value)
 
     def add_anchor(self, mode: str):
@@ -664,9 +663,7 @@ class Widget(AlbowRect):
         if width is not None:
             font = self.font
             d = 2 * self.margin
-            #
-            # Python 3 update
-            # if isinstance(width, basestring):
+
             if isinstance(width, str):
                 width, height = font.size(width)
                 width += d + 2
