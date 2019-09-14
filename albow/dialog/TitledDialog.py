@@ -35,7 +35,9 @@ class TitledDialog(Dialog):
                  okTxt: str = 'Ok', cancelTxt: str = 'Cancel', thirdButtTxt: str = None,
                  client=None, wrapWidth: int = 100, **kwds):
         """
-        The dialog reports which button was pressed with the text of the button
+        The dialog reports which button was pressed with the text of the button.
+        TODO:  This constructor has way too many parameters;  Dude, simplify the parameter list;  Perhaps,
+        use the kwds dictionary
 
         Args:
             title:          The title of the titled dialog
@@ -52,47 +54,69 @@ class TitledDialog(Dialog):
         self.logger: Logger = getLogger(__name__)
         self.title:  str    = title
         self.wrap_width     = wrapWidth
+        self.logger.info(f'margin: {self.margin}')
 
-        dlgTitleBar: DialogTitleBar = DialogTitleBar(theTitle=title, width=TitledDialog.TD_SIZE)
-        lblMsg:      Label          = wrapped_label(message, self.wrap_width, margin=3, border_width=1, border_color=Theme.ELECTRON_BLUE)
-        margin:      int            = self.margin
-        self.logger.info(f'margin: {margin}')
+        dlgTitleBar:   DialogTitleBar = DialogTitleBar(theTitle=title, width=TitledDialog.TD_SIZE)
+        mainContainer: Column         = self._makeMainPartOfDialog(dlgTitleBar, message)
 
-        butOk:     Button = Button(okTxt,     action=lambda x=okTxt:     self.dismiss(x))
+        dlgColAttrs: AttrDict = {
+            'expand': 1,
+            'margin': 8,
+            'border_width': 2,
+            'border_color': Theme.CITY_LIGHTS,
+            'align': 'r',
+        }
+        buttRow = self._makeButtons(cancelTxt, okTxt, thirdButtTxt)
+
+        dlgColumn: Column = Column([mainContainer, buttRow], **dlgColAttrs)
+        dlgColumn.topleft = (self.margin, self.margin)
+
+        self.add(dlgColumn)
+        self.shrink_wrap()
+
+    def _makeMainPartOfDialog(self, dlgTitleBar, message):
+
+        lblMsg: Label = wrapped_label(message, self.wrap_width, margin=3)
+
+        mainColAttrs: AttrDict = {
+            'spacing': self.margin,
+            'margin': 4,
+            'align': 'l',
+            # 'border_width': 1,
+            # 'border_color': Theme.GREEN,
+        }
+        mainColumn: Column = Column([dlgTitleBar, lblMsg], **mainColAttrs)
+        return mainColumn
+
+    def _makeButtons(self, cancelTxt, okTxt, thirdButtTxt):
+        """
+
+        Args:
+            okTxt:          The text to display in the first button
+            cancelTxt:      The text to display in the second button
+            thirdButtTxt:   The text to display in the third button
+
+        Returns:  A row container with the appropriate buttons
+
+        """
+
+        butOk:     Button = Button(okTxt, action=lambda x=okTxt: self.dismiss(x))
         butCancel: Button = Button(cancelTxt, action=lambda x=cancelTxt: self.dismiss(x))
         butThree:  Button = cast(Button, None)
+
         if thirdButtTxt is not None:
             butThree = Button(thirdButtTxt, action=lambda x=thirdButtTxt: self.dismiss(x))
 
         buttRowAttrs: AttrDict = {
-            'spacing': margin,
+            'spacing': self.margin,
             'margin': 4,
             'equalize': 'w',
-            'border_width': 1,
-            'border_color': Theme.ELECTRON_BLUE
+            # 'border_width': 1,
+            # 'border_color': Theme.ELECTRON_BLUE,
         }
         if butThree is None:
             buttRow: Row = Row([butOk, butCancel], **buttRowAttrs)
         else:
             buttRow: Row = Row([butOk, butCancel, butThree], **buttRowAttrs)
 
-        bottColAttrs: AttrDict = {
-            'spacing': margin,
-            'margin': 4,
-            'align': 'r'
-        }
-        botColumn: Column = Column([lblMsg, buttRow], **bottColAttrs)
-
-        mainColAttrs: AttrDict = {
-            'align': 'l',
-            'expand': 1,
-            'margin': 8,
-            'border_width':  2,
-            'border_color': Theme.CITY_LIGHTS,
-            'equalize': 'w'
-        }
-        mainColumn: Column = Column([dlgTitleBar, botColumn], **mainColAttrs)
-        mainColumn.topleft = (margin, margin)
-
-        self.add(mainColumn)
-        self.shrink_wrap()
+        return buttRow

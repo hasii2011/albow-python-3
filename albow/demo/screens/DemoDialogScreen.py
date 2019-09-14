@@ -94,6 +94,10 @@ class DemoDialogScreen(BaseDemoScreen):
             f' by totally disusing and neglecting the militia.  -- George Mason]'
         )
 
+        ttlDlg = TitledDialog(title='Three Button', thirdButtTxt='Just Quit', message='Three buttons with custom text')
+        response = ttlDlg.present()
+        alert(f'You responded: {response}')
+
         ttlDlg: TitledDialog = TitledDialog(title='Long wrapped message', message=longMsg)
         response = ttlDlg.present()
         alert(f'You responded: {response}')
@@ -102,7 +106,4 @@ class DemoDialogScreen(BaseDemoScreen):
         response = ttlDlg.present()
         alert(f'You responded: {response}')
 
-        ttlDlg = TitledDialog(title='Three Button', thirdButtTxt='Just Quit', message='Three buttons with custom text')
-        response = ttlDlg.present()
-        alert(f'You responded: {response}')
 
