@@ -59,6 +59,8 @@ class TitledDialog(Dialog):
         dlgTitleBar:   DialogTitleBar = DialogTitleBar(theTitle=title, width=TitledDialog.TD_SIZE)
         mainContainer: Column         = self._makeMainPartOfDialog(dlgTitleBar, message)
 
+        buttRow = self._makeButtons(cancelTxt, okTxt, thirdButtTxt)
+
         dlgColAttrs: AttrDict = {
             'expand': 1,
             'margin': 8,
@@ -66,8 +68,6 @@ class TitledDialog(Dialog):
             'border_color': Theme.CITY_LIGHTS,
             'align': 'r',
         }
-        buttRow = self._makeButtons(cancelTxt, okTxt, thirdButtTxt)
-
         dlgColumn: Column = Column([mainContainer, buttRow], **dlgColAttrs)
         dlgColumn.topleft = (self.margin, self.margin)
 
@@ -82,24 +82,20 @@ class TitledDialog(Dialog):
             'spacing': self.margin,
             'margin': 4,
             'align': 'l',
-            # 'border_width': 1,
-            # 'border_color': Theme.GREEN,
+            'equalize': 'w',
         }
         mainColumn: Column = Column([dlgTitleBar, lblMsg], **mainColAttrs)
         return mainColumn
 
     def _makeButtons(self, cancelTxt, okTxt, thirdButtTxt):
         """
-
         Args:
             okTxt:          The text to display in the first button
             cancelTxt:      The text to display in the second button
             thirdButtTxt:   The text to display in the third button
 
         Returns:  A row container with the appropriate buttons
-
         """
-
         butOk:     Button = Button(okTxt, action=lambda x=okTxt: self.dismiss(x))
         butCancel: Button = Button(cancelTxt, action=lambda x=cancelTxt: self.dismiss(x))
         butThree:  Button = cast(Button, None)
@@ -111,8 +107,6 @@ class TitledDialog(Dialog):
             'spacing': self.margin,
             'margin': 4,
             'equalize': 'w',
-            # 'border_width': 1,
-            # 'border_color': Theme.ELECTRON_BLUE,
         }
         if butThree is None:
             buttRow: Row = Row([butOk, butCancel], **buttRowAttrs)
