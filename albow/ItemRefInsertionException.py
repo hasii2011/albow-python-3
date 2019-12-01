@@ -4,7 +4,7 @@ class ItemRefInsertionException(Exception):
     This exception is thrown if there is a problem when updating an ItemRef
     object
     """
-    def __init__(self, theIndex: int, theMessage:str =None):
+    def __init__(self, theIndex: int, theMessage: str = None):
         """
 
         Args:
@@ -14,7 +14,7 @@ class ItemRefInsertionException(Exception):
         """
         self.index = theIndex
 
-        if theMessage == None:
+        if theMessage is None:
             self.message = f"Can't insert item at {theIndex}"
         else:
             self.message = f"{theMessage}: at index: {theIndex}"

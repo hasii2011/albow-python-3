@@ -26,11 +26,11 @@ class TestBase(TestCase):
         logging.logProcesses = False
         logging.logThreads = False
 
-    @classmethod
-    def findLoggingConfig(cls):
-        """"""
-        if os.path.isfile(JSON_LOGGING_CONFIG_FILENAME):
-            return
-        else:
-            os.chdir("../")
-            cls.findLoggingConfig()
+@classmethod
+def findLoggingConfig(cls):
+    """"""
+    if os.path.isfile(JSON_LOGGING_CONFIG_FILENAME):
+        return
+    else:
+        os.chdir("../")
+        cls.findLoggingConfig()
