@@ -37,6 +37,13 @@
                 "consoleHandler"
             ],
             "propagate": "False"
+        },
+        "TestResourceUtility": {
+            "level": "INFO",
+            "handlers": [
+                "consoleHandler"
+            ],
+            "propagate": "False"
         }
     }
 }

@@ -22,7 +22,7 @@ def main():
     suite.addTest(testLoader.loadTestsFromTestCase(TestFindResources))
     suite.addTest(testLoader.loadTestsFromTestCase(TestPredictor))
     suite.addTest(testLoader.loadTestsFromTestCase(TestReferences))
-    # suite.addTest(testLoader.loadTestsFromTestCase(TestResourceUtility))
+    suite.addTest(testLoader.loadTestsFromTestCase(TestResourceUtility))
     suite.addTest(testLoader.loadTestsFromTestCase(TestScheduledCall))
     suite.addTest(testLoader.loadTestsFromTestCase(TestTheme))
     suite.addTest(testLoader.loadTestsFromTestCase(TestThemeProperty))
