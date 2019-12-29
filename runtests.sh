@@ -1,5 +1,4 @@
 #!/bin/bash
 
-cd test
 
-python3 -m RunTests
+python3 -m test.RunTests

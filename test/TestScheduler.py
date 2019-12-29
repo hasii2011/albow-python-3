@@ -79,7 +79,7 @@ class TestScheduler(TestBase):
 
     def testMakeDueCalls(self):
 
-        TestScheduler.ourLogger.info("Test Scheduler make call that are due")
+        TestScheduler.ourLogger.info("Test Scheduler make calls that are due")
 
         retToken = Scheduler.schedule_call(delay=0, func=TestScheduler.callbackFunction, repeat=False)
 
