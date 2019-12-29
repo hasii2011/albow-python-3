@@ -32,6 +32,7 @@ class TestScheduler(TestBase):
     callTime1 = 0
     callTime2 = 0
     callTime3 = 0
+
     @classmethod
     def setUpClass(cls):
         """"""
@@ -184,7 +185,9 @@ class TestScheduler(TestBase):
 
         cls.ourLogger.info(f"Event type: {theEvent.type} -  ts: {theEvent.dict['time']}")
 
-        cls.assertEqual(theEvent.type, USEREVENT, "Wrong kind of event")
+        assert theEvent.type == USEREVENT,  'Wrong kind of event'       # Use python instead of unit test
+        # cls.assertTrue(theEvent.type == USEREVENT,  'Wrong kind of event')
+        # cls.assertEqual(theEvent.type, USEREVENT, "Wrong kind of event")
 
 
 if __name__ == '__main__':
