@@ -1,11 +1,11 @@
 .idea/
 __pycache__/
 .DS_Store
-/venv-albow/
+.python-version
 /html/
 /build/
 /dist/
 /python3_albow.egg-info/
-/venv-albow-Python-3.7.3/
 /site/
 /docs/
+/venv-pyenv-3.7.7-system/
