@@ -1,3 +1,5 @@
+[![Build Status](https://travis-ci.org/hasii2011/albow-python-3.svg?branch=master)](https://travis-ci.org/hasii2011/albow-python-3)
+
 This project is a port of Gregory Ewing's Albow project (https://www.pygame.org/project/338/4687) that is only
 compatible with Python 2 and is unsupported since 2014.
 
