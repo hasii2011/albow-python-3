@@ -8,4 +8,6 @@ __pycache__/
 /python3_albow.egg-info/
 /site/
 /docs/
-/venv-pyenv-3.7.7-system/
+/venv-pyenv-3.7.7/
+/venv-pyenv-3.8.5/
+

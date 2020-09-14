@@ -54,3 +54,7 @@ class DummyVehicle:
                 return True
         else:
             return False
+
+    def __repr__(self):
+        return f'{self.velocity=} {self.weight=} {self.width=} {self.height=}'
+

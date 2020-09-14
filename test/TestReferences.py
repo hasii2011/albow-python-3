@@ -69,17 +69,16 @@ class TestReferences(TestBase):
         #
         try:
             velocityControl.set_value(500)
-            self.assertTrue(velocityControl.get_value() == vehicleList[TEST_ITEM_INDEX].velocity,
-                            "Control did not update reference")
+            self.assertTrue(velocityControl.get_value() == vehicleList[TEST_ITEM_INDEX].velocity, "Control did not update reference")
         except ItemRefInsertionException as e:
-            self.logger.error("%s", e.message)
+            self.logger.error(f"{e.message}")
 
     def testBasicItemRefRetrieval(self):
 
         vehicleList = self.getVehicleList()
 
         itemRef = ItemRef(base=vehicleList, index=TEST_ITEM_INDEX)
-        self.logger.info("Created %s", itemRef)
+        self.logger.info(f"Created {itemRef=}")
 
         velocityControl: DummyControl = DummyControl(ref=itemRef)
         self.logger.info("Created velocity control %s", velocityControl)

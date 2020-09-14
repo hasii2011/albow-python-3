@@ -1,1 +1,2 @@
 pygame==1.9.6
+jsonpickle==1.4.1

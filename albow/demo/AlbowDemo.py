@@ -44,7 +44,7 @@ def main():
     from albow.demo.AlbowDemoShell import AlbowDemoShell
 
     pygame.init()
-    pygame.display.set_caption("%s" % DEMO_WINDOW_TITLE)
+    pygame.display.set_caption(f'{DEMO_WINDOW_TITLE}')
 
     # "file_handler": {
     #   "class": "logging.FileHandler",

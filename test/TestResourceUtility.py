@@ -1,16 +1,13 @@
 
 import os
 
-from os import sep as osSep
-from os import path as osPath
-from os import getcwd
-from os import chdir
-
 from logging import Logger
 from logging import getLogger
 
 from unittest import main as unitTestMain
 from unittest import expectedFailure
+
+from pkg_resources import resource_filename
 
 from test.TestBase import TestBase
 
@@ -18,7 +15,7 @@ from albow.core.ResourceUtility import ResourceUtility
 
 UNIT_TEST_DIR_NAME:       str = 'test'
 RESOURCE_DIR_NAME:        str = 'testresources'
-TEST_SOUND_RELATIVE_PATH: str = f'{RESOURCE_DIR_NAME}{osSep}TestSound.mp3'
+TEST_SOUND_RELATIVE_PATH: str = f'TestSound.mp3'
 
 
 class TestResourceUtility(TestBase):
@@ -58,17 +55,17 @@ class TestResourceUtility(TestBase):
         import pygame
         pygame.init()
 
-        self._findTestResourceDirectory()
+        fqFileName: str = self.getFullResourcePath(TEST_SOUND_RELATIVE_PATH)
 
-        dummySound = ResourceUtility.load_sound(TEST_SOUND_RELATIVE_PATH)
+        dummySound = ResourceUtility.load_sound(fqFileName)
         self.logger.info(f"{dummySound}")
 
     def testLoadSoundFail(self):
 
-        self._findTestResourceDirectory()
+        fqFileName: str = self.getFullResourcePath(TEST_SOUND_RELATIVE_PATH)
 
         ResourceUtility.sound_cache = None
-        dummySound = ResourceUtility.load_sound(TEST_SOUND_RELATIVE_PATH)
+        dummySound = ResourceUtility.load_sound(fqFileName)
 
         self.assertEqual(first=ResourceUtility.dummy_sound, second=dummySound, msg="Did not get the dummy sound")
 
@@ -77,16 +74,11 @@ class TestResourceUtility(TestBase):
 
         ResourceUtility.get_image("")
 
-    def _findTestResourceDirectory(self):
+    def getFullResourcePath(self, filename: str) -> str:
 
-        self.logger.info(f'current directory: {getcwd()}')
-        if osPath.isdir(f'{UNIT_TEST_DIR_NAME}{osSep}{RESOURCE_DIR_NAME}'):
-            chdir(f'{UNIT_TEST_DIR_NAME}')
-        if osPath.isdir(RESOURCE_DIR_NAME):
-            return
-        else:
-            chdir("../")
-            return self._findTestResourceDirectory()
+        fqFileName:str = resource_filename(TestBase.RESOURCES_PACKAGE_NAME, filename)
+
+        return fqFileName
 
 
 if __name__ == '__main__':

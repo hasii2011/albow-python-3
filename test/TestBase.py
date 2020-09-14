@@ -14,6 +14,8 @@ class TestBase(TestCase):
     A base unit test class to initialize some logging stuff we need
     """
 
+    RESOURCES_PACKAGE_NAME: str = 'test.testresources'
+
     @classmethod
     def setUpLogging(cls):
         """"""

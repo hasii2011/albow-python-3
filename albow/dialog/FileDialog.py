@@ -28,6 +28,9 @@ class FileDialog(Dialog):
         label         = None
         d             = self.margin
         self.suffixes = suffixes or ()
+        if self.up_button_text is None:
+            self.up_button_text = ''
+
         up_button     = Button(self.up_button_text, action=self.go_up)
         dir_box       = DirectoryPathView(self.box_width - up_button.width - 10, self)
         self.dir_box  = dir_box
