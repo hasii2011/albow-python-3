@@ -76,7 +76,7 @@ class TestResourceUtility(TestBase):
 
     def getFullResourcePath(self, filename: str) -> str:
 
-        fqFileName:str = resource_filename(TestBase.RESOURCES_PACKAGE_NAME, filename)
+        fqFileName: str = resource_filename(TestBase.RESOURCES_PACKAGE_NAME, filename)
 
         return fqFileName
 
