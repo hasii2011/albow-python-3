@@ -4,7 +4,7 @@
 #
 clear
 
-source venv-albow-Python-3.7.3/bin/activate
+source venv-albow-Python-3.8.5/bin/activate
 ./cleanup.sh
 python3 setup.py sdist bdist_wheel
 
