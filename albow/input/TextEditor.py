@@ -1,7 +1,14 @@
+from logging import Logger
+from logging import getLogger
 
+from pygame.constants import K_BACKSPACE
+from pygame.constants import K_DELETE
 from pygame.locals import K_LEFT
 from pygame.locals import K_RIGHT
 from pygame.locals import K_TAB
+
+from pygame.event import Event
+
 from pygame import draw
 
 from albow.utils import overridable_property
@@ -17,6 +24,8 @@ class TextEditor(Widget):
 
     .. Note::
         There is currently no support for selecting or copying and pasting text.
+        In pygame 2.0.0.dev10, the backspace and delete keycodes return an empty string
+        as their unicode representation.
     """
 
     text = overridable_property('text')
@@ -49,6 +58,8 @@ class TextEditor(Widget):
     """
     _text = ""
 
+    clsLogger: Logger = getLogger(__name__)
+
     def __init__(self, width: int, upper: bool = None, **kwds):
         """
         The height is determined by the height of a line of text in the font in effect at construction time.
@@ -72,12 +83,12 @@ class TextEditor(Widget):
 
     def set_text(self, theNewText):
         """
-        Internally, the widget uses these methods to access the text being edited. By default they access text held 
-        in a private attribute. By overriding them, you can arrange for the widget to edit text being held 
+        Internally, the widget uses these methods to access the text being edited. By default they access text held
+        in a private attribute. By overriding them, you can arrange for the widget to edit text being held
         somewhere else.
-        
+
         Args:
-            theNewText: 
+            theNewText:
 
         """
         self._text = theNewText
@@ -98,9 +109,13 @@ class TextEditor(Widget):
             y = frame.top
             draw.line(surface, fg, (x, y), (x, y + h - 1))
 
-    def key_down(self, theKeyEvent):
+    def key_down(self, theKeyEvent: Event):
+
         if not (theKeyEvent.cmd or theKeyEvent.alt):
+
             k = theKeyEvent.key
+            self.logger.debug(f'{k=}')
+
             if k == K_LEFT:
                 self.move_insertion_point(-1)
                 return
@@ -111,14 +126,17 @@ class TextEditor(Widget):
                 self.attention_lost()
                 self.tab_to_next()
                 return
+            if k == K_BACKSPACE:
+                self.handleDelete()
+                return
+            if k == K_DELETE:
+                self.handleDelete()
+                return
+
             try:
                 c = theKeyEvent.unicode
             except ValueError:
                 c = ""
-            #
-            # Python 3 update
-            #
-            # if self.insert_char(c) <> 'pass':
             if self.insert_char(c) != 'pass':
                 return
         if theKeyEvent.cmd and theKeyEvent.unicode:
@@ -144,21 +162,13 @@ class TextEditor(Widget):
         self.insertionPoint = i
 
     def insert_char(self, c):
+
+        self.logger.debug(f'{c=}')
+
         if self.upper:
             c = c.upper()
         if c <= "\x7f":
-            if c == "\x08" or c == "\x7f":
-                text, i = self.get_text_and_insertion_point()
-                if i is None:
-                    text = ""
-                    i = 0
-                else:
-                    text = text[:i-1] + text[i:]
-                    i -= 1
-                self.change_text(text)
-                self.insertionPoint = i
-                return
-            elif c == "\r" or c == "\x03":
+            if c == "\r" or c == "\x03":
                 return self.call_handler('enter_action')
             elif c == "\x1b":
                 return self.call_handler('escape_action')
@@ -176,6 +186,19 @@ class TextEditor(Widget):
                     return
         return 'pass'
 
+    def handleDelete(self):
+
+        text, i = self.get_text_and_insertion_point()
+        if i is None:
+            text = ""
+            i = 0
+        else:
+            text = text[:i - 1] + text[i:]
+            i -= 1
+        self.change_text(text)
+        self.insertionPoint = i
+
+    # noinspection PyUnusedLocal
     def allow_char(self, c):
         """
         This method meant to be overridden
