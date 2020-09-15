@@ -55,7 +55,8 @@ class TestReferences(TestBase):
         velocityControl.set_value(500)
         self.assertTrue(velocityControl.get_value() == testVehicle.velocity, "Control did not update reference")
 
-    def testBadBItemRefInsertion(self):
+    @unittest.expectedFailure
+    def testBadItemRefInsertion(self):
 
         vehicleList = self.getVehicleList()
 
@@ -71,7 +72,8 @@ class TestReferences(TestBase):
             velocityControl.set_value(500)
             self.assertTrue(velocityControl.get_value() == vehicleList[TEST_ITEM_INDEX].velocity, "Control did not update reference")
         except ItemRefInsertionException as e:
-            self.logger.error(f"{e.message}")
+            self.logger.debug(f"{e.message}")
+            self.fail('Expected failure')
 
     def testBasicItemRefRetrieval(self):
 
