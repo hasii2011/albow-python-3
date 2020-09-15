@@ -11,3 +11,9 @@ function changeToProjectRoot {
 changeToProjectRoot
 
 python3 -m test.RunTests
+
+status=$?
+
+echo "Exit with status: ${status}"
+exit ${status}
+

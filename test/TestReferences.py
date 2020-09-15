@@ -1,18 +1,20 @@
 
-import logging
+from logging import Logger
+from logging import getLogger
 
-import unittest
-
-from test.TestBase import TestBase
+from unittest import expectedFailure
+from unittest import main as unitTestMain
 
 from test.DummyControl import DummyControl
-
 from test.DummyVehicle import DummyVehicle
 
 from albow.ItemRefInsertionException import ItemRefInsertionException
 
 from albow.References import AttrRef
 from albow.References import ItemRef
+
+
+from test.TestBase import TestBase
 
 
 TEST_ITEM_INDEX = 3
@@ -29,7 +31,7 @@ class TestReferences(TestBase):
 
     def setUp(self):
         """"""
-        self.logger = logging.getLogger(__name__)
+        self.logger: Logger = getLogger(__name__)
 
     def testBasicAttrRef(self):
 
@@ -55,7 +57,7 @@ class TestReferences(TestBase):
         velocityControl.set_value(500)
         self.assertTrue(velocityControl.get_value() == testVehicle.velocity, "Control did not update reference")
 
-    @unittest.expectedFailure
+    @expectedFailure
     def testBadItemRefInsertion(self):
 
         vehicleList = self.getVehicleList()
@@ -113,4 +115,4 @@ class TestReferences(TestBase):
 
 
 if __name__ == '__main__':
-    unittest.main()
+    unitTestMain()
