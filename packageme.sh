@@ -2,6 +2,17 @@
 #
 #  Assumes python 3 is on PATH
 #
+
+function changeToProjectRoot {
+
+    export areHere=`basename ${PWD}`
+    if [[ ${areHere} = "scripts" ]]; then
+        cd ..
+    fi
+}
+
+changeToProjectRoot
+
 clear
 
 source venv-albow-Python-3.8.5/bin/activate
