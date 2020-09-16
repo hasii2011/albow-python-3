@@ -1,4 +1,5 @@
-[![Build Status](https://travis-ci.org/hasii2011/albow-python-3.svg?branch=master)](https://travis-ci.org/hasii2011/albow-python-3)
+[![Build Status](https://travis-ci.com/hasii2011/OrthogonalDrawing.svg?branch=master)](https://travis-ci.com/hasii2011/OrthogonalDrawing)
+
 [![PyPI version](https://badge.fury.io/py/python3-albow.svg)](https://badge.fury.io/py/python3-albow)
 
 This project is a port of Gregory Ewing's Albow project (https://www.pygame.org/project/338/4687) that is only
