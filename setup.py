@@ -10,7 +10,7 @@ README = (HERE / "README.md").read_text()
 
 setup(
     name="python3-albow",
-    version="2.86",
+    version="2.87",
     author='Humberto A. Sanchez II',
     author_email='Humberto.A.Sanchez.II@gmail.com',
     description="A Little Bit of Widgetry for PyGame",
