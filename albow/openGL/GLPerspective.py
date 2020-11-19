@@ -1,6 +1,7 @@
 
 from pygame import Rect
 
+# noinspection PyPackageRequirements
 from OpenGL import GLU
 
 from albow.openGL.GLViewport import GLViewport

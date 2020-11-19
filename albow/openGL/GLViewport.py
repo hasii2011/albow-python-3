@@ -3,7 +3,9 @@ from pygame import Rect
 
 from pygame.display import get_surface as get_display
 
+# noinspection PyPackageRequirements
 from OpenGL import GL
+# noinspection PyPackageRequirements
 from OpenGL import GLU
 
 from albow.core.ui.Widget import Widget

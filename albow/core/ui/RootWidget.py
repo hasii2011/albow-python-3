@@ -21,7 +21,7 @@ from pygame.event import get_grab
 from pygame.event import set_grab
 
 from pygame.locals import USEREVENT
-from pygame.locals import OPENGL
+# from pygame.locals import OPENGL
 
 from albow.core.ui.Widget import Widget
 
@@ -99,8 +99,9 @@ class RootWidget(Widget):
         RootWidget.root_widget = self
         Widget.root_widget = self
 
-        self.is_gl = surface.get_flags() & OPENGL != 0
-        # RootWidget.classLogger.info(f"self.is_gl: {self.is_gl}")
+        # self.is_gl = surface.get_flags() & OPENGL != 0
+        self.is_gl: bool = False    # in pygame 2.0.0 I cannot support Open GL
+        RootWidget.classLogger.info(f"self.is_gl: {self.is_gl}")
         if self.is_gl:
 
             from albow.openGL.GLSurface import GLSurface

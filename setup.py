@@ -10,12 +10,14 @@ README = (HERE / "README.md").read_text()
 
 setup(
     name="python3-albow",
-    version="2.80",
+    version="2.86",
+    author='Humberto A. Sanchez II',
+    author_email='Humberto.A.Sanchez.II@gmail.com',
     description="A Little Bit of Widgetry for PyGame",
     long_description=README,
     long_description_content_type="text/markdown",
     url="https://hasii2011.github.io",
     packages=find_packages(),
     include_package_data=True,
-    install_requires=["pygame"]
+    install_requires=['pygame', 'PyOpenGL', 'PyOpenGL-accelerate']
 )

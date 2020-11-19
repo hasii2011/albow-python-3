@@ -19,30 +19,19 @@
     "loggers": {
         "root": {
             "level": "INFO",
-            "handlers": [
-                "consoleHandler"
-            ],
+            "handlers": ["consoleHandler"],
             "propagate": "False"
         },
         "test": {
             "level": "INFO",
-            "handlers": [
-                "consoleHandler"
-            ],
             "propagate": "False"
         },
         "albow": {
             "level": "INFO",
-            "handlers": [
-                "consoleHandler"
-            ],
             "propagate": "False"
         },
         "TestResourceUtility": {
             "level": "INFO",
-            "handlers": [
-                "consoleHandler"
-            ],
             "propagate": "False"
         }
     }

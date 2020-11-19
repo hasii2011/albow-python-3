@@ -2,7 +2,9 @@
 from pygame import Rect
 from pygame import image
 
+# noinspection PyPackageRequirements
 from OpenGL import GL
+# noinspection PyPackageRequirements
 from OpenGL import GLU
 
 

@@ -21,23 +21,15 @@
     "loggers": {
         "root": {
             "level": "INFO",
-            "handlers": [
-                "consoleHandler"
-            ],
+            "handlers": ["consoleHandler"],
             "propagate": "0"
         },
         "albow": {
             "level": "INFO",
-            "handlers": [
-                "consoleHandler"
-            ],
             "propagate": "False"
         },
         "__main__": {
             "level": "INFO",
-            "handlers": [
-                "consoleHandler"
-            ],
             "propagate": "False"
         }
     }

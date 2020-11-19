@@ -15,8 +15,8 @@ changeToProjectRoot
 
 clear
 
-source venv-albow-Python-3.8.5/bin/activate
-./cleanup.sh
+source venv-pyenv-3.8.5/bin/activate
+./scripts/cleanup.sh
 python3 setup.py sdist bdist_wheel
 
 # Check package
