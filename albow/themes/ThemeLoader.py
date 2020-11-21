@@ -1,43 +1,49 @@
 
+from logging import Logger
+from logging import getLogger
 
-import logging
+from os import sep as osSep
 
-import configparser
 from configparser import ConfigParser
+from configparser import SectionProxy
 
 from ast import literal_eval as make_tuple
-
-from pkg_resources import resource_filename
 
 from albow.themes.Theme import Theme
 
 
 class ThemeLoader:
 
-    DEFAULT_PKG = "albow.themes.resources"
-    DEFAULT_THEME_FILENAME = "default-theme.ini"
-    ROOT_THEME_NAME = "root"
+    DEFAULT_THEME_FILENAME: str = "default-theme.ini"
 
-    def __init__(self, themePkg: str = DEFAULT_PKG,  themeFilename: str = DEFAULT_THEME_FILENAME):
+    DEFAULT_PKG:      str = "resources"
+    ROOT_THEME_NAME:  str = "root"
+
+    def __init__(self, themePkg: str = DEFAULT_PKG, themeFilename: str = DEFAULT_THEME_FILENAME):
         """
-
         """
-        self.logger = logging.getLogger(__name__)
+        self.logger: Logger = getLogger(__name__)
 
-        self.themePkg = themePkg
-        self.themeFilename = themeFilename
-        self.themeFullFilename = self.findThemeFile()
+        self.themePkg:      str = themePkg
+        self.themeFilename: str = themeFilename
+
         self.topLevelClassThemes = []
         self.themeRoot = None
 
     def load(self):
 
-        config = configparser.ConfigParser()
-        config.read(self.themeFullFilename)
+        config = ConfigParser()
+
+        import pkgutil
+
+        bThemeData = pkgutil.get_data(__name__, f"{self.themePkg}{osSep}{self.themeFilename}")
+        themeData = bThemeData.decode('ascii')
+
+        self.logger.debug(f"{themeData=}")
+
+        config.read_string(themeData)
 
         self.themeRoot = self.loadAClass(config[ThemeLoader.ROOT_THEME_NAME])
-
-        self.logger.debug(f"Initial themeRoot: {self.themeRoot}")
 
         self.extractThemeInstances(config)
         self.augmentInstancesWithBase()
@@ -56,13 +62,7 @@ class ThemeLoader:
                     setattr(embeddedTheme, "base", baseTheme)
                     self.logger.debug(f"Theme {embeddedTheme} has new base {baseTheme}")
 
-    def findThemeFile(self):
-
-        fileName = resource_filename(self.themePkg, self.themeFilename)
-
-        return fileName
-
-    def loadAClass(self, classDict: dict) -> Theme:
+    def loadAClass(self, classDict: SectionProxy) -> Theme:
 
         themeName = classDict["name"]
 
