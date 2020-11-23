@@ -14,7 +14,7 @@ DATA_FILES = [('albow/themes/resources', ['albow/themes/resources/default-theme.
              ]
 setup(
     name="python3-albow",
-    version="2.89",
+    version="2.89.12",
     author='Humberto A. Sanchez II',
     author_email='Humberto.A.Sanchez.II@gmail.com',
     description="A Little Bit of Widgetry for PyGame",

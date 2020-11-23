@@ -1,9 +1,11 @@
 
-from pkg_resources import resource_filename
+from logging import Logger
+from logging import getLogger
 
-import logging
+from importlib.resources import path
 
 from pygame.font import Font
+from pygame.font import SysFont
 
 from albow.themes.ThemeError import ThemeError
 
@@ -89,9 +91,9 @@ class Theme:
             base: A Theme object can be based on another Theme object. When looking in a Theme object
                 for an attribute, if not found it will be looked for in the base theme
         """
-        self.logger = logging.getLogger(__name__)
-        self.name = name
-        self.base = base
+        self.logger: Logger = getLogger(__name__)
+        self.name:   str    = name
+        self.base:   str    = base
 
     def get(self, cls, name):
         try:
@@ -102,7 +104,7 @@ class Theme:
 
     def lookup(self, cls, name):
 
-        self.logger.debug("Theme(%s),lookup(%s, %s)", self.name, cls, name)
+        # self.logger.debug("Theme(%s),lookup(%s, %s)", self.name, cls, name)
         for base_class in cls.__mro__:
             class_theme = getattr(self, base_class.__name__, None)
             if class_theme:
@@ -116,20 +118,30 @@ class Theme:
             except AttributeError:
                 base_theme = self.base
                 if base_theme:
+                    # TODO problem here;  No such method .lookup
+                    # https://github.com/hasii2011/albow-python-3/issues/70
                     return base_theme.lookup(cls, name)
                 else:
                     raise ThemeError
 
     def get_font(self, cls, name):
 
-        self.logger.debug(f"Theme.get_font({cls}, {name})")
+        #  self.logger.debug(f"Theme.get_font({cls}, {name})")
         spec = self.get(cls, name)
         if spec:
 
-            self.logger.debug(f"font spec = {spec}")
+            # self.logger.debug(f"font spec = {spec}")
 
-            fontPath = self._findFontFile(spec)
-            font = self._loadFont(fontPath=fontPath, fontSize=spec[0])
+            try:
+                fontPath = self._findFontFile(spec)
+                font = self._loadFont(fontPath=fontPath, fontSize=spec[0])
+            except (ValueError, Exception) as e:
+                #
+                # TODO Fix this via github issue #  https://github.com/hasii2011/albow-python-3/issues/69
+                self.logger.error(f'{e}')
+                self.logger.warning(f'Use system font instead')
+                font = SysFont('Arial', spec[0])
+
             return font
 
     def add_theme(self, name):
@@ -138,7 +150,11 @@ class Theme:
     def _findFontFile(self, spec: tuple):
 
         fontName = spec[1]
-        fileName = resource_filename(Theme.DEFAULT_PKG, fontName)
+        # fileName = resource_filename(Theme.DEFAULT_PKG, fontName)
+        with path(Theme.DEFAULT_PKG, fontName) as p:
+            # self.logger.debug(f'{p=}')
+            fileName: str = p.__str__()
+
         return fileName
 
     def _loadFont(self, fontPath: str, fontSize: int) -> Font:

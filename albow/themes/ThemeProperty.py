@@ -36,26 +36,19 @@ class ThemeProperty:
         self.cache_name = sys.intern("_" + name)
 
     def __get__(self, obj, owner):
-        self.logger.debug("%s(%s).__get__(%s)", self.__class__.__name__, self.name, obj)
+        # self.logger.debug("%s(%s).__get__(%s)", self.__class__.__name__, self.name, obj)
 
         try:
             cache_name = self.cache_name
             try:
                 return getattr(obj, cache_name)
-            #
-            # Python 3 update
-            #
-            # except AttributeError, e:
             except AttributeError as e:
                 if ThemeProperty.debug_theme:
                     self.logger.exception(f"{e}.  Ok. Get value from Theme")
                 value = self.get_from_theme(obj.__class__, self.name)
                 obj.__dict__[cache_name] = value
                 return value
-        #
-        # TODO Do not use bare exception
-        #
-        except:
+        except (ValueError, Exception):
             if ThemeProperty.debug_theme:
                 import traceback
                 traceback.print_exc()
@@ -73,7 +66,7 @@ class ThemeProperty:
         Returns:
 
         """
-        self.logger.debug(f"Setting {obj}.{self.cache_name} = {value}")
+        # self.logger.debug(f"Setting {obj}.{self.cache_name} = {value}")
         obj.__dict__[self.cache_name] = value
 
     def get_from_theme(self, cls, name):
