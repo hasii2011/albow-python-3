@@ -1,6 +1,4 @@
-pygame==2.0.0
-PyOpenGL==3.1.5
-PyOpenGL_accelerate==3.1.5
-wheel==0.35.1
-setuptools==50.3.2
-twine==3.2.0
+pygame~=2.0.1
+wheel~=0.35.1
+setuptools~=54.1.1
+twine~=3.3.0

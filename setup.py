@@ -23,5 +23,5 @@ setup(
     url="https://github.com/hasii2011/albow-python-3",
     packages=find_packages(),
     include_package_data=True,
-    install_requires=['pygame', 'PyOpenGL', 'PyOpenGL-accelerate']
+    install_requires=['pygame']
 )
